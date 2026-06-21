@@ -21,7 +21,7 @@ This document defines the physical, electrical, and data interfaces between the 
 
 | ID | Interface | Type | Endpoint A | Endpoint B | Status |
 |---|---|---|---|---|---|
-| INT-01 | Power distribution | Power | Holybro PM06 V2 | FC, servo rail, RX, telemetry | Partial |
+| INT-01 | Power distribution | Power | Holybro PM03D | FC, servo rail (5V), battery telemetry | Confirmed |
 | INT-02 | Actuator outputs | PWM | FC (MAIN 1-6) | Control surface servos, motors | Confirmed |
 | INT-03 | RC link | Serial (Telem_1, 460800 8N1) | FC | Radiomaster DBR4 | Confirmed |
 | INT-04 | Telemetry link | Serial (Telem_2, 57600 8N1) | FC | RFD900(x) | Confirmed |
@@ -34,9 +34,13 @@ This document defines the physical, electrical, and data interfaces between the 
 
 ### INT-01: Power Distribution
 
-Power module: **Holybro PM06 V2**. PX4 power monitor driver `SENS_EN_INA228` is enabled, reading battery voltage/current via the PM06's onboard INA228 monitor. Battery: `BAT1_N_CELLS` = 6S (pack capacity unclear — see [open items](../context/open-items.md)).
+Power module: **Holybro PM03D** (purchased 2026-05-11 with Julian's personal funds, not club funds — see [purchase-history.md](purchase-history.md)). Installed and providing:
+- Battery voltage/current telemetry to the FC — PX4 power monitor driver `SENS_EN_INA228` is enabled. Battery: Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack (`BAT1_N_CELLS` = 6S).
+- 5V power to the servo rail, which is electrically isolated from the main Pixhawk power supply (see INT-02).
 
-Status: **Partial** — power module model and battery cell count confirmed. Still need: output rail voltages, connector types, current ratings, and which subsystems draw from which rail (servo rail, RX, telemetry, companion computer).
+Note: a MATEKSYS PDB FCHUB-12S V2 and a Holybro PM06 V2 were also purchased/shortlisted for this project (see [purchase-history.md](purchase-history.md)) but are **not** the unit in use — the PM03D above is fitted. The PM06 V2 specifically was not used because its power telemetry format is not accepted by the Pixhawk.
+
+Status: **Confirmed** power module, battery telemetry, and servo rail power. Still need: any other output rail voltages/connectors (RX, telemetry, companion computer) and current ratings.
 
 ### INT-02: Flight Controller ↔ Actuator Outputs (PWM)
 
@@ -142,7 +146,7 @@ Status: **Partial** — driver enablement confirmed. I2C bus/port, address, and 
 
 ### INT-08: Radio Master GX12
 
-Radiomaster GX12 Crush Xrossband ExpressLRS radio controller (transmitter) — Gemini-X dual-band, transmitting simultaneously on 2.4GHz and 900MHz. Pairs with the Radiomaster DBR4 receiver (INT-03), configured in ELRS Hybrid switch mode with MAVLink enabled. See INT-03 for the full channel and flight-mode mapping.
+Radiomaster GX12 ExpressLRS radio controller (transmitter) — Gemini-X dual-band, transmitting simultaneously on 2.4GHz and 900MHz. **Not** the "Crush" variant (that name appears on the shopping list but is incorrect). Pairs with the Radiomaster DBR4 receiver (INT-03), configured in ELRS Hybrid switch mode with MAVLink enabled. See INT-03 for the full channel and flight-mode mapping.
 
 Status: **Confirmed** role, protocol, and channel mapping (see INT-03).
 

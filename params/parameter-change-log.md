@@ -7,7 +7,7 @@ Per the maiden flight checklist: "Document all parameter changes and build log. 
 | Parameter | Description | Default / Old Value | New Value | Justification |
 |---|---|---|---|---|
 | `SENS_BOARD_ROT` | FC board rotation relative to aircraft body frame | 0 | Yaw 180° | Corrects Pixhawk orientation so sensed axes align with physical installation. |
-| `SENS_EN_INA228` | Enable INA228 power monitor driver | Disabled | Enabled | Enables the connected INA228 power monitor (Holybro PM06 V2) for battery voltage/current measurement. |
+| `SENS_EN_INA228` | Enable INA228 power monitor driver | Disabled | Enabled | Enables the connected INA228 power monitor (Holybro PM03D) for battery voltage/current measurement. |
 | `SENS_EN_MS4525DO` | Enable MS4525DO differential pressure sensor driver | Disabled | Enabled | Enables the connected MS4525DO airspeed sensor. |
 | `BAT1_N_CELLS` | Number of cells in primary battery pack | Default / Auto | 6S | Configures battery monitor for the installed 6S LiPo. |
 | `GPS_1_CONFIG` | Serial port for GPS instance 1 | Default | GPS 1 | Assigns primary GPS receiver to the GPS 1 port. |

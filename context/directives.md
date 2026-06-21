@@ -2,12 +2,16 @@
 
 Standing conventions for working in this repo. Update this file when the user gives new durable instructions.
 
-- **All project documents are kept as Markdown** (manual, ICD, purchase history, etc.), not Word/PDF, so they version cleanly in git. Confirmed by user.
-- Source material (e.g. `Believer Checklist.docx`) may arrive as Word docs — extract content into Markdown docs rather than editing/maintaining the original docx.
+- **All project documentation is kept as Markdown** (manual, ICD, purchase history, etc.), not Word/PDF, so it versions cleanly in git. Confirmed by user.
+- Source material (Word docs, spreadsheets, PDFs dropped in the root for context) gets its content extracted into the relevant Markdown docs.
+  - Working/scratch documents (e.g. `Believer Checklist.docx`) are deleted once extracted.
+  - Formal reference documents (signed proposals/funding applications, invoices) are **kept** in their original format under `supporting-documents/`, not deleted — confirmed by user 2026-06-21.
 - Diagrams/photos worth keeping are saved under `docs/assets/` with descriptive filenames.
 - Repo layout:
   - `docs/` — manual, ICD, and other documentation
   - `params/` — parameter change logs / flight controller parameter files
+  - `supporting-documents/` — formal reference documents kept in original format (proposals, funding applications)
+    - `supporting-documents/invoices/` — purchase invoices, named `<vendor>-<item>-<date>.pdf`, referenced from `docs/purchase-history.md`
   - `context/` — this folder: persistent project memory + directives for Claude
 - Mark unknown/unconfirmed interface details as `TBD` rather than guessing — track them in `open-items.md` and confirm with the user.
 - Log notable changes to repo docs in `CHANGELOG.md` (root), most recent first.

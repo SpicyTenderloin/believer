@@ -10,6 +10,18 @@ The project aims to develop a fixed-wing drone for beyond visual line of sight (
 
 Beyond the platform itself, the project is run through QUTAS to give students hands-on, real-world experience across the full UAS engineering lifecycle — systems integration, flight testing, regulatory compliance, and industry liaison — spanning aerospace, electrical, robotics, software, and mechanical disciplines.
 
+## Roadmap
+
+From the original project proposal (2026-01-25):
+
+| Phase | Timeframe | Key Activities |
+|---|---|---|
+| Near-term | 0–3 months | Finalise avionics integration, establish redundant RC control link, conduct ground testing and initial flight testing. |
+| Mid-term | 3–6 months | Flight controller tuning, implementation of robust failsafe procedures, expansion of flight-testing activities, strengthening of industry and testing facility engagement. |
+| Long-term | 6–12+ months | Integration of companion computer and camera payload, development of advanced autonomous and sensing capabilities, platform optimisation for research and teaching use. |
+
+The redundant RC link (near-term) is done — see the GX12/DBR4 ExpressLRS setup in [ICD.md](ICD.md) and [manual.md](manual.md).
+
 ## Team & Contacts
 
 - Julian Williams — UAS Systems Lead / Program Manager
@@ -23,3 +35,4 @@ Beyond the platform itself, the project is run through QUTAS to give students ha
 - [maiden-flight-checklist.md](maiden-flight-checklist.md) — build/maiden flight checklist
 - [purchase-history.md](purchase-history.md) — component purchases
 - [../params/parameter-change-log.md](../params/parameter-change-log.md) — PX4 parameter change history
+- [../supporting-documents/](../supporting-documents/) — original proposal, funding application materials, and purchase invoices

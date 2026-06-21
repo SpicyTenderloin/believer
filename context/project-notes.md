@@ -30,23 +30,23 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 | Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
 ## Serial / Sensor Interfaces (updated with parameter log)
-- **Telem_1** (`RC_PORT_CONFIG = TELEM1`): Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver. Baud `SER_TEL1_BAUD = 460800 8N1`. Paired transmitter: Radiomaster GX12 Crush Xrossband ExpressLRS controller.
+- **Telem_1** (`RC_PORT_CONFIG = TELEM1`): Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver. Baud `SER_TEL1_BAUD = 460800 8N1`. Paired transmitter: Radiomaster GX12 (Gemini-X dual-band ExpressLRS) — **not** the "Crush" variant, despite that name appearing on the shopping list.
 - **Telem_2** (`MAV_0_CONFIG = TELEM2`): RFD900(x) long-range telemetry radio. Baud `SER_TEL2_BAUD = 57600 8N1`. MAVLink rate `MAV_0_RATE = 3000 B/s`, flow control disabled. Pinout: Black=GND, Brown=Vcc(5V), Yellow=Rx→FC TX1, Red=Tx→FC RX1.
 - **GPS_1** (`GPS_1_CONFIG = GPS 1`, `GPS_1_PROTOCOL = u-blox`): M8N GPS. `GPS_1_GNSS = 21` (constellation mask). `GPS_UBX_DYNMODEL = Airborne <4g`.
 - **GPS_2** (`GPS_2_GNSS = 29`): SparkFun GPS-RTK-SMA Breakout — ZED-F9P. RTK correction source still TBD.
 - **I2C**: MS4525DO airspeed sensor — driver enabled (`SENS_EN_MS4525DO`). Bus/address wiring not documented yet.
-- **Power**: `SENS_EN_INA228` enabled — power monitor reading on the Holybro PM06 V2 power module (see Power below). `BAT1_N_CELLS` = 6S.
+- **Power**: `SENS_EN_INA228` enabled — power monitor reading on the Holybro PM03D power module (see Power below). `BAT1_N_CELLS` = 6S.
 - **RC switches** (updated 2026-06-21 — see `params/parameter-change-log.md` for the remap history): `RC_MAP_ARM_SW` = Channel 5, `RC_MAP_KILL_SW` = Channel 7. GR1 (6-position flight-mode switch) on Channel 6. Full channel map and GR1→PX4 mode mapping documented in `docs/ICD.md` (INT-03) and `docs/manual.md`.
 - **Radio Master GX12**: RC transmitter (not a module/receiver) — Gemini-X dual-band (2.4GHz + 900MHz) ExpressLRS, pairs with the DBR4 receiver above. Configured in ELRS Hybrid switch mode with MAVLink enabled.
 
-## Power
-- Power module: **Holybro PM06 V2** (per shopping list), providing the INA228-monitored power measurement enabled in PX4 params.
-- Funding application separately proposed a "MatekSys Power Distribution Board" — superseded by the PM06 V2 choice on the shopping list.
+## Power — confirmed
+- Power module fitted: **Holybro PM03D** (invoice 2026-05-11, purchased with Julian's personal funds, not club funds). Installed and providing battery voltage/current telemetry (INA228) and 5V power to the servo rail.
+- Two other power modules were purchased/shortlisted but are **not** the unit in use:
+  - MATEKSYS PDB FCHUB-12S V2 (invoice confirmed, 2026-05-10, per the original funding application budget) — not used.
+  - Holybro PM06 V2 (per shopping list) — not used because its power telemetry format is not accepted by the Pixhawk.
 
-## Battery — needs clarification
-Two different packs appear across documents, both 6S — unclear which is actually fitted:
-- Funding application budget: 2200mAh 6S 60C LiPo (~$46)
-- Shopping list (2026-02-27, later): Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack (~$93.23)
+## Battery — confirmed
+Fitted pack: **Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack** (~$93.23, per shopping list). The 2200mAh 6S 60C LiPo in the funding application budget was an earlier estimate and was not purchased.
 
 ## Future / Planned Capability (not yet wired into FC)
 - IMX335 5MP USB camera — for onboard decision-making / pilot video feed (companion computer phase).
