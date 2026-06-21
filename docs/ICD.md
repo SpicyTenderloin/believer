@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 0.5 |
-| **Date** | 2026-06-21 |
+| **Revision** | 0.6 |
+| **Date** | 2026-06-22 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -175,3 +175,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.3 | 2026-06-21 | Added RC channel map and flight-mode mapping |
 | 0.4 | 2026-06-21 | Confirmed power module and GPS routing; rewritten for clarity |
 | 0.5 | 2026-06-21 | Added system block diagram |
+| 0.6 | 2026-06-22 | Redrawn block diagram with orthogonal routing, uniform box sizing, and a white background |

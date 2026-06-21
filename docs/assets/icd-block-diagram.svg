@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" font-family="Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 960" font-family="Arial, Helvetica, sans-serif">
   <style>
     .box { fill:#ffffff; stroke:#1a1a1a; stroke-width:2; }
     .fcbox { fill:#1f3b57; stroke:#1a1a1a; stroke-width:2.5; }
@@ -10,7 +10,7 @@
     .fclabel { font-size:15px; font-weight:bold; fill:#ffffff; }
     .fcsublabel { font-size:11px; fill:#dbe6f0; }
     .linklabel { font-size:11px; fill:#1a1a1a; }
-    .linklabel-bg { fill:#ffffff; opacity:0.85; }
+    .linklabel-bg { fill:#ffffff; opacity:0.9; }
     .wire { stroke:#1a1a1a; stroke-width:1.6; fill:none; }
     .power { stroke:#b5651d; stroke-width:2; fill:none; }
     .rf { stroke:#1a1a1a; stroke-width:1.6; fill:none; stroke-dasharray:6,5; }
@@ -18,152 +18,161 @@
     .legend { font-size:12px; fill:#1a1a1a; }
   </style>
 
+  <!-- Background -->
+  <rect x="0" y="0" width="1400" height="960" fill="#ffffff"/>
+
   <!-- Title -->
-  <text x="700" y="32" text-anchor="middle" class="title">Believer Fixed-Wing UAV — ICD Block Diagram</text>
-  <text x="700" y="52" text-anchor="middle" class="subtitle">ICD-BELIEVER-001 Rev 0.4 — 2026-06-21</text>
+  <text x="700" y="30" text-anchor="middle" class="title">Believer Fixed-Wing UAV — ICD Block Diagram</text>
+  <text x="700" y="50" text-anchor="middle" class="subtitle">ICD-BELIEVER-001 Rev 0.6 — 2026-06-22</text>
 
   <!-- Aircraft boundary -->
-  <rect x="40" y="140" width="1320" height="780" rx="10" class="boundary"/>
-  <text x="60" y="165" class="sublabel" fill="#666666">AIRCRAFT</text>
+  <rect x="60" y="270" width="1300" height="510" rx="10" class="boundary"/>
+  <text x="80" y="293" class="sublabel" fill="#666666">AIRCRAFT</text>
 
-  <!-- Ground equipment -->
-  <rect x="130" y="70" width="220" height="60" rx="6" class="groundbox"/>
-  <text x="240" y="95" text-anchor="middle" class="label">Radiomaster GX12</text>
-  <text x="240" y="112" text-anchor="middle" class="sublabel">RC Transmitter (ground / pilot)</text>
+  <!-- Ground equipment (uniform 240x90 box size) -->
+  <rect x="140" y="70" width="240" height="90" rx="6" class="groundbox"/>
+  <text x="260" y="108" text-anchor="middle" class="label">Radiomaster GX12</text>
+  <text x="260" y="126" text-anchor="middle" class="sublabel">RC Transmitter</text>
+  <text x="260" y="142" text-anchor="middle" class="sublabel">(ground / pilot)</text>
 
-  <rect x="1050" y="70" width="240" height="60" rx="6" class="groundbox"/>
-  <text x="1170" y="95" text-anchor="middle" class="label">Ground Station</text>
-  <text x="1170" y="112" text-anchor="middle" class="sublabel">Laptop + QGroundControl</text>
+  <rect x="1040" y="70" width="240" height="90" rx="6" class="groundbox"/>
+  <text x="1160" y="108" text-anchor="middle" class="label">Ground Station</text>
+  <text x="1160" y="126" text-anchor="middle" class="sublabel">Laptop + QGroundControl</text>
 
-  <!-- Flight Controller (center) -->
-  <rect x="560" y="470" width="280" height="100" rx="8" class="fcbox"/>
-  <text x="700" y="510" text-anchor="middle" class="fclabel">HOLYBRO PIXHAWK 6X</text>
-  <text x="700" y="530" text-anchor="middle" class="fcsublabel">PX4 Autopilot</text>
-  <text x="700" y="548" text-anchor="middle" class="fcsublabel">CG: 15mm aft of front spar (~25% MAC)</text>
+  <!-- Flight Controller (center, primary box) -->
+  <rect x="560" y="470" width="280" height="110" rx="8" class="fcbox"/>
+  <text x="700" y="508" text-anchor="middle" class="fclabel">HOLYBRO PIXHAWK 6X</text>
+  <text x="700" y="528" text-anchor="middle" class="fcsublabel">PX4 Autopilot</text>
+  <text x="700" y="546" text-anchor="middle" class="fcsublabel">CG: 15mm aft of front spar (~25% MAC)</text>
+
+  <!-- All peripheral boxes share a uniform 240x90 size -->
 
   <!-- DBR4 -->
-  <rect x="140" y="300" width="220" height="70" rx="6" class="box"/>
-  <text x="250" y="328" text-anchor="middle" class="label">Radiomaster DBR4</text>
-  <text x="250" y="346" text-anchor="middle" class="sublabel">RC Receiver (ExpressLRS)</text>
-  <text x="250" y="360" text-anchor="middle" class="sublabel">Hybrid mode, MAVLink enabled</text>
+  <rect x="140" y="300" width="240" height="90" rx="6" class="box"/>
+  <text x="260" y="338" text-anchor="middle" class="label">Radiomaster DBR4</text>
+  <text x="260" y="356" text-anchor="middle" class="sublabel">RC Receiver (ExpressLRS)</text>
+  <text x="260" y="372" text-anchor="middle" class="sublabel">Hybrid mode, MAVLink enabled</text>
 
   <!-- RFD900x -->
-  <rect x="1040" y="300" width="240" height="70" rx="6" class="box"/>
-  <text x="1160" y="328" text-anchor="middle" class="label">RFD900x</text>
-  <text x="1160" y="346" text-anchor="middle" class="sublabel">Long-Range Telemetry Radio</text>
+  <rect x="1040" y="300" width="240" height="90" rx="6" class="box"/>
+  <text x="1160" y="338" text-anchor="middle" class="label">RFD900x</text>
+  <text x="1160" y="358" text-anchor="middle" class="sublabel">Long-Range Telemetry Radio</text>
 
   <!-- M8N GPS -->
-  <rect x="1040" y="460" width="240" height="70" rx="6" class="box"/>
-  <text x="1160" y="488" text-anchor="middle" class="label">M8N GPS</text>
-  <text x="1160" y="506" text-anchor="middle" class="sublabel">GPS 1 — Primary</text>
+  <rect x="1040" y="420" width="240" height="90" rx="6" class="box"/>
+  <text x="1160" y="458" text-anchor="middle" class="label">M8N GPS</text>
+  <text x="1160" y="478" text-anchor="middle" class="sublabel">GPS 1 — Primary</text>
 
   <!-- ZED-F9P -->
-  <rect x="1040" y="620" width="260" height="80" rx="6" class="box"/>
-  <text x="1170" y="648" text-anchor="middle" class="label">SparkFun ZED-F9P</text>
-  <text x="1170" y="666" text-anchor="middle" class="sublabel">GPS 2 — RTK Breakout</text>
-  <text x="1170" y="682" text-anchor="middle" class="sublabel" fill="#a33">Antenna not fitted</text>
+  <rect x="1040" y="540" width="240" height="90" rx="6" class="box"/>
+  <text x="1160" y="578" text-anchor="middle" class="label">SparkFun ZED-F9P</text>
+  <text x="1160" y="596" text-anchor="middle" class="sublabel">GPS 2 — RTK Breakout</text>
+  <text x="1160" y="612" text-anchor="middle" class="sublabel" fill="#a33">Antenna not fitted</text>
 
-  <!-- MS4525DO -->
-  <rect x="560" y="780" width="280" height="70" rx="6" class="box"/>
-  <text x="700" y="808" text-anchor="middle" class="label">MS4525DO</text>
-  <text x="700" y="826" text-anchor="middle" class="sublabel">Airspeed Sensor (differential pressure)</text>
-
-  <!-- Actuators -->
-  <rect x="140" y="460" width="240" height="100" rx="6" class="box"/>
-  <text x="260" y="486" text-anchor="middle" class="label">Control Surfaces &amp; Motors</text>
-  <text x="260" y="504" text-anchor="middle" class="sublabel">MAIN 1-6: V-Tail L/R,</text>
-  <text x="260" y="518" text-anchor="middle" class="sublabel">Ailerons L/R, Motors L/R</text>
-  <text x="260" y="536" text-anchor="middle" class="sublabel">Servo rail isolated from FC supply</text>
+  <!-- Control Surfaces & Motors (Actuators) -->
+  <rect x="140" y="420" width="240" height="90" rx="6" class="box"/>
+  <text x="260" y="450" text-anchor="middle" class="label">Control Surfaces &amp; Motors</text>
+  <text x="260" y="468" text-anchor="middle" class="sublabel">MAIN 1-6 (PWM)</text>
+  <text x="260" y="484" text-anchor="middle" class="sublabel">V-Tail, Ailerons, Motors</text>
 
   <!-- PM03D -->
-  <rect x="140" y="620" width="240" height="80" rx="6" class="box"/>
-  <text x="260" y="648" text-anchor="middle" class="label">Holybro PM03D</text>
-  <text x="260" y="666" text-anchor="middle" class="sublabel">Power Module</text>
-  <text x="260" y="682" text-anchor="middle" class="sublabel">INA228 battery telemetry</text>
+  <rect x="140" y="540" width="240" height="90" rx="6" class="box"/>
+  <text x="260" y="570" text-anchor="middle" class="label">Holybro PM03D</text>
+  <text x="260" y="588" text-anchor="middle" class="sublabel">Power Module</text>
+  <text x="260" y="604" text-anchor="middle" class="sublabel">INA228 battery telemetry</text>
 
   <!-- Battery -->
-  <rect x="160" y="780" width="200" height="60" rx="6" class="box"/>
-  <text x="260" y="805" text-anchor="middle" class="label">6S LiPo Battery</text>
-  <text x="260" y="822" text-anchor="middle" class="sublabel">Turnigy Graphene 8000mAh 15C</text>
+  <rect x="140" y="660" width="240" height="90" rx="6" class="box"/>
+  <text x="260" y="698" text-anchor="middle" class="label">6S LiPo Battery</text>
+  <text x="260" y="716" text-anchor="middle" class="sublabel">Turnigy Graphene</text>
+  <text x="260" y="732" text-anchor="middle" class="sublabel">8000mAh, 15C</text>
 
-  <!-- Wires: FC to peripherals -->
-  <path d="M560,500 L360,335" class="wire"/>
-  <path d="M840,500 L1040,335" class="wire"/>
-  <path d="M840,495 L1040,495" class="wire"/>
-  <path d="M840,545 L1040,655" class="wire"/>
-  <path d="M700,570 L700,780" class="wire"/>
-  <path d="M560,510 L380,510" class="wire"/>
-  <path d="M560,540 L380,660" class="wire"/>
+  <!-- MS4525DO -->
+  <rect x="580" y="660" width="240" height="90" rx="6" class="box"/>
+  <text x="700" y="698" text-anchor="middle" class="label">MS4525DO</text>
+  <text x="700" y="716" text-anchor="middle" class="sublabel">Airspeed Sensor</text>
+  <text x="700" y="732" text-anchor="middle" class="sublabel">(differential pressure)</text>
 
-  <!-- Power chain: Battery -> PM03D -> Actuators (servo rail) -->
-  <path d="M260,780 L260,700" class="power"/>
-  <path d="M380,660 L260,560" class="power"/>
+  <!-- Wires: FC to peripherals (orthogonal: horizontal + vertical segments only) -->
+  <path d="M560,495 H470 V345 H380" class="wire"/>
+  <path d="M560,525 H470 V465 H380" class="wire"/>
+  <path d="M560,555 H470 V585 H380" class="wire"/>
+  <path d="M840,495 H940 V345 H1040" class="wire"/>
+  <path d="M840,525 H940 V465 H1040" class="wire"/>
+  <path d="M840,555 H940 V585 H1040" class="wire"/>
+  <path d="M700,580 V660" class="wire"/>
 
-  <!-- RF links across the aircraft boundary -->
-  <path d="M240,130 L250,300" class="rf"/>
-  <path d="M1170,130 L1160,300" class="rf"/>
+  <!-- Power chain: Battery -> PM03D -> Actuators (servo rail), straight vertical -->
+  <path d="M260,540 V510" class="power"/>
+  <path d="M260,660 V630" class="power"/>
+
+  <!-- RF links across the aircraft boundary, straight vertical -->
+  <path d="M260,160 V300" class="rf"/>
+  <path d="M1160,160 V300" class="rf"/>
 
   <!-- Link labels -->
   <g>
-    <rect x="370" y="395" width="180" height="34" class="linklabel-bg"/>
-    <text x="460" y="409" text-anchor="middle" class="linklabel">INT-03: TELEM1</text>
-    <text x="460" y="423" text-anchor="middle" class="linklabel">460800 8N1</text>
+    <rect x="385" y="405" width="170" height="34" class="linklabel-bg"/>
+    <text x="470" y="419" text-anchor="middle" class="linklabel">INT-03: TELEM1</text>
+    <text x="470" y="433" text-anchor="middle" class="linklabel">460800 8N1</text>
   </g>
   <g>
-    <rect x="855" y="395" width="180" height="34" class="linklabel-bg"/>
-    <text x="945" y="409" text-anchor="middle" class="linklabel">INT-04: TELEM2</text>
-    <text x="945" y="423" text-anchor="middle" class="linklabel">57600 8N1</text>
+    <rect x="385" y="480" width="170" height="34" class="linklabel-bg"/>
+    <text x="470" y="494" text-anchor="middle" class="linklabel">INT-02: PWM</text>
+    <text x="470" y="508" text-anchor="middle" class="linklabel">MAIN 1-6</text>
   </g>
   <g>
-    <rect x="870" y="478" width="160" height="20" class="linklabel-bg"/>
-    <text x="950" y="492" text-anchor="middle" class="linklabel">INT-05: GPS1 UART</text>
+    <rect x="385" y="555" width="170" height="34" class="linklabel-bg"/>
+    <text x="470" y="569" text-anchor="middle" class="linklabel">INT-01: Battery Telem.</text>
+    <text x="470" y="583" text-anchor="middle" class="linklabel">I2C / INA228</text>
   </g>
   <g>
-    <rect x="850" y="590" width="190" height="34" class="linklabel-bg"/>
-    <text x="945" y="604" text-anchor="middle" class="linklabel">INT-06: GPS2 UART</text>
-    <text x="945" y="618" text-anchor="middle" class="linklabel">(RTK)</text>
+    <rect x="845" y="405" width="170" height="34" class="linklabel-bg"/>
+    <text x="930" y="419" text-anchor="middle" class="linklabel">INT-04: TELEM2</text>
+    <text x="930" y="433" text-anchor="middle" class="linklabel">57600 8N1</text>
   </g>
   <g>
-    <rect x="660" y="660" width="80" height="20" class="linklabel-bg"/>
-    <text x="700" y="674" text-anchor="middle" class="linklabel">INT-07: I2C</text>
+    <rect x="845" y="480" width="170" height="20" class="linklabel-bg"/>
+    <text x="930" y="494" text-anchor="middle" class="linklabel">INT-05: GPS1 UART</text>
   </g>
   <g>
-    <rect x="395" y="495" width="170" height="34" class="linklabel-bg"/>
-    <text x="480" y="509" text-anchor="middle" class="linklabel">INT-02: PWM</text>
-    <text x="480" y="523" text-anchor="middle" class="linklabel">MAIN 1-6</text>
+    <rect x="845" y="555" width="170" height="34" class="linklabel-bg"/>
+    <text x="930" y="569" text-anchor="middle" class="linklabel">INT-06: GPS2 UART</text>
+    <text x="930" y="583" text-anchor="middle" class="linklabel">(RTK)</text>
   </g>
   <g>
-    <rect x="385" y="585" width="190" height="34" class="linklabel-bg"/>
-    <text x="480" y="599" text-anchor="middle" class="linklabel">INT-01: Battery Telemetry</text>
-    <text x="480" y="613" text-anchor="middle" class="linklabel">I2C / INA228</text>
+    <rect x="640" y="610" width="120" height="20" class="linklabel-bg"/>
+    <text x="700" y="624" text-anchor="middle" class="linklabel">INT-07: I2C</text>
   </g>
   <g>
-    <rect x="265" y="600" width="120" height="20" class="linklabel-bg"/>
-    <text x="325" y="614" text-anchor="middle" class="linklabel" fill="#b5651d">5V Servo Rail</text>
+    <rect x="270" y="513" width="130" height="20" class="linklabel-bg"/>
+    <text x="335" y="527" text-anchor="middle" class="linklabel" fill="#b5651d">5V Servo Rail</text>
   </g>
   <g>
-    <rect x="195" y="730" width="100" height="20" class="linklabel-bg"/>
-    <text x="245" y="744" text-anchor="middle" class="linklabel" fill="#b5651d">VBat (6S)</text>
+    <rect x="270" y="633" width="110" height="20" class="linklabel-bg"/>
+    <text x="325" y="647" text-anchor="middle" class="linklabel" fill="#b5651d">VBat (6S)</text>
   </g>
   <g>
-    <rect x="160" y="245" width="160" height="34" class="linklabel-bg"/>
-    <text x="240" y="259" text-anchor="middle" class="linklabel">INT-08: ExpressLRS</text>
-    <text x="240" y="273" text-anchor="middle" class="linklabel">Dual-band 2.4/900MHz</text>
+    <rect x="270" y="208" width="190" height="34" class="linklabel-bg"/>
+    <text x="365" y="222" text-anchor="middle" class="linklabel">INT-08: ExpressLRS</text>
+    <text x="365" y="236" text-anchor="middle" class="linklabel">Dual-band 2.4/900MHz</text>
   </g>
   <g>
-    <rect x="1090" y="245" width="160" height="20" class="linklabel-bg"/>
-    <text x="1170" y="259" text-anchor="middle" class="linklabel">900MHz Telemetry Link</text>
+    <rect x="965" y="218" width="190" height="20" class="linklabel-bg"/>
+    <text x="1060" y="232" text-anchor="middle" class="linklabel">900MHz Telemetry Link</text>
   </g>
 
   <!-- Legend -->
   <g>
-    <rect x="1040" y="850" width="320" height="110" rx="6" class="box"/>
-    <text x="1060" y="872" class="label" font-size="13">Legend</text>
-    <line x1="1060" y1="892" x2="1110" y2="892" class="wire"/>
-    <text x="1120" y="896" class="legend">Wired interface (FC)</text>
-    <line x1="1060" y1="912" x2="1110" y2="912" class="power"/>
-    <text x="1120" y="916" class="legend">Power / battery rail</text>
-    <line x1="1060" y1="932" x2="1110" y2="932" class="rf"/>
-    <text x="1120" y="936" class="legend">RF / wireless link</text>
+    <rect x="1040" y="800" width="280" height="130" rx="6" class="box"/>
+    <text x="1060" y="822" class="label" font-size="13">Legend</text>
+    <line x1="1060" y1="842" x2="1110" y2="842" class="wire"/>
+    <text x="1120" y="846" class="legend">Wired interface (FC)</text>
+    <line x1="1060" y1="862" x2="1110" y2="862" class="power"/>
+    <text x="1120" y="866" class="legend">Power / battery rail</text>
+    <line x1="1060" y1="882" x2="1110" y2="882" class="rf"/>
+    <text x="1120" y="886" class="legend">RF / wireless link</text>
+    <rect x="1060" y="897" width="50" height="16" class="groundbox"/>
+    <text x="1120" y="909" class="legend">Ground equipment</text>
   </g>
 </svg>
