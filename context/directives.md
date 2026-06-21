@@ -16,3 +16,7 @@ Standing conventions for working in this repo. Update this file when the user gi
 - Mark unknown/unconfirmed interface details as `TBD` rather than guessing — track them in `open-items.md` and confirm with the user.
 - Log notable changes to repo docs in `CHANGELOG.md` (root), most recent first.
 - **Commit and push updates as we go**, rather than batching many changes into one commit at the end of a session — confirmed by user 2026-06-21.
+- **Documents under `docs/` must read as professional engineering documents**, not working notes — confirmed by user 2026-06-21 after the ICD drifted into "cached memory" style (inline source citations like "per shopping list", provenance asides like "Note: X was also purchased but not used because Y", changelog-style diffs like "(updated 2026-06-21, was Channel 10)", and verbose per-section "Status: Confirmed/Partial" commentary).
+  - State the as-built/current fact cleanly; don't narrate how it was learned or what was tried and rejected.
+  - Decision history, corrections, source provenance, and rejected alternatives belong in `context/` (e.g. `project-notes.md`) — create new files under `context/` if a new category of working memory doesn't fit existing ones.
+  - Exception: `docs/purchase-history.md` and `params/parameter-change-log.md` are logs by nature — transactional/change notes are the expected content there, not a violation of this rule.

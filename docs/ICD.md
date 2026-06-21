@@ -1,52 +1,62 @@
-# Believer Fixed-Wing UAV — Interface Control Document (ICD)
+# Believer Fixed-Wing UAV — Interface Control Document
 
 | | |
 |---|---|
-| **Project** | Believer Fixed-Wing UAV |
-| **Status** | Draft — most interfaces confirmed, see Open Items |
-| **Source** | Believer Checklist.docx, QGroundControl actuator config, believer_PX4_Parameter_Change_Log.xlsx, Shopping List 27_02_26.xlsx |
+| **Document** | ICD-BELIEVER-001 |
+| **Revision** | 0.4 |
+| **Date** | 2026-06-21 |
+| **Status** | Draft |
 
-## 1. Purpose & Scope
+## 1. Scope
 
-This document defines the physical, electrical, and data interfaces between the avionics subsystems on the Believer airframe: flight controller (FC), power distribution board (PDB), control surface/motor actuators, telemetry/RC radios, GPS receivers, and the airspeed sensor.
+This document defines the physical, electrical, and data interfaces between the avionics subsystems of the Believer fixed-wing UAV: the flight controller (FC), power module, control surface and motor actuators, telemetry and RC radio links, GPS receivers, and the airspeed sensor.
 
-## 2. System Overview
+## 2. Reference Documents
 
-- Airframe: V-tail, twin-motor (left/right) fixed wing.
-- Flight controller: Pixhawk-series, running **PX4** (confirmed via QGroundControl Actuators Config UI).
-- Centre of Gravity: 15mm aft of the front wing spar carbon rod centerline (~25% MAC).
-- Servo rail is electrically isolated from FC power and is fed independently 5V from the PDB.
+- Believer Project Proposal (QUTAS, 2026-01-25) — `supporting-documents/`
+- QUTAS EER Funding Application (2026-05-20) — `supporting-documents/`
+- Purchase invoices — `supporting-documents/invoices/`
+- PX4 parameter change history — `params/parameter-change-log.md`
+- Component datasheets — `Component datasheets/`
 
-## 3. Interface Summary
+## 3. System Description
 
-| ID | Interface | Type | Endpoint A | Endpoint B | Status |
-|---|---|---|---|---|---|
-| INT-01 | Power distribution | Power | Holybro PM03D | FC, servo rail (5V), battery telemetry | Confirmed |
-| INT-02 | Actuator outputs | PWM | FC (MAIN 1-6) | Control surface servos, motors | Confirmed |
-| INT-03 | RC link | Serial (Telem_1, 460800 8N1) | FC | Radiomaster DBR4 | Confirmed |
-| INT-04 | Telemetry link | Serial (Telem_2, 57600 8N1) | FC | RFD900(x) | Confirmed |
-| INT-05 | GPS 1 (primary) | Serial (GPS 1 UART, u-blox protocol) | FC | M8N GPS | Confirmed |
-| INT-06 | GPS 2 (RTK) | Serial (GPS 2 UART) | FC | SparkFun ZED-F9P breakout | Partial — antenna not fitted |
-| INT-07 | Airspeed sensor | I2C | FC | MS4525DO | Partial |
-| INT-08 | RC transmitter | RF (ExpressLRS, dual-band 2.4/900MHz) | Radiomaster GX12 | Radiomaster DBR4 | Confirmed |
+The Believer is a V-tail, twin-motor fixed-wing airframe. The flight controller is a Pixhawk-class board running PX4. Centre of gravity is located 15mm aft of the front wing spar carbon rod centreline, approximately 25% of the mean aerodynamic chord (MAC).
 
-## 4. Detailed Interfaces
+The servo rail is electrically isolated from the main flight controller power supply and is fed independently at 5V from the power module.
 
-### INT-01: Power Distribution
+## 4. Interface Summary
 
-Power module: **Holybro PM03D** (purchased 2026-05-11 with Julian's personal funds, not club funds — see [purchase-history.md](purchase-history.md)). Installed and providing:
-- Battery voltage/current telemetry to the FC — PX4 power monitor driver `SENS_EN_INA228` is enabled. Battery: Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack (`BAT1_N_CELLS` = 6S).
-- 5V power to the servo rail, which is electrically isolated from the main Pixhawk power supply (see INT-02).
+| ID | Interface | Type | Endpoint A | Endpoint B |
+|---|---|---|---|---|
+| INT-01 | Power distribution | Power | Holybro PM03D power module | FC, servo rail (5V) |
+| INT-02 | Actuator outputs | PWM | FC (MAIN 1–6) | Control surface servos, motors |
+| INT-03 | RC control link | Serial, TELEM1 | FC | Radiomaster DBR4 receiver |
+| INT-04 | Telemetry link | Serial, TELEM2 | FC | RFD900x radio modem |
+| INT-05 | GPS 1 (primary) | Serial, GPS1 UART | FC | M8N GPS module |
+| INT-06 | GPS 2 (RTK) | Serial, GPS2 UART | FC | SparkFun GPS-RTK-SMA Breakout (ZED-F9P) |
+| INT-07 | Airspeed sensor | I2C | FC | MS4525DO differential pressure sensor |
+| INT-08 | RC transmitter link | RF, ExpressLRS dual-band (2.4GHz/900MHz) | Radiomaster GX12 transmitter | Radiomaster DBR4 receiver |
 
-Note: a MATEKSYS PDB FCHUB-12S V2 and a Holybro PM06 V2 were also purchased/shortlisted for this project (see [purchase-history.md](purchase-history.md)) but are **not** the unit in use — the PM03D above is fitted. The PM06 V2 specifically was not used because its power telemetry format is not accepted by the Pixhawk.
+Open items against this interface set are tracked in [context/open-items.md](../context/open-items.md).
 
-Status: **Confirmed** power module, battery telemetry, and servo rail power. Still need: any other output rail voltages/connectors (RX, telemetry, companion computer) and current ratings.
+## 5. Interface Definitions
 
-### INT-02: Flight Controller ↔ Actuator Outputs (PWM)
+### INT-01 — Power Distribution
 
-All flight surface and motor control servos connect to the FC's I/O PWM OUT ports. The servo rail is electrically separate from the main Pixhawk power supply and requires an independent 5V supply from the PDB.
+Power module: Holybro PM03D.
 
-| Control Input | I/O PWM OUT | Min PWM | Max PWM | Disarmed | Trim | Reversed |
+| Characteristic | Value |
+|---|---|
+| Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled) |
+| Battery | 6S LiPo (`BAT1_N_CELLS` = 6S) |
+| Servo rail | 5V, electrically isolated from main FC supply |
+
+### INT-02 — Actuator Outputs (PWM)
+
+All flight control surface and motor servos connect to the FC's PWM outputs.
+
+| Control Input | PWM Output | Min (µs) | Max (µs) | Disarmed (µs) | Trim (µs) | Reversed |
 |---|---|---|---|---|---|---|
 | V-Tail Left | MAIN 1 | 1100 | 1900 | 1500 | 1500 | Yes |
 | V-Tail Right | MAIN 2 | 1100 | 1900 | 1500 | 1500 | No |
@@ -57,20 +67,20 @@ All flight surface and motor control servos connect to the FC's I/O PWM OUT port
 
 ![PX4 Actuator Output Configuration](assets/actuator-output-config.png)
 
-### INT-03: Flight Controller ↔ RC Receiver (Telem_1 — Radiomaster DBR4)
+### INT-03 — RC Control Link (TELEM1)
 
-Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver, connected to the FC's Telem_1 port. Configured in **ELRS Hybrid switch mode with MAVLink enabled**. Paired with a Radiomaster GX12 transmitter (see INT-08).
+Radiomaster DBR4 dual-band (2.4GHz/900MHz) ExpressLRS receiver, connected to FC TELEM1. Operating mode: ELRS Hybrid switch mode with MAVLink enabled. Paired transmitter: Radiomaster GX12 (INT-08).
 
 | Parameter | Value |
 |---|---|
 | `RC_PORT_CONFIG` | TELEM 1 |
 | `SER_TEL1_BAUD` | 460800 8N1 |
-| `RC_MAP_ARM_SW` | Channel 5 (updated 2026-06-21, was Channel 10) |
-| `RC_MAP_KILL_SW` | Channel 7 (updated 2026-06-21, was Channel 8) |
+| `RC_MAP_ARM_SW` | Channel 5 |
+| `RC_MAP_KILL_SW` | Channel 7 |
 
-ELRS Hybrid mode only carries normal RC channels through CH12 (CH13–16 are not sent) — this is why the flight-mode selector below lives on CH6 rather than a higher channel.
+ELRS Hybrid mode carries RC channels through CH12 only (CH13–16 are not transmitted).
 
-#### RC channel map (current, 2026-06-21)
+#### RC Channel Map
 
 | Channel | Function | Notes |
 |---|---|---|
@@ -78,35 +88,33 @@ ELRS Hybrid mode only carries normal RC channels through CH12 (CH13–16 are not
 | CH2 | Pitch | Stick |
 | CH3 | Throttle | Stick |
 | CH4 | Yaw | Stick |
-| CH5 | Arm | Latching button; disarmed at startup |
-| CH6 | GR1 flight-mode selector | Six positions; starts on SW2 |
+| CH5 | Arm | Latching; disarmed at startup |
+| CH6 | Flight-mode selector (GR1) | Six-position switch group, defaults to SW2 |
 | CH7 | Emergency kill | Inverted in EdgeTX |
-| CH8 | Loiter / Hold | Latching button; overrides GR1-selected mode |
-| CH9 | Flaperon control / spare | Inverted in EdgeTX; inactive for maiden flight |
+| CH8 | Loiter / Hold | Latching; overrides the GR1-selected mode |
+| CH9 | Flaperon control | Inverted in EdgeTX; disabled for maiden flight |
 | CH10 | Return | Inverted in EdgeTX |
 | CH11 | Offboard | Inverted in EdgeTX |
-| CH12 | Spare / future buzzer or payload | Currently unassigned |
+| CH12 | Spare | Unassigned |
 
-#### GR1 flight-mode mapping (GR1 starts on SW2)
+#### Flight-Mode Mapping (GR1)
 
-| GX12 Button | PX4 Mode | Use |
+| Switch Position | PX4 Mode |
+|---|---|
+| SW1 | Manual |
+| SW2 | Stabilized |
+| SW3 | Altitude |
+| SW4 | Position |
+| SW5 | Mission |
+| SW6 | Hold |
+
+### INT-04 — Telemetry Link (TELEM2)
+
+RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 datasheet.
+
+| Wire Colour | RFD900 Pin | FC Pin |
 |---|---|---|
-| SW1 | Manual | Direct-control backup; avoid for normal launch |
-| SW2 | Stabilized | Startup/default and hand-launch mode |
-| SW3 | Altitude | Holds altitude; pilot still flies direction |
-| SW4 | Position | GPS-assisted track/altitude holding |
-| SW5 | Mission | Future autonomous missions only |
-| SW6 | Hold | Backup access to Loiter/Hold |
-
-Status: **Confirmed** — full channel map and mode mapping documented 2026-06-21. See [params/parameter-change-log.md](../params/parameter-change-log.md) for the change history.
-
-### INT-04: Flight Controller ↔ Telemetry Radio (Telem_2 — RFD900x)
-
-Long-range telemetry modem, connected to the FC's Telem_2 port, per the RFD900 datasheet.
-
-| Wire Colour | RFD900 Pin | Flight Controller Pin |
-|---|---|---|
-| Black | Ground | Ground |
+| Black | GND | GND |
 | Brown | Vcc | 5V |
 | Yellow | Rx | TX1 |
 | Red | Tx | RX1 |
@@ -121,47 +129,44 @@ Long-range telemetry modem, connected to the FC's Telem_2 port, per the RFD900 d
 
 ![RFD900x Pinout Diagram](assets/rfd900-pinout-diagram.png)
 
-### INT-05: Flight Controller ↔ GPS 1 (M8N GPS)
+### INT-05 — GPS 1 (Primary)
 
-M8N GPS is the **primary GPS** at this stage, connected to the Pixhawk's **GPS 1 UART port**.
+M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
 
 | Parameter | Value |
 |---|---|
 | `GPS_1_CONFIG` | GPS 1 |
 | `GPS_1_PROTOCOL` | u-blox |
-| `GPS_1_GNSS` | 21 (constellation mask) |
-| `GPS_UBX_DYNMODEL` | Airborne <4g acceleration |
+| `GPS_1_GNSS` | 21 |
+| `GPS_UBX_DYNMODEL` | Airborne <4g |
 
-Status: **Confirmed** — port (GPS 1 UART), protocol, and GNSS config all confirmed.
+### INT-06 — GPS 2 / RTK
 
-### INT-06: Flight Controller ↔ GPS 2 / RTK (SparkFun GPS-RTK-SMA Breakout — ZED-F9P)
+SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART.
 
-Connected to the Pixhawk's **GPS 2 UART port**. `GPS_2_GNSS` = 29 (constellation mask, set to support the ZED-F9P).
+| Parameter | Value |
+|---|---|
+| `GPS_2_GNSS` | 29 |
 
-**Outstanding hardware issue:** this board currently has **no antenna installed** — must be fixed before the maiden flight (see [maiden-flight-checklist.md](maiden-flight-checklist.md)).
+Antenna not yet fitted — tracked as a maiden flight blocker in [maiden-flight-checklist.md](maiden-flight-checklist.md).
 
-Status: **Partial** — port and GNSS config confirmed. RTK correction source (base station / NTRIP) not yet confirmed, and the antenna is not yet fitted.
+### INT-07 — Airspeed Sensor (I2C)
 
-### INT-07: Flight Controller ↔ Airspeed Sensor (I2C — MS4525DO)
+MS4525DO differential pressure sensor. Driver enabled (`SENS_EN_MS4525DO`).
 
-`SENS_EN_MS4525DO` enabled in PX4.
+### INT-08 — RC Transmitter Link
 
-Status: **Partial** — driver enablement confirmed. I2C bus/port, address, and pull-up configuration not yet documented.
+Radiomaster GX12 ExpressLRS transmitter — Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled.
 
-### INT-08: Radio Master GX12
+## 6. Open Items
 
-Radiomaster GX12 ExpressLRS radio controller (transmitter) — Gemini-X dual-band, transmitting simultaneously on 2.4GHz and 900MHz. **Not** the "Crush" variant (that name appears on the shopping list but is incorrect). Pairs with the Radiomaster DBR4 receiver (INT-03), configured in ELRS Hybrid switch mode with MAVLink enabled. See INT-03 for the full channel and flight-mode mapping.
+Tracked in [context/open-items.md](../context/open-items.md).
 
-Status: **Confirmed** role, protocol, and channel mapping (see INT-03).
-
-## 5. Open Items
-
-See [context/open-items.md](../context/open-items.md) for the full list of unconfirmed details tracked against this document.
-
-## 6. Revision History
+## 7. Revision History
 
 | Rev | Date | Description |
 |---|---|---|
-| 0.1 | 2026-06-21 | Initial draft generated from Believer Checklist.docx |
-| 0.2 | 2026-06-21 | Resolved most TBDs against believer_PX4_Parameter_Change_Log.xlsx, Shopping List 27_02_26.xlsx, and the project proposal/funding application |
-| 0.3 | 2026-06-21 | Added full RC channel map and GR1 flight-mode mapping (INT-03/INT-08) from GX12 Logical Switch Setup notes; documented arm/kill channel remap |
+| 0.1 | 2026-06-21 | Initial issue |
+| 0.2 | 2026-06-21 | Added power, GPS, and telemetry interface detail |
+| 0.3 | 2026-06-21 | Added RC channel map and flight-mode mapping |
+| 0.4 | 2026-06-21 | Confirmed power module and GPS routing; rewritten for clarity |
