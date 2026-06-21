@@ -32,8 +32,8 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 ## Serial / Sensor Interfaces (updated with parameter log)
 - **Telem_1** (`RC_PORT_CONFIG = TELEM1`): Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver. Baud `SER_TEL1_BAUD = 460800 8N1`. Paired transmitter: Radiomaster GX12 (Gemini-X dual-band ExpressLRS) — **not** the "Crush" variant, despite that name appearing on the shopping list.
 - **Telem_2** (`MAV_0_CONFIG = TELEM2`): RFD900(x) long-range telemetry radio. Baud `SER_TEL2_BAUD = 57600 8N1`. MAVLink rate `MAV_0_RATE = 3000 B/s`, flow control disabled. Pinout: Black=GND, Brown=Vcc(5V), Yellow=Rx→FC TX1, Red=Tx→FC RX1.
-- **GPS_1** (`GPS_1_CONFIG = GPS 1`, `GPS_1_PROTOCOL = u-blox`): M8N GPS. `GPS_1_GNSS = 21` (constellation mask). `GPS_UBX_DYNMODEL = Airborne <4g`.
-- **GPS_2** (`GPS_2_GNSS = 29`): SparkFun GPS-RTK-SMA Breakout — ZED-F9P. RTK correction source still TBD.
+- **GPS_1** (`GPS_1_CONFIG = GPS 1`, `GPS_1_PROTOCOL = u-blox`): M8N GPS — **primary GPS at this stage**, connected to the Pixhawk's GPS 1 UART port. `GPS_1_GNSS = 21` (constellation mask). `GPS_UBX_DYNMODEL = Airborne <4g`.
+- **GPS_2** (`GPS_2_GNSS = 29`): SparkFun GPS-RTK-SMA Breakout — ZED-F9P, connected to the Pixhawk's GPS 2 UART port. RTK correction source still TBD. **No antenna installed yet — must be fixed before the maiden flight.**
 - **I2C**: MS4525DO airspeed sensor — driver enabled (`SENS_EN_MS4525DO`). Bus/address wiring not documented yet.
 - **Power**: `SENS_EN_INA228` enabled — power monitor reading on the Holybro PM03D power module (see Power below). `BAT1_N_CELLS` = 6S.
 - **RC switches** (updated 2026-06-21 — see `params/parameter-change-log.md` for the remap history): `RC_MAP_ARM_SW` = Channel 5, `RC_MAP_KILL_SW` = Channel 7. GR1 (6-position flight-mode switch) on Channel 6. Full channel map and GR1→PX4 mode mapping documented in `docs/ICD.md` (INT-03) and `docs/manual.md`.

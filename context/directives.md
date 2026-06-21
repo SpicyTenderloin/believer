@@ -15,3 +15,4 @@ Standing conventions for working in this repo. Update this file when the user gi
   - `context/` — this folder: persistent project memory + directives for Claude
 - Mark unknown/unconfirmed interface details as `TBD` rather than guessing — track them in `open-items.md` and confirm with the user.
 - Log notable changes to repo docs in `CHANGELOG.md` (root), most recent first.
+- **Commit and push updates as we go**, rather than batching many changes into one commit at the end of a session — confirmed by user 2026-06-21.

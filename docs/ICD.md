@@ -25,8 +25,8 @@ This document defines the physical, electrical, and data interfaces between the 
 | INT-02 | Actuator outputs | PWM | FC (MAIN 1-6) | Control surface servos, motors | Confirmed |
 | INT-03 | RC link | Serial (Telem_1, 460800 8N1) | FC | Radiomaster DBR4 | Confirmed |
 | INT-04 | Telemetry link | Serial (Telem_2, 57600 8N1) | FC | RFD900(x) | Confirmed |
-| INT-05 | GPS 1 | Serial (u-blox protocol) | FC | M8N GPS | Partial |
-| INT-06 | GPS 2 (RTK) | Serial | FC | SparkFun ZED-F9P breakout | Partial |
+| INT-05 | GPS 1 (primary) | Serial (GPS 1 UART, u-blox protocol) | FC | M8N GPS | Confirmed |
+| INT-06 | GPS 2 (RTK) | Serial (GPS 2 UART) | FC | SparkFun ZED-F9P breakout | Partial — antenna not fitted |
 | INT-07 | Airspeed sensor | I2C | FC | MS4525DO | Partial |
 | INT-08 | RC transmitter | RF (ExpressLRS, dual-band 2.4/900MHz) | Radiomaster GX12 | Radiomaster DBR4 | Confirmed |
 
@@ -102,7 +102,7 @@ Status: **Confirmed** — full channel map and mode mapping documented 2026-06-2
 
 ### INT-04: Flight Controller ↔ Telemetry Radio (Telem_2 — RFD900x)
 
-Long-range telemetry modem, connected to the FC's Telem_2 port.
+Long-range telemetry modem, connected to the FC's Telem_2 port, per the RFD900 datasheet.
 
 | Wire Colour | RFD900 Pin | Flight Controller Pin |
 |---|---|---|
@@ -123,6 +123,8 @@ Long-range telemetry modem, connected to the FC's Telem_2 port.
 
 ### INT-05: Flight Controller ↔ GPS 1 (M8N GPS)
 
+M8N GPS is the **primary GPS** at this stage, connected to the Pixhawk's **GPS 1 UART port**.
+
 | Parameter | Value |
 |---|---|
 | `GPS_1_CONFIG` | GPS 1 |
@@ -130,13 +132,15 @@ Long-range telemetry modem, connected to the FC's Telem_2 port.
 | `GPS_1_GNSS` | 21 (constellation mask) |
 | `GPS_UBX_DYNMODEL` | Airborne <4g acceleration |
 
-Status: **Partial** — protocol/port/GNSS config confirmed via parameter log. Physical connector/wiring not yet documented.
+Status: **Confirmed** — port (GPS 1 UART), protocol, and GNSS config all confirmed.
 
 ### INT-06: Flight Controller ↔ GPS 2 / RTK (SparkFun GPS-RTK-SMA Breakout — ZED-F9P)
 
-`GPS_2_GNSS` = 29 (constellation mask, set to support the ZED-F9P).
+Connected to the Pixhawk's **GPS 2 UART port**. `GPS_2_GNSS` = 29 (constellation mask, set to support the ZED-F9P).
 
-Status: **Partial** — GNSS config confirmed. Physical connector/wiring and RTK correction source (base station / NTRIP) not yet confirmed.
+**Outstanding hardware issue:** this board currently has **no antenna installed** — must be fixed before the maiden flight (see [maiden-flight-checklist.md](maiden-flight-checklist.md)).
+
+Status: **Partial** — port and GNSS config confirmed. RTK correction source (base station / NTRIP) not yet confirmed, and the antenna is not yet fitted.
 
 ### INT-07: Flight Controller ↔ Airspeed Sensor (I2C — MS4525DO)
 
