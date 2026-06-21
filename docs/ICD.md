@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 0.4 |
+| **Revision** | 0.5 |
 | **Date** | 2026-06-21 |
 | **Status** | Draft |
 
@@ -25,7 +25,11 @@ The Believer is a V-tail, twin-motor fixed-wing airframe. The flight controller 
 
 The servo rail is electrically isolated from the main flight controller power supply and is fed independently at 5V from the power module.
 
-## 4. Interface Summary
+## 4. System Block Diagram
+
+![Believer ICD Block Diagram](assets/icd-block-diagram.svg)
+
+## 5. Interface Summary
 
 | ID | Interface | Type | Endpoint A | Endpoint B |
 |---|---|---|---|---|
@@ -40,7 +44,7 @@ The servo rail is electrically isolated from the main flight controller power su
 
 Open items against this interface set are tracked in [context/open-items.md](../context/open-items.md).
 
-## 5. Interface Definitions
+## 6. Interface Definitions
 
 ### INT-01 — Power Distribution
 
@@ -158,11 +162,11 @@ MS4525DO differential pressure sensor. Driver enabled (`SENS_EN_MS4525DO`).
 
 Radiomaster GX12 ExpressLRS transmitter — Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled.
 
-## 6. Open Items
+## 7. Open Items
 
 Tracked in [context/open-items.md](../context/open-items.md).
 
-## 7. Revision History
+## 8. Revision History
 
 | Rev | Date | Description |
 |---|---|---|
@@ -170,3 +174,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.2 | 2026-06-21 | Added power, GPS, and telemetry interface detail |
 | 0.3 | 2026-06-21 | Added RC channel map and flight-mode mapping |
 | 0.4 | 2026-06-21 | Confirmed power module and GPS routing; rewritten for clarity |
+| 0.5 | 2026-06-21 | Added system block diagram |
