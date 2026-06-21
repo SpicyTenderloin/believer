@@ -2,7 +2,7 @@
 
 ## What it is
 
-**Believer** is a long-range, fixed-wing observation drone built and operated by the QUT Aerospace Society (QUTAS). It is a V-tail, twin-motor airframe built around a Pixhawk-class flight controller running PX4, with a long-range RFD900 telemetry link and an ExpressLRS RC link (Radiomaster GX12 transmitter / DBR4 receiver).
+**Believer** is a long-range, fixed-wing observation drone built and operated by the QUT Aerospace Society (QUTAS). It is a V-tail, twin-motor airframe built around a Holybro Pixhawk 6X flight controller running PX4, with a long-range RFD900 telemetry link and an ExpressLRS RC link (Radiomaster GX12 transmitter / DBR4 receiver).
 
 ## Purpose
 

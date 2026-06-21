@@ -4,7 +4,7 @@ Operating manual for the Believer fixed-wing UAV. For wiring/pinout/parameter de
 
 ## 1. Aircraft Summary
 
-V-tail, twin-motor (left/right) fixed wing, two independently-servoed ailerons. Pixhawk-class flight controller running PX4. Centre of Gravity: 15mm aft of the front wing spar carbon rod centerline (~25% MAC).
+V-tail, twin-motor (left/right) fixed wing, two independently-servoed ailerons. Holybro Pixhawk 6X flight controller running PX4. Centre of Gravity: 15mm aft of the front wing spar carbon rod centerline (~25% MAC).
 
 ## 2. RC Control — Channels & Switches
 

@@ -21,7 +21,7 @@ This document defines the physical, electrical, and data interfaces between the 
 
 ## 3. System Description
 
-The Believer is a V-tail, twin-motor fixed-wing airframe. The flight controller is a Pixhawk-class board running PX4. Centre of gravity is located 15mm aft of the front wing spar carbon rod centreline, approximately 25% of the mean aerodynamic chord (MAC).
+The Believer is a V-tail, twin-motor fixed-wing airframe. The flight controller is a Holybro Pixhawk 6X running PX4. Centre of gravity is located 15mm aft of the front wing spar carbon rod centreline, approximately 25% of the mean aerodynamic chord (MAC).
 
 The servo rail is electrically isolated from the main flight controller power supply and is fed independently at 5V from the power module.
 

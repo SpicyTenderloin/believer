@@ -12,7 +12,9 @@ Standing conventions for working in this repo. Update this file when the user gi
   - `params/` — parameter change logs / flight controller parameter files
   - `supporting-documents/` — formal reference documents kept in original format (proposals, funding applications)
     - `supporting-documents/invoices/` — purchase invoices, named `<vendor>-<item>-<date>.pdf`, referenced from `docs/purchase-history.md`
+  - `Component datasheets/` — manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
   - `context/` — this folder: persistent project memory + directives for Claude
+- **`Component datasheets/` holds datasheets only for components currently installed in the aircraft** — confirmed by user 2026-06-21. Not for: ground-side equipment (e.g. the GX12 transmitter the pilot holds — its receiver counterpart, the DBR4, is installed and does get a datasheet), purchased-but-unused components (e.g. MatekSys PDB, Holybro PM06 V2 — see `context/project-notes.md` Power section), or not-yet-installed components (e.g. the IMX335 camera, still in the future/companion-computer phase). When no official manufacturer PDF exists (e.g. Holybro Pixhawk 6X, the Turnigy battery — both only have web-based docs/product pages), don't fabricate one; note the gap instead.
 - Mark unknown/unconfirmed interface details as `TBD` rather than guessing — track them in `open-items.md` and confirm with the user.
 - Log notable changes to repo docs in `CHANGELOG.md` (root), most recent first.
 - **Commit and push updates as we go**, rather than batching many changes into one commit at the end of a session — confirmed by user 2026-06-21.
