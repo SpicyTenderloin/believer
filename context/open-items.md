@@ -6,3 +6,4 @@ Information gaps still to confirm with the user. Resolved items (Telem_1 protoco
 - [ ] I2C airspeed sensor (MS4525DO): bus address, pull-up resistors, which I2C port on FC — driver enablement confirmed
 - [ ] Power module (Holybro PM03D): output rail voltages/connectors/current ratings for any rails beyond the servo rail (e.g. RX, telemetry, companion computer)
 - [ ] Motors/ESCs: model, KV rating, ESC protocol (PWM/DShot), prop size — not mentioned in any source document yet
+- [ ] CH12 (SH switch, mixed in the GX12 radio): reserved for a future buzzer or payload function, but which one — and its eventual `RC_MAP_*` parameter — is not yet decided

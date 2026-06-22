@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 0.6 |
+| **Revision** | 0.7 |
 | **Date** | 2026-06-22 |
 | **Status** | Draft |
 
@@ -99,7 +99,9 @@ ELRS Hybrid mode carries RC channels through CH12 only (CH13–16 are not transm
 | CH9 | Flaperon control | Inverted in EdgeTX; disabled for maiden flight |
 | CH10 | Return | Inverted in EdgeTX |
 | CH11 | Offboard | Inverted in EdgeTX |
-| CH12 | Spare | Unassigned |
+| CH12 | Spare / future buzzer or payload | Mixed from SH switch in EdgeTX; no PX4 function currently assigned |
+
+![PX4 Flight Modes / Switch Settings Configuration](assets/flight-modes-config.png)
 
 #### Flight-Mode Mapping (GR1)
 
@@ -176,3 +178,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.4 | 2026-06-21 | Confirmed power module and GPS routing; rewritten for clarity |
 | 0.5 | 2026-06-21 | Added system block diagram |
 | 0.6 | 2026-06-22 | Redrawn block diagram with orthogonal routing, uniform box sizing, and a white background |
+| 0.7 | 2026-06-22 | Confirmed CH12 (SH switch) routing against the GX12 EdgeTX radio backup and the QGC Flight Modes Config screenshot; added screenshot |
