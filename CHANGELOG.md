@@ -8,6 +8,7 @@ All notable changes to the Believer project repo are logged here, most recent fi
 - Corrected INT-08/`purchase-history.md`/`project-notes.md`: the transmitter in use is the Radiomaster GX12 **Crush** (Iron Grey), reversing the 2026-06-21 note that it was not the Crush variant.
 - Added annotated front and top-view diagrams of the GX12 showing each physical switch's function (`docs/assets/gx12-front-switches.png`, `docs/assets/gx12-top-switches.png`), sourced from RadioMaster's official product photography and cross-checked against the radio backup's switch config and an EdgeTX teardown review. Wired into `docs/ICD.md` INT-03.
 - Expanded the root `README.md` with a full repo content overview and an explanation of the `context/` memory files for AI-assisted editing.
+- Added `context/authorities.md`: a durable log of standing authorities granted to Claude, since `.claude/settings.local.json` (the actual permission file) is gitignored/local-only. Added a session-start check in `CLAUDE.md` so Claude asks whether to sync any authorities not yet reflected in local settings.
 
 ## 2026-06-21
 - Set up repo structure: `README.md`, `.gitignore`, `docs/`, `params/`, `context/`.
