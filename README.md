@@ -2,7 +2,7 @@
 
 Documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV — a long-range BVLOS observation drone built by the QUT Aerospace Society (QUTAS). See [docs/project-overview.md](docs/project-overview.md) for the project background and roadmap.
 
-This repo is both the engineering record for the aircraft and a working memory for AI-assisted editing: `context/` (below) lets Claude pick up this project cold in a new session with the same facts and conventions established in prior ones.
+This repo is both the engineering record for the aircraft and a working memory for AI-assisted editing: `context/` (below) lets AI tools pick up this project cold in a new session with the same facts and conventions established in prior ones.
 
 ## Contents
 
@@ -20,13 +20,13 @@ This repo is both the engineering record for the aircraft and a working memory f
 - `supporting-documents/` — formal reference documents kept in their original format (signed proposals, funding applications)
   - `invoices/` — purchase invoices, referenced from `docs/purchase-history.md`
 - `Component datasheets/` — manufacturer datasheets/manuals, but only for components currently installed in the aircraft
-- `context/` — persistent project memory for Claude (see below)
+- `context/` — persistent project memory for AI tools (see below)
 
 Project documentation (manual, ICD, notes, logs) is kept as Markdown so it versions cleanly in git. Formal supporting documents, invoices, and datasheets are kept in their original format (PDF, etc.) since they're reference material, not living documents.
 
-## `context/` — Claude's working memory for this repo
+## `context/` — working memory for AI tools
 
-These files aren't aircraft documentation — they're notes Claude reads and updates so it can work consistently across sessions without re-deriving the same facts or re-litigating settled decisions. `CLAUDE.md` points here automatically at the start of every session.
+These files aren't aircraft documentation — they're notes AI tools read and update so they can work consistently across sessions without re-deriving the same facts or re-litigating settled decisions. `CLAUDE.md` points here automatically at the start of every session.
 
 - **`MEMORY.md`** — the index. Lists what's in the other three files and what each is for; read first.
 - **`project-notes.md`** — facts about the aircraft and avionics, plus the *provenance* behind them: what was confirmed, when, against which source, and what alternatives were ruled out (e.g. why the Holybro PM06 V2 was purchased but isn't the power module actually fitted). This is where decision history and "what we learned and from where" lives, kept separate so the formal docs under `docs/` can stay clean.
