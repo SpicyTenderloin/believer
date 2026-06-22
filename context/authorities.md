@@ -6,6 +6,6 @@ A log of standing authorities the user has granted Claude for working in this re
 
 | Granted | Authority | Scope | Synced to settings.local.json? |
 |---|---|---|---|
-| 2026-06-21 | Commit and push changes without asking each time, rather than batching | This repo | No — `git commit`/`git push`/`git add` still prompt each time as of 2026-06-22 |
+| 2026-06-21 | Commit and push changes without asking each time, rather than batching | This repo | Yes — synced 2026-06-22 (`Bash(git add *)`, `Bash(git commit *)`, `Bash(git push *)` added to `settings.local.json`) |
 
 To add a new authority: append a row when the user grants something durable (a standing permission, not a one-off approval), then offer to sync it into `settings.local.json` at the next session start.
