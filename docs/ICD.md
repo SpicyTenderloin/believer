@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 0.7 |
+| **Revision** | 0.8 |
 | **Date** | 2026-06-22 |
 | **Status** | Draft |
 
@@ -103,6 +103,12 @@ ELRS Hybrid mode carries RC channels through CH12 only (CH13–16 are not transm
 
 ![PX4 Flight Modes / Switch Settings Configuration](assets/flight-modes-config.png)
 
+#### GX12 Physical Switch Locations
+
+![GX12 front view with switch functions annotated](assets/gx12-front-switches.png)
+
+![GX12 top view with switch functions annotated](assets/gx12-top-switches.png)
+
 #### Flight-Mode Mapping (GR1)
 
 | Switch Position | PX4 Mode |
@@ -162,7 +168,7 @@ MS4525DO differential pressure sensor. Driver enabled (`SENS_EN_MS4525DO`).
 
 ### INT-08 — RC Transmitter Link
 
-Radiomaster GX12 ExpressLRS transmitter — Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled.
+Radiomaster GX12 Crush ExpressLRS transmitter (Iron Grey) — Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled. Physical switch locations and functions are shown in INT-03.
 
 ## 7. Open Items
 
@@ -179,3 +185,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.5 | 2026-06-21 | Added system block diagram |
 | 0.6 | 2026-06-22 | Redrawn block diagram with orthogonal routing, uniform box sizing, and a white background |
 | 0.7 | 2026-06-22 | Confirmed CH12 (SH switch) routing against the GX12 EdgeTX radio backup and the QGC Flight Modes Config screenshot; added screenshot |
+| 0.8 | 2026-06-22 | Corrected INT-08: transmitter is the GX12 **Crush** (Iron Grey), not the standard GX12. Added annotated front/top switch-location diagrams |

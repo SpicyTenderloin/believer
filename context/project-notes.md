@@ -30,7 +30,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 | Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
 ## Serial / Sensor Interfaces (updated with parameter log)
-- **Telem_1** (`RC_PORT_CONFIG = TELEM1`): Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver. Baud `SER_TEL1_BAUD = 460800 8N1`. Paired transmitter: Radiomaster GX12 (Gemini-X dual-band ExpressLRS) — **not** the "Crush" variant, despite that name appearing on the shopping list.
+- **Telem_1** (`RC_PORT_CONFIG = TELEM1`): Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver. Baud `SER_TEL1_BAUD = 460800 8N1`. Paired transmitter: Radiomaster GX12 **Crush** (Gemini-X dual-band ExpressLRS), Iron Grey colorway — confirmed by user 2026-06-22, correcting the earlier (2026-06-21) note that it was not the Crush variant.
 - **Telem_2** (`MAV_0_CONFIG = TELEM2`): RFD900(x) long-range telemetry radio. Baud `SER_TEL2_BAUD = 57600 8N1`. MAVLink rate `MAV_0_RATE = 3000 B/s`, flow control disabled. Pinout: Black=GND, Brown=Vcc(5V), Yellow=Rx→FC TX1, Red=Tx→FC RX1.
 - **GPS_1** (`GPS_1_CONFIG = GPS 1`, `GPS_1_PROTOCOL = u-blox`): M8N GPS — **primary GPS at this stage**, connected to the Pixhawk's GPS 1 UART port. `GPS_1_GNSS = 21` (constellation mask). `GPS_UBX_DYNMODEL = Airborne <4g`.
 - **GPS_2** (`GPS_2_GNSS = 29`): SparkFun GPS-RTK-SMA Breakout — ZED-F9P, connected to the Pixhawk's GPS 2 UART port. RTK correction source still TBD. **No antenna installed yet — must be fixed before the maiden flight.**
