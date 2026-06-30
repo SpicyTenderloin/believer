@@ -3,6 +3,7 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-06-30
+- Rewrote `docs/maiden-flight-checklist.md`: updated item 11 (paint) status to Not started; expanded Configure and Tune (was a single row) into a dedicated section with 10 sub-items covering battery/power, sensor calibration, airspeed, GPS, motors/ESCs, control surfaces, RC/flight modes, failsafe, PID tuning, and Standard Install; merged Additional Pre-Flight Items into the main table (items 12-18) including new items for ZED-F9P external mount, avionics bay bolt torque, and GPS mounting bolt torque; marked Configure and Tune and Standard Install as In progress.
 - Updated `docs/purchase-history.md`: converted USD totals to AUD at the historical rate on date of purchase (1 USD = 1.379 AUD on 2026-05-10; source: RBA/financial market rates) - MATEKSYS PDB $31.17 USD = $42.98 AUD, LiPo straps $10.08 USD = $13.90 AUD. University total updated to $981.08 AUD (from $924.20 AUD + $41.25 USD). Added funding summary header: $1,379.00 AUD allocated, $981.08 AUD spent, $397.92 AUD remaining.
 - Added `supporting-documents/QUTAS Fixed Wing Drone Funding Application SIGNED.pdf` - the signed EER club activity funding application (signed 2026-05-20/21, $689.50 EER funding approved). Previously deleted before the policy of retaining signed reference documents was established.
 
