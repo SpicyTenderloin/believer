@@ -1,7 +1,5 @@
 ﻿# Maiden Flight Checklist
 
-Source: `Believer Checklist.docx` (2026-06-21).
-
 | # | Task / Consideration | Notes / Actions Required | Status |
 |---|---|---|---|
 | 1 | Aircraft airworthiness | Confirm Believer is structurally ready to fly | Done |
@@ -23,3 +21,6 @@ Source: `Believer Checklist.docx` (2026-06-21).
 | # | Task / Consideration | Notes / Actions Required | Status |
 |---|---|---|---|
 | 14 | GPS 2 antenna | SparkFun ZED-F9P RTK breakout (GPS 2) currently has no antenna installed | Not done - must be fixed before maiden flight |
+| 15 | Motor and ESC access hatch retention | Verify all motor and ESC access hatches are fully closed and secured prior to flight | Not done |
+| 16 | Nacelle retention | Verify nacelle fairing is correctly seated and secured to the airframe | Not done |
+| 17 | Propeller retention nuts | Verify propeller retention nuts are correctly torqued on both motors. The LHS motor rotates clockwise (viewed from the front of the aircraft), causing a standard right-hand-thread nut to self-loosen under operation - the LHS retention nut must be inspected with particular attention and confirmed secure before each flight | Not done |
