@@ -14,6 +14,7 @@ Tracks components purchased for the Believer project. Invoiced items link to the
 | | SparkFun GPS-RTK-SMA Breakout — ZED-F9P | SparkFun Electronics | 1 | $259.95 AUD | $272.95 AUD (incl. 5% shipping est.) | University | Yes | | | No RTK antenna installed yet — must be fitted before maiden flight |
 | | PM06 V2 Power Module | Holybro | 1 | $20.99 AUD | $22.04 AUD (incl. 5% shipping est.) | University | No | | | Power telemetry format not accepted by Pixhawk; not the unit installed |
 | | IMX335 5MP USB Camera | Core Electronics | 1 | $60.65 AUD | $63.68 AUD (incl. 5% shipping est.) | University | No | | | For future onboard decision-making / pilot video feed |
+| | **University total** | | | | **$924.20 AUD + $41.25 USD** | University | | | | AUD total covers 8 items above; $41.25 USD covers MATEKSYS PDB ($31.17) and LiPo straps ($10.08) billed in USD — not converted. Excludes PM03D (Julian personal funds). Approved budget: $1,379.00 AUD — **$454.80 AUD remaining** (AUD items only). |
 
 ## Funding application budget (for reference)
 
