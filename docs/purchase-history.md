@@ -4,7 +4,7 @@ Tracks components purchased for the Believer project. Invoiced items link to the
 
 **To date, $1,379.00 AUD of funding was allocated to this project, of which $981.08 AUD has been spent.**
 
-(University-funded items only - excludes the Holybro PM03D purchased with Julian's personal funds.)
+(University-funded items only.)
 
 | Date | Item | Vendor | Qty | Unit Cost | Total (incl. shipping) | Paid By | Installed | Order / Tracking # | Invoice | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
