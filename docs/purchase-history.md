@@ -1,21 +1,19 @@
 # Purchase History
 
-Tracks components purchased for the Believer project. Invoiced items link to their source document under [`../supporting-documents/invoices/`](../supporting-documents/invoices/). Items without an invoice yet are seeded from `Shopping List 27_02_26.xlsx` / the QUTAS funding application budget and still need their purchase confirmed.
+Tracks components purchased for the Believer project. Invoiced items link to their source document under [`../supporting-documents/invoices/`](../supporting-documents/invoices/).
 
-| Date | Item | Vendor | Qty | Unit Cost | Total Cost | Order / Tracking # | Status | Invoice | Notes |
-|---|---|---|---|---|---|---|---|---|---|
-| 2026-03-20 | Interface Cable — RP-SMA Male to RP-SMA Female (25cm, RG174) | Core Electronics | 1 | $6.85 AUD | $10.55 AUD (incl. $3.70 shipping) | Tax Invoice 1000669124 | Purchased | [link](../supporting-documents/invoices/core-electronics-rpsma-cable-2026-03-20.pdf) | |
-| 2026-05-10 | MATEKSYS PDB FCHUB-12S V2 (5V/12V output, 440A current sensor, 3-12S) | FPV Drone Store (Alibaba.com) | 1 | $24.99 USD | $31.17 USD (incl. $6.18 delivery) | Notice B1020260510035468 | Purchased — **not used** | [link](../supporting-documents/invoices/alibaba-mateksys-pdb-fchub12s-2026-05-10.pdf) | Bought per the original funding application budget; not the unit installed (see Holybro PM03D below) |
-| 2026-05-10 | Gemfan LIPO Strap (16x250/20x250/20x330/20x550mm woven metal buckle) | YUNYAO2008 FPV Store (Alibaba.com) | 1 | $5.51 USD | $10.08 USD (incl. $4.57 delivery) | Notice B1020260510035438 | Purchased | [link](../supporting-documents/invoices/alibaba-lipo-battery-straps-2026-05-10.pdf) | |
-| 2026-05-11 | Holybro PM03D Power Module | ChipBoard Development Store (Alibaba.com) | 1 | 434.12 CNY | 477.53 CNY | Notice B1020260511035088 | Purchased — **installed** | [link](../supporting-documents/invoices/alibaba-pm03d-power-module-2026-05-11.pdf) | Purchased with Julian's personal funds (not club funds). This is the power module actually fitted — provides battery telemetry and powers the servo rail at 5V (see ICD INT-01) |
-| | Radiomaster GX12 Crush Xrossband ExpressLRS Radio Controller (Iron Grey) | FPVFaster | 1 | $349.99 AUD | | | Shortlisted | | Cheaper option ~$260 on AliExpress noted in shopping list. Confirmed 2026-06-22 as the Crush variant, Iron Grey colorway |
-| | Radiomaster DBR4 2.4GHz/900MHz Dual Band Gemini Xrossband ELRS Receiver | FPVFaster | 1 | $52.99 AUD | | | Shortlisted | | |
-| | SparkFun GPS-RTK-SMA Breakout — ZED-F9P | SparkFun Electronics | 1 | $259.95 AUD | | | Shortlisted | | Cheaper option ~$185 on AliExpress noted in shopping list |
-| | Holybro PM06 V2 Power Module | Holybro | 1 | $29.50 AUD | | | Shortlisted — **not used** | | Not the unit fitted — superseded by the Holybro PM03D above. Reason: its power telemetry format is not accepted by the Pixhawk |
-| | IMX335 5MP USB Camera | Core Electronics | 1 | $60.65 AUD | | | Shortlisted | | For future onboard decision-making / pilot video feed |
-| 2026-02-27 | Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack | HobbyKing.com | 1 | $93.23 AUD | | | Purchased | | Confirmed as the fitted pack — the 2200mAh 6S 60C pack budgeted in the funding application was not purchased |
-
-Shopping list total (as listed, excl. invoiced items above): **$846.31 AUD**.
+| Date | Item | Vendor | Qty | Unit Cost | Total (incl. shipping) | Paid By | Installed | Order / Tracking # | Invoice | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2026-02-27 | Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack | HobbyKing.com | 1 | $145.57 AUD | $152.85 AUD (incl. 5% shipping est.) | University | Yes | | | |
+| 2026-03-20 | Interface Cable — RP-SMA Male to RP-SMA Female (25cm, RG174) | Core Electronics | 1 | $6.85 AUD | $10.55 AUD (incl. $3.70 shipping) | University | Yes | Tax Invoice 1000669124 | [link](../supporting-documents/invoices/core-electronics-rpsma-cable-2026-03-20.pdf) | |
+| 2026-05-10 | MATEKSYS PDB FCHUB-12S V2 (5V/12V output, 440A current sensor, 3-12S) | FPV Drone Store (Alibaba.com) | 1 | $24.99 USD | $31.17 USD (incl. $6.18 delivery) | University | No | Notice B1020260510035468 | [link](../supporting-documents/invoices/alibaba-mateksys-pdb-fchub12s-2026-05-10.pdf) | Purchased per original funding application budget; not the unit installed — see PM03D |
+| 2026-05-10 | Gemfan LIPO Strap (16x250/20x250/20x330/20x550mm woven metal buckle) | YUNYAO2008 FPV Store (Alibaba.com) | 1 | $5.51 USD | $10.08 USD (incl. $4.57 delivery) | University | Yes | Notice B1020260510035438 | [link](../supporting-documents/invoices/alibaba-lipo-battery-straps-2026-05-10.pdf) | |
+| 2026-05-11 | Holybro PM03D Power Module | ChipBoard Development Store (Alibaba.com) | 1 | 434.12 CNY | 477.53 CNY (incl. shipping) | Julian (personal) | Yes | Notice B1020260511035088 | [link](../supporting-documents/invoices/alibaba-pm03d-power-module-2026-05-11.pdf) | Provides battery telemetry and 5V servo rail power (ICD INT-01) |
+| | Radiomaster GX12 Crush ExpressLRS Radio Controller (Iron Grey) | FPVFaster | 1 | $329.99 AUD | $346.49 AUD (incl. 5% shipping est.) | University | Yes | | | Ground-side transmitter |
+| | Radiomaster DBR4 Dual Band ELRS Xross Gemini ExpressLRS Receiver | FPVFaster | 1 | $52.99 AUD | $55.64 AUD (incl. 5% shipping est.) | University | Yes | | | |
+| | SparkFun GPS-RTK-SMA Breakout — ZED-F9P | SparkFun Electronics | 1 | $259.95 AUD | $272.95 AUD (incl. 5% shipping est.) | University | Yes | | | No RTK antenna installed yet — must be fitted before maiden flight |
+| | PM06 V2 Power Module | Holybro | 1 | $20.99 AUD | $22.04 AUD (incl. 5% shipping est.) | University | No | | | Power telemetry format not accepted by Pixhawk; not the unit installed |
+| | IMX335 5MP USB Camera | Core Electronics | 1 | $60.65 AUD | $63.68 AUD (incl. 5% shipping est.) | University | No | | | For future onboard decision-making / pilot video feed |
 
 ## Funding application budget (for reference)
 

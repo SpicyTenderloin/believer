@@ -28,9 +28,15 @@ Project documentation (manual, ICD, notes, logs) is kept as Markdown so it versi
 
 These files aren't aircraft documentation — they're notes AI tools read and update so they can work consistently across sessions without re-deriving the same facts or re-litigating settled decisions. `CLAUDE.md` points here automatically at the start of every session.
 
-- **`MEMORY.md`** — the index. Lists what's in the other three files and what each is for; read first.
-- **`project-notes.md`** — facts about the aircraft and avionics, plus the *provenance* behind them: what was confirmed, when, against which source, and what alternatives were ruled out (e.g. why the Holybro PM06 V2 was purchased but isn't the power module actually fitted). This is where decision history and "what we learned and from where" lives, kept separate so the formal docs under `docs/` can stay clean.
-- **`directives.md`** — standing working conventions for this repo: how files are organized, what's kept vs. deleted, how `docs/` should read, when to commit/push. Updated whenever a new durable instruction is confirmed.
-- **`open-items.md`** — open TBDs and information gaps still to confirm with the user, so unknowns get tracked instead of guessed at.
+- **`startup-prompt.md`** — the single bootstrapping entry point. Contains the project summary, read-order for all context files, key document map, and standing instructions. Point any AI tool here first.
+- **`MEMORY.md`** — the index. Lists every context file and its purpose.
+- **`project-overview.md`** — current build state (installed components, actuator mapping, key parameters) and the full repo file-structure map.
+- **`project-notes.md`** — facts about the aircraft and avionics, plus the *provenance* behind them: what was confirmed, when, against which source, and what alternatives were ruled out.
+- **`directives.md`** — standing working conventions for this repo: how files are organized, what's kept vs. deleted, when to commit/push.
+- **`style-guide.md`** — document writing standards for all files under `docs/`: what belongs inline vs. in `context/`, format conventions, and exceptions.
+- **`open-items.md`** — open TBDs and information gaps still to confirm with the user.
+- **`authorities.md`** — standing authorities granted to Claude, checked against `.claude/settings.local.json` at each session start.
+- **`academic-integrity.md`** — QUT academic conduct and AI use policy, with notes on how it applies to this project.
+- **`CHANGELOG.md`** — all notable changes to the repo, most recent first.
 
 The split exists so the formal docs read like professional engineering documents (current, as-built facts only) while the reasoning, history, and unresolved questions behind them stay queryable in `context/` rather than cluttering `docs/`.
