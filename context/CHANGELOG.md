@@ -3,6 +3,9 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-06-30
+- Added `supporting-documents/QUTAS Fixed Wing Drone Funding Application SIGNED.pdf` - the signed EER club activity funding application (signed 2026-05-20/21, $689.50 EER funding approved). Previously deleted before the policy of retaining signed reference documents was established.
+
+
 - Updated `docs/purchase-history.md`: added **Paid By** (University / Julian personal) and **Installed** columns; removed Status column (redundant with Installed); confirmed all items in the table as purchased, removing the Shortlisted status category; updated unit prices from current shopping data (GX12: $349.99 → $329.99 AUD; Turnigy LiPo: $93.23 → $145.57 AUD; PM06 V2: $29.50 → $20.99 AUD); added 5% shipping estimate on items without invoiced actuals; corrected GX12 Installed status to Yes (in use as part of the operating system). Verified via RadioMaster product page that "Iron Grey" is the official color name - no change required.
 - Restructured `context/`: created `startup-prompt.md` (single AI bootstrapping entry point), `project-overview.md` (project state + repo file map), `style-guide.md` (document writing standards extracted from `directives.md`), and `academic-integrity.md` (QUT conduct and AI use policy, researched from QUT MOPP). Moved CHANGELOG here from repo root.
 - Updated `context/directives.md`: extracted document style guidance into `context/style-guide.md`; updated CHANGELOG location reference.
