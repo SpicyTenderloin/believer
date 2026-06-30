@@ -82,7 +82,7 @@ Intended safe startup condition, to be verified before every flight:
 14. With propellers removed, arm the vehicle in Manual mode.
 15. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
 16. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
-17. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise.
+17. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](assets/motor-rotation-direction.png)).
 18. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
 19. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
 20. Install and torque the propellers.
