@@ -9,7 +9,7 @@ This repo is both the engineering record for the aircraft and a working memory f
 - `docs/` - manual, ICD, build notes, purchase history, and other documentation, written as clean engineering documents (not working notes)
   - `manual.md` - flight modes, switch mapping, operating procedures
   - `ICD.md` - interface control document: physical/electrical/data interfaces between avionics subsystems
-  - `maiden-flight-checklist.md` - build and maiden-flight checklist
+  - `build-checklist.md` - build, retention, and configuration checklist
   - `purchase-history.md` - component purchase log
   - `project-overview.md` - project background, purpose, roadmap, team
   - `assets/` - diagrams and photos referenced by the docs above

@@ -160,7 +160,7 @@ SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART.
 |---|---|
 | `GPS_2_GNSS` | 29 |
 
-Antenna not yet fitted - tracked as a maiden flight blocker in [maiden-flight-checklist.md](maiden-flight-checklist.md).
+Antenna not yet fitted - tracked as a maiden flight blocker in [build-checklist.md](build-checklist.md).
 
 ### INT-07 - Airspeed Sensor (I2C)
 

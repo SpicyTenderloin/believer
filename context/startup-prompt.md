@@ -44,7 +44,7 @@ Read them in order - each one builds on the last.
 |---|---|
 | [`docs/ICD.md`](../docs/ICD.md) | Interface control document - all avionics interfaces: serial ports, RC channel map, power, GPS, sensors |
 | [`docs/manual.md`](../docs/manual.md) | Operating manual - flight modes, GR1 switch map, failsafe config, pre-flight checklist |
-| [`docs/maiden-flight-checklist.md`](../docs/maiden-flight-checklist.md) | Build completion and maiden flight checklist |
+| [`docs/build-checklist.md`](../docs/build-checklist.md) | Build completion, retention checks, and configuration checklist |
 | [`docs/purchase-history.md`](../docs/purchase-history.md) | All component purchases - unit cost, total with shipping, who paid (University/Julian personal), installed status |
 | [`docs/project-overview.md`](../docs/project-overview.md) | Public-facing project background, purpose, roadmap, and team |
 | [`params/parameter-change-log.md`](../params/parameter-change-log.md) | Narrative log of every PX4 parameter change and the reason behind it |

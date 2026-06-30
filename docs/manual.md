@@ -88,4 +88,4 @@ Intended safe startup condition, to be verified before every flight:
 20. Install and torque the propellers.
 21. Confirm GPS has acquired a 3D fix with an appropriate HDOP and VDOP.
 
-See also [maiden-flight-checklist.md](maiden-flight-checklist.md) for the pre-flight build checklist.
+See also [build-checklist.md](build-checklist.md) for the build, retention, and configuration checklist.

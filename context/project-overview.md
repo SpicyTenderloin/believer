@@ -78,7 +78,7 @@ believer/
 ├── docs/                            ← Engineering documentation
 │   ├── ICD.md                       ← Interface control document
 │   ├── manual.md                    ← Operating manual (flight modes, procedures)
-│   ├── maiden-flight-checklist.md   ← Build completion and maiden flight checklist
+│   ├── build-checklist.md           ← Build completion, retention checks, and configuration checklist
 │   ├── purchase-history.md          ← Component purchases (cost, funder, installed status)
 │   ├── project-overview.md          ← Public-facing project background and roadmap
 │   └── assets/                      ← Diagrams and photos referenced by docs

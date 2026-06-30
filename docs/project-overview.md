@@ -32,7 +32,7 @@ The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup i
 
 - [ICD.md](ICD.md) - interface control document (avionics interfaces)
 - [manual.md](manual.md) - flight modes, switch mapping, operating procedures
-- [maiden-flight-checklist.md](maiden-flight-checklist.md) - build/maiden flight checklist
+- [build-checklist.md](build-checklist.md) - build, retention, and configuration checklist
 - [purchase-history.md](purchase-history.md) - component purchases
 - [../params/parameter-change-log.md](../params/parameter-change-log.md) - PX4 parameter change history
 - [../supporting-documents/](../supporting-documents/) - original proposal, funding application materials, and purchase invoices

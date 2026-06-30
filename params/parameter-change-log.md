@@ -1,6 +1,6 @@
 ﻿# PX4 Parameter Change Log
 
-Per the maiden flight checklist: "Document all parameter changes and build log. Should be re-configured from scratch before each test flight." This log is the build record - append new entries rather than overwriting old ones, and flag any value here that gets superseded later.
+Per the build checklist: "Document all parameter changes and build log. Should be re-configured from scratch before each test flight." This log is the build record - append new entries rather than overwriting old ones, and flag any value here that gets superseded later.
 
 ## Baseline configuration (source: `believer_PX4_Parameter_Change_Log.xlsx`)
 
