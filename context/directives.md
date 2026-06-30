@@ -1,23 +1,24 @@
-# Working Directives — Believer Project
+﻿# Working Directives - Believer Project
 
 Standing conventions for working in this repo. Update this file when the user gives new durable instructions.
 
 - **All project documentation is kept as Markdown** (manual, ICD, purchase history, etc.), not Word/PDF, so it versions cleanly in git. Confirmed by user.
 - Source material (Word docs, spreadsheets, PDFs dropped in the root for context) gets its content extracted into the relevant Markdown docs.
   - Working/scratch documents (e.g. `Believer Checklist.docx`) are deleted once extracted.
-  - Formal reference documents (signed proposals/funding applications, invoices) are **kept** in their original format under `supporting-documents/`, not deleted — confirmed by user 2026-06-21.
+  - Formal reference documents (signed proposals/funding applications, invoices) are **kept** in their original format under `supporting-documents/`, not deleted - confirmed by user 2026-06-21.
 - Diagrams/photos worth keeping are saved under `docs/assets/` with descriptive filenames.
-- **Document writing standards** are in `context/style-guide.md` — read before creating or editing any file under `docs/`.
+- **Document writing standards** are in `context/style-guide.md` - read before creating or editing any file under `docs/`.
 - Repo layout:
-  - `docs/` — manual, ICD, and other documentation
-  - `params/` — parameter change logs / flight controller parameter files
-  - `supporting-documents/` — formal reference documents kept in original format (proposals, funding applications)
-    - `supporting-documents/invoices/` — purchase invoices, named `<vendor>-<item>-<date>.pdf`, referenced from `docs/purchase-history.md`
-  - `Component datasheets/` — manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
-  - `GX12 Backup/` — full EdgeTX SD card backup for the Radiomaster GX12 transmitter (model config, radio config, firmware, stock assets). Kept in full (not trimmed to just the project-specific config files) for restore capability — confirmed by user 2026-06-22. This is an exception to the "extract then delete" rule above: it's a functional restore image, not a working/scratch document.
-  - `context/` — this folder: persistent project memory + directives for Claude
-- **`Component datasheets/` holds datasheets only for components currently installed in the aircraft** — confirmed by user 2026-06-21. Exception added 2026-06-23: the **Radiomaster GX12** (ground-side transmitter the pilot holds, not installed in the airframe) also gets a manual here, given how heavily its switch/channel mapping is referenced throughout the ICD and manual — overrides the ground-side exclusion for this one item specifically. Still excluded: purchased-but-unused components (e.g. MatekSys PDB, Holybro PM06 V2 — see `context/project-notes.md` Power section), or not-yet-installed components (e.g. the IMX335 camera, still in the future/companion-computer phase). When no official manufacturer PDF exists (e.g. Holybro Pixhawk 6X, the Turnigy battery — both only have web-based docs/product pages), don't fabricate one; note the gap instead.
-- Mark unknown/unconfirmed interface details as `TBD` rather than guessing — track them in `open-items.md` and confirm with the user.
-- **Standing authorities granted to Claude are logged in `context/authorities.md`.** At the start of each session, check that list against `.claude/settings.local.json` and ask the user whether to sync any gaps — confirmed by user 2026-06-22. Settings are local/gitignored, so this file is the durable record of what's actually been authorized.
+  - `docs/` - manual, ICD, and other documentation
+  - `params/` - parameter change logs / flight controller parameter files
+  - `supporting-documents/` - formal reference documents kept in original format (proposals, funding applications)
+    - `supporting-documents/invoices/` - purchase invoices, named `<vendor>-<item>-<date>.pdf`, referenced from `docs/purchase-history.md`
+  - `Component datasheets/` - manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
+  - `GX12 Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter (model config, radio config, firmware, stock assets). Kept in full (not trimmed to just the project-specific config files) for restore capability - confirmed by user 2026-06-22. This is an exception to the "extract then delete" rule above: it's a functional restore image, not a working/scratch document.
+  - `context/` - this folder: persistent project memory + directives for Claude
+- **`Component datasheets/` holds datasheets only for components currently installed in the aircraft** - confirmed by user 2026-06-21. Exception added 2026-06-23: the **Radiomaster GX12** (ground-side transmitter the pilot holds, not installed in the airframe) also gets a manual here, given how heavily its switch/channel mapping is referenced throughout the ICD and manual - overrides the ground-side exclusion for this one item specifically. Still excluded: purchased-but-unused components (e.g. MatekSys PDB, Holybro PM06 V2 - see `context/project-notes.md` Power section), or not-yet-installed components (e.g. the IMX335 camera, still in the future/companion-computer phase). When no official manufacturer PDF exists (e.g. Holybro Pixhawk 6X, the Turnigy battery - both only have web-based docs/product pages), don't fabricate one; note the gap instead.
+- Mark unknown/unconfirmed interface details as `TBD` rather than guessing - track them in `open-items.md` and confirm with the user.
+- **Do not use em-dashes (-) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `context/`, `params/`, and the repo root.
+- **Standing authorities granted to Claude are logged in `context/authorities.md`.** At the start of each session, check that list against `.claude/settings.local.json` and ask the user whether to sync any gaps - confirmed by user 2026-06-22. Settings are local/gitignored, so this file is the durable record of what's actually been authorized.
 - Log notable changes to repo docs in `context/CHANGELOG.md`, most recent first.
-- **Commit and push updates as we go**, rather than batching many changes into one commit at the end of a session — confirmed by user 2026-06-21.
+- **Commit and push updates as we go**, rather than batching many changes into one commit at the end of a session - confirmed by user 2026-06-21.

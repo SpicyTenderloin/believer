@@ -1,4 +1,4 @@
-# Project Overview
+﻿# Project Overview
 
 ## What it is
 
@@ -8,7 +8,7 @@
 
 The project aims to develop a fixed-wing drone for beyond visual line of sight (BVLOS) observation missions: a long-range platform capable of advanced onboard decision-making, including object detection, for applications such as shark spotting, monitoring of threatened ecosystems, and agricultural observation.
 
-Beyond the platform itself, the project is run through QUTAS to give students hands-on, real-world experience across the full UAS engineering lifecycle — systems integration, flight testing, regulatory compliance, and industry liaison — spanning aerospace, electrical, robotics, software, and mechanical disciplines.
+Beyond the platform itself, the project is run through QUTAS to give students hands-on, real-world experience across the full UAS engineering lifecycle - systems integration, flight testing, regulatory compliance, and industry liaison - spanning aerospace, electrical, robotics, software, and mechanical disciplines.
 
 ## Roadmap
 
@@ -20,19 +20,19 @@ From the original project proposal (2026-01-25):
 | Mid-term | 3–6 months | Flight controller tuning, implementation of robust failsafe procedures, expansion of flight-testing activities, strengthening of industry and testing facility engagement. |
 | Long-term | 6–12+ months | Integration of companion computer and camera payload, development of advanced autonomous and sensing capabilities, platform optimisation for research and teaching use. |
 
-The redundant RC link (near-term) is done — see the GX12/DBR4 ExpressLRS setup in [ICD.md](ICD.md) and [manual.md](manual.md).
+The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup in [ICD.md](ICD.md) and [manual.md](manual.md).
 
 ## Team & Contacts
 
-- Julian Williams — UAS Systems Lead / Program Manager
-- Charlotte Kelly — Vice-President / President
+- Julian Williams - UAS Systems Lead / Program Manager
+- Charlotte Kelly - Vice-President / President
 - Contact: qutaerospacesociety@qut.edu.au
 
 ## Related documents
 
-- [ICD.md](ICD.md) — interface control document (avionics interfaces)
-- [manual.md](manual.md) — flight modes, switch mapping, operating procedures
-- [maiden-flight-checklist.md](maiden-flight-checklist.md) — build/maiden flight checklist
-- [purchase-history.md](purchase-history.md) — component purchases
-- [../params/parameter-change-log.md](../params/parameter-change-log.md) — PX4 parameter change history
-- [../supporting-documents/](../supporting-documents/) — original proposal, funding application materials, and purchase invoices
+- [ICD.md](ICD.md) - interface control document (avionics interfaces)
+- [manual.md](manual.md) - flight modes, switch mapping, operating procedures
+- [maiden-flight-checklist.md](maiden-flight-checklist.md) - build/maiden flight checklist
+- [purchase-history.md](purchase-history.md) - component purchases
+- [../params/parameter-change-log.md](../params/parameter-change-log.md) - PX4 parameter change history
+- [../supporting-documents/](../supporting-documents/) - original proposal, funding application materials, and purchase invoices

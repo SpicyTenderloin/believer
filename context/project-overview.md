@@ -1,4 +1,4 @@
-# Project Overview — Believer UAV
+﻿# Project Overview - Believer UAV
 
 A comprehensive reference for AI tools working on this repo. For the public-facing project description and roadmap, see [`docs/project-overview.md`](../docs/project-overview.md).
 
@@ -11,8 +11,8 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 **Purpose:** BVLOS observation platform for shark spotting, threatened ecosystem monitoring, and agricultural observation. Onboard object detection planned for a future companion computer phase.
 
 **Team:**
-- Julian Williams — UAS Systems Lead / Program Manager
-- Charlotte Kelly — Vice-President / President
+- Julian Williams - UAS Systems Lead / Program Manager
+- Charlotte Kelly - Vice-President / President
 - Contact: qutaerospacesociety@qut.edu.au
 
 **Funding:** QUT EER School club activity funding ($689.50, 50% of $1,379), matched by QUTAS account funds. Approved 2026-05-20/21.
@@ -29,8 +29,8 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 
 | Component | Role | Interface |
 |---|---|---|
-| Holybro Pixhawk 6X | Flight controller, PX4 firmware | — |
-| Holybro PM03D | Power module — battery telemetry (INA228) + 5V servo rail | FC power input |
+| Holybro Pixhawk 6X | Flight controller, PX4 firmware | - |
+| Holybro PM03D | Power module - battery telemetry (INA228) + 5V servo rail | FC power input |
 | u-blox NEO-M8N | Primary GPS | GPS 1 UART |
 | SparkFun ZED-F9P | RTK GPS (secondary) | GPS 2 UART |
 | Radiomaster DBR4 | ELRS Gemini dual-band RC receiver | Telem_1 (460800 8N1) |
@@ -62,7 +62,7 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 
 ```
 believer/
-├── CLAUDE.md                        ← AI session entry point — read first
+├── CLAUDE.md                        ← AI session entry point - read first
 ├── README.md                        ← Repo overview for humans
 ├── context/                         ← AI working memory (this folder)
 │   ├── startup-prompt.md            ← Single bootstrapping file for AI tools
@@ -86,7 +86,7 @@ believer/
 │   ├── parameter-change-log.md      ← Narrative PX4 parameter change history
 │   └── believer-parameters.params   ← Full PX4 parameter dump (raw backup)
 ├── GX12 Backup/                     ← Full EdgeTX SD card backup (restore image)
-│   └── MODELS/model00.yml           ← GX12 model config — channel/mixer definitions
+│   └── MODELS/model00.yml           ← GX12 model config - channel/mixer definitions
 ├── supporting-documents/            ← Formal docs kept in original format
 │   ├── Believer Project Proposal.pdf
 │   ├── QUTAS Fixed Wing Drone Funding Application SIGNED.pdf (or similar)
@@ -98,11 +98,11 @@ believer/
 
 ## Key document relationships
 
-- **ICD.md** is the primary technical reference — avionics interfaces, serial port config, RC channel map, power system. When in doubt about what's connected to what, check here.
+- **ICD.md** is the primary technical reference - avionics interfaces, serial port config, RC channel map, power system. When in doubt about what's connected to what, check here.
 - **manual.md** covers flight operations: flight modes, GR1 switch mapping, failsafe config, maiden flight procedure.
 - **purchase-history.md** tracks every component purchased, who paid, and whether it's installed.
-- **parameter-change-log.md** narrates every PX4 parameter change with the reason — use this to understand *why* parameters are set the way they are.
-- **project-notes.md** (context) is the companion to ICD.md — it holds the provenance and decision history behind the facts in the ICD, so the ICD itself stays clean.
+- **parameter-change-log.md** narrates every PX4 parameter change with the reason - use this to understand *why* parameters are set the way they are.
+- **project-notes.md** (context) is the companion to ICD.md - it holds the provenance and decision history behind the facts in the ICD, so the ICD itself stays clean.
 
 ---
 
@@ -110,6 +110,6 @@ believer/
 
 See `context/open-items.md` for the full list. Key blockers for maiden flight:
 
-- ZED-F9P RTK antenna not installed — confirmed maiden flight blocker
+- ZED-F9P RTK antenna not installed - confirmed maiden flight blocker
 - MS4525DO I2C wiring not documented
 - Motors/ESCs model/KV/ESC protocol not yet captured

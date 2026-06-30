@@ -1,15 +1,15 @@
-# Document Style Guide — Believer Project
+﻿# Document Style Guide - Believer Project
 
 Standards for all documents under `docs/`.
 
 ## Engineering document standard
 
-Documents under `docs/` are engineering records — they should read as if written for an external audience, not as working notes or session logs.
+Documents under `docs/` are engineering records - they should read as if written for an external audience, not as working notes or session logs.
 
 **Do:**
 - State the current, as-built fact directly
 - Use tables for structured data (interfaces, parameters, purchase history)
-- Mark unknowns as `TBD` — track them in `context/open-items.md`
+- Mark unknowns as `TBD` - track them in `context/open-items.md`
 
 **Do not:**
 - Cite source documents inline ("per shopping list", "per the funding application")
@@ -30,12 +30,12 @@ Documents under `docs/` are engineering records — they should read as if writt
 
 ## Exceptions
 
-`docs/purchase-history.md` and `params/parameter-change-log.md` are transactional logs by nature — dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
+`docs/purchase-history.md` and `params/parameter-change-log.md` are transactional logs by nature - dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
 
 ## Format conventions
 
-- All documents are Markdown (`.md`) — not Word, PDF, or other formats — so they version cleanly in git.
+- All documents are Markdown (`.md`) - not Word, PDF, or other formats - so they version cleanly in git.
 - Diagrams and photos are saved under `docs/assets/` with descriptive filenames.
 - Top-level sections use `##`, subsections use `###`.
 - Tables are preferred over prose for structured data.
-- No trailing changelog blocks at the bottom of individual documents — all changes go in `context/CHANGELOG.md`.
+- No trailing changelog blocks at the bottom of individual documents - all changes go in `context/CHANGELOG.md`.

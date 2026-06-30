@@ -1,6 +1,6 @@
-# QUT Academic Integrity — Guidelines and Project Context
+﻿# QUT Academic Integrity - Guidelines and Project Context
 
-Sourced from QUT's Manual of Policies and Procedures (MOPP): Academic Integrity Policy (MOPP C/5.3), Management of Student Misconduct Policy (MOPP E/8.1), and Code of Conduct — Student. Retrieved June 2026.
+Sourced from QUT's Manual of Policies and Procedures (MOPP): Academic Integrity Policy (MOPP C/5.3), Management of Student Misconduct Policy (MOPP E/8.1), and Code of Conduct - Student. Retrieved June 2026.
 
 ---
 
@@ -21,7 +21,7 @@ Applies to all undergraduate and postgraduate coursework students. Research high
 
 ### What Constitutes a Breach
 
-A breach is any conduct — intentional or unintentional — that fails to demonstrate ethics, fairness, honesty, respect, and accountability in academic work.
+A breach is any conduct - intentional or unintentional - that fails to demonstrate ethics, fairness, honesty, respect, and accountability in academic work.
 
 Major categories:
 
@@ -39,13 +39,13 @@ Major categories:
 
 ### Breach Classification and Consequences
 
-**Poor Academic Practice** — minor, typically unintentional violations:
+**Poor Academic Practice** - minor, typically unintentional violations:
 - Formal recorded finding
 - Warning issued
 - Educative requirements (additional training, resubmission, or alternative assessment)
 - No mark penalty
 
-**Academic Misconduct** — serious, intentional, or repeated violations:
+**Academic Misconduct** - serious, intentional, or repeated violations:
 - Managed under the Management of Student Misconduct Policy (MOPP E/8.1)
 - May result in formal penalties
 
@@ -64,14 +64,14 @@ QUT's Academic Integrity Policy explicitly addresses AI use in assessment:
 QUT's critical evaluation framework for any GenAI use:
 - **Accuracy**: GenAI can produce plausible-sounding but unsourced content
 - **Bias**: May stem from training data or creator bias
-- **Privacy**: Tools may collect and store user data — review terms before use
+- **Privacy**: Tools may collect and store user data - review terms before use
 - **Creatorship**: Unknown training data origins make output unreliable as an academic source
 
 ---
 
 ## QUT Student Code of Conduct
 
-Applies to all enrolled students across all activities — on-campus, off-campus (if affecting the university), and online.
+Applies to all enrolled students across all activities - on-campus, off-campus (if affecting the university), and online.
 
 Key obligations relevant to this project:
 - Act with integrity and honesty
@@ -92,13 +92,13 @@ The Believer project is a QUTAS student club project with university (QUT EER) f
 
 Claude Code (Anthropic) is used openly and extensively to assist with writing and maintaining project documentation in this repo. This is an acknowledged working practice, not a concealed use of AI.
 
-- All AI-generated or AI-assisted content in this repo is project documentation (engineering records, logs, parameter files) — not academic assessment work.
+- All AI-generated or AI-assisted content in this repo is project documentation (engineering records, logs, parameter files) - not academic assessment work.
 - The technical facts, decisions, and engineering judgments in these documents originate with the project team (Julian Williams, Charlotte Kelly, QUTAS). Claude assists with formatting, consistency, and writing quality.
 - If any materials from this repo are used in formal academic work (reports, theses, presentations), QUT's GenAI policy applies to that submission: the use of AI in producing the submitted work must comply with the specific unit's authorization.
 
 ### Funding Accountability
 
-The project received $689.50 in EER School club activity funding (approved 2026-05-20/21). Accurate record-keeping of expenditure — maintained in `docs/purchase-history.md` — is part of responsible use of university funds and consistent with the Code of Conduct obligation to "provide accurate information regarding enrollment matters" (extended here to funding matters).
+The project received $689.50 in EER School club activity funding (approved 2026-05-20/21). Accurate record-keeping of expenditure - maintained in `docs/purchase-history.md` - is part of responsible use of university funds and consistent with the Code of Conduct obligation to "provide accurate information regarding enrollment matters" (extended here to funding matters).
 
 ### BVLOS Operations and Regulatory Compliance
 
@@ -108,7 +108,7 @@ Operating a drone BVLOS requires compliance with CASA regulations and engagement
 
 ## Sources
 
-- [QUT Academic Integrity Policy — MOPP C/5.3](https://mopp.qut.edu.au/document/view.php?id=146)
-- [QUT Code of Conduct — Student — MOPP](https://mopp.qut.edu.au/document/view.php?id=25)
-- [QUT Management of Student Misconduct Policy — MOPP E/8.1](https://mopp.qut.edu.au/document/view.php?id=15)
-- [QUT Library — Evaluative and Ethical Use of Generative AI](https://libguides.library.qut.edu.au/c.php?g=963920&p=7029563)
+- [QUT Academic Integrity Policy - MOPP C/5.3](https://mopp.qut.edu.au/document/view.php?id=146)
+- [QUT Code of Conduct - Student - MOPP](https://mopp.qut.edu.au/document/view.php?id=25)
+- [QUT Management of Student Misconduct Policy - MOPP E/8.1](https://mopp.qut.edu.au/document/view.php?id=15)
+- [QUT Library - Evaluative and Ethical Use of Generative AI](https://libguides.library.qut.edu.au/c.php?g=963920&p=7029563)

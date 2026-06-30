@@ -1,4 +1,4 @@
-# Believer Fixed-Wing UAV — Interface Control Document
+﻿# Believer Fixed-Wing UAV - Interface Control Document
 
 | | |
 |---|---|
@@ -13,11 +13,11 @@ This document defines the physical, electrical, and data interfaces between the 
 
 ## 2. Reference Documents
 
-- Believer Project Proposal (QUTAS, 2026-01-25) — `supporting-documents/`
-- QUTAS EER Funding Application (2026-05-20) — `supporting-documents/`
-- Purchase invoices — `supporting-documents/invoices/`
-- PX4 parameter change history — `params/parameter-change-log.md`
-- Component datasheets — `Component datasheets/`
+- Believer Project Proposal (QUTAS, 2026-01-25) - `supporting-documents/`
+- QUTAS EER Funding Application (2026-05-20) - `supporting-documents/`
+- Purchase invoices - `supporting-documents/invoices/`
+- PX4 parameter change history - `params/parameter-change-log.md`
+- Component datasheets - `Component datasheets/`
 
 ## 3. System Description
 
@@ -46,7 +46,7 @@ Open items against this interface set are tracked in [context/open-items.md](../
 
 ## 6. Interface Definitions
 
-### INT-01 — Power Distribution
+### INT-01 - Power Distribution
 
 Power module: Holybro PM03D.
 
@@ -56,7 +56,7 @@ Power module: Holybro PM03D.
 | Battery | 6S LiPo (`BAT1_N_CELLS` = 6S) |
 | Servo rail | 5V, electrically isolated from main FC supply |
 
-### INT-02 — Actuator Outputs (PWM)
+### INT-02 - Actuator Outputs (PWM)
 
 All flight control surface and motor servos connect to the FC's PWM outputs.
 
@@ -71,7 +71,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 
 ![PX4 Actuator Output Configuration](assets/actuator-output-config.png)
 
-### INT-03 — RC Control Link (TELEM1)
+### INT-03 - RC Control Link (TELEM1)
 
 Radiomaster DBR4 dual-band (2.4GHz/900MHz) ExpressLRS receiver, connected to FC TELEM1. Operating mode: ELRS Hybrid switch mode with MAVLink enabled. Paired transmitter: Radiomaster GX12 (INT-08).
 
@@ -120,7 +120,7 @@ ELRS Hybrid mode carries RC channels through CH12 only (CH13–16 are not transm
 | SW5 | Mission |
 | SW6 | Hold |
 
-### INT-04 — Telemetry Link (TELEM2)
+### INT-04 - Telemetry Link (TELEM2)
 
 RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 datasheet.
 
@@ -141,7 +141,7 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 
 ![RFD900x Pinout Diagram](assets/rfd900-pinout-diagram.png)
 
-### INT-05 — GPS 1 (Primary)
+### INT-05 - GPS 1 (Primary)
 
 M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
 
@@ -152,7 +152,7 @@ M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
 | `GPS_1_GNSS` | 21 |
 | `GPS_UBX_DYNMODEL` | Airborne <4g |
 
-### INT-06 — GPS 2 / RTK
+### INT-06 - GPS 2 / RTK
 
 SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART.
 
@@ -160,15 +160,15 @@ SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART.
 |---|---|
 | `GPS_2_GNSS` | 29 |
 
-Antenna not yet fitted — tracked as a maiden flight blocker in [maiden-flight-checklist.md](maiden-flight-checklist.md).
+Antenna not yet fitted - tracked as a maiden flight blocker in [maiden-flight-checklist.md](maiden-flight-checklist.md).
 
-### INT-07 — Airspeed Sensor (I2C)
+### INT-07 - Airspeed Sensor (I2C)
 
 MS4525DO differential pressure sensor. Driver enabled (`SENS_EN_MS4525DO`).
 
-### INT-08 — RC Transmitter Link
+### INT-08 - RC Transmitter Link
 
-Radiomaster GX12 Crush ExpressLRS transmitter (Iron Grey) — Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled. Physical switch locations and functions are shown in INT-03.
+Radiomaster GX12 Crush ExpressLRS transmitter (Iron Grey) - Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled. Physical switch locations and functions are shown in INT-03.
 
 ## 7. Open Items
 

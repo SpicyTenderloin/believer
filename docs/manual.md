@@ -1,4 +1,4 @@
-# Believer Flight Manual
+﻿# Believer Flight Manual
 
 Operating manual for the Believer fixed-wing UAV. For wiring/pinout/parameter detail, see [ICD.md](ICD.md) and [../params/parameter-change-log.md](../params/parameter-change-log.md).
 
@@ -6,7 +6,7 @@ Operating manual for the Believer fixed-wing UAV. For wiring/pinout/parameter de
 
 V-tail, twin-motor (left/right) fixed wing, two independently-servoed ailerons. Holybro Pixhawk 6X flight controller running PX4. Centre of Gravity: 15mm aft of the front wing spar carbon rod centerline (~25% MAC).
 
-## 2. RC Control — Channels & Switches
+## 2. RC Control - Channels & Switches
 
 RC link: Radiomaster GX12 transmitter → DBR4 receiver (ExpressLRS, dual-band 2.4GHz/900MHz), Hybrid switch mode with MAVLink enabled.
 
@@ -25,7 +25,7 @@ RC link: Radiomaster GX12 transmitter → DBR4 receiver (ExpressLRS, dual-band 2
 | CH11 | Offboard | Inverted in EdgeTX |
 | CH12 | Spare / future buzzer or payload | Currently unassigned |
 
-For channels 7, 9, 10, 11: inversion is handled in EdgeTX already — do not add a duplicate reversal in PX4 unless QGroundControl shows the active/inactive direction is actually wrong.
+For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGroundControl shows the active/inactive direction is actually wrong.
 
 ## 3. Flight Modes (GR1 Switch Group)
 
@@ -40,7 +40,7 @@ GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a 
 | SW5 | Mission | Future autonomous missions only |
 | SW6 | Hold | Backup access to Loiter/Hold |
 
-**Hold vs. Loiter:** these are the same PX4 mode — "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude — it cannot stop and hover like a multirotor.
+**Hold vs. Loiter:** these are the same PX4 mode - "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude - it cannot stop and hover like a multirotor.
 
 CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly.
 
@@ -48,7 +48,7 @@ CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has sele
 
 The Believer has two ailerons, each on its own servo, rather than separate dedicated flap surfaces. This makes it possible to configure flaperons later: a normal roll command moves the ailerons oppositely, while a flap command moves both ailerons down together; PX4 combines the two.
 
-**Do not enable flaperons until the aircraft's baseline handling, trim, stall behaviour, and roll authority are known.** When introduced later, start with small deflections and test well above the ground — flaperons can alter pitch trim and reduce roll authority. CH9 (flaperon control) stays inactive/disabled for the maiden flight and until this testing has been done.
+**Do not enable flaperons until the aircraft's baseline handling, trim, stall behaviour, and roll authority are known.** When introduced later, start with small deflections and test well above the ground - flaperons can alter pitch trim and reduce roll authority. CH9 (flaperon control) stays inactive/disabled for the maiden flight and until this testing has been done.
 
 ## 5. Pre-Flight Safety State
 
@@ -66,7 +66,7 @@ Intended safe startup condition, to be verified before every flight:
 
 ## 6. Maiden Flight Procedure
 
-1. Test every switch in QGroundControl with propellers removed first — especially Kill, Return, and Offboard.
+1. Test every switch in QGroundControl with propellers removed first - especially Kill, Return, and Offboard.
 2. Use **Stabilized** only for launch and normal flying.
 3. Move to **Altitude** only once safely established in stabilized flight.
 4. Move to **Position** only after GPS, compass, airspeed, and navigation behaviour are clearly behaving correctly.

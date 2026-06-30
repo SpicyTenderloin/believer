@@ -1,4 +1,4 @@
-# Maiden Flight Checklist
+﻿# Maiden Flight Checklist
 
 Source: `Believer Checklist.docx` (2026-06-21).
 
@@ -15,11 +15,11 @@ Source: `Believer Checklist.docx` (2026-06-21).
 | 9 | Antenna externalisation | Move antennas externally; determine and source any required adapters | Done |
 | 10 | Parachute bay repair | Fix parachute bay and install missing servo | Done |
 | 11 | Paint and finishing | Apply paint job as required | Not done |
-| 12 | Configure & Tune | — | Not started |
+| 12 | Configure & Tune | - | Not started |
 | 13 | Standard Install | Document all parameter changes and build log. Should be re-configured from scratch before each test flight. | Not started |
 
 ## Additional Pre-Flight Items (identified during avionics integration)
 
 | # | Task / Consideration | Notes / Actions Required | Status |
 |---|---|---|---|
-| 14 | GPS 2 antenna | SparkFun ZED-F9P RTK breakout (GPS 2) currently has no antenna installed | Not done — must be fixed before maiden flight |
+| 14 | GPS 2 antenna | SparkFun ZED-F9P RTK breakout (GPS 2) currently has no antenna installed | Not done - must be fixed before maiden flight |

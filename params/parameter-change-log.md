@@ -1,6 +1,6 @@
-# PX4 Parameter Change Log
+﻿# PX4 Parameter Change Log
 
-Per the maiden flight checklist: "Document all parameter changes and build log. Should be re-configured from scratch before each test flight." This log is the build record — append new entries rather than overwriting old ones, and flag any value here that gets superseded later.
+Per the maiden flight checklist: "Document all parameter changes and build log. Should be re-configured from scratch before each test flight." This log is the build record - append new entries rather than overwriting old ones, and flag any value here that gets superseded later.
 
 ## Baseline configuration (source: `believer_PX4_Parameter_Change_Log.xlsx`)
 
@@ -19,19 +19,19 @@ Per the maiden flight checklist: "Document all parameter changes and build log. 
 | `MAV_0_MODE` | MAVLink mode, instance 0 | Default | Normal | Standard GCS telemetry profile for QGroundControl via RFD900. |
 | `MAV_0_RATE` | Max MAVLink send rate, instance 0 | 1200 B/s | 3000 B/s | Increased rate while staying under the 57600 baud link's throughput. |
 | `MAV_0_FLOW_CTRL` | MAVLink serial flow control, instance 0 | Default / Enabled | Disabled | RTS/CTS hardware flow control not connected on the RFD900 link. |
-| `RC_MAP_ARM_SW` | RC channel for arm switch | Unassigned | Channel 10 | **Superseded 2026-06-21 — see below.** |
-| `RC_MAP_KILL_SW` | RC channel for kill switch | Unassigned | Channel 8 | **Superseded 2026-06-21 — see below.** |
+| `RC_MAP_ARM_SW` | RC channel for arm switch | Unassigned | Channel 10 | **Superseded 2026-06-21 - see below.** |
+| `RC_MAP_KILL_SW` | RC channel for kill switch | Unassigned | Channel 8 | **Superseded 2026-06-21 - see below.** |
 | `RC_PORT_CONFIG` | Serial port for RC input | Default | TELEM 1 | Configures TELEM1 as RC input from the DBR4 receiver. |
 | `SER_TEL1_BAUD` | Baud rate, TELEM1 serial port | Default | 460800 8N1 | Matches the DBR4 radio transceiver configuration. |
 | `SER_TEL2_BAUD` | Baud rate, TELEM2 serial port | Default | 57600 8N1 | Matches the RFD900 telemetry radio configuration. |
 
-## 2026-06-21 — GX12/DBR4 channel & flight-mode remap
+## 2026-06-21 - GX12/DBR4 channel & flight-mode remap
 
 Source: "GX12 Logical Switch Setup" notes. Radio is a Radiomaster GX12 + DBR4 (ELRS) in **Hybrid switch mode with MAVLink enabled**. ELRS Hybrid mode only carries normal RC channels through CH12 (CH13–16 are not sent), which forced a remap of the flight-mode selector.
 
 - `RC_MAP_ARM_SW`: **Channel 10 → Channel 5** (dedicated fast AUX channel, latching, disarmed at startup)
 - `RC_MAP_KILL_SW`: **Channel 8 → Channel 7** (inverted in EdgeTX)
-- GR1 (six-position flight-mode switch group) remapped from **CH13 → CH6** — CH13 is not transmitted in ELRS Hybrid mode, so QGroundControl never saw the switch movement.
+- GR1 (six-position flight-mode switch group) remapped from **CH13 → CH6** - CH13 is not transmitted in ELRS Hybrid mode, so QGroundControl never saw the switch movement.
 - CH8 repurposed from kill to **Loiter/Hold** (latching button; overrides the GR1-selected mode).
 
 ### Current RC channel map
@@ -62,6 +62,6 @@ Source: "GX12 Logical Switch Setup" notes. Radio is a Radiomaster GX12 + DBR4 (E
 | SW5 | Mission | Future autonomous missions only |
 | SW6 | Hold | Backup access to Loiter/Hold |
 
-Note: PX4's formal mode name is "Hold"; "Loiter" is the older/common name for the same mode and is still used in switch-mapping wording above. The aircraft flies a circle around the point Hold was engaged, maintaining altitude — it cannot hover.
+Note: PX4's formal mode name is "Hold"; "Loiter" is the older/common name for the same mode and is still used in switch-mapping wording above. The aircraft flies a circle around the point Hold was engaged, maintaining altitude - it cannot hover.
 
-For channels 7, 9, 10, 11: inversion is handled in EdgeTX already — do not add a duplicate reversal in PX4 unless QGC shows the active/inactive direction is actually wrong.
+For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGC shows the active/inactive direction is actually wrong.
