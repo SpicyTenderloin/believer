@@ -19,7 +19,7 @@
 | 15 | Nacelle retention | Verify nacelle fairing is correctly seated and secured to the airframe | Not done |
 | 16 | Propeller retention nuts | Verify propeller retention nuts are correctly torqued on both motors. The LHS motor rotates clockwise (viewed from the front of the aircraft), causing a standard right-hand-thread nut to self-loosen under operation - the LHS retention nut must be inspected with particular attention and confirmed secure before each flight | Not done |
 | 17 | Avionics bay mounting bolt torque | Verify all mounting bolts securing the avionics bay are torqued correctly and have not loosened during handling or vibration | Not done |
-| 18 | GPS mounting bolt torque | Verify the M10 GPS module mounting bolts are correctly torqued and the unit is secure | Not done |
+| 18 | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Not done |
 
 ## Configure and Tune
 

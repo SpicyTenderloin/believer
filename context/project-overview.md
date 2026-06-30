@@ -99,7 +99,7 @@ believer/
 ## Key document relationships
 
 - **ICD.md** is the primary technical reference - avionics interfaces, serial port config, RC channel map, power system. When in doubt about what's connected to what, check here.
-- **manual.md** covers flight operations: flight modes, GR1 switch mapping, failsafe config, maiden flight procedure.
+- **manual.md** covers flight operations: flight modes, GR1 switch mapping, failsafe config, pre-flight checklist.
 - **purchase-history.md** tracks every component purchased, who paid, and whether it's installed.
 - **parameter-change-log.md** narrates every PX4 parameter change with the reason - use this to understand *why* parameters are set the way they are.
 - **project-notes.md** (context) is the companion to ICD.md - it holds the provenance and decision history behind the facts in the ICD, so the ICD itself stays clean.

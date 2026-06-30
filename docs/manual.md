@@ -64,13 +64,28 @@ Intended safe startup condition, to be verified before every flight:
 | CH10 (Return) | Inactive |
 | CH11 (Offboard) | Inactive |
 
-## 6. Maiden Flight Procedure
+## 6. Pre-Flight Checklist
 
-1. Test every switch in QGroundControl with propellers removed first - especially Kill, Return, and Offboard.
-2. Use **Stabilized** only for launch and normal flying.
-3. Move to **Altitude** only once safely established in stabilized flight.
-4. Move to **Position** only after GPS, compass, airspeed, and navigation behaviour are clearly behaving correctly.
-5. Keep Loiter and Return available as backups, but do not deliberately test Mission, Offboard, or full Return behaviour on the maiden flight.
-6. Leave flaperons (CH9) inactive for the entire maiden flight.
+1. Remove airframe components from the carry box and inspect for damage incurred in transport.
+2. Assemble the airframe, ensuring all connections are firmly engaged.
+3. Reinspect the assembled airframe for damage.
+4. Install the 900 MHz antennas to the external antenna ports; ensure they are correctly torqued and oriented to prevent damage.
+5. Install the M8N GPS in its mount and torque to secure.
+6. Connect the M8N GPS to the GPS 1 port on the Pixhawk flight computer.
+7. Power on the GX12 transmitter and confirm the throttle is at the minimum position and the kill switch is engaged.
+8. Install the battery using the supplied straps and verify the centre of gravity is correct. Do not connect the battery to the power distribution board at this stage.
+9. Connect the RFD900 ground station module to a laptop running QGroundControl.
+10. Connect the battery to the power distribution board and establish a connection with QGroundControl.
+11. Perform any flight computer calibration steps required.
+12. Confirm QGroundControl reports no warnings.
+13. Confirm sufficient battery capacity remains for the planned flight.
+14. With propellers removed, arm the vehicle in Manual mode.
+15. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
+16. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
+17. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise.
+18. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
+19. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
+20. Install and torque the propellers.
+21. Confirm GPS has acquired a 3D fix with an appropriate HDOP and VDOP.
 
 See also [maiden-flight-checklist.md](maiden-flight-checklist.md) for the pre-flight build checklist.
