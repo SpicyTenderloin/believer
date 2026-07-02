@@ -67,5 +67,6 @@ Tracks build completion, hardware retention checks, and flight controller config
 | 6 | Control surface and servo configuration | Verify V-tail (MAIN 1-2) and aileron (MAIN 3, 5) output mapping; confirm deflection directions, PWM limits, and trim values; verify control surface response to stick inputs before arming | In progress |
 | 7 | RC and flight mode configuration | Verify RC channel mapping, arm and kill switch assignments (CH5 = arm, CH7 = kill), and GR1 flight mode selector (CH6); confirm all six GR1 positions map to the correct PX4 flight modes | In progress |
 | 8 | Failsafe configuration | Configure and verify RC loss, GCS loss, and battery low/critical failsafe behaviour | Not started |
-| 9 | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Not started |
-| 10 | Standard Install | Document all parameter changes and build log. Re-configure from scratch before each test flight. | In progress |
+| 9 | Geofence configuration | Define and enable a geofence appropriate to the operating site in QGroundControl Vehicle Setup; configure geofence breach action (e.g. Hold or Return) and verify the fence boundary and altitude limits are correctly applied | Not started |
+| 10 | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Not started |
+| 11 | Standard Install | Document all parameter changes and build log. Re-configure from scratch before each test flight. | In progress |

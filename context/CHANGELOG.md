@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-02
+- Added geofence configuration task to `docs/build-checklist.md` Configure and Tune section (item 9, between failsafe and flight controller tuning); shifted tuning to item 10 and Standard Install to item 11.
+
 ## 2026-06-30
 - Renamed `docs/maiden-flight-checklist.md` to `docs/build-checklist.md` ("Build and Configuration Checklist") to reflect that retention and configuration items are ongoing, not specific to the maiden flight. Split the single build table into category sections (Airframe and Structural, Avionics Installation, Sensors, RC and Telemetry, Power System, GPS, Fasteners and Retention Checks) ahead of the existing Configure and Tune section, each with its own local numbering. Updated all cross-references in `README.md`, `docs/project-overview.md`, `docs/ICD.md`, `docs/manual.md`, `context/project-overview.md`, `context/startup-prompt.md`, and `params/parameter-change-log.md`.
 - Added `docs/assets/motor-rotation-direction.png` (moved from the repo working directory, renamed from "ChatGPT Image Jun 30, 2026, 11_38_17 AM.png"): diagram showing motor rotation viewed from behind the aircraft looking forward (LHS counterclockwise, RHS clockwise). Linked from the pre-flight checklist in `docs/manual.md`.
