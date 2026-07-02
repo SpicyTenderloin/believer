@@ -20,5 +20,5 @@ Standing conventions for working in this repo. Update this file when the user gi
 - Mark unknown/unconfirmed interface details as `TBD` rather than guessing - track them in `open-items.md` and confirm with the user.
 - **Do not use em-dashes (-) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `context/`, `params/`, and the repo root.
 - **Standing authorities granted to Claude are logged in `context/authorities.md`.** At the start of each session, check that list against `.claude/settings.local.json` and ask the user whether to sync any gaps - confirmed by user 2026-06-22. Settings are local/gitignored, so this file is the durable record of what's actually been authorized.
-- Log notable changes to repo docs in `context/CHANGELOG.md`, most recent first.
+- **Log every change to any repo document in `context/CHANGELOG.md` before committing - no exceptions, no change is too small.** Each CHANGELOG entry must state which file was changed, what changed, and briefly why. Date entries as `## YYYY-MM-DD` with the most recent date at the top. The CHANGELOG update must be included in the same commit as the change it describes.
 - **Commit and push updates as we go**, rather than batching many changes into one commit at the end of a session - confirmed by user 2026-06-21.
