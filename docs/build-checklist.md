@@ -24,6 +24,7 @@ Tracks build completion, hardware retention checks, and flight controller config
 | # | Task / Consideration | Notes / Actions Required | Status |
 |---|---|---|---|
 | 1 | Pitot system installation | Install pitot tube and route tubing correctly | Done |
+| 2 | Pitot tube clearance verification | Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air - check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient | Not done |
 
 ## RC and Telemetry
 

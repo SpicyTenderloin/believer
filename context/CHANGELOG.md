@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-02 (session 2, continued again)
+- Added pitot tube clearance verification task to `docs/build-checklist.md` Sensors section (item 2): verify pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed air; reposition if clearance is insufficient.
+
 ## 2026-07-02 (session 2, continued)
 - Recorded propeller as 11x4.7" (manufacturer unknown) in `docs/ICD.md` motor spec table and `context/project-notes.md`.
 - Updated `context/open-items.md`: split propeller entry into two items - manufacturer TBD and thrust validation pending.
