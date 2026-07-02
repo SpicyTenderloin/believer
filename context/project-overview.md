@@ -38,6 +38,10 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 | MS4525DO | I2C airspeed sensor | I2C (wiring TBD) |
 | Turnigy 8000mAh 6S | Main battery | PM03D |
 | Radiomaster GX12 Crush (Iron Grey) | RC transmitter (ground-side) | ExpressLRS Gemini-X |
+| T-Motor U5 v2.0 (KV400) | Main propulsion motors (x2, one per wing) | FC MAIN 4, MAIN 6 (via ESC) |
+| T-Motor ESC (model TBD) | Motor ESCs (x2) | FC PWM signal; drives T-Motor U5 v2.0 |
+| Hitec HS-5125MG | Aileron servos (x2, one per wing) | FC MAIN 3, MAIN 5 |
+| Emax ES3054 | V-tail servos (x2, one per V-tail surface) | FC MAIN 1, MAIN 2 |
 
 ### Actuator mapping (MAIN outputs)
 | Output | Function |

@@ -29,6 +29,13 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 | Right Aileron | MAIN 5 | 1100 | 1900 | 1500 | 1500 | No |
 | Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
+## Motors and Servos - confirmed 2026-07-02
+
+- **Motors**: T-Motor U5 v2.0, KV400, one per wing (MAIN 4 = left, MAIN 6 = right). 12N14P configuration, 5mm shaft, 156g (excl. cables), 3-8S LiPo, max 30A / 850W continuous (180s). No official PDF datasheet - specs from T-Motor product page only.
+- **ESCs**: T-Motor branded (one per motor), model unidentified. PCB markings visible: "T-MOTOR", "1747", "08" - IC part number not legible. ESC protocol (PWM/DShot) not yet confirmed. Tracked in `context/open-items.md`.
+- **Aileron servos**: Hitec HS-5125MG, one per wing (MAIN 3 = left, MAIN 5 = right). Digital, metal gear, 10mm slim wing profile, 24g, 4.8-6.0V, 3.0-3.5 kg.cm torque, 0.17-0.13 sec/60°. No official PDF datasheet - specs from Hitec RCD product page only.
+- **V-tail servos**: Emax ES3054, one per V-tail surface (MAIN 1 = left, MAIN 2 = right). Digital, metal gear, 17g, 4.8-6.0V, 3.0-3.5 kg.cm torque, 0.15-0.13 sec/60°, 23T spline. No official PDF datasheet - specs from Emax product page only.
+
 ## Serial / Sensor Interfaces (updated with parameter log)
 - **Telem_1** (`RC_PORT_CONFIG = TELEM1`): Radiomaster DBR4 dual-band (2.4GHz/900MHz) Gemini Xrossband ExpressLRS receiver. Baud `SER_TEL1_BAUD = 460800 8N1`. Paired transmitter: Radiomaster GX12 **Crush** (Gemini-X dual-band ExpressLRS), Iron Grey colorway - confirmed by user 2026-06-22, correcting the earlier (2026-06-21) note that it was not the Crush variant.
 - **Telem_2** (`MAV_0_CONFIG = TELEM2`): RFD900(x) long-range telemetry radio. Baud `SER_TEL2_BAUD = 57600 8N1`. MAVLink rate `MAV_0_RATE = 3000 B/s`, flow control disabled. Pinout: Black=GND, Brown=Vcc(5V), Yellow=Rx→FC TX1, Red=Tx→FC RX1.

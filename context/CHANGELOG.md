@@ -2,6 +2,14 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-02 (session 2)
+- Documented motors, ESCs, and servos in `docs/ICD.md` (INT-02 connected devices): T-Motor U5 v2.0 KV400 (motors, MAIN 4/6), Hitec HS-5125MG (aileron servos, MAIN 3/5), Emax ES3054 (V-tail servos, MAIN 1/2). ESC identified as T-Motor branded; model number not legible from PCB markings (T-MOTOR, 1747, 08) - protocol TBD. Bumped ICD revision to 0.9.
+- Added component photos to `docs/assets/`: `tmotor-u5-front.jpg`, `tmotor-u5-side.jpg`, `tmotor-esc-front.jpg`, `tmotor-esc-back.jpg`, `hitec-hs5125mg-wing-servo.jpg`, `emax-es3054-tail-servo.jpg`. Wired into ICD INT-02 under each device spec section.
+- Updated `context/project-overview.md`: added T-Motor U5 v2.0, T-Motor ESC, Hitec HS-5125MG, and Emax ES3054 to the installed components table.
+- Updated `context/project-notes.md`: added Motors and Servos section with confirmed specs and provenance notes.
+- Updated `context/open-items.md`: replaced generic motors/ESCs TBD with two specific items - ESC model (T-Motor, PCB markings noted, protocol TBD) and propeller size (TBD).
+- Note: no official PDF datasheets published by any of the three manufacturers; specs sourced from product pages only.
+
 ## 2026-07-02
 - Rewrote `README.md`: added "AI-enabled workflow" section explaining the context/ approach and how to start a new AI session; converted context file list to a table with role descriptions; tightened the repo contents listing.
 - Cleaned up `context/` files to eliminate cross-over and redundancy:

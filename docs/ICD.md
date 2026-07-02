@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 0.8 |
-| **Date** | 2026-06-22 |
+| **Revision** | 0.9 |
+| **Date** | 2026-07-02 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -70,6 +70,69 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
 ![PX4 Actuator Output Configuration](assets/actuator-output-config.png)
+
+#### Connected Devices
+
+| PWM Output | Function | Device |
+|---|---|---|
+| MAIN 1 | V-Tail Left | Emax ES3054 (V-tail servo) |
+| MAIN 2 | V-Tail Right | Emax ES3054 (V-tail servo) |
+| MAIN 3 | Left Aileron | Hitec HS-5125MG (wing servo) |
+| MAIN 4 | Left Motor | T-Motor U5 v2.0 (via ESC) |
+| MAIN 5 | Right Aileron | Hitec HS-5125MG (wing servo) |
+| MAIN 6 | Right Motor | T-Motor U5 v2.0 (via ESC) |
+
+**V-Tail Servos (MAIN 1, MAIN 2) - Emax ES3054**
+
+| Characteristic | Value |
+|---|---|
+| Type | Digital, metal gear |
+| Weight | 17g |
+| Dimensions | 28.45 x 13.00 x 31.10mm |
+| Operating voltage | 4.8 - 6.0V |
+| Torque @ 4.8V / 6.0V | 3.0 / 3.5 kg.cm |
+| Speed @ 4.8V / 6.0V | 0.15 / 0.13 sec/60° |
+| Spline | 23T |
+
+![Emax ES3054 tail servo](assets/emax-es3054-tail-servo.jpg)
+
+**Aileron Servos (MAIN 3, MAIN 5) - Hitec HS-5125MG**
+
+| Characteristic | Value |
+|---|---|
+| Type | Digital, metal gear, slim wing |
+| Weight | 24g |
+| Dimensions | 30 x 10 x 34mm |
+| Operating voltage | 4.8 - 6.0V |
+| Torque @ 4.8V / 6.0V | 3.0 / 3.5 kg.cm |
+| Speed @ 4.8V / 6.0V | 0.17 / 0.13 sec/60° |
+| Spline | Micro 25T |
+
+![Hitec HS-5125MG wing servo](assets/hitec-hs5125mg-wing-servo.jpg)
+
+**Motors (MAIN 4, MAIN 6) - T-Motor U5 v2.0**
+
+| Characteristic | Value |
+|---|---|
+| KV | 400 |
+| Configuration | 12N14P |
+| Weight | 156g (excl. cables) |
+| Dimensions | Φ42.5 x 37.5mm |
+| Shaft diameter | 5mm |
+| Voltage range | 3-8S LiPo |
+| Max continuous current (180s) | 30A |
+| Max continuous power (180s) | 850W |
+| Internal resistance | 116mΩ |
+| ESC | T-Motor (model TBD - see open items) |
+| Propeller | TBD |
+
+![T-Motor U5 v2.0 front view](assets/tmotor-u5-front.jpg)
+
+![T-Motor U5 v2.0 side view](assets/tmotor-u5-side.jpg)
+
+![T-Motor ESC front](assets/tmotor-esc-front.jpg)
+
+![T-Motor ESC back](assets/tmotor-esc-back.jpg)
 
 ### INT-03 - RC Control Link (TELEM1)
 
@@ -186,3 +249,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.6 | 2026-06-22 | Redrawn block diagram with orthogonal routing, uniform box sizing, and a white background |
 | 0.7 | 2026-06-22 | Confirmed CH12 (SH switch) routing against the GX12 EdgeTX radio backup and the QGC Flight Modes Config screenshot; added screenshot |
 | 0.8 | 2026-06-22 | Corrected INT-08: transmitter is the GX12 **Crush** (Iron Grey), not the standard GX12. Added annotated front/top switch-location diagrams |
+| 0.9 | 2026-07-02 | Added INT-02 connected device specs: V-tail servos (Emax ES3054), aileron servos (Hitec HS-5125MG), motors (T-Motor U5 v2.0 KV400). ESC identified as T-Motor branded, model TBD |
