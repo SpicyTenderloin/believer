@@ -37,6 +37,6 @@ These files aren't aircraft documentation - they're notes AI tools read and upda
 - **`open-items.md`** - open TBDs and information gaps still to confirm with the user.
 - **`authorities.md`** - standing authorities granted to Claude, checked against `.claude/settings.local.json` at each session start.
 - **`academic-integrity.md`** - QUT academic conduct and AI use policy, with notes on how it applies to this project.
-- **`CHANGELOG.md`** - all notable changes to the repo, most recent first.
+- **`CHANGELOG.md`** - all changes to the repo, most recent first.
 
 The split exists so the formal docs read like professional engineering documents (current, as-built facts only) while the reasoning, history, and unresolved questions behind them stay queryable in `context/` rather than cluttering `docs/`.
