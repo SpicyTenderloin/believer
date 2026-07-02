@@ -3,6 +3,11 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-07-02
+- Cleaned up `context/` files to eliminate cross-over and redundancy:
+  - Removed `context/MEMORY.md` - fully redundant with `context/startup-prompt.md`'s read-order list; removed references from `README.md` and `context/project-overview.md`
+  - Rewrote `context/directives.md` - removed items that belonged in `context/style-guide.md` (Markdown-only rule, assets path, TBD convention, em-dash rule); reorganised remaining working conventions under two headings (File organisation, Session behaviour)
+  - Updated `context/style-guide.md` - added em-dash rule (moved from directives.md); now the single owner of all writing and formatting standards
+  - Updated `context/startup-prompt.md` - removed "Standing instructions" section (all rules now live in their canonical file only); replaced with a single pointer to directives.md and style-guide.md
 - Removed root `CHANGELOG.md` stub (it only contained a redirect to `context/CHANGELOG.md`; redirect is no longer needed as the canonical location is established).
 - Updated `context/directives.md`: strengthened the CHANGELOG rule from "log notable changes" to a mandatory requirement - every change to any repo document must be logged in `context/CHANGELOG.md` before committing, no exceptions.
 - Added geofence configuration task to `docs/build-checklist.md` Configure and Tune section (item 9, between failsafe and flight controller tuning); shifted tuning to item 10 and Standard Install to item 11.

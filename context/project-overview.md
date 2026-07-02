@@ -66,7 +66,6 @@ believer/
 ├── README.md                        ← Repo overview for humans
 ├── context/                         ← AI working memory (this folder)
 │   ├── startup-prompt.md            ← Single bootstrapping file for AI tools
-│   ├── MEMORY.md                    ← Index of context files
 │   ├── project-overview.md          ← This file: project state + file map
 │   ├── project-notes.md             ← Confirmed facts + decision/provenance history
 │   ├── directives.md                ← Working conventions for AI

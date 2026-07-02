@@ -29,7 +29,6 @@ Project documentation (manual, ICD, notes, logs) is kept as Markdown so it versi
 These files aren't aircraft documentation - they're notes AI tools read and update so they can work consistently across sessions without re-deriving the same facts or re-litigating settled decisions. `CLAUDE.md` points here automatically at the start of every session.
 
 - **`startup-prompt.md`** - the single bootstrapping entry point. Contains the project summary, read-order for all context files, key document map, and standing instructions. Point any AI tool here first.
-- **`MEMORY.md`** - the index. Lists every context file and its purpose.
 - **`project-overview.md`** - current build state (installed components, actuator mapping, key parameters) and the full repo file-structure map.
 - **`project-notes.md`** - facts about the aircraft and avionics, plus the *provenance* behind them: what was confirmed, when, against which source, and what alternatives were ruled out.
 - **`directives.md`** - standing working conventions for this repo: how files are organized, what's kept vs. deleted, when to commit/push.

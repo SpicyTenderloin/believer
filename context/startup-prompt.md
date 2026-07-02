@@ -53,13 +53,4 @@ Read them in order - each one builds on the last.
 
 ---
 
-## Standing instructions
-
-- **All project documentation is Markdown** - never create Word or PDF documents for project docs.
-- **Commit and push changes as you go** - do not batch everything into one commit at the end of a session.
-- **Mark unknowns as `TBD`** - add them to `context/open-items.md` and do not guess.
-- **Log notable changes in `context/CHANGELOG.md`**, most recent first.
-- **Do not write source provenance, decision history, or confirmation notes inside `docs/` files** - those go in `context/project-notes.md`. See `context/style-guide.md` for the full standard.
-- **Documents under `docs/` are engineering records** - they state current, as-built facts cleanly. No inline citations, no changelog diffs, no "Status: Confirmed" commentary.
-- **AI use is open and acknowledged** on this project. See `context/academic-integrity.md` for QUT policy context. The technical facts and engineering decisions originate with the project team; AI assists with writing quality and consistency.
-- **Check `context/authorities.md` at session start** and offer to sync any gaps to `.claude/settings.local.json` before proceeding.
+All working conventions are in `context/directives.md`. Document writing standards are in `context/style-guide.md`. Read those files as part of the read-order above - the rules are not repeated here.

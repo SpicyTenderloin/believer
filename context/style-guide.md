@@ -39,3 +39,4 @@ Documents under `docs/` are engineering records - they should read as if written
 - Top-level sections use `##`, subsections use `###`.
 - Tables are preferred over prose for structured data.
 - No trailing changelog blocks at the bottom of individual documents - all changes go in `context/CHANGELOG.md`.
+- **Do not use em-dashes (—) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `context/`, `params/`, and the repo root.
