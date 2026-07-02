@@ -2,7 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
-## 2026-07-02 (session 2)
+## 2026-07-02 (session 2, continued)
+- Recorded propeller as 11x4.7" (manufacturer unknown) in `docs/ICD.md` motor spec table and `context/project-notes.md`.
+- Updated `context/open-items.md`: split propeller entry into two items - manufacturer TBD and thrust validation pending.
+- Added thrust validation task to `docs/build-checklist.md` Configure and Tune section (item 5a): verify 11x4.7" props on T-Motor U5 v2.0 KV400 produce adequate thrust for the aircraft's all-up weight.
+
+## 2026-07-02 (session 2, earlier)
 - Documented motors, ESCs, and servos in `docs/ICD.md` (INT-02 connected devices): T-Motor U5 v2.0 KV400 (motors, MAIN 4/6), Hitec HS-5125MG (aileron servos, MAIN 3/5), Emax ES3054 (V-tail servos, MAIN 1/2). ESC identified as T-Motor branded; model number not legible from PCB markings (T-MOTOR, 1747, 08) - protocol TBD. Bumped ICD revision to 0.9.
 - Added component photos to `docs/assets/`: `tmotor-u5-front.jpg`, `tmotor-u5-side.jpg`, `tmotor-esc-front.jpg`, `tmotor-esc-back.jpg`, `hitec-hs5125mg-wing-servo.jpg`, `emax-es3054-tail-servo.jpg`. Wired into ICD INT-02 under each device spec section.
 - Updated `context/project-overview.md`: added T-Motor U5 v2.0, T-Motor ESC, Hitec HS-5125MG, and Emax ES3054 to the installed components table.

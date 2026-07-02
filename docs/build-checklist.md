@@ -64,6 +64,7 @@ Tracks build completion, hardware retention checks, and flight controller config
 | 3 | Airspeed sensor calibration | Calibrate the MS4525DO airspeed sensor; verify pitot tube orientation and check for blockage | In progress |
 | 4 | GPS configuration and validation | Verify GPS_1 (u-blox M8N) and GPS_2 (ZED-F9P) protocol assignments, port routing, and GNSS constellation settings; confirm GPS lock before arming | In progress |
 | 5 | Motor and ESC configuration | Verify PWM output mapping (MAIN 4 = left motor, MAIN 6 = right motor), confirm motor spin directions, and set PWM min/max limits; conduct motor test via QGroundControl Actuators page | In progress |
+| 5a | Motor thrust validation | Verify that the fitted 11x4.7" propellers on T-Motor U5 v2.0 KV400 motors produce adequate thrust for the aircraft's all-up weight; replace propellers if thrust is insufficient | Not started |
 | 6 | Control surface and servo configuration | Verify V-tail (MAIN 1-2) and aileron (MAIN 3, 5) output mapping; confirm deflection directions, PWM limits, and trim values; verify control surface response to stick inputs before arming | In progress |
 | 7 | RC and flight mode configuration | Verify RC channel mapping, arm and kill switch assignments (CH5 = arm, CH7 = kill), and GR1 flight mode selector (CH6); confirm all six GR1 positions map to the correct PX4 flight modes | In progress |
 | 8 | Failsafe configuration | Configure and verify RC loss, GCS loss, and battery low/critical failsafe behaviour | Not started |

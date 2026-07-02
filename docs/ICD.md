@@ -124,7 +124,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Max continuous power (180s) | 850W |
 | Internal resistance | 116mΩ |
 | ESC | T-Motor (model TBD - see open items) |
-| Propeller | TBD |
+| Propeller | 11x4.7" (manufacturer unknown) |
 
 ![T-Motor U5 v2.0 front view](assets/tmotor-u5-front.jpg)
 
