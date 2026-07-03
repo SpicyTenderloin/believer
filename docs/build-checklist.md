@@ -39,9 +39,9 @@ Priority definitions:
 | Category | Task | Notes | Priority |
 |---|---|---|---|
 | Configure and Tune | Sensor calibration | Accelerometer, gyroscope, and magnetometer calibration in QGroundControl | Critical |
-| Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Critical |
 | Configure and Tune | Failsafe configuration | Configure and verify RC loss, GCS loss, and battery low/critical failsafe behaviour | Critical |
 | Configure and Tune | Motor and ESC configuration | Verify PWM output mapping (MAIN 4 = left motor, MAIN 6 = right motor), confirm motor spin directions, and set PWM min/max limits; conduct motor test via QGroundControl Actuators page | Critical |
+| Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Urgent |
 | Configure and Tune | Standard Install | Document all parameter changes and build log; re-configure from scratch before each test flight | Non-critical |
 
 ---

@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x12)
+- `docs/build-checklist.md`: GPS 2 (ZED-F9P) configuration and validation re-prioritised from Critical to Urgent; reordered In Progress section to maintain Critical-first sort.
+
 ## 2026-07-03 (continued x11)
 - `docs/build-checklist.md`: split control surface and servo configuration into two tasks - "Control surface PWM mapping and direction" (Complete) and "Control surface deflection limits, rates, and expo" (Not Started, Critical).
 
