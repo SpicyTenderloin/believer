@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x5)
+- `docs/build-checklist.md`: sorted rows within each status section - Critical items first, Non-critical below.
+
 ## 2026-07-03 (continued x4)
 - `docs/build-checklist.md`: upgraded GPS mounting bolt torque priority from Non-critical to Critical.
 
