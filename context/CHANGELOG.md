@@ -3,7 +3,7 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-07-03 (continued x10)
-- `docs/build-checklist.md`: moved airspeed sensor calibration and battery and power monitor configuration to Complete; moved failsafe configuration from Not Started to In Progress.
+- `docs/build-checklist.md`: moved airspeed sensor calibration, battery/power monitor configuration, and GPS 1 (M8N) configuration and validation to Complete; split GPS configuration task into GPS 1 (Complete) and GPS 2/ZED-F9P (In Progress, blocked by antenna); moved failsafe configuration from Not Started to In Progress.
 
 ## 2026-07-03 (continued x9)
 - Updated `docs/ICD.md` INT-07 (Rev 1.0 - 1.1): added I2C port detail for MS4525DO - Pixhawk 6X I2C port (JST-GH 4-pin), address 0x28. Updated `context/project-notes.md` to match.
