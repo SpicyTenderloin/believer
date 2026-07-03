@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x9)
+- Updated `docs/ICD.md` INT-07 (Rev 1.0 - 1.1): added I2C port detail for MS4525DO - Pixhawk 6X I2C port (JST-GH 4-pin), address 0x28. Updated `context/project-notes.md` to match.
+
 ## 2026-07-03 (continued x8)
 - Rewrote `params/parameter-change-log.md`: replaced changelog-style sections with a single current-configuration reference (one table per subsystem, current values only, no old-value tracking). Added MAV_1_* (TELEM1/ELRS OSD telemetry back-channel) and PWM_MAIN_FUNC1-6 / PWM_MAIN_REV (actuator assignments). Moved calibration values (ACC, BARO, GYRO, MAG) to a separate section at the bottom. Flag on PWM_MAIN_DIS7 = 2000 removed from the log (not an intentional configuration change).
 

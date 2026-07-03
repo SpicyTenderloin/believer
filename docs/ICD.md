@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.0 |
+| **Revision** | 1.1 |
 | **Date** | 2026-07-03 |
 | **Status** | Draft |
 
@@ -253,7 +253,17 @@ Antenna not yet fitted - tracked as a maiden flight blocker in [build-checklist.
 
 ### INT-07 - Airspeed Sensor (I2C)
 
-MS4525DO differential pressure sensor. Driver enabled (`SENS_EN_MS4525DO`).
+MS4525DO differential pressure sensor, connected to the Pixhawk 6X I2C port (JST-GH 4-pin).
+
+| Characteristic | Value |
+|---|---|
+| Port | Pixhawk 6X I2C (JST-GH 4-pin: VCC, SCL, SDA, GND) |
+| I2C address | 0x28 (default) |
+
+| Parameter | Value |
+|---|---|
+| `SENS_EN_MS4525DO` | 1 (Enabled) |
+| `SENS_EXT_I2C_PRB` | 1 (Enabled) |
 
 ### INT-08 - RC Transmitter Link
 
@@ -277,3 +287,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.8 | 2026-06-22 | Corrected INT-08: transmitter is the GX12 **Crush** (Iron Grey), not the standard GX12. Added annotated front/top switch-location diagrams |
 | 0.9 | 2026-07-02 | Added INT-02 connected device specs: V-tail servos (Emax ES3054), aileron servos (Hitec HS-5125MG), motors (T-Motor U5 v2.0 KV400). ESC identified as T-Motor branded, model TBD |
 | 1.0 | 2026-07-03 | Split INT-02 into INT-02a-f (one interface per PWM output); added full 16-pin RFD900x connector pinout table under INT-04; updated block diagram to show individual actuator connections |
+| 1.1 | 2026-07-03 | Added INT-07 I2C port and address detail |
