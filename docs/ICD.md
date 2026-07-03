@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 0.9 |
-| **Date** | 2026-07-02 |
+| **Revision** | 1.0 |
+| **Date** | 2026-07-03 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -34,7 +34,12 @@ The servo rail is electrically isolated from the main flight controller power su
 | ID | Interface | Type | Endpoint A | Endpoint B |
 |---|---|---|---|---|
 | INT-01 | Power distribution | Power | Holybro PM03D power module | FC, servo rail (5V) |
-| INT-02 | Actuator outputs | PWM | FC (MAIN 1–6) | Control surface servos, motors |
+| INT-02a | V-Tail Left servo (MAIN 1) | PWM | FC MAIN 1 | Emax ES3054 |
+| INT-02b | V-Tail Right servo (MAIN 2) | PWM | FC MAIN 2 | Emax ES3054 |
+| INT-02c | Left Aileron servo (MAIN 3) | PWM | FC MAIN 3 | Hitec HS-5125MG |
+| INT-02d | Left Motor (MAIN 4) | PWM | FC MAIN 4 | T-Motor U5 v2.0 (via ESC) |
+| INT-02e | Right Aileron servo (MAIN 5) | PWM | FC MAIN 5 | Hitec HS-5125MG |
+| INT-02f | Right Motor (MAIN 6) | PWM | FC MAIN 6 | T-Motor U5 v2.0 (via ESC) |
 | INT-03 | RC control link | Serial, TELEM1 | FC | Radiomaster DBR4 receiver |
 | INT-04 | Telemetry link | Serial, TELEM2 | FC | RFD900x radio modem |
 | INT-05 | GPS 1 (primary) | Serial, GPS1 UART | FC | M8N GPS module |
@@ -56,7 +61,7 @@ Power module: Holybro PM03D.
 | Battery | 6S LiPo (`BAT1_N_CELLS` = 6S) |
 | Servo rail | 5V, electrically isolated from main FC supply |
 
-### INT-02 - Actuator Outputs (PWM)
+### INT-02a through INT-02f - Actuator Outputs (PWM MAIN 1-6)
 
 All flight control surface and motor servos connect to the FC's PWM outputs.
 
@@ -204,6 +209,27 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 
 ![RFD900x Pinout Diagram](assets/rfd900-pinout-diagram.png)
 
+#### RFD900x Connector Pinout (full 16-pin)
+
+| Pin | Signal | Direction | Function | Level |
+|---|---|---|---|---|
+| 1 | GND | - | Ground | 0V |
+| 2 | GND | - | Ground | 0V |
+| 3 | CTS | Input | Clear to send | 3.3V |
+| 4 | Vcc | - | Power supply | 5V |
+| 5 | Vusb | - | Power supply from USB | 5V |
+| 6 | Vusb | - | Power supply from USB | 5V |
+| 7 | RX | Input | UART Data In | 3.3V |
+| 8 | GPIO5/P3.4 | I/O | Digital I/O | 3.3V |
+| 9 | TX | Output | UART Data Out | 3.3V |
+| 10 | GPIO4/P3.3 | I/O | Digital I/O | 3.3V |
+| 11 | RTS | Output | Request to send | 3.3V |
+| 12 | GPIO3/P1.3 | I/O | Digital I/O | 3.3V |
+| 13 | GPIO0/P1.0 | I/O | Digital I/O | 3.3V |
+| 14 | GPIO2/P1.2 | I/O | Digital I/O | 3.3V |
+| 15 | GPIO1/P1.1 | I/O | Digital I/O, PPM I/O | 3.3V |
+| 16 | GND | - | Ground | 0V |
+
 ### INT-05 - GPS 1 (Primary)
 
 M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
@@ -250,3 +276,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.7 | 2026-06-22 | Confirmed CH12 (SH switch) routing against the GX12 EdgeTX radio backup and the QGC Flight Modes Config screenshot; added screenshot |
 | 0.8 | 2026-06-22 | Corrected INT-08: transmitter is the GX12 **Crush** (Iron Grey), not the standard GX12. Added annotated front/top switch-location diagrams |
 | 0.9 | 2026-07-02 | Added INT-02 connected device specs: V-tail servos (Emax ES3054), aileron servos (Hitec HS-5125MG), motors (T-Motor U5 v2.0 KV400). ESC identified as T-Motor branded, model TBD |
+| 1.0 | 2026-07-03 | Split INT-02 into INT-02a-f (one interface per PWM output); added full 16-pin RFD900x connector pinout table under INT-04; updated block diagram to show individual actuator connections |

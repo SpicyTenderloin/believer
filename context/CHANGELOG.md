@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03
+- Rewrote `docs/build-checklist.md`: added Priority column (Critical / Non-critical) to all tables; changed "Done" to "Complete" throughout; updated parachute bay task (servo removed, bay taped shut, future servo/payload work noted); updated pitot installation note (secured with tape); added pitot permanent mount task (Sensors item 2, shifted clearance check to item 3); added wiring tidy task (Avionics Installation item 4); marked Configure and Tune item 7 (RC and flight mode configuration) as Complete.
+- Updated `docs/ICD.md` to Rev 1.0: split INT-02 into INT-02a through INT-02f in the interface summary (one row per PWM output, naming the connected device); updated INT-02 section heading to "INT-02a through INT-02f"; added full 16-pin RFD900x connector pinout table under INT-04 after the pinout diagram image.
+- Redrawn `docs/assets/icd-block-diagram.svg`: replaced single "Control Surfaces and Motors" block with 6 individual actuator boxes (one per MAIN output), each labelled with device model and PWM assignment; motor boxes use a distinct green style; INT-02 link labels updated to INT-02a through INT-02f; legend updated to include motor/propulsion entry. Canvas expanded to 1500x1100 to accommodate new layout.
+
 ## 2026-07-02 (session 2, continued again)
 - Added pitot tube clearance verification task to `docs/build-checklist.md` Sensors section (item 2): verify pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed air; reposition if clearance is insufficient.
 
