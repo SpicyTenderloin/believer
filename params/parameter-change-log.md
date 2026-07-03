@@ -65,3 +65,49 @@ Source: "GX12 Logical Switch Setup" notes. Radio is a Radiomaster GX12 + DBR4 (E
 Note: PX4's formal mode name is "Hold"; "Loiter" is the older/common name for the same mode and is still used in switch-mapping wording above. The aircraft flies a circle around the point Hold was engaged, maintaining altitude - it cannot hover.
 
 For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGC shows the active/inactive direction is actually wrong.
+
+## 2026-07-03 - Sensor recalibrations, battery thresholds, and geofence action
+
+Source: `beleiver.params` (parameter dump from FC, 2026-07-03); diffed against `params/believer-parameters.params` (2026-06-22 backup).
+
+### Calibration updates
+
+Calibration offsets are written automatically by PX4 during QGroundControl calibration procedures and must not be edited manually. All values below changed as a result of running the QGC sensor calibration wizard.
+
+| Parameter | Old Value | New Value | Note |
+|---|---|---|---|
+| `CAL_ACC0_XOFF` | 0.051469 | -0.024361 | IMU0 accelerometer recalibrated |
+| `CAL_ACC0_YOFF` | -0.067020 | -0.078681 | |
+| `CAL_ACC0_ZOFF` | 0.130733 | 0.089067 | |
+| `CAL_ACC1_XOFF` | 0.073733 | 0.042716 | IMU1 accelerometer recalibrated |
+| `CAL_ACC1_YOFF` | 0.090720 | 0.021262 | |
+| `CAL_ACC1_ZOFF` | -0.310685 | -0.310753 | |
+| `CAL_ACC2_XOFF` | -0.006950 | -0.022205 | IMU2 accelerometer recalibrated |
+| `CAL_ACC2_YOFF` | -0.029953 | -0.065430 | |
+| `CAL_ACC2_ZOFF` | 0.114083 | 0.154072 | |
+| `CAL_BARO0_OFF` | 26.695 | 11.688 | Barometer recalibrated |
+| `CAL_GYRO2_XOFF` | -0.007781 | -0.013063 | IMU2 gyroscope recalibrated |
+| `CAL_GYRO2_YOFF` | -0.024517 | -0.033166 | |
+| `CAL_GYRO2_ZOFF` | -0.024705 | -0.024671 | |
+| `CAL_MAG1_XOFF` | 0.029010 | 0.000856 | External magnetometer recalibrated |
+| `CAL_MAG1_YOFF` | 0.075150 | 0.076916 | |
+| `CAL_MAG1_ZOFF` | 0.053271 | 0.049901 | |
+
+### Intentional parameter changes
+
+| Parameter | Old Value | New Value | Justification |
+|---|---|---|---|
+| `BAT_CRIT_THR` | 0.070 (7%) | 0.100 (10%) | Raised from PX4 default to a more conservative critical battery threshold; reduces risk of in-flight power loss. |
+| `BAT_LOW_THR` | 0.150 (15%) | 0.200 (20%) | Raised from PX4 default to a more conservative low-battery warning threshold. |
+| `GF_ACTION` | 2 (Hold) | 3 (Return) | Geofence breach action changed from Hold to Return to Launch. Return is preferred - Hold would leave the aircraft loitering outside the fence boundary indefinitely. |
+| `PWM_MAIN_DIS7` | 1500 | 2000 | **See flag below.** |
+
+### Other
+
+| Parameter | Old Value | New Value | Note |
+|---|---|---|---|
+| `COM_FLIGHT_UUID` | 171 | 180 | Internal flight session counter; incremented automatically by PX4. 9 additional sessions since the 2026-06-22 backup. Not configurable; logged for completeness. |
+
+### Flag
+
+**`PWM_MAIN_DIS7` = 2000**: MAIN 7 is not assigned to any actuator or function in the current configuration (active outputs are MAIN 1-6 only). A disarmed PWM value of 2000 is the high end of the servo range rather than the neutral/safe position (1500). If a servo or motor ESC is ever connected to MAIN 7, it will receive a full-deflection or full-throttle signal when the aircraft is disarmed. Verify this change was intentional; if not, restore to 1500.

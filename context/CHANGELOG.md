@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x7)
+- Replaced `params/believer-parameters.params` with user-supplied dump `beleiver.params` (2026-07-03 export from FC). Updated `params/parameter-change-log.md` with a new section documenting all changes since the 2026-06-22 backup: sensor recalibrations (ACC0/1/2, BARO0, GYRO2, MAG1), battery threshold increases (BAT_CRIT_THR 7%→10%, BAT_LOW_THR 15%→20%), geofence breach action change (GF_ACTION Hold→Return), and a flag on PWM_MAIN_DIS7 = 2000 on an unassigned output.
+
 ## 2026-07-03 (continued x6)
 - `docs/build-checklist.md`: added Urgent priority tier (between Critical and Non-critical); added priority definitions header; re-prioritised all tasks - pitot permanent mount, pitot clearance, ZED-F9P antenna and mount, geofence, and PID tuning moved to Urgent; GPS 2 antenna note updated to clarify aircraft can fly on M8N only.
 
