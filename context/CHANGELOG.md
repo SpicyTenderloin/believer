@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x11)
+- `docs/build-checklist.md`: split control surface and servo configuration into two tasks - "Control surface PWM mapping and direction" (Complete) and "Control surface deflection limits, rates, and expo" (Not Started, Critical).
+
 ## 2026-07-03 (continued x10)
 - `docs/build-checklist.md`: moved airspeed sensor calibration, battery/power monitor configuration, and GPS 1 (M8N) configuration and validation to Complete; split GPS configuration task into GPS 1 (Complete) and GPS 2/ZED-F9P (In Progress, blocked by antenna); moved failsafe configuration from Not Started to In Progress.
 
