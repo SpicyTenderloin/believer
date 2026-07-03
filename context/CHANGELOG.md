@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x19)
+- Created `docs/project-timeline.md`: completed milestones table, current status summary, remaining pre-flight tasks, and five-phase roadmap (first flight, expanded testing, companion computer integration, autonomous capabilities, BVLOS operations). Linked from `docs/project-overview.md`.
+
 ## 2026-07-03 (continued x18)
 - `docs/build-checklist.md`: added Future Work section; moved paint/finishing and parachute/payload bay servo there from Not Started; added companion computer mount, camera mount, camera record-on-arm, LiDAR sourcing, LiDAR installation, auto takeoff, and auto land tasks.
 

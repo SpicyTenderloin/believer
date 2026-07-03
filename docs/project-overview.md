@@ -30,6 +30,7 @@ The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup i
 
 ## Related documents
 
+- [project-timeline.md](project-timeline.md) - milestone history and phase roadmap
 - [ICD.md](ICD.md) - interface control document (avionics interfaces)
 - [manual.md](manual.md) - flight modes, switch mapping, operating procedures
 - [build-checklist.md](build-checklist.md) - build, retention, and configuration checklist
