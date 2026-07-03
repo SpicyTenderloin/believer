@@ -72,26 +72,50 @@ Intended safe startup condition, to be verified before every flight:
 
 ## 6. Pre-Flight Checklist
 
-1. Remove airframe components from the carry box and inspect for damage incurred in transport.
-2. Assemble the airframe, ensuring all connections are firmly engaged.
-3. Reinspect the assembled airframe for damage.
-4. Install the 900 MHz antennas to the external antenna ports; ensure they are correctly torqued and oriented to prevent damage.
-5. Install the M8N GPS in its mount and torque to secure.
-6. Connect the M8N GPS to the GPS 1 port on the Pixhawk flight computer.
-7. Power on the GX12 transmitter and confirm the throttle is at the minimum position and the kill switch is engaged.
-8. Install the battery using the supplied straps and verify the centre of gravity is correct. Do not connect the battery to the power distribution board at this stage.
-9. Connect the RFD900 ground station module to a laptop running QGroundControl.
-10. Connect the battery to the power distribution board and establish a connection with QGroundControl.
-11. Perform any flight computer calibration steps required.
-12. Confirm QGroundControl reports no warnings.
-13. Confirm sufficient battery capacity remains for the planned flight.
-14. With propellers removed, arm the vehicle in Manual mode.
-15. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
-16. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
-17. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](assets/motor-rotation-direction.png)).
-18. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
-19. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
-20. Install and torque the propellers.
-21. Confirm GPS has acquired a 3D fix with an appropriate HDOP and VDOP.
+### Site and conditions
+
+1. Check the weather forecast. Confirm wind speed, gusts, and visibility are within acceptable limits for the planned flight.
+2. Check NOTAMs and confirm the operating area and altitude are clear of airspace restrictions.
+
+### Assembly and inspection
+
+3. Remove airframe components from the carry box and inspect for damage incurred in transport.
+4. Assemble the airframe, ensuring all connections are firmly engaged.
+5. Reinspect the assembled airframe for damage.
+6. Inspect the pitot tube. Confirm the tube is unobstructed (no insects, moisture, or transport tape covering the inlet) and the tubing to the airspeed sensor is securely connected.
+7. Install the 900 MHz antennas to the external antenna ports; ensure they are correctly torqued and oriented to prevent damage.
+8. Install the M8N GPS in its mount and torque to secure.
+9. Connect the M8N GPS to the GPS 1 port on the Pixhawk flight computer.
+
+### Power on and ground station
+
+10. Power on the GX12 transmitter and confirm the throttle is at the minimum position and the kill switch is engaged.
+11. Install the battery using the supplied straps and verify the centre of gravity is correct. Do not connect the battery to the power distribution board at this stage.
+12. Connect the RFD900 ground station module to a laptop running QGroundControl.
+13. Connect the battery to the power distribution board and establish a connection with QGroundControl.
+14. Perform any flight computer calibration steps required.
+15. Confirm QGroundControl reports no warnings.
+16. Confirm sufficient battery capacity remains for the planned flight.
+17. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
+18. Confirm the geofence is loaded and active in QGroundControl, and that the breach action is set to Return.
+19. Confirm RC link signal quality (RSSI) is good in QGroundControl before proceeding.
+
+### Ground functional checks (propellers removed)
+
+20. With propellers removed, arm the vehicle in Manual mode.
+21. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
+22. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
+23. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](assets/motor-rotation-direction.png)).
+24. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
+25. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
+26. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
+27. Disarm the vehicle before proceeding.
+
+### Pre-launch
+
+28. Confirm the launch area is clear of people, animals, and obstructions. Confirm the airspace overhead is clear.
+29. Install and torque the propellers.
+30. Confirm propeller retention nuts are correctly torqued on both motors. The left-hand motor rotates clockwise when viewed from the front - its retention nut is reverse-threaded and must be inspected with particular care.
+31. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
 
 See also [build-checklist.md](build-checklist.md) for the build, retention, and configuration checklist.

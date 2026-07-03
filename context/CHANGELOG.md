@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x22)
+- `docs/manual.md`: expanded pre-flight checklist from 21 to 31 steps; added section headers; added weather/NOTAM checks, pitot obstruction check, home position confirmation, geofence active check, RSSI check, airspeed sensor functional check, explicit disarm before propeller installation, people/airspace clear check, and propeller retention nut torque check (with LHS reverse-thread note).
+
 ## 2026-07-03 (continued x21)
 - `docs/manual.md`: added GX12 front and top switch diagrams to RC Control section; added QGC flight modes config screenshot after GR1 flight mode table.
 
