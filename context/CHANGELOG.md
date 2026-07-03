@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued again)
+- Restructured `docs/build-checklist.md`: replaced category-based layout with three status sections (Complete, In Progress, Not Started), each as a single table with a Category column; dropped the Status column (redundant with section heading) and the # column. Parachute/payload bay servo split out as a new Not Started item (previously embedded as future-work notes in the Complete parachute bay task).
+
 ## 2026-07-03 (continued)
 - `docs/build-checklist.md`: marked Fasteners and Retention Checks items 1 (motor/ESC access hatch) and 2 (nacelle retention) as Complete.
 
