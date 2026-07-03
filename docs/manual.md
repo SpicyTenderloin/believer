@@ -113,9 +113,21 @@ Intended safe startup condition, to be verified before every flight:
 
 ### Pre-launch
 
-28. Confirm the launch area is clear of people, animals, and obstructions. Confirm the airspace overhead is clear.
-29. Install and torque the propellers.
-30. Confirm propeller retention nuts are correctly torqued on both motors. The left-hand motor rotates clockwise when viewed from the front - its retention nut is reverse-threaded and must be inspected with particular care.
-31. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
+28. Install and torque the propellers.
+29. Confirm propeller retention nuts are correctly torqued on both motors. The left-hand motor rotates clockwise when viewed from the front - its retention nut is reverse-threaded and must be inspected with particular care.
+30. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
+
+### Assisted hand launch
+
+Two people are required: a **pilot** operating the GX12 and a **handler** who holds and throws the aircraft. The handler must not approach the aircraft until the pilot signals ready.
+
+31. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
+32. Pilot: select Stabilized mode (GR1 SW2) and confirm throttle is at minimum.
+33. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
+34. Pilot: arm the aircraft (CH5) and advance throttle to approximately 75-100%.
+35. Pilot: call "launch" (or pre-agreed signal).
+36. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
+37. Pilot: hold Stabilized mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
+38. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
 
 See also [build-checklist.md](build-checklist.md) for the build, retention, and configuration checklist.

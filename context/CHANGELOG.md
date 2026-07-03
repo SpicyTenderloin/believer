@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x23)
+- `docs/manual.md`: moved launch area clear check to immediately before launch (step 31); added assisted hand launch section (steps 31-38) covering roles, handler grip, arm/throttle sequence, throw technique, and post-launch recovery.
+
 ## 2026-07-03 (continued x22)
 - `docs/manual.md`: expanded pre-flight checklist from 21 to 31 steps; added section headers; added weather/NOTAM checks, pitot obstruction check, home position confirmation, geofence active check, RSSI check, airspeed sensor functional check, explicit disarm before propeller installation, people/airspace clear check, and propeller retention nut torque check (with LHS reverse-thread note).
 
