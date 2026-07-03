@@ -61,6 +61,22 @@ Priority definitions:
 | GPS | External mount for ZED-F9P | Install external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation | Urgent |
 | GPS | GPS 2 antenna | Install antenna on the SparkFun ZED-F9P RTK GPS breakout; aircraft can fly on M8N (GPS 1) only but RTK capability is unavailable without this | Urgent |
 | Configure and Tune | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Urgent |
-| Airframe | Paint and finishing | Apply paint job as required | Non-critical |
-| Airframe | Parachute/payload bay servo | Install a servo in the parachute bay and wire it for parachute or payload deployment | Non-critical |
 | Avionics | Wiring tidy | Inspect and tidy all internal wiring; ensure cables are routed clear of moving parts, control linkages, and propeller arcs; secure with cable ties or sleeving as required | Non-critical |
+
+---
+
+## Future Work
+
+Capabilities not required for current operations but planned for later phases of the project.
+
+| Category | Task | Notes |
+|---|---|---|
+| Airframe | Paint and finishing | Apply paint job as required |
+| Airframe | Parachute/payload bay servo | Install a servo in the parachute bay and wire it for parachute or payload deployment |
+| Avionics | Companion computer mount | Design and install a mount for the companion computer inside the airframe |
+| Avionics | Camera mount | Design and install a mount for the IMX335 5MP USB camera |
+| Payload | Configure camera to record on arm | Configure the companion computer to begin camera recording automatically when the aircraft arms |
+| Sensors | Source LiDAR | Identify and procure an appropriate LiDAR unit for terrain following, obstacle avoidance, or precision landing |
+| Sensors | Install LiDAR | Mount and wire the LiDAR; configure PX4 driver and distance sensor parameters |
+| Configure and Tune | Configure auto takeoff | Configure and test PX4 hand-launch or runway takeoff procedure for autonomous departure |
+| Configure and Tune | Configure auto land | Configure and test PX4 automated landing approach and touchdown sequence |
