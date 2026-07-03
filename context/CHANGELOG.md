@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x17)
+- `docs/build-checklist.md`: moved sensor calibration (accelerometer, gyroscope, magnetometer) to Complete.
+
 ## 2026-07-03 (continued x16)
 - `docs/build-checklist.md`: moved failsafe configuration to Complete.
 

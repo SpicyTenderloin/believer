@@ -24,6 +24,7 @@ Priority definitions:
 | Fasteners | Motor and ESC access hatch retention | All motor and ESC access hatches closed and secured | Critical |
 | Fasteners | Nacelle retention | Nacelle fairing correctly seated and secured to airframe | Critical |
 | Fasteners | Torque avionics bay mounting bolts | All mounting bolts securing the avionics bay torqued correctly | Critical |
+| Configure and Tune | Sensor calibration | Accelerometer, gyroscope, and magnetometer calibration completed in QGroundControl | Critical |
 | Configure and Tune | Battery and power monitor configuration | BAT1_N_CELLS = 6 set; voltage and current sensing verified via PM03D (INA228) | Critical |
 | Configure and Tune | RC and flight mode configuration | RC channel mapping, arm/kill switches (CH5/CH7), and GR1 flight mode selector (CH6) verified; all six GR1 positions confirmed against PX4 flight modes | Critical |
 | Configure and Tune | Airspeed sensor calibration | MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port | Critical |
@@ -41,7 +42,6 @@ Priority definitions:
 
 | Category | Task | Notes | Priority |
 |---|---|---|---|
-| Configure and Tune | Sensor calibration | Accelerometer, gyroscope, and magnetometer calibration in QGroundControl | Critical |
 | Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Urgent |
 | Configure and Tune | Standard Install | Document all parameter changes and build log; re-configure from scratch before each test flight | Non-critical |
 
