@@ -52,8 +52,8 @@ Tracks build completion, hardware retention checks, and flight controller config
 
 | # | Task / Consideration | Notes / Actions Required | Priority | Status |
 |---|---|---|---|---|
-| 1 | Motor and ESC access hatch retention | Verify all motor and ESC access hatches are fully closed and secured prior to flight | Critical | Not started |
-| 2 | Nacelle retention | Verify nacelle fairing is correctly seated and secured to the airframe | Critical | Not started |
+| 1 | Motor and ESC access hatch retention | Verify all motor and ESC access hatches are fully closed and secured prior to flight | Critical | Complete |
+| 2 | Nacelle retention | Verify nacelle fairing is correctly seated and secured to the airframe | Critical | Complete |
 | 3 | Propeller retention nuts | Verify propeller retention nuts are correctly torqued on both motors. The LHS motor rotates clockwise (viewed from the front of the aircraft), causing a standard right-hand-thread nut to self-loosen under operation - the LHS retention nut must be inspected with particular attention and confirmed secure before each flight | Critical | Not started |
 | 4 | Avionics bay mounting bolt torque | Verify all mounting bolts securing the avionics bay are torqued correctly and have not loosened during handling or vibration | Critical | Not started |
 | 5 | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Non-critical | Not started |
