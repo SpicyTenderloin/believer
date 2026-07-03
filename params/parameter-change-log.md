@@ -103,6 +103,7 @@ PWM limits and disarmed values per output are documented in `docs/ICD.md` (INT-0
 | Parameter | Value | Notes |
 |---|---|---|
 | `GF_ACTION` | 3 (Return) | Geofence breach action. Return is preferred over Hold - Hold would leave the aircraft loitering outside the fence boundary indefinitely. |
+| `GF_MAX_VER_DIST` | 120 (m) | Maximum altitude above home. Set to the CASA standard operating limit of 120m AGL. |
 
 ---
 
