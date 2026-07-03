@@ -27,6 +27,7 @@ Priority definitions:
 | Configure and Tune | Battery and power monitor configuration | BAT1_N_CELLS = 6 set; voltage and current sensing verified via PM03D (INA228) | Critical |
 | Configure and Tune | RC and flight mode configuration | RC channel mapping, arm/kill switches (CH5/CH7), and GR1 flight mode selector (CH6) verified; all six GR1 positions confirmed against PX4 flight modes | Critical |
 | Configure and Tune | Airspeed sensor calibration | MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port | Critical |
+| Configure and Tune | Motor and ESC configuration | PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page | Critical |
 | Configure and Tune | Control surface PWM mapping and direction | PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction | Critical |
 | Configure and Tune | GPS 1 (M8N) configuration and validation | GPS_1_CONFIG, GPS_1_PROTOCOL, GPS_1_GNSS, and GPS_UBX_DYNMODEL set; GPS lock confirmed | Critical |
 | Airframe | Wing tape cleanup | Excess and temporary tape removed from wings | Non-critical |
@@ -40,7 +41,6 @@ Priority definitions:
 |---|---|---|---|
 | Configure and Tune | Sensor calibration | Accelerometer, gyroscope, and magnetometer calibration in QGroundControl | Critical |
 | Configure and Tune | Failsafe configuration | Configure and verify RC loss, GCS loss, and battery low/critical failsafe behaviour | Critical |
-| Configure and Tune | Motor and ESC configuration | Verify PWM output mapping (MAIN 4 = left motor, MAIN 6 = right motor), confirm motor spin directions, and set PWM min/max limits; conduct motor test via QGroundControl Actuators page | Critical |
 | Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Urgent |
 | Configure and Tune | Standard Install | Document all parameter changes and build log; re-configure from scratch before each test flight | Non-critical |
 
@@ -54,6 +54,7 @@ Priority definitions:
 | Fasteners | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Critical |
 | Configure and Tune | Control surface deflection limits, rates, and expo | Set appropriate PWM travel limits for V-tail and ailerons; configure rates and expo in EdgeTX to give suitable stick feel and prevent over-deflection at speed | Critical |
 | Configure and Tune | Motor thrust validation | Verify that the fitted 11x4.7" propellers on T-Motor U5 v2.0 KV400 motors produce adequate thrust for the aircraft's all-up weight; replace propellers if thrust is insufficient | Critical |
+| Configure and Tune | Motor PWM min/max limits | Set and verify minimum and maximum PWM duty cycle for both ESCs to ensure correct throttle range | Urgent |
 | Sensors | Pitot tube permanent mount | Replace temporary tape with a rigid, permanent mount; ensure the mount does not introduce vibration or movement that could affect sensor readings | Urgent |
 | Sensors | Pitot tube clearance verification | Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air - check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient | Urgent |
 | GPS | External mount for ZED-F9P | Install external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation | Urgent |

@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x13)
+- `docs/build-checklist.md`: moved motor and ESC configuration to Complete; split out motor PWM min/max limits as a new Urgent Not Started task.
+
 ## 2026-07-03 (continued x12)
 - `docs/build-checklist.md`: GPS 2 (ZED-F9P) configuration and validation re-prioritised from Critical to Urgent; reordered In Progress section to maintain Critical-first sort.
 
