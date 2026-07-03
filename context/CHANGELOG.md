@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x14)
+- `docs/build-checklist.md`: moved geofence configuration to Complete (GF_ACTION = Return, GF_MAX_VER_DIST = 120m AGL).
+
 ## 2026-07-03 (continued x13)
 - `docs/build-checklist.md`: moved motor and ESC configuration to Complete; split out motor PWM min/max limits as a new Urgent Not Started task.
 

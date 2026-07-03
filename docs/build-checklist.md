@@ -30,6 +30,7 @@ Priority definitions:
 | Configure and Tune | Motor and ESC configuration | PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page | Critical |
 | Configure and Tune | Control surface PWM mapping and direction | PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction | Critical |
 | Configure and Tune | GPS 1 (M8N) configuration and validation | GPS_1_CONFIG, GPS_1_PROTOCOL, GPS_1_GNSS, and GPS_UBX_DYNMODEL set; GPS lock confirmed | Critical |
+| Configure and Tune | Geofence configuration | Breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST) | Urgent |
 | Airframe | Wing tape cleanup | Excess and temporary tape removed from wings | Non-critical |
 | Airframe | Parachute bay | Servo removed; bay taped shut | Non-critical |
 
@@ -59,7 +60,6 @@ Priority definitions:
 | Sensors | Pitot tube clearance verification | Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air - check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient | Urgent |
 | GPS | External mount for ZED-F9P | Install external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation | Urgent |
 | GPS | GPS 2 antenna | Install antenna on the SparkFun ZED-F9P RTK GPS breakout; aircraft can fly on M8N (GPS 1) only but RTK capability is unavailable without this | Urgent |
-| Configure and Tune | Geofence configuration | Define and enable a geofence appropriate to the operating site in QGroundControl; configure breach action (Hold or Return) and verify fence boundary and altitude limits | Urgent |
 | Configure and Tune | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Urgent |
 | Airframe | Paint and finishing | Apply paint job as required | Non-critical |
 | Airframe | Parachute/payload bay servo | Install a servo in the parachute bay and wire it for parachute or payload deployment | Non-critical |
