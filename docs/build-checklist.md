@@ -20,6 +20,7 @@ Tracks build completion, hardware retention checks, and flight controller config
 | Power | Battery installation | Battery installed and CG location verified | Critical |
 | Fasteners | Motor and ESC access hatch retention | All motor and ESC access hatches closed and secured | Critical |
 | Fasteners | Nacelle retention | Nacelle fairing correctly seated and secured to airframe | Critical |
+| Fasteners | Torque avionics bay mounting bolts | All mounting bolts securing the avionics bay torqued correctly | Critical |
 | Configure and Tune | RC and flight mode configuration | RC channel mapping, arm/kill switches (CH5/CH7), and GR1 flight mode selector (CH6) verified; all six GR1 positions confirmed against PX4 flight modes | Critical |
 
 ---
@@ -50,8 +51,7 @@ Tracks build completion, hardware retention checks, and flight controller config
 | GPS | External mount for ZED-F9P | Install external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation | Critical |
 | GPS | GPS 2 antenna | Install antenna on the SparkFun ZED-F9P RTK GPS breakout - maiden flight blocker | Critical |
 | Fasteners | Propeller retention nuts | Verify propeller retention nuts are correctly torqued on both motors. The LHS motor rotates clockwise (viewed from the front of the aircraft), causing a standard right-hand-thread nut to self-loosen under operation - the LHS retention nut must be inspected with particular attention and confirmed secure before each flight | Critical |
-| Fasteners | Avionics bay mounting bolt torque | Verify all mounting bolts securing the avionics bay are torqued correctly and have not loosened during handling or vibration | Critical |
-| Fasteners | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Non-critical |
+| Fasteners | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Critical |
 | Configure and Tune | Motor thrust validation | Verify that the fitted 11x4.7" propellers on T-Motor U5 v2.0 KV400 motors produce adequate thrust for the aircraft's all-up weight; replace propellers if thrust is insufficient | Critical |
 | Configure and Tune | Failsafe configuration | Configure and verify RC loss, GCS loss, and battery low/critical failsafe behaviour | Critical |
 | Configure and Tune | Geofence configuration | Define and enable a geofence appropriate to the operating site in QGroundControl; configure breach action (Hold or Return) and verify fence boundary and altitude limits | Non-critical |
