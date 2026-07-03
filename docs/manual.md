@@ -27,6 +27,10 @@ RC link: Radiomaster GX12 transmitter → DBR4 receiver (ExpressLRS, dual-band 2
 
 For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGroundControl shows the active/inactive direction is actually wrong.
 
+![GX12 front view with switch functions annotated](assets/gx12-front-switches.png)
+
+![GX12 top view with switch functions annotated](assets/gx12-top-switches.png)
+
 ## 3. Flight Modes (GR1 Switch Group)
 
 GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a time), mapped to CH6 and used as the main PX4 flight-mode selector.
@@ -43,6 +47,8 @@ GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a 
 **Hold vs. Loiter:** these are the same PX4 mode - "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude - it cannot stop and hover like a multirotor.
 
 CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly.
+
+![QGroundControl Flight Modes configuration](assets/flight-modes-config.png)
 
 ## 4. Flaperons
 

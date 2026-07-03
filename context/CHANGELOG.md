@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x21)
+- `docs/manual.md`: added GX12 front and top switch diagrams to RC Control section; added QGC flight modes config screenshot after GR1 flight mode table.
+
 ## 2026-07-03 (continued x20)
 - Corrected project history: airframe built prior to 2020 (inherited), project revived December 2025. Updated `docs/project-timeline.md` milestones and `context/project-notes.md`.
 
