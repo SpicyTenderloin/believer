@@ -8,6 +8,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 - Team: Julian Williams (UAS Systems Lead / Program Manager), Charlotte Kelly (Vice-President / President). Contact: qutaerospacesociety@qut.edu.au.
 - External contacts established: QUT Chief Remote Pilot, Brisbane North Model Aero Club (BNEMAC), CSIRO.
 - Funding: EER School club activity funding, $689.50 requested (50% of $1,379 total), matched by QUTAS account funds. Signed 2026-05-20/21.
+- **Build history**: The airframe was built prior to 2020 (original builder unknown) with motors, servos, and ESCs installed. The project was inherited by Julian Williams and revived in December 2025. All avionics and the current flight controller (Pixhawk 6X / PX4) were installed as part of the revived project.
 
 ## Airframe
 - Believer fixed-wing UAV: V-tail, twin motor (left/right), 2 ailerons.

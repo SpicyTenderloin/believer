@@ -4,10 +4,12 @@
 
 | Date | Milestone |
 |---|---|
+| Prior to 2020 | Airframe originally built with motors, servos, and ESCs installed (original builder unknown; aircraft inherited) |
+| December 2025 | Project revived - Julian Williams takes on the Believer as a QUTAS project |
 | 2026-01-25 | Project proposal submitted (QUTAS, QUT EER School) |
 | 2026-05-11 | Key avionics procured; Holybro PM03D power module purchased |
 | 2026-05-20 | EER club activity funding approved ($689.50 of $1,379 total) |
-| 2026-06 | Aircraft structurally assembled; avionics installed (Pixhawk 6X, RFD900x, M8N GPS, MS4525DO airspeed sensor) |
+| Early 2026 | Avionics installed and upgraded: Holybro Pixhawk 6X (replacing original FC), RFD900x telemetry, M8N GPS, MS4525DO airspeed sensor, Radiomaster DBR4 ELRS receiver |
 | 2026-06-21 | PX4 parameter baseline established; RC link operational (GX12 Crush + DBR4, ELRS dual-band); flight mode mapping configured |
 | 2026-06-22 | EdgeTX radio backup archived; full PX4 parameter dump taken |
 | 2026-06-30 | Build checklist and pre-flight procedures documented |

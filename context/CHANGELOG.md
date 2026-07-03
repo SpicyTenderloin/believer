@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x20)
+- Corrected project history: airframe built prior to 2020 (inherited), project revived December 2025. Updated `docs/project-timeline.md` milestones and `context/project-notes.md`.
+
 ## 2026-07-03 (continued x19)
 - Created `docs/project-timeline.md`: completed milestones table, current status summary, remaining pre-flight tasks, and five-phase roadmap (first flight, expanded testing, companion computer integration, autonomous capabilities, BVLOS operations). Linked from `docs/project-overview.md`.
 
