@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x16)
+- `docs/build-checklist.md`: moved failsafe configuration to Complete.
+
 ## 2026-07-03 (continued x15)
 - `params/parameter-change-log.md`: added GF_MAX_VER_DIST = 120m to geofence section.
 
