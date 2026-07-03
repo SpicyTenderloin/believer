@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-03 (continued x6)
+- `docs/build-checklist.md`: added Urgent priority tier (between Critical and Non-critical); added priority definitions header; re-prioritised all tasks - pitot permanent mount, pitot clearance, ZED-F9P antenna and mount, geofence, and PID tuning moved to Urgent; GPS 2 antenna note updated to clarify aircraft can fly on M8N only.
+
 ## 2026-07-03 (continued x5)
 - `docs/build-checklist.md`: sorted rows within each status section - Critical items first, Non-critical below.
 

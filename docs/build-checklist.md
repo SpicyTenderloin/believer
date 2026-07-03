@@ -2,6 +2,11 @@
 
 Tracks build completion, hardware retention checks, and flight controller configuration. Retention and configuration checks should be re-verified periodically and after any maintenance.
 
+Priority definitions:
+- **Critical** - must be correct before flight; incorrect or incomplete state could cause a crash or loss of aircraft
+- **Urgent** - should be done soon; aircraft can fly without it but it represents a meaningful gap
+- **Non-critical** - worthwhile but can wait
+
 ---
 
 ## Complete
@@ -43,16 +48,16 @@ Tracks build completion, hardware retention checks, and flight controller config
 
 | Category | Task | Notes | Priority |
 |---|---|---|---|
-| Sensors | Pitot tube permanent mount | Replace temporary tape with a rigid, permanent mount; ensure the mount does not introduce vibration or movement that could affect sensor readings | Critical |
-| Sensors | Pitot tube clearance verification | Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air - check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient | Critical |
-| GPS | External mount for ZED-F9P | Install external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation | Critical |
-| GPS | GPS 2 antenna | Install antenna on the SparkFun ZED-F9P RTK GPS breakout - maiden flight blocker | Critical |
 | Fasteners | Propeller retention nuts | Verify propeller retention nuts are correctly torqued on both motors. The LHS motor rotates clockwise (viewed from the front of the aircraft), causing a standard right-hand-thread nut to self-loosen under operation - the LHS retention nut must be inspected with particular attention and confirmed secure before each flight | Critical |
 | Fasteners | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Critical |
 | Configure and Tune | Motor thrust validation | Verify that the fitted 11x4.7" propellers on T-Motor U5 v2.0 KV400 motors produce adequate thrust for the aircraft's all-up weight; replace propellers if thrust is insufficient | Critical |
 | Configure and Tune | Failsafe configuration | Configure and verify RC loss, GCS loss, and battery low/critical failsafe behaviour | Critical |
-| Configure and Tune | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Critical |
+| Sensors | Pitot tube permanent mount | Replace temporary tape with a rigid, permanent mount; ensure the mount does not introduce vibration or movement that could affect sensor readings | Urgent |
+| Sensors | Pitot tube clearance verification | Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air - check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient | Urgent |
+| GPS | External mount for ZED-F9P | Install external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation | Urgent |
+| GPS | GPS 2 antenna | Install antenna on the SparkFun ZED-F9P RTK GPS breakout; aircraft can fly on M8N (GPS 1) only but RTK capability is unavailable without this | Urgent |
+| Configure and Tune | Geofence configuration | Define and enable a geofence appropriate to the operating site in QGroundControl; configure breach action (Hold or Return) and verify fence boundary and altitude limits | Urgent |
+| Configure and Tune | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Urgent |
 | Airframe | Paint and finishing | Apply paint job as required | Non-critical |
 | Airframe | Parachute/payload bay servo | Install a servo in the parachute bay and wire it for parachute or payload deployment | Non-critical |
 | Avionics | Wiring tidy | Inspect and tidy all internal wiring; ensure cables are routed clear of moving parts, control linkages, and propeller arcs; secure with cable ties or sleeving as required | Non-critical |
-| Configure and Tune | Geofence configuration | Define and enable a geofence appropriate to the operating site in QGroundControl; configure breach action (Hold or Return) and verify fence boundary and altitude limits | Non-critical |
