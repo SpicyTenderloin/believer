@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-04
+- `docs/build-checklist.md`: moved propeller retention nuts and GPS mounting bolt torque to Complete.
+
 ## 2026-07-03 (continued x23)
 - `docs/manual.md`: moved launch area clear check to immediately before launch (step 31); added assisted hand launch section (steps 31-38) covering roles, handler grip, arm/throttle sequence, throw technique, and post-launch recovery.
 

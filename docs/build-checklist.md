@@ -23,6 +23,8 @@ Priority definitions:
 | Power | Battery installation | Battery installed and CG location verified | Critical |
 | Fasteners | Motor and ESC access hatch retention | All motor and ESC access hatches closed and secured | Critical |
 | Fasteners | Nacelle retention | Nacelle fairing correctly seated and secured to airframe | Critical |
+| Fasteners | Propeller retention nuts | Propeller retention nuts torqued on both motors; LHS reverse-thread nut confirmed secure | Critical |
+| Fasteners | GPS mounting bolt torque | M8N GPS module mounting bolts torqued and unit confirmed secure | Critical |
 | Fasteners | Torque avionics bay mounting bolts | All mounting bolts securing the avionics bay torqued correctly | Critical |
 | Configure and Tune | Sensor calibration | Accelerometer, gyroscope, and magnetometer calibration completed in QGroundControl | Critical |
 | Configure and Tune | Battery and power monitor configuration | BAT1_N_CELLS = 6 set; voltage and current sensing verified via PM03D (INA228) | Critical |
@@ -51,8 +53,6 @@ Priority definitions:
 
 | Category | Task | Notes | Priority |
 |---|---|---|---|
-| Fasteners | Propeller retention nuts | Verify propeller retention nuts are correctly torqued on both motors. The LHS motor rotates clockwise (viewed from the front of the aircraft), causing a standard right-hand-thread nut to self-loosen under operation - the LHS retention nut must be inspected with particular attention and confirmed secure before each flight | Critical |
-| Fasteners | GPS mounting bolt torque | Verify the M8N GPS module mounting bolts are correctly torqued and the unit is secure | Critical |
 | Configure and Tune | Control surface deflection limits, rates, and expo | Set appropriate PWM travel limits for V-tail and ailerons; configure rates and expo in EdgeTX to give suitable stick feel and prevent over-deflection at speed | Critical |
 | Configure and Tune | Motor thrust validation | Verify that the fitted 11x4.7" propellers on T-Motor U5 v2.0 KV400 motors produce adequate thrust for the aircraft's all-up weight; replace propellers if thrust is insufficient | Critical |
 | Configure and Tune | Motor PWM min/max limits | Set and verify minimum and maximum PWM duty cycle for both ESCs to ensure correct throttle range | Urgent |
