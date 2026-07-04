@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-04 (continued x2)
+- `params/believer-parameters.params`: replaced with 2026-07-04 FC export (params.params). Changes from previous export: full accelerometer recalibration (offsets and scales, ACC0/1/2); barometer offset updated (26.695 → 24.000); full magnetometer recalibration including soft-iron correction (MAG0 and MAG1, odiag values now non-zero); CAL_MAG0_PRIO set to 0 (internal compass excluded from sensor fusion); board level calibration updated (SENS_BOARD_X_OFF, SENS_BOARD_Y_OFF); airspeed differential pressure offset updated (SENS_DPRES_OFF: 58.784 → 48.835); GF_MAX_VER_DIST set to 120; GPS_2_CONFIG set to 0 (GPS_2_GNSS, GPS_2_PROTOCOL, and SER_GPS2_BAUD parameters removed from file as a result); COM_FLIGHT_UUID incremented to 181.
+- `params/parameter-change-log.md`: updated calibration section with all 2026-07-04 values; added accelerometer scale factors; added full MAG0 and MAG1 calibration with odiag; added board level and airspeed offset sections; updated GPS table to remove GPS_2_GNSS row (no longer in params file); updated header date to 2026-07-04.
+
 ## 2026-07-04 (continued)
 - `params/parameter-change-log.md`: added GPS_2_CONFIG = 0 (Disabled); ZED-F9P port disabled until antenna and mount are installed. Parameter backup pending update.
 

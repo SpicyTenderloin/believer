@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `params/believer-parameters.params` (exported 2026-07-03).
+Values reflect `params/believer-parameters.params` (exported 2026-07-04).
 
 ---
 
@@ -39,8 +39,7 @@ Values reflect `params/believer-parameters.params` (exported 2026-07-03).
 |---|---|---|
 | `GPS_1_CONFIG` | 201 (GPS 1) | Assigns the primary GPS instance to the GPS 1 UART port. |
 | `GPS_1_PROTOCOL` | 1 (u-blox) | Matches the fitted M8N receiver. |
-| `GPS_2_CONFIG` | 0 (Disabled) | GPS 2 port disabled until ZED-F9P antenna and external mount are installed. Re-enable by setting to 202 (GPS 2). |
-| `GPS_2_GNSS` | 29 | GNSS constellation mask for the ZED-F9P RTK receiver (GPS + GLONASS + Galileo + BeiDou). Stored for when GPS 2 is re-enabled. |
+| `GPS_2_CONFIG` | 0 (Disabled) | GPS 2 port disabled until ZED-F9P antenna and external mount are installed. Re-enable by setting to 202 (GPS 2) and restore GPS_2_GNSS = 29 and GPS_2_PROTOCOL = 1. |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
 ## Serial Ports
@@ -110,40 +109,85 @@ PWM limits and disarmed values per output are documented in `docs/ICD.md` (INT-0
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-07-03 calibration run.
+Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-07-04 calibration run.
 
 ### Accelerometers
 
 | Parameter | Value |
 |---|---|
-| `CAL_ACC0_XOFF` | -0.024361 |
-| `CAL_ACC0_YOFF` | -0.078681 |
-| `CAL_ACC0_ZOFF` | 0.089067 |
-| `CAL_ACC1_XOFF` | 0.042716 |
-| `CAL_ACC1_YOFF` | 0.021262 |
-| `CAL_ACC1_ZOFF` | -0.310753 |
-| `CAL_ACC2_XOFF` | -0.022205 |
-| `CAL_ACC2_YOFF` | -0.065430 |
-| `CAL_ACC2_ZOFF` | 0.154072 |
+| `CAL_ACC0_XOFF` | -0.014409 |
+| `CAL_ACC0_XSCALE` | 0.995518 |
+| `CAL_ACC0_YOFF` | 0.000312 |
+| `CAL_ACC0_YSCALE` | 1.011120 |
+| `CAL_ACC0_ZOFF` | 0.045671 |
+| `CAL_ACC0_ZSCALE` | 0.999696 |
+| `CAL_ACC1_XOFF` | 0.030172 |
+| `CAL_ACC1_XSCALE` | 0.997084 |
+| `CAL_ACC1_YOFF` | 0.074453 |
+| `CAL_ACC1_YSCALE` | 1.020391 |
+| `CAL_ACC1_ZOFF` | -0.397207 |
+| `CAL_ACC1_ZSCALE` | 1.004521 |
+| `CAL_ACC2_XOFF` | -0.017968 |
+| `CAL_ACC2_XSCALE` | 0.995736 |
+| `CAL_ACC2_YOFF` | -0.000730 |
+| `CAL_ACC2_YSCALE` | 1.018520 |
+| `CAL_ACC2_ZOFF` | 0.046937 |
+| `CAL_ACC2_ZSCALE` | 0.999588 |
 
 ### Barometer
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 11.688 |
+| `CAL_BARO0_OFF` | 24.000 |
 
 ### Gyroscopes
 
 | Parameter | Value |
 |---|---|
-| `CAL_GYRO2_XOFF` | -0.013063 |
-| `CAL_GYRO2_YOFF` | -0.033166 |
-| `CAL_GYRO2_ZOFF` | -0.024671 |
+| `CAL_GYRO0_XOFF` | -0.003567 |
+| `CAL_GYRO0_YOFF` | -0.000534 |
+| `CAL_GYRO0_ZOFF` | 0.000158 |
+| `CAL_GYRO1_XOFF` | 0.001345 |
+| `CAL_GYRO1_YOFF` | -0.003667 |
+| `CAL_GYRO1_ZOFF` | -0.012162 |
+| `CAL_GYRO2_XOFF` | -0.007781 |
+| `CAL_GYRO2_YOFF` | -0.024517 |
+| `CAL_GYRO2_ZOFF` | -0.024705 |
 
 ### Magnetometers
 
+Full 6-point calibration with soft-iron correction (odiag values non-zero). CAL_MAG0_PRIO = 0 (internal compass excluded from sensor fusion; external MAG1 on M8N GPS is primary).
+
 | Parameter | Value |
 |---|---|
-| `CAL_MAG1_XOFF` | 0.000856 |
-| `CAL_MAG1_YOFF` | 0.076916 |
-| `CAL_MAG1_ZOFF` | 0.049901 |
+| `CAL_MAG0_XOFF` | 0.020362 |
+| `CAL_MAG0_XSCALE` | 0.983407 |
+| `CAL_MAG0_XODIAG` | -0.006632 |
+| `CAL_MAG0_YOFF` | 0.008718 |
+| `CAL_MAG0_YSCALE` | 0.995368 |
+| `CAL_MAG0_YODIAG` | -0.001033 |
+| `CAL_MAG0_ZOFF` | -0.410242 |
+| `CAL_MAG0_ZSCALE` | 1.023885 |
+| `CAL_MAG0_ZODIAG` | 0.007716 |
+| `CAL_MAG1_XOFF` | 0.029062 |
+| `CAL_MAG1_XSCALE` | 0.989014 |
+| `CAL_MAG1_XODIAG` | 0.016254 |
+| `CAL_MAG1_YOFF` | -0.090900 |
+| `CAL_MAG1_YSCALE` | 0.983770 |
+| `CAL_MAG1_YODIAG` | 0.001022 |
+| `CAL_MAG1_ZOFF` | -0.031236 |
+| `CAL_MAG1_ZSCALE` | 1.067977 |
+| `CAL_MAG1_ZODIAG` | 0.168101 |
+
+### Board level
+
+| Parameter | Value |
+|---|---|
+| `SENS_BOARD_X_OFF` | 1.571581 |
+| `SENS_BOARD_Y_OFF` | -2.146216 |
+
+### Airspeed
+
+| Parameter | Value |
+|---|---|
+| `SENS_DPRES_OFF` | 48.834885 |
