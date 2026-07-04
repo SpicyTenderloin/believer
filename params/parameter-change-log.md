@@ -39,7 +39,8 @@ Values reflect `params/believer-parameters.params` (exported 2026-07-03).
 |---|---|---|
 | `GPS_1_CONFIG` | 201 (GPS 1) | Assigns the primary GPS instance to the GPS 1 UART port. |
 | `GPS_1_PROTOCOL` | 1 (u-blox) | Matches the fitted M8N receiver. |
-| `GPS_2_GNSS` | 29 | GNSS constellation mask for the ZED-F9P RTK receiver (GPS + GLONASS + Galileo + BeiDou). |
+| `GPS_2_CONFIG` | 0 (Disabled) | GPS 2 port disabled until ZED-F9P antenna and external mount are installed. Re-enable by setting to 202 (GPS 2). |
+| `GPS_2_GNSS` | 29 | GNSS constellation mask for the ZED-F9P RTK receiver (GPS + GLONASS + Galileo + BeiDou). Stored for when GPS 2 is re-enabled. |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
 ## Serial Ports

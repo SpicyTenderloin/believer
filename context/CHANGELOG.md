@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-04 (continued)
+- `params/parameter-change-log.md`: added GPS_2_CONFIG = 0 (Disabled); ZED-F9P port disabled until antenna and mount are installed. Parameter backup pending update.
+
 ## 2026-07-04
 - `docs/build-checklist.md`: moved propeller retention nuts and GPS mounting bolt torque to Complete.
 
