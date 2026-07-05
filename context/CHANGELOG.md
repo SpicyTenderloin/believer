@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-05 (continued x5)
+- `docs/project-timeline.md`: added 2026-07-04 BNEMAC visit (Ross Dennington) to Completed Milestones; refreshed "Remaining before first flight" and Phase 2 roadmap to match current build-checklist state (removed stale 11x4.7" propeller references and already-completed items; added thrust-to-weight test, reverse-pitch propeller, and flight mode investigation).
+- `docs/build-checklist.md`: merged ruddervator direction fix back into the combined "Control surface PWM mapping and direction" Complete entry (all surfaces now verified correct); reframed "Motor and ESC replacement" as pending a new "Thrust-to-weight ground test" task rather than a settled conclusion; updated "Source reverse-pitch propeller" to note motors are temporarily set to spin the same direction as an interim fix; added "Reverse motor rotation after propeller upgrade" task; moved deflection limits/expo to Complete and split out "Dual/tri-rate switch-selectable deflection" as a separate Non-critical task per user direction.
+- `context/project-notes.md`: recorded the ruddervator fix, the now-unsettled thrust conclusion pending a ground test, and the interim same-direction motor reconfiguration (and its likely contribution to the original thrust complaint).
+- `context/open-items.md`: updated motor replacement and reverse-pitch propeller entries to reflect the above.
+
 ## 2026-07-05 (continued x4)
 - `docs/build-checklist.md`: moved "Primary control expo" to Complete - 30% set on aileron/elevator/rudder, 20% on throttle (deviating from the originally planned flat 30% on all four). Updated "Control surface deflection limits, rates, and expo" notes to reflect expo now done; dual/tri-rate switch-selectable deflection still outstanding.
 

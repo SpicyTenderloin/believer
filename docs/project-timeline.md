@@ -15,6 +15,7 @@
 | 2026-06-30 | Build checklist and pre-flight procedures documented |
 | 2026-07-02 | Motor, ESC, and servo interfaces documented; system block diagram updated |
 | 2026-07-03 | Flight controller configuration phase substantially complete: sensor calibration (accel/gyro/mag/airspeed), GPS 1 (M8N) operational, battery and power monitor configured, RC and flight modes verified, motor and ESC mapping confirmed, failsafe configured, geofence configured (Return action, 120m AGL ceiling) |
+| 2026-07-04 | Visited BNEMAC (Brisbane Northside Electric Model Aero Club) - met Ross Dennington and club members for an initial system review and discussion of findings |
 
 ---
 
@@ -25,16 +26,15 @@ The aircraft is in the **late configuration phase**, working through the remaini
 ### Remaining before first flight
 
 **Critical (must be resolved before any flight):**
-- Control surface deflection limits, rates, and expo
+- Motor and ESC replacement decision (pending thrust-to-weight ground test)
 - Motor PWM min/max limits
-- Propeller retention nut torque check
-- GPS mounting bolt torque check
-- Motor thrust validation (11x4.7" props on U5 v2.0 KV400)
 
 **Urgent (should be resolved before first flight):**
 - Pitot tube permanent mount
 - Pitot tube clearance verification
 - Flight controller PID tuning
+- Source and install reverse-pitch propeller (current props are matched handedness, not a true contra-rotating pair)
+- Investigate flight mode behaviour (Stabilize mode)
 
 ---
 
@@ -58,7 +58,7 @@ Key activities:
 - Wiring tidy and cable management
 - Autonomous mode testing: Position hold, Mission, Return to Launch
 - Geofence and failsafe behaviour verified in flight
-- Propeller evaluation: confirm or replace 11x4.7" based on thrust test results
+- Motor/ESC upgrade evaluation: thrust-to-weight ground test to confirm whether higher-KV motors are required; complete reverse-pitch propeller fitment for correct contra-rotation
 
 ### Phase 3 - Companion Computer and Camera Integration (Target: TBD)
 

@@ -85,4 +85,10 @@ Investigated slow-updating telemetry (battery current/capacity, in particular) o
 - To persist across reboots, these commands must go in `/fs/microsd/etc/extras.txt` (not the SD card root - PX4 does not source a root-level `extras.txt`). This FC's NuttX shell (console) cannot create new files via `echo >`/`echo >>` redirection - `mkdir` and `mv` work, and appending to an already-existing file with `>>` works, but creating a new file this way does not. The file had to be created on a PC after physically removing the SD card. Watch for missing newlines between appended lines when using `>>` from the console - it does not insert a separator, so lines run together and break parsing at boot.
 - `SER_TEL1_BAUD` (DBR4 UART) was left at 460800 - not changed.
 
+## Post-BNEMAC Follow-up - 2026-07-05
+
+- Ruddervator direction reversed and confirmed correct.
+- Radio recalibration (see Telemetry Rate Tuning above) may have already increased effective motor RPM - whether the motors are actually thrust-inadequate is no longer settled; a basic thrust-to-weight ground test is planned before deciding on motor/ESC replacement.
+- Motors have been temporarily reconfigured to spin the same direction, as an interim measure so that both currently-fitted propellers (same handedness) produce forward thrust. Previously, with the motors outward contra-rotating and both propellers the same handedness, one propeller was running against its designed pitch - plausibly a contributing factor to the original insufficient-thrust observation, independent of motor KV. This will need reversing back on one side once the reverse-pitch propeller is sourced and fitted.
+
 See [open-items.md](open-items.md) for what's still missing.

@@ -31,12 +31,13 @@ Priority definitions:
 | Configure and Tune | RC and flight mode configuration | RC channel mapping, arm/kill switches (CH5/CH7), and GR1 flight mode selector (CH6) verified; all six GR1 positions confirmed against PX4 flight modes | Critical |
 | Configure and Tune | Airspeed sensor calibration | MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port | Critical |
 | Configure and Tune | Motor and ESC configuration | PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page | Critical |
-| Configure and Tune | Control surface PWM mapping and direction | PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; aileron direction verified correct | Critical |
+| Configure and Tune | Control surface PWM mapping and direction | PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction | Critical |
 | Configure and Tune | GPS 1 (M8N) configuration and validation | GPS_1_CONFIG, GPS_1_PROTOCOL, GPS_1_GNSS, and GPS_UBX_DYNMODEL set; GPS lock confirmed | Critical |
 | Configure and Tune | Failsafe configuration | RC loss, GCS loss, and battery low/critical failsafe behaviour configured and verified | Critical |
 | Configure and Tune | Geofence configuration | Breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST) | Urgent |
 | Airframe | Wing tape cleanup | Excess and temporary tape removed from wings | Non-critical |
 | Configure and Tune | Primary control expo | 30% exponential set on aileron, elevator, and rudder; 20% on throttle | Non-critical |
+| Configure and Tune | Control surface deflection limits and expo | Radio calibration matched stick travel to the configured PWM deflection limits (V-tail, ailerons); expo set (30% aileron/elevator/rudder, 20% throttle) | Critical |
 | Airframe | Parachute bay | Servo removed; bay taped shut | Non-critical |
 
 ---
@@ -47,7 +48,6 @@ Priority definitions:
 |---|---|---|---|
 | Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Urgent |
 | Configure and Tune | Standard Install | Document all parameter changes and build log; re-configure from scratch before each test flight | Non-critical |
-| Configure and Tune | Control surface deflection limits, rates, and expo | Radio calibration completed - stick travel now matched to the configured PWM deflection limits (V-tail, ailerons). Expo set (30% aileron/elevator/rudder, 20% throttle). Dual/tri-rate switch-selectable deflection still to be configured | Critical |
 
 ---
 
@@ -55,9 +55,10 @@ Priority definitions:
 
 | Category | Task | Notes | Priority |
 |---|---|---|---|
-| Configure and Tune | V-tail (ruddervator) direction correction | Ruddervator direction confirmed inverted (BNEMAC review); correct mixing/reversal and re-verify surface movement direction | Critical |
-| Configure and Tune | Motor and ESC replacement | Current T-Motor U5 v2.0 KV400 motors confirmed to produce inadequate thrust (BNEMAC review); replace motors and ESCs with a higher-KV rated unit. Propeller diameter limited to 11" by 150mm motor-shaft-to-ground clearance (no landing gear) - 11" barely clears; folding propeller confirmed not required. Sourcing in progress | Critical |
-| Configure and Tune | Source reverse-pitch propeller | Both propellers currently fitted (Hobbyrama LP11X7E, 11x7") are the same handedness; motors are outward contra-rotating - source a reverse-pitch 11x7" propeller for one side to achieve correct contra-rotation | Urgent |
+| Configure and Tune | Thrust-to-weight ground test | Basic ground test to check whether the motors produce a thrust-to-weight ratio near 1:1 for the aircraft's all-up weight; radio recalibration may have already improved effective RPM. Outcome determines whether motor/ESC replacement proceeds | Critical |
+| Configure and Tune | Motor and ESC replacement | BNEMAC review raised concern of inadequate thrust; pending the thrust-to-weight ground test above before deciding whether to replace motors and ESCs with a higher-KV rated unit. Propeller diameter limited to 11" by 150mm motor-shaft-to-ground clearance (no landing gear) - 11" barely clears; folding propeller confirmed not required | Critical |
+| Configure and Tune | Source reverse-pitch propeller | Both propellers currently fitted (Hobbyrama LP11X7E, 11x7") are the same handedness; motors have been temporarily reconfigured to spin the same direction as an interim measure so both propellers produce forward thrust - source a reverse-pitch 11x7" propeller for one side to restore correct contra-rotation | Urgent |
+| Configure and Tune | Reverse motor rotation after propeller upgrade | Once the reverse-pitch propeller is installed, reverse that motor's rotation direction back to restore correct contra-rotation | Urgent |
 | Configure and Tune | Motor start synchronisation | One motor starts before the other on throttle-up; investigate ESC configuration and/or PX4 PWM min/max pulse width range as the cause - may be resolved by the motor/ESC replacement above | Urgent |
 | Configure and Tune | Investigate flight mode behaviour | Stabilize mode observed to behave differently than expected during BNEMAC test session; investigate PX4 flight mode configuration and behaviour | Urgent |
 | Configure and Tune | Motor PWM min/max limits | Set and verify minimum and maximum PWM duty cycle for both ESCs to ensure correct throttle range | Urgent |
@@ -70,6 +71,7 @@ Priority definitions:
 | Fasteners | Motor/ESC inspection bay cover bolts | Existing bolts are rounded; source and fit appropriately sized replacement bolts | Urgent |
 | RC and Telemetry | RFD900x antenna installation | Install the smaller RFD900x antennas onto the externalised 900MHz SMA connectors | Urgent |
 | Airframe | Launch dolly | Design and build a launch dolly | Non-critical |
+| Configure and Tune | Dual/tri-rate switch-selectable deflection | Configure switch-selectable high/low control surface deflection rates in EdgeTX | Non-critical |
 
 ---
 
