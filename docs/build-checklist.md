@@ -46,6 +46,7 @@ Priority definitions:
 |---|---|---|---|
 | Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Urgent |
 | Configure and Tune | Standard Install | Document all parameter changes and build log; re-configure from scratch before each test flight | Non-critical |
+| Configure and Tune | Control surface deflection limits, rates, and expo | Radio calibration completed - stick travel now matched to the configured PWM deflection limits (V-tail, ailerons). Rates and expo in EdgeTX still to be configured to give suitable stick feel and prevent over-deflection at speed | Critical |
 
 ---
 
@@ -53,7 +54,6 @@ Priority definitions:
 
 | Category | Task | Notes | Priority |
 |---|---|---|---|
-| Configure and Tune | Control surface deflection limits, rates, and expo | Set appropriate PWM travel limits for V-tail and ailerons, calibrating servos for maximum available travel (BNEMAC review); configure rates and expo in EdgeTX to give suitable stick feel and prevent over-deflection at speed | Critical |
 | Configure and Tune | V-tail (ruddervator) direction correction | Ruddervator direction confirmed inverted (BNEMAC review); correct mixing/reversal and re-verify surface movement direction | Critical |
 | Configure and Tune | Motor and ESC replacement | Current T-Motor U5 v2.0 KV400 motors confirmed to produce inadequate thrust (BNEMAC review); replace motors and ESCs with a higher-KV rated unit. Propeller diameter limited to 11" by 150mm motor-shaft-to-ground clearance (no landing gear) - 11" barely clears; folding propeller confirmed not required. Sourcing in progress | Critical |
 | Configure and Tune | Source reverse-pitch propeller | Both propellers currently fitted (Hobbyrama LP11X7E, 11x7") are the same handedness; motors are outward contra-rotating - source a reverse-pitch 11x7" propeller for one side to achieve correct contra-rotation | Urgent |

@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-05 (continued x2)
+- `docs/build-checklist.md`: moved "Control surface deflection limits, rates, and expo" from Not Started to In Progress - radio calibration completed, matching stick travel to the configured PWM deflection limits; rates/expo configuration still outstanding.
+
 ## 2026-07-05 (continued)
 - `docs/build-checklist.md`: added tasks from the 2026-07-04 BNEMAC review - motor and ESC replacement (higher KV), reverse-pitch propeller sourcing, V-tail (ruddervator) direction correction, motor start synchronisation investigation, flight mode behaviour investigation; folded servo max-travel calibration into the existing deflection/rates/expo task; narrowed the control surface direction Complete entry to ailerons only pending the ruddervator fix. Also added 30% primary control expo, motor/ESC bay cover bolt replacement, RFD900x antenna installation, and launch dolly tasks.
 - `context/project-notes.md`: recorded BNEMAC review findings (2026-07-04, Ross) and provenance for the new build-checklist tasks.
