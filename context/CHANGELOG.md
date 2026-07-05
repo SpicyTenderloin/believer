@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-05 (continued x7)
+- Added `docs/test-reports/2026-07-05-initial-system-inspection.md`: new test report covering today's BNEMAC review findings and same-day follow-up configuration work. Establishes `docs/test-reports/` as a new dated, one-file-per-session document type.
+- `context/style-guide.md`: added `docs/test-reports/` to the transactional-log exceptions; documented the `YYYY-MM-DD-<slug>.md` naming convention.
+- `context/project-overview.md`, `README.md`: added `docs/test-reports/` to the repo structure map.
+
 ## 2026-07-05 (continued x6)
 - Corrected the BNEMAC review date: the full review (thrust, ruddervator, motor timing, servo travel, stabilize mode) was 2026-07-05 (today), not 2026-07-04 as earlier entries in this changelog, `docs/project-timeline.md`, `context/project-notes.md`, and `context/open-items.md` had recorded. 2026-07-04 remains correct for the propeller purchase and a brief, separate hello with Ross.
 

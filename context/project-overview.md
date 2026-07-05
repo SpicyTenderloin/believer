@@ -84,6 +84,7 @@ believer/
 │   ├── build-checklist.md           ← Build completion, retention checks, and configuration checklist
 │   ├── purchase-history.md          ← Component purchases (cost, funder, installed status)
 │   ├── project-overview.md          ← Public-facing project background and roadmap
+│   ├── test-reports/                ← Dated test/session reports (one file per session)
 │   └── assets/                      ← Diagrams and photos referenced by docs
 ├── params/
 │   ├── parameter-change-log.md      ← Narrative PX4 parameter change history
