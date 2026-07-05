@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.1 |
-| **Date** | 2026-07-03 |
+| **Revision** | 1.2 |
+| **Date** | 2026-07-05 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -150,8 +150,13 @@ Radiomaster DBR4 dual-band (2.4GHz/900MHz) ExpressLRS receiver, connected to FC 
 | `SER_TEL1_BAUD` | 460800 8N1 |
 | `RC_MAP_ARM_SW` | Channel 5 |
 | `RC_MAP_KILL_SW` | Channel 7 |
+| `MAV_1_CONFIG` | TELEM 1 |
+| `MAV_1_MODE` | OSD |
+| `MAV_1_RATE` | 19200 B/s |
 
 ELRS Hybrid mode carries RC channels through CH12 only (CH13–16 are not transmitted).
+
+A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled over this same link alongside RC control. `BATTERY_STATUS` is forced to 10Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the OSD mode's 0.5Hz default.
 
 #### RC Channel Map
 
@@ -207,6 +212,8 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 | `SER_TEL2_BAUD` | 57600 8N1 |
 | `MAV_0_RATE` | 3000 B/s |
 | `MAV_0_FLOW_CTRL` | Disabled |
+
+Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the Normal mode default.
 
 ![RFD900x Pinout Diagram](assets/rfd900-pinout-diagram.png)
 
@@ -270,6 +277,8 @@ MS4525DO differential pressure sensor, connected to the Pixhawk 6X I2C port (JST
 
 Radiomaster GX12 Crush ExpressLRS transmitter (Iron Grey) - Gemini-X dual-band, 2.4GHz and 900MHz simultaneous. Pairs with the Radiomaster DBR4 receiver (INT-03) in ELRS Hybrid switch mode with MAVLink enabled. Physical switch locations and functions are shown in INT-03.
 
+Packet rate: 100Hz Full.
+
 ## 7. Open Items
 
 Tracked in [context/open-items.md](../context/open-items.md).
@@ -289,3 +298,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 0.9 | 2026-07-02 | Added INT-02 connected device specs: V-tail servos (Emax ES3054), aileron servos (Hitec HS-5125MG), motors (T-Motor U5 v2.0 KV400). ESC identified as T-Motor branded, model TBD |
 | 1.0 | 2026-07-03 | Split INT-02 into INT-02a-f (one interface per PWM output); added full 16-pin RFD900x connector pinout table under INT-04; updated block diagram to show individual actuator connections |
 | 1.1 | 2026-07-03 | Added INT-07 I2C port and address detail |
+| 1.2 | 2026-07-05 | Added INT-08 ELRS packet rate; added MAV_1 (TELEM1/DBR4) and MAV_0 (TELEM2/RFD900x) MAVLink instance parameters, device paths, and BATTERY_STATUS rate overrides |

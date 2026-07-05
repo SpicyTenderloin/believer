@@ -74,4 +74,15 @@ Julian met with the Brisbane Northside Electric Model Aero Club (BNEMAC); feedba
 
 All items above are tracked as tasks in `docs/build-checklist.md`.
 
+## Telemetry Rate Tuning - 2026-07-05
+
+Investigated slow-updating telemetry (battery current/capacity, in particular) on both the DBR4/ELRS link (TELEM1) and the RFD900x link (TELEM2):
+- ELRS packet rate set to 100Hz Full on the GX12/DBR4 pair.
+- `mavlink status`/`mavlink status streams` (via QGC MAVLink Console) identified the two MAVLink instances: MAV_0 (TELEM2/RFD900x, device `/dev/ttyS4`, mode Normal) and MAV_1 (TELEM1/DBR4, device `/dev/ttyS6`, mode OSD).
+- MAV_0 was bandwidth-starved (`MAV_0_RATE` found live at 1200 B/s, throttling every message to ~39% of its configured rate) despite `docs/ICD.md` already documenting 3000 B/s - the live parameter had reverted or been changed without the docs being updated. Reset to 3000 B/s to match.
+- MAV_1 was not bandwidth-starved (only ~12% of its 9600 B/s budget in use) but `BATTERY_STATUS` was hard-set to 0.5Hz by the OSD mode default; raised `MAV_1_RATE` to 19200 B/s for headroom and overrode `BATTERY_STATUS` specifically.
+- Per-message rate overrides added via `mavlink stream -d <device> -s BATTERY_STATUS -r <hz>`: 5Hz on MAV_0 (`/dev/ttyS4`), 10Hz on MAV_1 (`/dev/ttyS6`).
+- To persist across reboots, these commands must go in `/fs/microsd/etc/extras.txt` (not the SD card root - PX4 does not source a root-level `extras.txt`). This FC's NuttX shell (console) cannot create new files via `echo >`/`echo >>` redirection - `mkdir` and `mv` work, and appending to an already-existing file with `>>` works, but creating a new file this way does not. The file had to be created on a PC after physically removing the SD card. Watch for missing newlines between appended lines when using `>>` from the console - it does not insert a separator, so lines run together and break parsing at boot.
+- `SER_TEL1_BAUD` (DBR4 UART) was left at 460800 - not changed.
+
 See [open-items.md](open-items.md) for what's still missing.

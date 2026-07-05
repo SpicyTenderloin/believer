@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-05 (continued x3)
+- `docs/ICD.md` (Rev 1.1 -> 1.2): added INT-08 ELRS packet rate (100Hz Full); added MAV_1 parameters and BATTERY_STATUS override note to INT-03 (TELEM1/DBR4); added device path and BATTERY_STATUS override note to INT-04 (TELEM2/RFD900x).
+- `context/project-notes.md`: recorded the 2026-07-05 telemetry rate tuning session - ELRS packet rate, MAV_0/MAV_1 instance identification, MAV_0_RATE discrepancy (documented 3000 B/s vs. live 1200 B/s) and correction, MAV_1_RATE increase, BATTERY_STATUS per-message overrides, and the `/fs/microsd/etc/extras.txt` persistence quirks (root vs. `etc/` path, console write limitations).
+
 ## 2026-07-05 (continued x2)
 - `docs/build-checklist.md`: moved "Control surface deflection limits, rates, and expo" from Not Started to In Progress - radio calibration completed, matching stick travel to the configured PWM deflection limits; rates/expo configuration still outstanding.
 
