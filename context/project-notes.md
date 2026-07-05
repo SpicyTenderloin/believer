@@ -63,7 +63,7 @@ Fitted pack: **Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack** (~$93.23
 - Companion computer for autonomy - longer-term roadmap item.
 - Secondary control link via ExpressLRS already implemented (DBR4/GX12) - this was the proposal's near-term roadmap item, now done.
 
-## BNEMAC Review - 2026-07-04
+## BNEMAC Review - 2026-07-05
 
 Julian met with the Brisbane Northside Electric Model Aero Club (BNEMAC); feedback from Ross:
 - Current T-Motor U5 v2.0 KV400 motors do not produce adequate thrust - recommended replacement with a higher-KV motor. Propeller diameter is constrained to 11" by 150mm motor-shaft-to-ground clearance (no landing gear fitted) - an 11" prop barely clears. A folding propeller was confirmed not required.

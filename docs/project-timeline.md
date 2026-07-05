@@ -15,7 +15,7 @@
 | 2026-06-30 | Build checklist and pre-flight procedures documented |
 | 2026-07-02 | Motor, ESC, and servo interfaces documented; system block diagram updated |
 | 2026-07-03 | Flight controller configuration phase substantially complete: sensor calibration (accel/gyro/mag/airspeed), GPS 1 (M8N) operational, battery and power monitor configured, RC and flight modes verified, motor and ESC mapping confirmed, failsafe configured, geofence configured (Return action, 120m AGL ceiling) |
-| 2026-07-04 | Visited BNEMAC (Brisbane Northside Electric Model Aero Club) - met Ross Dennington and club members for an initial system review and discussion of findings |
+| 2026-07-05 | Visited BNEMAC (Brisbane Northside Electric Model Aero Club) - met Ross Dennington and club members for an initial system review and discussion of findings |
 
 ---
 

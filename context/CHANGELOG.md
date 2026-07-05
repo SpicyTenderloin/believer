@@ -2,8 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-05 (continued x6)
+- Corrected the BNEMAC review date: the full review (thrust, ruddervator, motor timing, servo travel, stabilize mode) was 2026-07-05 (today), not 2026-07-04 as earlier entries in this changelog, `docs/project-timeline.md`, `context/project-notes.md`, and `context/open-items.md` had recorded. 2026-07-04 remains correct for the propeller purchase and a brief, separate hello with Ross.
+
 ## 2026-07-05 (continued x5)
-- `docs/project-timeline.md`: added 2026-07-04 BNEMAC visit (Ross Dennington) to Completed Milestones; refreshed "Remaining before first flight" and Phase 2 roadmap to match current build-checklist state (removed stale 11x4.7" propeller references and already-completed items; added thrust-to-weight test, reverse-pitch propeller, and flight mode investigation).
+- `docs/project-timeline.md`: added 2026-07-05 BNEMAC visit (Ross Dennington) to Completed Milestones; refreshed "Remaining before first flight" and Phase 2 roadmap to match current build-checklist state (removed stale 11x4.7" propeller references and already-completed items; added thrust-to-weight test, reverse-pitch propeller, and flight mode investigation).
 - `docs/build-checklist.md`: merged ruddervator direction fix back into the combined "Control surface PWM mapping and direction" Complete entry (all surfaces now verified correct); reframed "Motor and ESC replacement" as pending a new "Thrust-to-weight ground test" task rather than a settled conclusion; updated "Source reverse-pitch propeller" to note motors are temporarily set to spin the same direction as an interim fix; added "Reverse motor rotation after propeller upgrade" task; moved deflection limits/expo to Complete and split out "Dual/tri-rate switch-selectable deflection" as a separate Non-critical task per user direction.
 - `context/project-notes.md`: recorded the ruddervator fix, the now-unsettled thrust conclusion pending a ground test, and the interim same-direction motor reconfiguration (and its likely contribution to the original thrust complaint).
 - `context/open-items.md`: updated motor replacement and reverse-pitch propeller entries to reflect the above.
@@ -19,8 +22,8 @@ All notable changes to the Believer project repo are logged here, most recent fi
 - `docs/build-checklist.md`: moved "Control surface deflection limits, rates, and expo" from Not Started to In Progress - radio calibration completed, matching stick travel to the configured PWM deflection limits; rates/expo configuration still outstanding.
 
 ## 2026-07-05 (continued)
-- `docs/build-checklist.md`: added tasks from the 2026-07-04 BNEMAC review - motor and ESC replacement (higher KV), reverse-pitch propeller sourcing, V-tail (ruddervator) direction correction, motor start synchronisation investigation, flight mode behaviour investigation; folded servo max-travel calibration into the existing deflection/rates/expo task; narrowed the control surface direction Complete entry to ailerons only pending the ruddervator fix. Also added 30% primary control expo, motor/ESC bay cover bolt replacement, RFD900x antenna installation, and launch dolly tasks.
-- `context/project-notes.md`: recorded BNEMAC review findings (2026-07-04, Ross) and provenance for the new build-checklist tasks.
+- `docs/build-checklist.md`: added tasks from the 2026-07-05 BNEMAC review - motor and ESC replacement (higher KV), reverse-pitch propeller sourcing, V-tail (ruddervator) direction correction, motor start synchronisation investigation, flight mode behaviour investigation; folded servo max-travel calibration into the existing deflection/rates/expo task; narrowed the control surface direction Complete entry to ailerons only pending the ruddervator fix. Also added 30% primary control expo, motor/ESC bay cover bolt replacement, RFD900x antenna installation, and launch dolly tasks.
+- `context/project-notes.md`: recorded BNEMAC review findings (2026-07-05, Ross) and provenance for the new build-checklist tasks.
 
 ## 2026-07-05
 - `supporting-documents/invoices/hobbyrama-propellers-2026-07-04.jpg`: added invoice photo for the propeller purchase.
