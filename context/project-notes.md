@@ -34,7 +34,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 
 - **Motors**: T-Motor U5 v2.0, KV400, one per wing (MAIN 4 = left, MAIN 6 = right). 12N14P configuration, 5mm shaft, 156g (excl. cables), 3-8S LiPo, max 30A / 850W continuous (180s). No official PDF datasheet - specs from T-Motor product page only.
 - **ESCs**: T-Motor branded (one per motor), model unidentified. PCB markings visible: "T-MOTOR", "1747", "08" - IC part number not legible. ESC protocol (PWM/DShot) not yet confirmed. Tracked in `context/open-items.md`.
-- **Propellers**: 11x4.7" fitted, manufacturer unknown. Whether these produce adequate thrust for the aircraft's all-up weight has not been verified - tracked as an open item.
+- **Propellers**: replaced 2026-07-04 with 2x Hobbyrama 11x7" Electric Propeller (LP11X7E), purchased in-store (Hobbyrama, Stafford QLD, Trans #117526, Julian personal funds) - superseding the prior unbranded 11x4.7" props. Both units purchased are the same handedness (item code LP11X7E for both); the motors are outward contra-rotating, so a true contra-rotating pair still needs a reverse-pitch 11x7" prop on one side - tracked as an open item.
 - **Aileron servos**: Hitec HS-5125MG, one per wing (MAIN 3 = left, MAIN 5 = right). Digital, metal gear, 10mm slim wing profile, 24g, 4.8-6.0V, 3.0-3.5 kg.cm torque, 0.17-0.13 sec/60°. No official PDF datasheet - specs from Hitec RCD product page only.
 - **V-tail servos**: Emax ES3054, one per V-tail surface (MAIN 1 = left, MAIN 2 = right). Digital, metal gear, 17g, 4.8-6.0V, 3.0-3.5 kg.cm torque, 0.15-0.13 sec/60°, 23T spline. No official PDF datasheet - specs from Emax product page only.
 
