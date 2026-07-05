@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-05 (continued)
+- `docs/build-checklist.md`: added tasks from the 2026-07-04 BNEMAC review - motor and ESC replacement (higher KV), reverse-pitch propeller sourcing, V-tail (ruddervator) direction correction, motor start synchronisation investigation, flight mode behaviour investigation; folded servo max-travel calibration into the existing deflection/rates/expo task; narrowed the control surface direction Complete entry to ailerons only pending the ruddervator fix. Also added 30% primary control expo, motor/ESC bay cover bolt replacement, RFD900x antenna installation, and launch dolly tasks.
+- `context/project-notes.md`: recorded BNEMAC review findings (2026-07-04, Ross) and provenance for the new build-checklist tasks.
+
 ## 2026-07-05
 - `supporting-documents/invoices/hobbyrama-propellers-2026-07-04.jpg`: added invoice photo for the propeller purchase.
 - `docs/purchase-history.md`: added 11x7" Hobbyrama propellers (2x, Julian personal funds, 2026-07-04), replacing the prior unbranded 11x4.7" props.
