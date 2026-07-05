@@ -36,6 +36,7 @@ Priority definitions:
 | Configure and Tune | Failsafe configuration | RC loss, GCS loss, and battery low/critical failsafe behaviour configured and verified | Critical |
 | Configure and Tune | Geofence configuration | Breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST) | Urgent |
 | Airframe | Wing tape cleanup | Excess and temporary tape removed from wings | Non-critical |
+| Configure and Tune | Primary control expo | 30% exponential set on aileron, elevator, and rudder; 20% on throttle | Non-critical |
 | Airframe | Parachute bay | Servo removed; bay taped shut | Non-critical |
 
 ---
@@ -46,7 +47,7 @@ Priority definitions:
 |---|---|---|---|
 | Configure and Tune | GPS 2 (ZED-F9P) configuration and validation | Configure protocol and GNSS constellation settings; confirm lock; blocked by antenna installation | Urgent |
 | Configure and Tune | Standard Install | Document all parameter changes and build log; re-configure from scratch before each test flight | Non-critical |
-| Configure and Tune | Control surface deflection limits, rates, and expo | Radio calibration completed - stick travel now matched to the configured PWM deflection limits (V-tail, ailerons). Rates and expo in EdgeTX still to be configured to give suitable stick feel and prevent over-deflection at speed | Critical |
+| Configure and Tune | Control surface deflection limits, rates, and expo | Radio calibration completed - stick travel now matched to the configured PWM deflection limits (V-tail, ailerons). Expo set (30% aileron/elevator/rudder, 20% throttle). Dual/tri-rate switch-selectable deflection still to be configured | Critical |
 
 ---
 
@@ -66,7 +67,6 @@ Priority definitions:
 | GPS | GPS 2 antenna | Install antenna on the SparkFun ZED-F9P RTK GPS breakout; aircraft can fly on M8N (GPS 1) only but RTK capability is unavailable without this | Urgent |
 | Configure and Tune | Flight controller tuning | Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights | Urgent |
 | Avionics | Wiring tidy | Inspect and tidy all internal wiring; ensure cables are routed clear of moving parts, control linkages, and propeller arcs; secure with cable ties or sleeving as required | Non-critical |
-| Configure and Tune | Set 30% expo on primary controls | Add 30% exponential to throttle, aileron, elevator, and rudder curves in the GX12 EdgeTX model (currently 0% on all four) | Non-critical |
 | Fasteners | Motor/ESC inspection bay cover bolts | Existing bolts are rounded; source and fit appropriately sized replacement bolts | Urgent |
 | RC and Telemetry | RFD900x antenna installation | Install the smaller RFD900x antennas onto the externalised 900MHz SMA connectors | Urgent |
 | Airframe | Launch dolly | Design and build a launch dolly | Non-critical |
