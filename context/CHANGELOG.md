@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x11)
+- `docs/purchase-history/purchase-history.md`: added 2x T-MOTOR MN3110 KV700 motors (Julian personal funds, $169.87 AUD, 2026-07-06), replacing the T-Motor U5 v2.0 KV400 units.
+- `docs/purchase-history/invoices/tmotor-mn3110-kv700-motors-2026-07-06.pdf`: added invoice.
+- `docs/build-checklist.md`: updated "Motor and ESC replacement" to reflect the KV700 motors purchased (ESC compatibility still TBD); added "Install T-MOTOR MN3110 KV700 motors" task; updated the thrust-to-weight ground test to be repeated once the new motors are fitted.
+- `context/open-items.md`, `context/project-notes.md`: updated motor replacement and ESC entries to reflect the purchase.
+
 ## 2026-07-06 (continued x10)
 - `docs/requirements/underslung-camera-mount-requirements.md` (Rev 0.8 -> 0.9): resolved REQ-CAM-10 - camera mount location is the fuselage centreline, between the two landing pads, per the airframe manufacturer's documentation. Removed the mounting-location open item; added an open item on whether the landing pads sit proud of the surrounding skin (relevant to the REQ-CAM-13 recess depth).
 - `context/project-notes.md`: recorded the landing pads and the manufacturer-designated camera mount location.
