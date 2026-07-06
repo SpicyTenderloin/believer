@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 0.2 |
+| **Revision** | 0.3 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
@@ -41,6 +41,9 @@ The camera supports the mission's observation objectives (shark spotting, threat
 | REQ-CAM-12 | The mount and camera assembly shall not shift the aircraft's CG outside the currently verified envelope (15mm aft of the front wing spar centreline, ~25% MAC) beyond a tolerance to be defined once camera and companion computer masses are known. |
 | REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/manual.md`) - a belly-mounted camera is a first point of ground contact by default. The camera shall be mounted internally to the fuselage, with the lens protruding through a cutout in the belly skin such that the lens face sits recessed 3mm from the outer belly surface. |
 | REQ-CAM-14 | The belly cutout shall be sized to the lens's field-of-view cone at the 3mm recess depth, so the recess does not vignette the image. |
+| REQ-CAM-15 | The mount shall be a two-part modular design: a female base permanently fixed to the airframe, and a male carrier that holds the camera and secures into the female base - allowing the camera to be swapped out in future without modifying the airframe-side mount. |
+| REQ-CAM-16 | The male carrier shall accommodate camera modules up to a 50mm x 50mm footprint. |
+| REQ-CAM-17 | The male carrier shall accommodate varying lens lengths, with adjustable positioning (e.g. shims or a sliding/threaded standoff) so the lens face can be set to the 3mm recess depth specified in REQ-CAM-13 regardless of which camera/lens combination is fitted. |
 
 ### 4.3 Environmental
 
@@ -79,3 +82,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 |---|---|---|
 | 0.1 | 2026-07-06 | Initial draft |
 | 0.2 | 2026-07-06 | REQ-CAM-13 specifies internal mounting with the lens recessed 3mm through a belly cutout; added REQ-CAM-14 (cutout sizing to avoid vignetting) |
+| 0.3 | 2026-07-06 | Added modular two-part mount (female base in airframe, male camera carrier) - REQ-CAM-15 to -17: swappable camera, up to 50mm x 50mm footprint, adjustable for varying lens lengths |

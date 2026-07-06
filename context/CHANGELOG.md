@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x2)
+- `docs/camera-mount-requirements.md` (Rev 0.2 -> 0.3): added a modular two-part mount requirement (REQ-CAM-15 to -17) - female base fixed to the airframe, male carrier holding the camera, swappable for future camera changes, up to a 50mm x 50mm footprint with adjustable positioning for varying lens lengths.
+
 ## 2026-07-06 (continued)
 - `docs/camera-mount-requirements.md` (Rev 0.1 -> 0.2): REQ-CAM-13 specifies internal camera mounting with the lens recessed 3mm through a belly cutout; added REQ-CAM-14 (cutout sizing to avoid vignetting); flagged open question on whether 3mm recess is sufficient given grass/dirt landing surfaces, and that lens FOV spec is unavailable to size the cutout.
 
