@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06
+- Added `docs/camera-mount-requirements.md` (Draft, Rev 0.1): initial system requirements for the IMX335 camera mounting subsystem (belly-mounted, downward/oblique observation, camera-only scope). Flags the airframe's lack of landing gear as a primary structural design driver (belly-landing ground-strike protection).
+- `context/open-items.md`: added camera mounting subsystem dependencies (companion computer selection, mounting location, observation angle, environmental range).
+
 ## 2026-07-05 (continued x7)
 - Added `docs/test-reports/2026-07-05-initial-system-inspection.md`: new test report covering today's BNEMAC review findings and same-day follow-up configuration work. Establishes `docs/test-reports/` as a new dated, one-file-per-session document type.
 - `context/style-guide.md`: added `docs/test-reports/` to the transactional-log exceptions; documented the `YYYY-MM-DD-<slug>.md` naming convention.
