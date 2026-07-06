@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued)
+- `docs/camera-mount-requirements.md` (Rev 0.1 -> 0.2): REQ-CAM-13 specifies internal camera mounting with the lens recessed 3mm through a belly cutout; added REQ-CAM-14 (cutout sizing to avoid vignetting); flagged open question on whether 3mm recess is sufficient given grass/dirt landing surfaces, and that lens FOV spec is unavailable to size the cutout.
+
 ## 2026-07-06
 - Added `docs/camera-mount-requirements.md` (Draft, Rev 0.1): initial system requirements for the IMX335 camera mounting subsystem (belly-mounted, downward/oblique observation, camera-only scope). Flags the airframe's lack of landing gear as a primary structural design driver (belly-landing ground-strike protection).
 - `context/open-items.md`: added camera mounting subsystem dependencies (companion computer selection, mounting location, observation angle, environmental range).

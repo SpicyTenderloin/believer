@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 0.1 |
+| **Revision** | 0.2 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
@@ -39,7 +39,8 @@ The camera supports the mission's observation objectives (shark spotting, threat
 | REQ-CAM-10 | The mount shall attach to the underside of the fuselage at a location clear of the battery, GPS modules, pitot tube, and existing avionics wiring. Exact location TBD - to be confirmed against fuselage internal layout. |
 | REQ-CAM-11 | The mount shall be removable without disassembling surrounding airframe structure, to allow camera servicing/replacement. |
 | REQ-CAM-12 | The mount and camera assembly shall not shift the aircraft's CG outside the currently verified envelope (15mm aft of the front wing spar centreline, ~25% MAC) beyond a tolerance to be defined once camera and companion computer masses are known. |
-| REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/manual.md`) - a belly-mounted camera is a first point of ground contact by default. This shall be addressed by recessing the camera above the fuselage's lowest contour line, fitting a flush/recessed protective window, and/or a sacrificial skid ahead of the lens. |
+| REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/manual.md`) - a belly-mounted camera is a first point of ground contact by default. The camera shall be mounted internally to the fuselage, with the lens protruding through a cutout in the belly skin such that the lens face sits recessed 3mm from the outer belly surface. |
+| REQ-CAM-14 | The belly cutout shall be sized to the lens's field-of-view cone at the 3mm recess depth, so the recess does not vignette the image. |
 
 ### 4.3 Environmental
 
@@ -67,6 +68,8 @@ The camera supports the mission's observation objectives (shark spotting, threat
 - Exact mounting location within the belly area not yet confirmed against fuselage internal layout (REQ-CAM-10).
 - Observation angle (REQ-CAM-01) pending object-detection FOV requirements from the companion computer/vision pipeline design.
 - Environmental operating range (REQ-CAM-21) not yet defined.
+- Whether a 3mm recess (REQ-CAM-13) is sufficient given belly-landing surfaces are grass/dirt rather than a smooth runway - surface irregularities could exceed 3mm and contact the lens. Not yet confirmed as acceptable.
+- Lens field-of-view spec not available (no IMX335 datasheet on file) - needed to size the belly cutout per REQ-CAM-14.
 
 Tracked in [context/open-items.md](../context/open-items.md).
 
@@ -75,3 +78,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | Rev | Date | Description |
 |---|---|---|
 | 0.1 | 2026-07-06 | Initial draft |
+| 0.2 | 2026-07-06 | REQ-CAM-13 specifies internal mounting with the lens recessed 3mm through a belly cutout; added REQ-CAM-14 (cutout sizing to avoid vignetting) |
