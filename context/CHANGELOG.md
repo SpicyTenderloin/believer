@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x13)
+- `docs/requirements/underslung-camera-mount-requirements.md` (Rev 1.0 -> 1.1): added Section 3b recording the airframe's manufacturer-published dimensions, MTOW, payload capacity, and load/battery compartment sizes (en.makeflyeasy.com); added a payload-capacity budget to REQ-CAM-12; flagged that the manufacturer page didn't corroborate the landing-pad detail in REQ-CAM-10.
+- `context/project-notes.md`: recorded the airframe manufacturer's published dimensions and payload specs.
+
 ## 2026-07-06 (continued x12)
 - `docs/requirements/underslung-camera-mount-requirements.md` (Rev 0.9 -> 1.0): added REQ-CAM-18 - the male carrier shall be interchangeable without tools (bayonet/spring latch/thumb screw, not plain screws or bolts). Narrowed the mating-mechanism open item to reflect this constraint.
 

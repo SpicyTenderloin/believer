@@ -14,6 +14,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 - Believer fixed-wing UAV: V-tail, twin motor (left/right), 2 ailerons.
 - Centre of Gravity: 15mm aft of the centerline of the carbon rod front wing spar, ~25% MAC.
 - Belly has two landing pads either side of the centreline; the airframe manufacturer's documentation designates the centreline location between them as the intended camera mount position (per Julian, 2026-07-06). See `docs/requirements/underslung-camera-mount-requirements.md` REQ-CAM-10.
+- Manufacturer specs (en.makeflyeasy.com, retrieved 2026-07-06 - no PDF datasheet available for this airframe): wingspan 1960mm, fuselage length 1070mm, fuselage height 185mm, wing area 51dm², max take-off weight 5.5kg, payload capacity ~670g (manufacturer demonstrates compatibility with a Sony A7RM2 camera), load compartment 120x150x119mm, battery compartment 260x140x105mm (separate from load compartment). Recommended flight speed 20m/s, range ~90km under specified conditions. The manufacturer page did not mention landing gear/pad details or an explicit camera mount position in the text extracted; whether the "load compartment" is the same bay as the landing-pad-flanked centreline location above is not confirmed.
 
 ## Flight Controller - history
 - **Original build** (per Jan 2026 proposal): ArduPlane on a Matek F405-Wing FC, u-blox NEO-7 GPS, RFD900 telemetry pair, RC control via QGroundControl joystick passthrough (no dedicated RC link at that time).
