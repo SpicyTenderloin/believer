@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x14)
+- `docs/requirements/underslung-camera-mount-requirements.md` (Rev 1.1 -> 1.2): resolved three open items per user confirmation - the 3mm recess (REQ-CAM-13) is sufficient; the manufacturer's load compartment is the same bay as REQ-CAM-10; softened REQ-CAM-14 to avoid vignetting "where possible," framing full-FOV avoidance as a limitation of the specific candidate module.
+- `context/project-notes.md`: recorded both confirmations.
+
 ## 2026-07-06 (continued x13)
 - `docs/requirements/underslung-camera-mount-requirements.md` (Rev 1.0 -> 1.1): added Section 3b recording the airframe's manufacturer-published dimensions, MTOW, payload capacity, and load/battery compartment sizes (en.makeflyeasy.com); added a payload-capacity budget to REQ-CAM-12; flagged that the manufacturer page didn't corroborate the landing-pad detail in REQ-CAM-10.
 - `context/project-notes.md`: recorded the airframe manufacturer's published dimensions and payload specs.

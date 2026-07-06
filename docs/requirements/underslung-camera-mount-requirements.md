@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 1.1 |
+| **Revision** | 1.2 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
@@ -54,7 +54,7 @@ Per the airframe manufacturer's page (en.makeflyeasy.com, retrieved 2026-07-06):
 | Load compartment | 120 x 150 x 119mm |
 | Battery compartment | 260 x 140 x 105mm (separate from the load compartment) |
 
-The manufacturer page does not mention landing gear/pad details or an explicit camera mount position in the text extracted - it was not possible to independently corroborate the landing-pad-flanked centreline location from REQ-CAM-10 against this source. The "Load compartment" figure above is assumed to be the same bay referenced in REQ-CAM-10, but this has not been confirmed.
+The manufacturer page does not mention landing gear/pad details or an explicit camera mount position in the text extracted, but the "Load compartment" above has been confirmed (2026-07-06) to be the same bay referenced in REQ-CAM-10.
 
 ## 4. Requirements
 
@@ -74,7 +74,7 @@ The manufacturer page does not mention landing gear/pad details or an explicit c
 | REQ-CAM-11 | The mount shall be removable without disassembling surrounding airframe structure, to allow camera servicing/replacement. |
 | REQ-CAM-12 | The mount and camera assembly shall not shift the aircraft's CG outside the currently verified envelope (15mm aft of the front wing spar centreline, ~25% MAC) beyond a tolerance to be defined once camera and companion computer masses are known. Combined with the companion computer and any other payload, total added mass shall stay within the airframe's rated payload capacity (~670g per the manufacturer, see Section 3b). |
 | REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/manual.md`) - a belly-mounted camera is a first point of ground contact by default. The camera shall be mounted internally to the fuselage, with the lens protruding through a cutout in the belly skin such that the lens face sits recessed 3mm from the outer belly surface. |
-| REQ-CAM-14 | The belly cutout shall be sized to the lens's field-of-view cone at the 3mm recess depth, so the recess does not vignette the image. |
+| REQ-CAM-14 | The belly cutout shall be sized to avoid vignetting the lens's field of view at the 3mm recess depth where possible. Full avoidance may not be achievable with a very wide FOV lens - this is a limitation of the specific camera module chosen, which may itself not be appropriate if so. |
 | REQ-CAM-15 | The mount shall be a two-part modular design: a female base permanently fixed to the airframe, and a male carrier that holds the camera and secures into the female base. The female base and the male-to-female mating interface (attachment geometry/mechanism) shall be fixed and shall not change between camera modules. |
 | REQ-CAM-16 | A new male carrier may be designed for each camera module, custom-fitted to that specific camera's footprint (up to a maximum envelope of 50mm x 50mm), while always conforming to the fixed mating interface of REQ-CAM-15. |
 | REQ-CAM-17 | Each male carrier shall be dimensioned for its specific camera's lens length, so the lens face sits at the recess depth specified in REQ-CAM-13 - built into that carrier's design rather than adjusted after the fact. |
@@ -104,10 +104,7 @@ The interface between the camera and the companion computer itself is out of sco
 ## 5. Open Items
 
 - Environmental operating range (REQ-CAM-21) not yet defined.
-- Whether the manufacturer's "Load compartment" (120 x 150 x 119mm, Section 3b) is the same bay as the centreline/landing-pad location in REQ-CAM-10 has not been confirmed - the manufacturer page didn't independently corroborate the landing pad detail.
 - The specific male-to-female mating mechanism (REQ-CAM-15) - not yet decided, but must be tool-less per REQ-CAM-18 (e.g. bayonet twist-lock, spring latch, dovetail slide with a quick-release, not plain screws/bolts).
-- Whether a 3mm recess (REQ-CAM-13) is sufficient given belly-landing surfaces are grass/dirt rather than a smooth runway - surface irregularities could exceed 3mm and contact the lens. Not yet confirmed as acceptable. Whether the two landing pads either side of the camera location (REQ-CAM-10) sit proud of the surrounding skin - which would give the recessed camera bay some natural stand-off protection - is not yet confirmed.
-- **REQ-CAM-13 vs. REQ-CAM-14 geometry conflict**: the candidate module's 175° FOV lens is a near-hemisphere. Avoiding vignetting at the full 175° through a 3mm-deep recess would require a cutout on the order of 130-140mm across (aperture radius = recess depth x tan(half-FOV) = 3mm x tan(87.5°) = ~69mm radius) - not compatible with a small belly cutout. Either some edge-of-frame vignetting will need to be accepted (the extreme edges of a 175° lens are already the most distorted, per the <-36% distortion spec), the recess depth reduced, or this is reconsidered once a specific module is finalised. Not yet resolved.
 - Operating temperature range for the candidate module is inconsistent between sources: two independent sources (Core Electronics product page, a separate web search) give -10°C to 60°C; the user's direct read of the primary Waveshare wiki page gave 10°C to 60°C (no minus sign). Worth a second look at the primary page for a possible dropped minus sign - not reconciled.
 - Internal clearance behind the belly skin: the candidate module's lens alone is 36.94mm long - needs confirming against available fuselage depth at whatever location is chosen (REQ-CAM-10).
 
@@ -128,3 +125,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 0.9 | 2026-07-06 | REQ-CAM-10 resolved: centreline of the fuselage, between the two landing pads, per the airframe manufacturer's documentation. Removed the mounting-location open item; added an open item on whether the landing pads sit proud of the surrounding skin |
 | 1.0 | 2026-07-06 | Added REQ-CAM-18: the male carrier shall be interchangeable without tools. Narrowed the mating-mechanism open item accordingly (must be tool-less) |
 | 1.1 | 2026-07-06 | Added Section 3b (airframe envelope reference: dimensions, MTOW, payload capacity, load/battery compartment sizes) from the manufacturer's page; added payload-capacity budget to REQ-CAM-12; flagged that the manufacturer page didn't corroborate the landing pad detail in REQ-CAM-10 |
+| 1.2 | 2026-07-06 | Resolved three open items per user confirmation: the 3mm recess (REQ-CAM-13) is sufficient; the manufacturer's load compartment is confirmed to be the same bay as REQ-CAM-10; softened REQ-CAM-14 to avoid vignetting "where possible," noting full-FOV avoidance is a limitation of the specific candidate module that may itself not be appropriate |
