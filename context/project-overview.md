@@ -85,6 +85,7 @@ believer/
 │   ├── purchase-history.md          ← Component purchases (cost, funder, installed status)
 │   ├── project-overview.md          ← Public-facing project background and roadmap
 │   ├── test-reports/                ← Dated test/session reports (one file per session)
+│   ├── requirements/                ← System requirements documents (one file per subsystem)
 │   └── assets/                      ← Diagrams and photos referenced by docs
 ├── params/
 │   ├── parameter-change-log.md      ← Narrative PX4 parameter change history

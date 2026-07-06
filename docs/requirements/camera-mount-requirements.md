@@ -74,7 +74,7 @@ The camera supports the mission's observation objectives (shark spotting, threat
 - Whether a 3mm recess (REQ-CAM-13) is sufficient given belly-landing surfaces are grass/dirt rather than a smooth runway - surface irregularities could exceed 3mm and contact the lens. Not yet confirmed as acceptable.
 - Lens field-of-view spec not available (no IMX335 datasheet on file) - needed to size the belly cutout per REQ-CAM-14.
 
-Tracked in [context/open-items.md](../context/open-items.md).
+Tracked in [context/open-items.md](../../context/open-items.md).
 
 ## 6. Revision History
 

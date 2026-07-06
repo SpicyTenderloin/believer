@@ -21,6 +21,7 @@ AI use on this project is open and acknowledged. See [`context/academic-integrit
   - `purchase-history.md` - component purchase log with cost, funder, and installed status
   - `project-overview.md` - project background, purpose, roadmap, and team
   - `test-reports/` - dated test/session reports, one file per session
+  - `requirements/` - system requirements documents, one file per subsystem
   - `assets/` - diagrams and photos referenced by the docs above
 - `params/` - flight controller configuration
   - `parameter-change-log.md` - narrative log of every PX4 parameter change and the reason behind it

@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x3)
+- Moved `docs/camera-mount-requirements.md` -> `docs/requirements/camera-mount-requirements.md`, establishing `docs/requirements/` as the home for system requirements documents (one file per subsystem). Updated cross-references in `context/open-items.md`, and added the new folder to the repo structure maps in `context/project-overview.md`, `README.md`, and the naming convention to `context/style-guide.md`.
+
 ## 2026-07-06 (continued x2)
 - `docs/camera-mount-requirements.md` (Rev 0.2 -> 0.3): added a modular two-part mount requirement (REQ-CAM-15 to -17) - female base fixed to the airframe, male carrier holding the camera, swappable for future camera changes, up to a 50mm x 50mm footprint with adjustable positioning for varying lens lengths.
 

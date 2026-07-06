@@ -41,4 +41,5 @@ Test reports are named `docs/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one
 - Top-level sections use `##`, subsections use `###`.
 - Tables are preferred over prose for structured data.
 - No trailing changelog blocks at the bottom of individual documents - all changes go in `context/CHANGELOG.md`.
+- System requirements documents are named `docs/requirements/<subsystem>-requirements.md`, one file per subsystem, following the same Document/Revision/Date/Status header and Revision History table convention as `docs/ICD.md`.
 - **Do not use em-dashes (—) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `context/`, `params/`, and the repo root.
