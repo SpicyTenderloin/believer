@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x8)
+- `docs/requirements/camera-mount-requirements.md` (Rev 0.6 -> 0.7): renamed document title to "Underslung Camera Mounting Subsystem - System Requirements" (filename unchanged).
+
+## 2026-07-06 (continued x7)
+- `docs/requirements/camera-mount-requirements.md` (Rev 0.5 -> 0.6): removed REQ-CAM-31 and narrowed REQ-CAM-30 - the camera/companion-computer interface itself is out of scope for this document; the mount's only obligation is not to obstruct the cable being routed away. Renamed section 4.4 to "Interface"; removed the companion-computer-selection open item.
+
 ## 2026-07-06 (continued x6)
 - `docs/requirements/camera-mount-requirements.md` (Rev 0.4 -> 0.5): clarified the modular mount philosophy per user direction - the female base and its mating interface (REQ-CAM-15) are fixed and never change; a new male carrier may be custom-designed per camera module (REQ-CAM-16, -17) rather than one universal adjustable carrier. Added connector detail (SH1.0 5-pin to USB cable) to the candidate module reference data; corroborated the -10°C operating-temperature low end via a second independent source (Core Electronics product page). Removed the stale REQ-CAM-01 open item (angle is now fixed, not TBD); added an open item for the still-undecided mating mechanism.
 

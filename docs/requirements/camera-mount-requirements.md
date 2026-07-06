@@ -1,9 +1,9 @@
-# Believer Camera Mounting Subsystem - System Requirements
+# Underslung Camera Mounting Subsystem - System Requirements
 
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 0.5 |
+| **Revision** | 0.7 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
@@ -69,12 +69,13 @@ No PDF datasheet has been captured under `Component datasheets/` - per `context/
 | REQ-CAM-20 | The mount shall withstand in-flight vibration from the twin T-Motor U5 v2.0 motors without loosening or inducing resonance in the camera assembly. |
 | REQ-CAM-21 | The camera and mount shall tolerate the outdoor operating environment for the mission profile (ambient temperature range, humidity, and incidental moisture/dust exposure typical of coastal and agricultural observation flights). Specific ranges TBD - not yet defined for this airframe. |
 
-### 4.4 Electrical and Interface
+### 4.4 Interface
+
+The interface between the camera and the companion computer itself is out of scope for this document. The mount's only obligation is not to get in the way of it.
 
 | ID | Requirement |
 |---|---|
-| REQ-CAM-30 | The mount shall route the camera's USB cable to the companion computer without strain on the connector and clear of moving parts (control linkages, propeller arcs). |
-| REQ-CAM-31 | Power/data interface requirements are dependent on the companion computer selection, which has not yet been made - tracked in `context/open-items.md`. |
+| REQ-CAM-30 | The mount shall not obstruct the camera's cable from being routed away to the companion computer. |
 
 ### 4.5 Maintainability
 
@@ -84,7 +85,6 @@ No PDF datasheet has been captured under `Component datasheets/` - per `context/
 
 ## 5. Open Items
 
-- Companion computer model not yet selected - drives REQ-CAM-31 and may constrain cable routing (REQ-CAM-30).
 - Exact mounting location within the belly area not yet confirmed against fuselage internal layout (REQ-CAM-10).
 - Environmental operating range (REQ-CAM-21) not yet defined.
 - The specific male-to-female mating mechanism (REQ-CAM-15) - e.g. bolt pattern, bayonet twist-lock, dovetail slide - not yet decided.
@@ -104,3 +104,5 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 0.3 | 2026-07-06 | Added modular two-part mount (female base in airframe, male camera carrier) - REQ-CAM-15 to -17: swappable camera, up to 50mm x 50mm footprint, adjustable for varying lens lengths |
 | 0.4 | 2026-07-06 | Reframed REQ-CAM-01 as downward (nadir)-facing; added Section 3a recording the Waveshare IMX335 (B) as a reference candidate module, not a fixed design input; flagged a geometry conflict between the 3mm recess and the candidate's 175° FOV lens, an unreconciled operating-temperature discrepancy between sources, and the candidate lens's 36.94mm length against unconfirmed internal clearance |
 | 0.5 | 2026-07-06 | Clarified the modular mount philosophy: the female base and its mating interface (REQ-CAM-15) are fixed and never change; a new male carrier may be custom-designed per camera module (REQ-CAM-16, -17) rather than one carrier flexing to fit all cameras. Added connector detail (SH1.0 5-pin to USB) to Section 3a; corroborated -10°C low end from a second independent source. Removed stale REQ-CAM-01 open item (angle is now fixed downward-facing, no longer TBD); added open item for the undefined mating mechanism |
+| 0.6 | 2026-07-06 | Removed REQ-CAM-31 and narrowed REQ-CAM-30 - the camera/companion-computer interface itself is out of scope; the mount's only obligation is not to obstruct the cable being routed away. Renamed section 4.4 to "Interface"; removed the companion-computer-selection open item |
+| 0.7 | 2026-07-06 | Renamed document title to "Underslung Camera Mounting Subsystem - System Requirements" |
