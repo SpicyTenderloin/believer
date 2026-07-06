@@ -17,7 +17,7 @@ The camera supports the mission's observation objectives (shark spotting, threat
 
 ## 3. Reference Documents
 
-- `docs/purchase-history.md` - IMX335 5MP USB Camera purchase record
+- `docs/purchase-history/purchase-history.md` - IMX335 5MP USB Camera purchase record
 - `context/project-notes.md` - future/planned capability notes
 - `docs/build-checklist.md` - Camera mount task (Future Work)
 - `context/open-items.md` - open dependencies against this subsystem

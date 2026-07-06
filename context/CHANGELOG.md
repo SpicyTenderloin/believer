@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x4)
+- Redistributed `supporting-documents/` into `docs/` by content type: the proposal and signed funding application PDFs moved to new `docs/reference/`; `purchase-history.md` and its `invoices/` subfolder moved together into new `docs/purchase-history/`. Removed the now-empty `supporting-documents/` folder.
+- Updated all cross-references: `docs/purchase-history/purchase-history.md` (internal invoice/proposal links), `docs/ICD.md` (Reference Documents), `docs/project-overview.md`, `docs/requirements/camera-mount-requirements.md`, `context/directives.md`, `context/project-overview.md` (repo structure map), `context/style-guide.md`, `context/startup-prompt.md`, `context/academic-integrity.md`, and `README.md`.
+
 ## 2026-07-06 (continued x3)
 - Moved `docs/camera-mount-requirements.md` -> `docs/requirements/camera-mount-requirements.md`, establishing `docs/requirements/` as the home for system requirements documents (one file per subsystem). Updated cross-references in `context/open-items.md`, and added the new folder to the repo structure maps in `context/project-overview.md`, `README.md`, and the naming convention to `context/style-guide.md`.
 

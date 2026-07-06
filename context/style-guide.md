@@ -30,7 +30,7 @@ Documents under `docs/` are engineering records - they should read as if written
 
 ## Exceptions
 
-`docs/purchase-history.md`, `params/parameter-change-log.md`, and `docs/test-reports/` are transactional logs by nature - dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
+`docs/purchase-history/purchase-history.md`, `params/parameter-change-log.md`, and `docs/test-reports/` are transactional logs by nature - dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
 
 Test reports are named `docs/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one file per session.
 

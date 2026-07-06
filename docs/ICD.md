@@ -13,9 +13,9 @@ This document defines the physical, electrical, and data interfaces between the 
 
 ## 2. Reference Documents
 
-- Believer Project Proposal (QUTAS, 2026-01-25) - `supporting-documents/`
-- QUTAS EER Funding Application (2026-05-20) - `supporting-documents/`
-- Purchase invoices - `supporting-documents/invoices/`
+- Believer Project Proposal (QUTAS, 2026-01-25) - `docs/reference/`
+- QUTAS EER Funding Application (2026-05-20) - `docs/reference/`
+- Purchase invoices - `docs/purchase-history/invoices/`
 - PX4 parameter change history - `params/parameter-change-log.md`
 - Component datasheets - `Component datasheets/`
 

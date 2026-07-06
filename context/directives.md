@@ -6,9 +6,11 @@ Standing conventions for working in this repo. Update this file when the user gi
 
 - Repo layout:
   - `docs/` - manual, ICD, and other documentation
+    - `docs/reference/` - formal reference documents kept in original format (proposals, funding applications)
+    - `docs/purchase-history/` - purchase-history.md and its `invoices/` subfolder, named `<vendor>-<item>-<date>.pdf`
+    - `docs/test-reports/` - dated test/session reports, one file per session
+    - `docs/requirements/` - system requirements documents, one file per subsystem
   - `params/` - parameter change logs / flight controller parameter files
-  - `supporting-documents/` - formal reference documents kept in original format (proposals, funding applications)
-    - `supporting-documents/invoices/` - purchase invoices, named `<vendor>-<item>-<date>.pdf`, referenced from `docs/purchase-history.md`
   - `Component datasheets/` - manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
   - `GX12 Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter (model config, radio config, firmware, stock assets)
   - `context/` - this folder: persistent project memory and directives for Claude
@@ -17,7 +19,7 @@ Standing conventions for working in this repo. Update this file when the user gi
 
 - Source material handling:
   - Working/scratch documents (e.g. Word docs, spreadsheets dropped in the root for context) are deleted once their content is extracted into the relevant Markdown docs.
-  - Formal reference documents (signed proposals, funding applications, invoices) are **kept** in their original format under `supporting-documents/` and never deleted.
+  - Formal reference documents (signed proposals, funding applications) are **kept** in their original format under `docs/reference/` and never deleted. Purchase invoices are kept the same way under `docs/purchase-history/invoices/`.
   - The `GX12 Backup/` folder is a functional restore image, not a scratch document - keep it in full, do not trim to just project-specific files.
 
 - **Document writing standards are in `context/style-guide.md`** - read before creating or editing any file under `docs/`.

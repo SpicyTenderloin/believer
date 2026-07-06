@@ -82,8 +82,11 @@ believer/
 │   ├── ICD.md                       ← Interface control document
 │   ├── manual.md                    ← Operating manual (flight modes, procedures)
 │   ├── build-checklist.md           ← Build completion, retention checks, and configuration checklist
-│   ├── purchase-history.md          ← Component purchases (cost, funder, installed status)
 │   ├── project-overview.md          ← Public-facing project background and roadmap
+│   ├── purchase-history/
+│   │   ├── purchase-history.md      ← Component purchases (cost, funder, installed status)
+│   │   └── invoices/                ← Purchase invoices, named <vendor>-<item>-<date>.pdf
+│   ├── reference/                   ← Formal docs kept in original format (proposal, signed funding application)
 │   ├── test-reports/                ← Dated test/session reports (one file per session)
 │   ├── requirements/                ← System requirements documents (one file per subsystem)
 │   └── assets/                      ← Diagrams and photos referenced by docs
@@ -92,10 +95,6 @@ believer/
 │   └── believer-parameters.params   ← Full PX4 parameter dump (raw backup)
 ├── GX12 Backup/                     ← Full EdgeTX SD card backup (restore image)
 │   └── MODELS/model00.yml           ← GX12 model config - channel/mixer definitions
-├── supporting-documents/            ← Formal docs kept in original format
-│   ├── Believer Project Proposal.pdf
-│   ├── QUTAS Fixed Wing Drone Funding Application SIGNED.pdf (or similar)
-│   └── invoices/                    ← Purchase invoices, named <vendor>-<item>-<date>.pdf
 └── Component datasheets/            ← Manufacturer datasheets for installed components only
 ```
 

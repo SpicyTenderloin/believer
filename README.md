@@ -18,8 +18,9 @@ AI use on this project is open and acknowledged. See [`context/academic-integrit
   - `manual.md` - flight modes, switch mapping, pre-flight checklist, and operating procedures
   - `ICD.md` - interface control document: all physical, electrical, and data interfaces between avionics subsystems
   - `build-checklist.md` - build completion, retention checks, and flight controller configuration checklist
-  - `purchase-history.md` - component purchase log with cost, funder, and installed status
   - `project-overview.md` - project background, purpose, roadmap, and team
+  - `purchase-history/` - component purchase log (`purchase-history.md`) with cost, funder, and installed status, plus its `invoices/` subfolder
+  - `reference/` - formal reference documents in their original format (signed proposal, funding application)
   - `test-reports/` - dated test/session reports, one file per session
   - `requirements/` - system requirements documents, one file per subsystem
   - `assets/` - diagrams and photos referenced by the docs above
@@ -27,7 +28,6 @@ AI use on this project is open and acknowledged. See [`context/academic-integrit
   - `parameter-change-log.md` - narrative log of every PX4 parameter change and the reason behind it
   - `believer-parameters.params` - full PX4 parameter dump (raw backup)
 - `GX12 Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter, kept in full for restore purposes
-- `supporting-documents/` - formal reference documents in their original format (signed proposals, funding applications, invoices)
 - `Component datasheets/` - manufacturer datasheets and manuals for components currently installed in the aircraft
 
 ## `context/` - project memory for AI tools

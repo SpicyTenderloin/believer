@@ -98,7 +98,7 @@ Claude Code (Anthropic) is used openly and extensively to assist with writing an
 
 ### Funding Accountability
 
-The project received $689.50 in EER School club activity funding (approved 2026-05-20/21). Accurate record-keeping of expenditure - maintained in `docs/purchase-history.md` - is part of responsible use of university funds and consistent with the Code of Conduct obligation to "provide accurate information regarding enrollment matters" (extended here to funding matters).
+The project received $689.50 in EER School club activity funding (approved 2026-05-20/21). Accurate record-keeping of expenditure - maintained in `docs/purchase-history/purchase-history.md` - is part of responsible use of university funds and consistent with the Code of Conduct obligation to "provide accurate information regarding enrollment matters" (extended here to funding matters).
 
 ### BVLOS Operations and Regulatory Compliance
 
