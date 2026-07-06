@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `params/believer-parameters.params` (exported 2026-07-04).
+Values reflect `params/believer-parameters.params` (exported 2026-07-06).
 
 ---
 
@@ -57,7 +57,7 @@ Values reflect `params/believer-parameters.params` (exported 2026-07-04).
 |---|---|---|
 | `MAV_0_CONFIG` | 102 (TELEM 2) | Assigns MAVLink instance 0 to the RFD900x radio port. |
 | `MAV_0_MODE` | 0 (Normal) | Standard GCS telemetry profile for QGroundControl. |
-| `MAV_0_RATE` | 1200 B/s | Maximum MAVLink send rate. |
+| `MAV_0_RATE` | 3000 B/s | Maximum MAVLink send rate. Raised from 1200 B/s (2026-07-06) - the link was bandwidth-starved, throttling every message to ~39% of its configured rate; `BATTERY_STATUS` also force-streamed at 5Hz via `mavlink stream` in `/fs/microsd/etc/extras.txt`. |
 | `MAV_0_FLOW_CTRL` | 2 (Disabled) | RTS/CTS hardware flow control not connected on the RFD900x link. |
 | `MAV_0_FORWARD` | 1 (Enabled) | Forward MAVLink packets received on this link to other instances. |
 | `MAV_0_RADIO_CTL` | 1 (Enabled) | Enables MAVLink radio status reporting from the RFD900x. |
@@ -67,8 +67,8 @@ Values reflect `params/believer-parameters.params` (exported 2026-07-04).
 | Parameter | Value | Notes |
 |---|---|---|
 | `MAV_1_CONFIG` | 101 (TELEM 1) | Assigns MAVLink instance 1 to TELEM1, sharing the port with the DBR4 ELRS receiver. |
-| `MAV_1_MODE` | 3 (OSD) | Sends a minimal telemetry stream back through the ELRS link to the GX12 transmitter display. |
-| `MAV_1_RATE` | 9600 B/s | Maximum MAVLink send rate for the ELRS uplink. |
+| `MAV_1_MODE` | 0 (Normal) | Changed from 3 (OSD) on 2026-07-06. |
+| `MAV_1_RATE` | 19200 B/s | Maximum MAVLink send rate for the ELRS uplink. Raised from 9600 B/s (2026-07-06); `BATTERY_STATUS` also force-streamed at 10Hz via `mavlink stream` in `/fs/microsd/etc/extras.txt` (device `/dev/ttyS6`). |
 
 ## RC
 
@@ -94,7 +94,9 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `PWM_MAIN_FUNC4` | 101 (Motor 1) | MAIN 4 assigned to left motor. |
 | `PWM_MAIN_FUNC5` | 202 (Right Aileron) | MAIN 5 assigned to right aileron. |
 | `PWM_MAIN_FUNC6` | 102 (Motor 2) | MAIN 6 assigned to right motor. |
-| `PWM_MAIN_REV` | 5 (0b00000101) | Output reversal bitmask: bits 0 and 2 set = MAIN 1 (V-tail left) and MAIN 3 (left aileron) reversed. |
+| `PWM_MAIN_MIN1` | 800 | V-tail left minimum PWM. Lowered from 1000 (2026-07-06) to give the servo more usable travel. |
+| `PWM_MAIN_MIN2` | 800 | V-tail right minimum PWM. Lowered from 1000 (2026-07-06) to give the servo more usable travel. |
+| `PWM_MAIN_REV` | 6 (0b00000110) | Output reversal bitmask: bits 1 and 2 set = MAIN 2 (V-tail right) and MAIN 3 (left aileron) reversed. Changed from 5 (0b00000101, MAIN 1 + MAIN 3) on 2026-07-06 as part of the ruddervator direction fix. |
 
 PWM limits and disarmed values per output are documented in `docs/ICD.md` (INT-02a through INT-02f).
 
@@ -109,36 +111,36 @@ PWM limits and disarmed values per output are documented in `docs/ICD.md` (INT-0
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-07-04 calibration run.
+Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-07-06 calibration run.
 
 ### Accelerometers
 
 | Parameter | Value |
 |---|---|
-| `CAL_ACC0_XOFF` | -0.014409 |
+| `CAL_ACC0_XOFF` | 0.005757 |
 | `CAL_ACC0_XSCALE` | 0.995518 |
-| `CAL_ACC0_YOFF` | 0.000312 |
+| `CAL_ACC0_YOFF` | -0.091530 |
 | `CAL_ACC0_YSCALE` | 1.011120 |
-| `CAL_ACC0_ZOFF` | 0.045671 |
+| `CAL_ACC0_ZOFF` | 0.033284 |
 | `CAL_ACC0_ZSCALE` | 0.999696 |
-| `CAL_ACC1_XOFF` | 0.030172 |
+| `CAL_ACC1_XOFF` | 0.062502 |
 | `CAL_ACC1_XSCALE` | 0.997084 |
-| `CAL_ACC1_YOFF` | 0.074453 |
+| `CAL_ACC1_YOFF` | -0.032561 |
 | `CAL_ACC1_YSCALE` | 1.020391 |
-| `CAL_ACC1_ZOFF` | -0.397207 |
+| `CAL_ACC1_ZOFF` | -0.405519 |
 | `CAL_ACC1_ZSCALE` | 1.004521 |
-| `CAL_ACC2_XOFF` | -0.017968 |
+| `CAL_ACC2_XOFF` | 0.007626 |
 | `CAL_ACC2_XSCALE` | 0.995736 |
-| `CAL_ACC2_YOFF` | -0.000730 |
+| `CAL_ACC2_YOFF` | -0.129514 |
 | `CAL_ACC2_YSCALE` | 1.018520 |
-| `CAL_ACC2_ZOFF` | 0.046937 |
+| `CAL_ACC2_ZOFF` | 0.034605 |
 | `CAL_ACC2_ZSCALE` | 0.999588 |
 
 ### Barometer
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 24.000 |
+| `CAL_BARO0_OFF` | 24.063 |
 
 ### Gyroscopes
 
@@ -150,9 +152,9 @@ Set automatically by QGroundControl calibration procedures. Do not edit manually
 | `CAL_GYRO1_XOFF` | 0.001345 |
 | `CAL_GYRO1_YOFF` | -0.003667 |
 | `CAL_GYRO1_ZOFF` | -0.012162 |
-| `CAL_GYRO2_XOFF` | -0.007781 |
-| `CAL_GYRO2_YOFF` | -0.024517 |
-| `CAL_GYRO2_ZOFF` | -0.024705 |
+| `CAL_GYRO2_XOFF` | -0.004272 |
+| `CAL_GYRO2_YOFF` | -0.021547 |
+| `CAL_GYRO2_ZOFF` | -0.018237 |
 
 ### Magnetometers
 
@@ -160,23 +162,23 @@ Full 6-point calibration with soft-iron correction (odiag values non-zero). CAL_
 
 | Parameter | Value |
 |---|---|
-| `CAL_MAG0_XOFF` | 0.020362 |
-| `CAL_MAG0_XSCALE` | 0.983407 |
+| `CAL_MAG0_XOFF` | 0.055093 |
+| `CAL_MAG0_XSCALE` | 0.999952 |
 | `CAL_MAG0_XODIAG` | -0.006632 |
-| `CAL_MAG0_YOFF` | 0.008718 |
-| `CAL_MAG0_YSCALE` | 0.995368 |
+| `CAL_MAG0_YOFF` | -0.001766 |
+| `CAL_MAG0_YSCALE` | 0.984097 |
 | `CAL_MAG0_YODIAG` | -0.001033 |
-| `CAL_MAG0_ZOFF` | -0.410242 |
-| `CAL_MAG0_ZSCALE` | 1.023885 |
+| `CAL_MAG0_ZOFF` | -0.457515 |
+| `CAL_MAG0_ZSCALE` | 1.017748 |
 | `CAL_MAG0_ZODIAG` | 0.007716 |
-| `CAL_MAG1_XOFF` | 0.029062 |
-| `CAL_MAG1_XSCALE` | 0.989014 |
+| `CAL_MAG1_XOFF` | 0.035959 |
+| `CAL_MAG1_XSCALE` | 1.019465 |
 | `CAL_MAG1_XODIAG` | 0.016254 |
-| `CAL_MAG1_YOFF` | -0.090900 |
-| `CAL_MAG1_YSCALE` | 0.983770 |
+| `CAL_MAG1_YOFF` | -0.094327 |
+| `CAL_MAG1_YSCALE` | 0.998253 |
 | `CAL_MAG1_YODIAG` | 0.001022 |
-| `CAL_MAG1_ZOFF` | -0.031236 |
-| `CAL_MAG1_ZSCALE` | 1.067977 |
+| `CAL_MAG1_ZOFF` | -0.029979 |
+| `CAL_MAG1_ZSCALE` | 1.088623 |
 | `CAL_MAG1_ZODIAG` | 0.168101 |
 
 ### Board level

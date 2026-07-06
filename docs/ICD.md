@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.2 |
-| **Date** | 2026-07-05 |
+| **Revision** | 1.3 |
+| **Date** | 2026-07-06 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -151,12 +151,12 @@ Radiomaster DBR4 dual-band (2.4GHz/900MHz) ExpressLRS receiver, connected to FC 
 | `RC_MAP_ARM_SW` | Channel 5 |
 | `RC_MAP_KILL_SW` | Channel 7 |
 | `MAV_1_CONFIG` | TELEM 1 |
-| `MAV_1_MODE` | OSD |
+| `MAV_1_MODE` | Normal |
 | `MAV_1_RATE` | 19200 B/s |
 
 ELRS Hybrid mode carries RC channels through CH12 only (CH13–16 are not transmitted).
 
-A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled over this same link alongside RC control. `BATTERY_STATUS` is forced to 10Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the OSD mode's 0.5Hz default.
+A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled over this same link alongside RC control. `BATTERY_STATUS` is forced to 10Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`. This override was configured while `MAV_1_MODE` was 3 (OSD, 0.5Hz default); the mode has since changed to 0 (Normal) - the resulting `BATTERY_STATUS` rate has not been re-verified against Normal mode's own default.
 
 #### RC Channel Map
 
@@ -299,3 +299,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 1.0 | 2026-07-03 | Split INT-02 into INT-02a-f (one interface per PWM output); added full 16-pin RFD900x connector pinout table under INT-04; updated block diagram to show individual actuator connections |
 | 1.1 | 2026-07-03 | Added INT-07 I2C port and address detail |
 | 1.2 | 2026-07-05 | Added INT-08 ELRS packet rate; added MAV_1 (TELEM1/DBR4) and MAV_0 (TELEM2/RFD900x) MAVLink instance parameters, device paths, and BATTERY_STATUS rate overrides |
+| 1.3 | 2026-07-06 | Updated `MAV_1_MODE` (OSD -> Normal) per the current parameter export; flagged that the BATTERY_STATUS extras.txt override has not been re-verified against Normal mode's default rate |

@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x15)
+- Replaced `params/believer-parameters.params` with the current FC export (was untracked in the repo root). Notable confirmed-intentional changes beyond the earlier telemetry tuning (`MAV_0_RATE` 1200->3000, `MAV_1_RATE` 9600->19200): `MAV_1_MODE` 3 (OSD) -> 0 (Normal); `PWM_MAIN_MIN1`/`MIN2` 1000->800 (more V-tail servo travel); `PWM_MAIN_REV` 5->6 (reversed set changed from MAIN1+MAIN3 to MAIN2+MAIN3, consistent with the ruddervator direction fix). Also refreshed a routine accelerometer/gyro/mag/barometer recalibration.
+- `params/parameter-change-log.md`: updated to match - MAV_0/MAV_1 rates and MAV_1_MODE, PWM_MAIN_MIN1/2 and PWM_MAIN_REV with notes, and all calibration values (export date 2026-07-04 -> 2026-07-06).
+- `docs/ICD.md` (Rev 1.2 -> 1.3): updated MAV_1_MODE (OSD -> Normal); flagged the BATTERY_STATUS extras.txt override as not yet re-verified against Normal mode's default rate.
+- `context/open-items.md`: added the BATTERY_STATUS re-verification item.
+
 ## 2026-07-06 (continued x14)
 - `docs/requirements/underslung-camera-mount-requirements.md` (Rev 1.1 -> 1.2): resolved three open items per user confirmation - the 3mm recess (REQ-CAM-13) is sufficient; the manufacturer's load compartment is the same bay as REQ-CAM-10; softened REQ-CAM-14 to avoid vignetting "where possible," framing full-FOV avoidance as a limitation of the specific candidate module.
 - `context/project-notes.md`: recorded both confirmations.
