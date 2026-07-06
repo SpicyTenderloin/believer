@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 0.8 |
+| **Revision** | 0.9 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
@@ -53,7 +53,7 @@ No PDF datasheet has been captured under `Component datasheets/` - per `context/
 
 | ID | Requirement |
 |---|---|
-| REQ-CAM-10 | The mount shall attach to the underside of the fuselage at a location clear of the battery, GPS modules, pitot tube, and existing avionics wiring. Exact location TBD - to be confirmed against fuselage internal layout. |
+| REQ-CAM-10 | The mount shall attach to the underside of the fuselage on the centreline, between the two landing pads - the location the airframe manufacturer's documentation designates for a camera mount - clear of the battery, GPS modules, pitot tube, and existing avionics wiring. |
 | REQ-CAM-11 | The mount shall be removable without disassembling surrounding airframe structure, to allow camera servicing/replacement. |
 | REQ-CAM-12 | The mount and camera assembly shall not shift the aircraft's CG outside the currently verified envelope (15mm aft of the front wing spar centreline, ~25% MAC) beyond a tolerance to be defined once camera and companion computer masses are known. |
 | REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/manual.md`) - a belly-mounted camera is a first point of ground contact by default. The camera shall be mounted internally to the fuselage, with the lens protruding through a cutout in the belly skin such that the lens face sits recessed 3mm from the outer belly surface. |
@@ -85,10 +85,9 @@ The interface between the camera and the companion computer itself is out of sco
 
 ## 5. Open Items
 
-- Exact mounting location within the belly area not yet confirmed against fuselage internal layout (REQ-CAM-10).
 - Environmental operating range (REQ-CAM-21) not yet defined.
 - The specific male-to-female mating mechanism (REQ-CAM-15) - e.g. bolt pattern, bayonet twist-lock, dovetail slide - not yet decided.
-- Whether a 3mm recess (REQ-CAM-13) is sufficient given belly-landing surfaces are grass/dirt rather than a smooth runway - surface irregularities could exceed 3mm and contact the lens. Not yet confirmed as acceptable.
+- Whether a 3mm recess (REQ-CAM-13) is sufficient given belly-landing surfaces are grass/dirt rather than a smooth runway - surface irregularities could exceed 3mm and contact the lens. Not yet confirmed as acceptable. Whether the two landing pads either side of the camera location (REQ-CAM-10) sit proud of the surrounding skin - which would give the recessed camera bay some natural stand-off protection - is not yet confirmed.
 - **REQ-CAM-13 vs. REQ-CAM-14 geometry conflict**: the candidate module's 175° FOV lens is a near-hemisphere. Avoiding vignetting at the full 175° through a 3mm-deep recess would require a cutout on the order of 130-140mm across (aperture radius = recess depth x tan(half-FOV) = 3mm x tan(87.5°) = ~69mm radius) - not compatible with a small belly cutout. Either some edge-of-frame vignetting will need to be accepted (the extreme edges of a 175° lens are already the most distorted, per the <-36% distortion spec), the recess depth reduced, or this is reconsidered once a specific module is finalised. Not yet resolved.
 - Operating temperature range for the candidate module is inconsistent between sources: two independent sources (Core Electronics product page, a separate web search) give -10°C to 60°C; the user's direct read of the primary Waveshare wiki page gave 10°C to 60°C (no minus sign). Worth a second look at the primary page for a possible dropped minus sign - not reconciled.
 - Internal clearance behind the belly skin: the candidate module's lens alone is 36.94mm long - needs confirming against available fuselage depth at whatever location is chosen (REQ-CAM-10).
@@ -107,3 +106,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 0.6 | 2026-07-06 | Removed REQ-CAM-31 and narrowed REQ-CAM-30 - the camera/companion-computer interface itself is out of scope; the mount's only obligation is not to obstruct the cable being routed away. Renamed section 4.4 to "Interface"; removed the companion-computer-selection open item |
 | 0.7 | 2026-07-06 | Renamed document title to "Underslung Camera Mounting Subsystem - System Requirements" |
 | 0.8 | 2026-07-06 | Renamed file to `underslung-camera-mount-requirements.md`, to distinguish from future camera mount requirement documents for other locations |
+| 0.9 | 2026-07-06 | REQ-CAM-10 resolved: centreline of the fuselage, between the two landing pads, per the airframe manufacturer's documentation. Removed the mounting-location open item; added an open item on whether the landing pads sit proud of the surrounding skin |

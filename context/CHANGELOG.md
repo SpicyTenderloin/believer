@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x10)
+- `docs/requirements/underslung-camera-mount-requirements.md` (Rev 0.8 -> 0.9): resolved REQ-CAM-10 - camera mount location is the fuselage centreline, between the two landing pads, per the airframe manufacturer's documentation. Removed the mounting-location open item; added an open item on whether the landing pads sit proud of the surrounding skin (relevant to the REQ-CAM-13 recess depth).
+- `context/project-notes.md`: recorded the landing pads and the manufacturer-designated camera mount location.
+
 ## 2026-07-06 (continued x9)
 - Renamed `docs/requirements/camera-mount-requirements.md` -> `docs/requirements/underslung-camera-mount-requirements.md` (Rev 0.7 -> 0.8), to distinguish from future camera mount requirement documents for other locations. Updated cross-references in `context/open-items.md` and `context/project-notes.md`.
 

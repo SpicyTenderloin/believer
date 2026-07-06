@@ -13,6 +13,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 ## Airframe
 - Believer fixed-wing UAV: V-tail, twin motor (left/right), 2 ailerons.
 - Centre of Gravity: 15mm aft of the centerline of the carbon rod front wing spar, ~25% MAC.
+- Belly has two landing pads either side of the centreline; the airframe manufacturer's documentation designates the centreline location between them as the intended camera mount position (per Julian, 2026-07-06). See `docs/requirements/underslung-camera-mount-requirements.md` REQ-CAM-10.
 
 ## Flight Controller - history
 - **Original build** (per Jan 2026 proposal): ArduPlane on a Matek F405-Wing FC, u-blox NEO-7 GPS, RFD900 telemetry pair, RC control via QGroundControl joystick passthrough (no dedicated RC link at that time).
