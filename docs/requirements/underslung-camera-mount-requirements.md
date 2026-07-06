@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 0.7 |
+| **Revision** | 0.8 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
@@ -106,3 +106,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 0.5 | 2026-07-06 | Clarified the modular mount philosophy: the female base and its mating interface (REQ-CAM-15) are fixed and never change; a new male carrier may be custom-designed per camera module (REQ-CAM-16, -17) rather than one carrier flexing to fit all cameras. Added connector detail (SH1.0 5-pin to USB) to Section 3a; corroborated -10°C low end from a second independent source. Removed stale REQ-CAM-01 open item (angle is now fixed downward-facing, no longer TBD); added open item for the undefined mating mechanism |
 | 0.6 | 2026-07-06 | Removed REQ-CAM-31 and narrowed REQ-CAM-30 - the camera/companion-computer interface itself is out of scope; the mount's only obligation is not to obstruct the cable being routed away. Renamed section 4.4 to "Interface"; removed the companion-computer-selection open item |
 | 0.7 | 2026-07-06 | Renamed document title to "Underslung Camera Mounting Subsystem - System Requirements" |
+| 0.8 | 2026-07-06 | Renamed file to `underslung-camera-mount-requirements.md`, to distinguish from future camera mount requirement documents for other locations |

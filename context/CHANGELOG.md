@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x9)
+- Renamed `docs/requirements/camera-mount-requirements.md` -> `docs/requirements/underslung-camera-mount-requirements.md` (Rev 0.7 -> 0.8), to distinguish from future camera mount requirement documents for other locations. Updated cross-references in `context/open-items.md` and `context/project-notes.md`.
+
 ## 2026-07-06 (continued x8)
 - `docs/requirements/camera-mount-requirements.md` (Rev 0.6 -> 0.7): renamed document title to "Underslung Camera Mounting Subsystem - System Requirements" (filename unchanged).
 
