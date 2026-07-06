@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x5)
+- `docs/requirements/camera-mount-requirements.md` (Rev 0.3 -> 0.4): reframed REQ-CAM-01 as downward (nadir)-facing; added Section 3a recording the Waveshare IMX335 (B) as a reference candidate module rather than a fixed design input; flagged a geometry conflict between the 3mm recess (REQ-CAM-13) and the candidate's 175° FOV lens, an unreconciled operating-temperature discrepancy between sources (10°C vs -10°C low end), and the candidate lens's 36.94mm length against unconfirmed internal fuselage clearance.
+- `context/project-notes.md`: recorded the candidate camera module's specs and source discrepancy.
+
 ## 2026-07-06 (continued x4)
 - Redistributed `supporting-documents/` into `docs/` by content type: the proposal and signed funding application PDFs moved to new `docs/reference/`; `purchase-history.md` and its `invoices/` subfolder moved together into new `docs/purchase-history/`. Removed the now-empty `supporting-documents/` folder.
 - Updated all cross-references: `docs/purchase-history/purchase-history.md` (internal invoice/proposal links), `docs/ICD.md` (Reference Documents), `docs/project-overview.md`, `docs/requirements/camera-mount-requirements.md`, `context/directives.md`, `context/project-overview.md` (repo structure map), `context/style-guide.md`, `context/startup-prompt.md`, `context/academic-integrity.md`, and `README.md`.

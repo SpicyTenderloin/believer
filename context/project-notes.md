@@ -59,7 +59,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 Fitted pack: **Turnigy Graphene Professional 8000mAh 6S 15C LiPo Pack** (~$93.23, per shopping list). The 2200mAh 6S 60C LiPo in the funding application budget was an earlier estimate and was not purchased.
 
 ## Future / Planned Capability (not yet wired into FC)
-- IMX335 5MP USB camera - for onboard decision-making / pilot video feed (companion computer phase).
+- IMX335 5MP USB camera - for onboard decision-making / pilot video feed (companion computer phase). Specs (Waveshare IMX335 5MP USB Camera (B), the specific unit purchased): 5MP, 2592x1944, 175° FOV, f/2.0, 3.65mm EFL, <-36% distortion, fixed-focus, 25.00x24.00mm board, 23.50x19.50x36.94mm lens, USB 2.0, 5V +/-5%. Operating temperature conflicts between sources: user-supplied figure from the Waveshare wiki page reads 10°C to 60°C; an independent web search of the same product returned -10°C to 60°C. Not reconciled - the wiki page itself returned HTTP 403 to automated fetch. See `docs/requirements/camera-mount-requirements.md` Section 3a.
 - Companion computer for autonomy - longer-term roadmap item.
 - Secondary control link via ExpressLRS already implemented (DBR4/GX12) - this was the proposal's near-term roadmap item, now done.
 

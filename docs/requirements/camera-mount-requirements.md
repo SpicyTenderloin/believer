@@ -3,17 +3,17 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-CAM-001 |
-| **Revision** | 0.3 |
+| **Revision** | 0.4 |
 | **Date** | 2026-07-06 |
 | **Status** | Draft |
 
 ## 1. Scope
 
-This document defines the requirements for the mechanical mount securing the IMX335 5MP USB camera to the Believer airframe. It covers the mount and its immediate interfaces (airframe attachment, camera retention, cable routing); it does not cover the companion computer's own mounting, which is a separate effort.
+This document defines the requirements for the mechanical mount securing a downward-facing USB camera to the Believer airframe. The requirements are written to be camera-module-agnostic where practical - the specific module currently on hand (Waveshare IMX335 5MP USB Camera (B)) is treated as a reference candidate, not a fixed design input, since it is subject to change (see Section 3a). This document covers the mount and its immediate interfaces (airframe attachment, camera retention, cable routing); it does not cover the companion computer's own mounting, which is a separate effort.
 
 ## 2. Purpose and Concept of Operations
 
-The camera supports the mission's observation objectives (shark spotting, threatened ecosystem monitoring, agricultural observation) by providing downward/oblique imagery to the onboard companion computer for object detection, planned for a future project phase. The camera is mounted on the underside (belly) of the fuselage.
+The camera supports the mission's observation objectives (shark spotting, threatened ecosystem monitoring, agricultural observation) by providing downward (nadir)-facing imagery to the onboard companion computer for object detection, planned for a future project phase. The camera is mounted on the underside (belly) of the fuselage.
 
 ## 3. Reference Documents
 
@@ -22,13 +22,30 @@ The camera supports the mission's observation objectives (shark spotting, threat
 - `docs/build-checklist.md` - Camera mount task (Future Work)
 - `context/open-items.md` - open dependencies against this subsystem
 
+## 3a. Candidate Camera Module (Reference Only)
+
+The camera currently on hand is a **Waveshare IMX335 5MP USB Camera (B)**. Its specs are recorded here as a reference data point for sizing the mount (e.g. REQ-CAM-16, REQ-CAM-17) - they are not requirements in themselves, since the module is subject to change.
+
+| Property | Value |
+|---|---|
+| Sensor / resolution | IMX335, 5MP, 2592 x 1944 |
+| Field of view | 175° (D), fixed-focus, f/2.0, 3.65mm EFL, <-36% distortion |
+| Outline dimensions | 25.00 x 24.00mm (board) |
+| Lens dimensions | 23.50 x 19.50 x 36.94mm (protruding length) |
+| Interface | USB 2.0 |
+| Operating voltage | 5V +/-5% |
+| Operating temperature | 10°C to 60°C per Waveshare's wiki page; a separate search of the same product returned -10°C to 60°C. Not yet reconciled - see Open Items. |
+| Other | Onboard microphone; auto gain/exposure/white balance |
+
+No PDF datasheet has been captured under `Component datasheets/` - per `context/directives.md`, that folder only holds datasheets for installed components, and this camera is not yet installed.
+
 ## 4. Requirements
 
 ### 4.1 Functional
 
 | ID | Requirement |
 |---|---|
-| REQ-CAM-01 | The mount shall hold the camera at a fixed downward or oblique angle suitable for ground/water observation (exact angle TBD, pending companion computer object-detection field-of-view requirements). |
+| REQ-CAM-01 | The mount shall hold the camera in a fixed downward (nadir)-facing orientation suitable for ground/water observation. |
 | REQ-CAM-02 | The mount shall not obstruct the camera's field of view with airframe structure, landing surfaces, or other equipment. |
 | REQ-CAM-03 | The mount shall hold the camera's line of sight stable in flight, without vibration-induced blur affecting object detection. |
 
@@ -72,7 +89,9 @@ The camera supports the mission's observation objectives (shark spotting, threat
 - Observation angle (REQ-CAM-01) pending object-detection FOV requirements from the companion computer/vision pipeline design.
 - Environmental operating range (REQ-CAM-21) not yet defined.
 - Whether a 3mm recess (REQ-CAM-13) is sufficient given belly-landing surfaces are grass/dirt rather than a smooth runway - surface irregularities could exceed 3mm and contact the lens. Not yet confirmed as acceptable.
-- Lens field-of-view spec not available (no IMX335 datasheet on file) - needed to size the belly cutout per REQ-CAM-14.
+- **REQ-CAM-13 vs. REQ-CAM-14 geometry conflict**: the candidate module's 175° FOV lens is a near-hemisphere. Avoiding vignetting at the full 175° through a 3mm-deep recess would require a cutout on the order of 130-140mm across (aperture radius = recess depth x tan(half-FOV) = 3mm x tan(87.5°) = ~69mm radius) - not compatible with a small belly cutout. Either some edge-of-frame vignetting will need to be accepted (the extreme edges of a 175° lens are already the most distorted, per the <-36% distortion spec), the recess depth reduced, or this is reconsidered once a specific module is finalised. Not yet resolved.
+- Operating temperature range for the candidate module is inconsistent between sources (10°C to 60°C vs. -10°C to 60°C) - not yet reconciled against the manufacturer page directly.
+- Internal clearance behind the belly skin: the candidate module's lens alone is 36.94mm long - needs confirming against available fuselage depth at whatever location is chosen (REQ-CAM-10).
 
 Tracked in [context/open-items.md](../../context/open-items.md).
 
@@ -83,3 +102,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 0.1 | 2026-07-06 | Initial draft |
 | 0.2 | 2026-07-06 | REQ-CAM-13 specifies internal mounting with the lens recessed 3mm through a belly cutout; added REQ-CAM-14 (cutout sizing to avoid vignetting) |
 | 0.3 | 2026-07-06 | Added modular two-part mount (female base in airframe, male camera carrier) - REQ-CAM-15 to -17: swappable camera, up to 50mm x 50mm footprint, adjustable for varying lens lengths |
+| 0.4 | 2026-07-06 | Reframed REQ-CAM-01 as downward (nadir)-facing; added Section 3a recording the Waveshare IMX335 (B) as a reference candidate module, not a fixed design input; flagged a geometry conflict between the 3mm recess and the candidate's 175° FOV lens, an unreconciled operating-temperature discrepancy between sources, and the candidate lens's 36.94mm length against unconfirmed internal clearance |
