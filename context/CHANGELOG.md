@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x12)
+- `docs/requirements/underslung-camera-mount-requirements.md` (Rev 0.9 -> 1.0): added REQ-CAM-18 - the male carrier shall be interchangeable without tools (bayonet/spring latch/thumb screw, not plain screws or bolts). Narrowed the mating-mechanism open item to reflect this constraint.
+
 ## 2026-07-06 (continued x11)
 - `docs/purchase-history/purchase-history.md`: added 2x T-MOTOR MN3110 KV700 motors (Julian personal funds, $169.87 AUD, 2026-07-06), replacing the T-Motor U5 v2.0 KV400 units.
 - `docs/purchase-history/invoices/tmotor-mn3110-kv700-motors-2026-07-06.pdf`: added invoice.
