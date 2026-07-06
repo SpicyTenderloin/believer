@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-06 (continued x6)
+- `docs/requirements/camera-mount-requirements.md` (Rev 0.4 -> 0.5): clarified the modular mount philosophy per user direction - the female base and its mating interface (REQ-CAM-15) are fixed and never change; a new male carrier may be custom-designed per camera module (REQ-CAM-16, -17) rather than one universal adjustable carrier. Added connector detail (SH1.0 5-pin to USB cable) to the candidate module reference data; corroborated the -10°C operating-temperature low end via a second independent source (Core Electronics product page). Removed the stale REQ-CAM-01 open item (angle is now fixed, not TBD); added an open item for the still-undecided mating mechanism.
+
 ## 2026-07-06 (continued x5)
 - `docs/requirements/camera-mount-requirements.md` (Rev 0.3 -> 0.4): reframed REQ-CAM-01 as downward (nadir)-facing; added Section 3a recording the Waveshare IMX335 (B) as a reference candidate module rather than a fixed design input; flagged a geometry conflict between the 3mm recess (REQ-CAM-13) and the candidate's 175° FOV lens, an unreconciled operating-temperature discrepancy between sources (10°C vs -10°C low end), and the candidate lens's 36.94mm length against unconfirmed internal fuselage clearance.
 - `context/project-notes.md`: recorded the candidate camera module's specs and source discrepancy.
