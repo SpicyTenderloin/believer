@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-16
+- `docs/ICD.md` (Rev 1.3 -> 1.4): removed a stray UTF-8 BOM causing garbled rendering; added the PM03D's 3A servo rail current limit, confirmed against `Component datasheets/holybro-pm03d-manual.pdf`.
+- `docs/purchase-history/purchase-history.md`: added two 9x6" Gemfan propeller invoices (standard + pusher, 2026-07-14, $19.07 AUD combined, Julian personal funds), superseding the 11x7" Hobbyrama props for the new KV700 motors; added Julian (personal) and all-parties total summary rows alongside the existing University total.
+- Added `docs/test-reports/2026-07-10-tmac-review-peter-spink.md`: reformatted from a root-directory draft - system review and RC tuning session with Peter Spink (TMAC).
+- `docs/build-checklist.md`: added tasks from the TMAC review - servo rail UBEC installation, DBR4 receiver relocation, CG correction ballast, battery retention velcro, RFD900x powered from PM03D, radio timer widget, radio flight-mode audio cues (Future Work: control surface hinges, MotoCalc airframe characterisation); updated motor start synchronisation (root cause confirmed: ESC calibration) and flight mode investigation (no yaw authority in Stabilized, raised to Critical) tasks; removed the now-superseded 11x7" reverse-pitch propeller tasks, folded into the KV700 motor install task; updated primary control expo (throttle expo removed) and control surface deflection/expo (aileron differential, rudder mix, pending trim) Complete entries; removed the stale CG-verified claim from the battery installation entry.
+- `context/project-notes.md`: added TMAC review provenance section; updated the PM03D power section with the confirmed 3A rail limit.
+- `context/open-items.md`: resolved the PM03D output rail ratings and 11x7" reverse-pitch propeller items; added the pending trim values item.
+- `docs/manual.md`: added pre-flight checklist step to update `SENS_BARO_QNH` to the current ambient barometric pressure reading (renumbered subsequent steps).
+
 ## 2026-07-06 (continued x15)
 - Replaced `params/believer-parameters.params` with the current FC export (was untracked in the repo root). Notable confirmed-intentional changes beyond the earlier telemetry tuning (`MAV_0_RATE` 1200->3000, `MAV_1_RATE` 9600->19200): `MAV_1_MODE` 3 (OSD) -> 0 (Normal); `PWM_MAIN_MIN1`/`MIN2` 1000->800 (more V-tail servo travel); `PWM_MAIN_REV` 5->6 (reversed set changed from MAIN1+MAIN3 to MAIN2+MAIN3, consistent with the ruddervator direction fix). Also refreshed a routine accelerometer/gyro/mag/barometer recalibration.
 - `params/parameter-change-log.md`: updated to match - MAV_0/MAV_1 rates and MAV_1_MODE, PWM_MAIN_MIN1/2 and PWM_MAIN_REV with notes, and all calibration values (export date 2026-07-04 -> 2026-07-06).

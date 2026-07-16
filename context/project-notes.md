@@ -54,6 +54,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 
 ## Power - confirmed
 - Power module fitted: **Holybro PM03D** (invoice 2026-05-11, purchased with Julian's personal funds, not club funds). Installed and providing battery voltage/current telemetry (INA228) and 5V power to the servo rail.
+- Servo rail (and all other BEC-derived outputs on the PM03D) confirmed limited to 3A by the manufacturer datasheet (`Component datasheets/holybro-pm03d-manual.pdf`) - independently corroborated by Peter Spink (TMAC) as insufficient for the servo load. A separate 5V UBEC (8-10A) is planned - see `docs/build-checklist.md`.
 - Two other power modules were purchased/shortlisted but are **not** the unit in use:
   - MATEKSYS PDB FCHUB-12S V2 (invoice confirmed, 2026-05-10, per the original funding application budget) - not used.
   - Holybro PM06 V2 (per shopping list) - not used because its power telemetry format is not accepted by the Pixhawk.
@@ -93,5 +94,15 @@ Investigated slow-updating telemetry (battery current/capacity, in particular) o
 - Ruddervator direction reversed and confirmed correct.
 - Radio recalibration (see Telemetry Rate Tuning above) may have already increased effective motor RPM - whether the motors are actually thrust-inadequate is no longer settled; a basic thrust-to-weight ground test is planned before deciding on motor/ESC replacement.
 - Motors have been temporarily reconfigured to spin the same direction, as an interim measure so that both currently-fitted propellers (same handedness) produce forward thrust. Previously, with the motors outward contra-rotating and both propellers the same handedness, one propeller was running against its designed pitch - plausibly a contributing factor to the original insufficient-thrust observation, independent of motor KV. This will need reversing back on one side once the reverse-pitch propeller is sourced and fitted.
+
+## TMAC Review - Peter Spink - 2026-07-10
+
+Julian met with Peter Spink at the Tingalpa Model Aero Club (TMAC) for a system review and RC tuning session. Full findings and actions in `docs/test-reports/2026-07-10-tmac-review-peter-spink.md`; summary of what changed:
+- PM03D servo rail confirmed limited to 3A (see Power section above) - a separate 5V UBEC is planned.
+- Peter introduced MotoCalc for motor/prop performance modelling. Used it to select 9x6" propellers (2 standard, 2 pusher) for the T-MOTOR MN3110 KV700 motors purchased 2026-07-06 - since ordered (2026-07-14, $19.07 AUD combined, Julian personal funds). Julian has reserved trust on Peter's airfoil modelling method, since it's unclear how the aerofoil was characterised. The 9x6" pair supersedes the 11x7" Hobbyrama props for the new motors; how the new motor/prop/ESC combination will actually perform is not yet known.
+- CG confirmed out of balance - approximately 350g of ballast needed in the nose. This contradicts the earlier "CG location verified" note against the 2026-07-03 battery installation (`docs/build-checklist.md` "Battery installation" row updated to remove that claim).
+- No yaw authority found in Stabilized mode.
+- Motor start desynchronisation (motors not starting together) attributed to ESC calibration, correctable via QGroundControl - to be done alongside the new motor installation.
+- Aileron differential (20mm up / 1.5mm down) and V-tail rudder mix adjusted live during the session; throttle expo removed (was 20%, now 0%). New trim values from this session are still to be provided by Julian - tracked in `context/open-items.md`.
 
 See [open-items.md](open-items.md) for what's still missing.

@@ -1,10 +1,10 @@
-﻿# Believer Fixed-Wing UAV - Interface Control Document
+# Believer Fixed-Wing UAV - Interface Control Document
 
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.3 |
-| **Date** | 2026-07-06 |
+| **Revision** | 1.4 |
+| **Date** | 2026-07-16 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -59,7 +59,7 @@ Power module: Holybro PM03D.
 |---|---|
 | Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled) |
 | Battery | 6S LiPo (`BAT1_N_CELLS` = 6S) |
-| Servo rail | 5V, electrically isolated from main FC supply |
+| Servo rail | 5V, electrically isolated from main FC supply, 3A max (per Holybro PM03D datasheet - all BEC-derived outputs on this module share the same 3A rating) |
 
 ### INT-02a through INT-02f - Actuator Outputs (PWM MAIN 1-6)
 
@@ -300,3 +300,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 1.1 | 2026-07-03 | Added INT-07 I2C port and address detail |
 | 1.2 | 2026-07-05 | Added INT-08 ELRS packet rate; added MAV_1 (TELEM1/DBR4) and MAV_0 (TELEM2/RFD900x) MAVLink instance parameters, device paths, and BATTERY_STATUS rate overrides |
 | 1.3 | 2026-07-06 | Updated `MAV_1_MODE` (OSD -> Normal) per the current parameter export; flagged that the BATTERY_STATUS extras.txt override has not been re-verified against Normal mode's default rate |
+| 1.4 | 2026-07-16 | Removed a stray UTF-8 BOM causing garbled rendering; added the PM03D's 3A servo rail current limit, confirmed against the manufacturer datasheet (`Component datasheets/holybro-pm03d-manual.pdf`) |

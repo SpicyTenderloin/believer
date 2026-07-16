@@ -94,40 +94,41 @@ Intended safe startup condition, to be verified before every flight:
 12. Connect the RFD900 ground station module to a laptop running QGroundControl.
 13. Connect the battery to the power distribution board and establish a connection with QGroundControl.
 14. Perform any flight computer calibration steps required.
-15. Confirm QGroundControl reports no warnings.
-16. Confirm sufficient battery capacity remains for the planned flight.
-17. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
-18. Confirm the geofence is loaded and active in QGroundControl, and that the breach action is set to Return.
-19. Confirm RC link signal quality (RSSI) is good in QGroundControl before proceeding.
+15. Update `SENS_BARO_QNH` to the current ambient barometric pressure reading.
+16. Confirm QGroundControl reports no warnings.
+17. Confirm sufficient battery capacity remains for the planned flight.
+18. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
+19. Confirm the geofence is loaded and active in QGroundControl, and that the breach action is set to Return.
+20. Confirm RC link signal quality (RSSI) is good in QGroundControl before proceeding.
 
 ### Ground functional checks (propellers removed)
 
-20. With propellers removed, arm the vehicle in Manual mode.
-21. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
-22. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
-23. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](assets/motor-rotation-direction.png)).
-24. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
-25. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
-26. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
-27. Disarm the vehicle before proceeding.
+21. With propellers removed, arm the vehicle in Manual mode.
+22. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
+23. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
+24. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](assets/motor-rotation-direction.png)).
+25. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
+26. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
+27. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
+28. Disarm the vehicle before proceeding.
 
 ### Pre-launch
 
-28. Install and torque the propellers.
-29. Confirm propeller retention nuts are correctly torqued on both motors. The left-hand motor rotates clockwise when viewed from the front - its retention nut is reverse-threaded and must be inspected with particular care.
-30. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
+29. Install and torque the propellers.
+30. Confirm propeller retention nuts are correctly torqued on both motors. The left-hand motor rotates clockwise when viewed from the front - its retention nut is reverse-threaded and must be inspected with particular care.
+31. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
 
 ### Assisted hand launch
 
 Two people are required: a **pilot** operating the GX12 and a **handler** who holds and throws the aircraft. The handler must not approach the aircraft until the pilot signals ready.
 
-31. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
-32. Pilot: select Stabilized mode (GR1 SW2) and confirm throttle is at minimum.
-33. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
-34. Pilot: arm the aircraft (CH5) and advance throttle to approximately 75-100%.
-35. Pilot: call "launch" (or pre-agreed signal).
-36. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
-37. Pilot: hold Stabilized mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
-38. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
+32. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
+33. Pilot: select Stabilized mode (GR1 SW2) and confirm throttle is at minimum.
+34. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
+35. Pilot: arm the aircraft (CH5) and advance throttle to approximately 75-100%.
+36. Pilot: call "launch" (or pre-agreed signal).
+37. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
+38. Pilot: hold Stabilized mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
+39. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
 
 See also [build-checklist.md](build-checklist.md) for the build, retention, and configuration checklist.
