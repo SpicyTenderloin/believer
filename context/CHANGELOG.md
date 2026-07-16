@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-16 (continued x2)
+- `docs/manual.md`: removed section 4 (Flaperons); renumbered subsequent sections (Pre-Flight Safety State, Pre-Flight Checklist) accordingly. CH9 channel mapping table entries left unchanged.
+
 ## 2026-07-16 (continued)
 - `docs/assets/icd-block-diagram.svg` (ICD Rev 1.4 -> 1.5): recreated the block diagram. Fixed a routing bug where the GX12-DBR4 RF link visually terminated on the V-Tail Left servo box instead of DBR4 (the GX12 box was positioned on the far left, over the actuator column, while its target DBR4 was on the far right - the straight-line RF path never reached it). Regrouped GX12 and Ground Station together above their onboard RF counterparts (DBR4, RFD900x); rerouted the Ground Station-RFD900x link around the DBR4 box instead of crossing through it; rerouted PM03D-FC power to enter via the FC's top edge instead of colliding with the PWM bus; re-centred MS4525DO under the FC; updated the stale propeller label and revision footer.
 

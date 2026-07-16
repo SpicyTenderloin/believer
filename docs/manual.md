@@ -50,13 +50,7 @@ CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has sele
 
 ![QGroundControl Flight Modes configuration](assets/flight-modes-config.png)
 
-## 4. Flaperons
-
-The Believer has two ailerons, each on its own servo, rather than separate dedicated flap surfaces. This makes it possible to configure flaperons later: a normal roll command moves the ailerons oppositely, while a flap command moves both ailerons down together; PX4 combines the two.
-
-**Do not enable flaperons until the aircraft's baseline handling, trim, stall behaviour, and roll authority are known.** When introduced later, start with small deflections and test well above the ground - flaperons can alter pitch trim and reduce roll authority. CH9 (flaperon control) stays inactive/disabled for the maiden flight and until this testing has been done.
-
-## 5. Pre-Flight Safety State
+## 4. Pre-Flight Safety State
 
 Intended safe startup condition, to be verified before every flight:
 
@@ -70,7 +64,7 @@ Intended safe startup condition, to be verified before every flight:
 | CH10 (Return) | Inactive |
 | CH11 (Offboard) | Inactive |
 
-## 6. Pre-Flight Checklist
+## 5. Pre-Flight Checklist
 
 ### Site and conditions
 
