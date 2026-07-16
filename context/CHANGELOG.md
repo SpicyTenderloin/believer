@@ -2,6 +2,9 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-16 (continued x3)
+- `docs/build-checklist.md`: reordered sections (In Progress, Not Started, Future Work, Complete - Complete moved to the end); added "Blocked by" notes identifying task dependencies (GPS 2 antenna/config chain, motor start sync on the new motor install, LiDAR install/source chain, auto takeoff/land blocked by LiDAR install, camera-record-on-arm blocked by companion computer/camera mounts).
+
 ## 2026-07-16 (continued x2)
 - `docs/manual.md`: removed section 4 (Flaperons); renumbered subsequent sections (Pre-Flight Safety State, Pre-Flight Checklist) accordingly. CH9 channel mapping table entries left unchanged.
 
