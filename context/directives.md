@@ -10,6 +10,8 @@ Standing conventions for working in this repo. Update this file when the user gi
     - `docs/purchase-history/` - purchase-history.md and its `invoices/` subfolder, named `<vendor>-<item>-<date>.pdf`
     - `docs/test-reports/` - dated test/session reports, one file per session
     - `docs/requirements/` - system requirements documents, one file per subsystem
+    - `docs/build-checklist.md` - current flight-readiness dashboard and work-package task tracking
+    - `docs/project-roadmap.md` - future capability work not required for current flight-readiness
   - `params/` - parameter change logs / flight controller parameter files
   - `Component datasheets/` - manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
   - `GX12 Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter (model config, radio config, firmware, stock assets)

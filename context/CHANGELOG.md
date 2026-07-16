@@ -2,6 +2,13 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-16 (continued x4)
+- `docs/build-checklist.md`: restructured from a status-first table (In Progress/Not Started/Future Work/Complete) into a flight-readiness dashboard plus engineering work packages (Airframe & mechanical retention, Propulsion, Electrical power, Flight controls & PX4, Navigation & air-data sensors, RC/telemetry/RF), each task carrying an ID, status, priority, milestone, explicit "Depends on" field, scope, and (for Critical tasks) acceptance criteria; merged the "Motor and ESC replacement" heading and "Install T-MOTOR MN3110 KV700 motors" action into a single PROP-01 work package, with static thrust testing split out as PROP-02; surfaced the still-pending TMAC trim values (previously buried in a Complete row's notes) as its own task, CTL-03; moved provenance/citation notes into collapsed "Background and engineering notes" `<details>` blocks per task; added a "Recurring Airworthiness Verification" table for retention/torque checks that were previously listed as permanently "Complete" (propeller nuts, hatch/nacelle/bolt torque, antenna security), with dates left TBD pending a dated inspection record; collapsed the historical Complete list into a `<details>` block, regrouped by subsystem.
+- Added `docs/project-roadmap.md`: split out of the former "Future Work" table (payload/autonomy items not required for current flight-readiness); linked from `docs/build-checklist.md`.
+- `context/directives.md`: added `docs/build-checklist.md` and `docs/project-roadmap.md` to the file organisation list.
+- `context/style-guide.md`: added `docs/build-checklist.md` to the exceptions list - collapsed "Background and engineering notes" sections are permitted to carry provenance/citation content that the general docs/ standard otherwise excludes.
+- `context/open-items.md`: added an item noting the recurring verification checks have no dated inspection record to backfill "Last verified"/"Evidence" against.
+
 ## 2026-07-16 (continued x3)
 - `docs/build-checklist.md`: reordered sections (In Progress, Not Started, Future Work, Complete - Complete moved to the end); added "Blocked by" notes identifying task dependencies (GPS 2 antenna/config chain, motor start sync on the new motor install, LiDAR install/source chain, auto takeoff/land blocked by LiDAR install, camera-record-on-arm blocked by companion computer/camera mounts).
 

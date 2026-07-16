@@ -34,6 +34,8 @@ Documents under `docs/` are engineering records - they should read as if written
 
 Test reports are named `docs/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one file per session.
 
+`docs/build-checklist.md` is also an exception: each task may carry a collapsed `<details><summary>Background and engineering notes</summary>` block holding provenance (who found/recommended it, and when) that would otherwise be stripped per the rules above. This is deliberate - the checklist is a work-package tracker where that context is load-bearing for whoever picks up the task, and it stays collapsed so the primary document still reads cleanly. The main task body (status, priority, scope, acceptance criteria) still follows the as-built-fact standard.
+
 ## Format conventions
 
 - All documents are Markdown (`.md`) - not Word, PDF, or other formats - so they version cleanly in git.
