@@ -26,18 +26,18 @@
 
   <!-- Title -->
   <text x="750" y="32" text-anchor="middle" class="title">Believer Fixed-Wing UAV - ICD Block Diagram</text>
-  <text x="750" y="52" text-anchor="middle" class="subtitle">ICD-BELIEVER-001 Rev 1.0 - 2026-07-03</text>
+  <text x="750" y="52" text-anchor="middle" class="subtitle">ICD-BELIEVER-001 Rev 1.4 - 2026-07-16</text>
 
-  <!-- Ground equipment -->
-  <rect x="100" y="72" width="220" height="82" rx="6" class="groundbox"/>
-  <text x="210" y="107" text-anchor="middle" class="label">Radiomaster GX12</text>
-  <text x="210" y="122" text-anchor="middle" class="sublabel">RC Transmitter</text>
-  <text x="210" y="136" text-anchor="middle" class="sublabel">(ground / pilot)</text>
+  <!-- Ground equipment (grouped top-right, above their onboard RF counterparts) -->
+  <rect x="1000" y="72" width="200" height="82" rx="6" class="groundbox"/>
+  <text x="1100" y="103" text-anchor="middle" class="label">Radiomaster GX12</text>
+  <text x="1100" y="118" text-anchor="middle" class="sublabel">RC Transmitter</text>
+  <text x="1100" y="132" text-anchor="middle" class="sublabel">(ground / pilot)</text>
 
-  <rect x="1180" y="72" width="240" height="82" rx="6" class="groundbox"/>
-  <text x="1300" y="107" text-anchor="middle" class="label">Ground Station</text>
-  <text x="1300" y="122" text-anchor="middle" class="sublabel">Laptop + QGroundControl</text>
-  <text x="1300" y="136" text-anchor="middle" class="sublabel">RFD900x ground modem</text>
+  <rect x="1210" y="72" width="200" height="82" rx="6" class="groundbox"/>
+  <text x="1310" y="103" text-anchor="middle" class="label">Ground Station</text>
+  <text x="1310" y="118" text-anchor="middle" class="sublabel">Laptop + QGroundControl</text>
+  <text x="1310" y="132" text-anchor="middle" class="sublabel">RFD900x ground modem</text>
 
   <!-- Aircraft boundary -->
   <rect x="50" y="200" width="1400" height="855" rx="10" class="boundary"/>
@@ -74,7 +74,7 @@
   <rect x="70" y="472" width="230" height="68" rx="6" class="motorbox"/>
   <text x="185" y="494" text-anchor="middle" class="mlabel">Left Motor</text>
   <text x="185" y="508" text-anchor="middle" class="msublabel">T-Motor U5 v2.0 KV400 / ESC</text>
-  <text x="185" y="522" text-anchor="middle" class="msublabel">MAIN 4 (PWM) / 11x4.7" prop</text>
+  <text x="185" y="522" text-anchor="middle" class="msublabel">MAIN 4 (PWM) / 11x7" prop</text>
 
   <!-- MAIN 5 - Right Aileron (HS-5125MG) -->
   <rect x="70" y="550" width="230" height="68" rx="6" class="box"/>
@@ -86,7 +86,7 @@
   <rect x="70" y="628" width="230" height="68" rx="6" class="motorbox"/>
   <text x="185" y="650" text-anchor="middle" class="mlabel">Right Motor</text>
   <text x="185" y="664" text-anchor="middle" class="msublabel">T-Motor U5 v2.0 KV400 / ESC</text>
-  <text x="185" y="678" text-anchor="middle" class="msublabel">MAIN 6 (PWM) / 11x4.7" prop</text>
+  <text x="185" y="678" text-anchor="middle" class="msublabel">MAIN 6 (PWM) / 11x7" prop</text>
 
   <!-- ── Flight Controller ─────────────────────────────────── -->
   <rect x="590" y="486" width="280" height="120" rx="8" class="fcbox"/>
@@ -118,11 +118,11 @@
   <text x="1210" y="634" text-anchor="middle" class="sublabel">GPS 2 - RTK Breakout</text>
   <text x="1210" y="648" text-anchor="middle" class="sublabel" fill="#a33">Antenna not fitted</text>
 
-  <!-- MS4525DO (below FC) -->
-  <rect x="590" y="764" width="240" height="72" rx="6" class="box"/>
-  <text x="710" y="794" text-anchor="middle" class="label">MS4525DO</text>
-  <text x="710" y="808" text-anchor="middle" class="sublabel">Airspeed Sensor</text>
-  <text x="710" y="822" text-anchor="middle" class="sublabel">(differential pressure)</text>
+  <!-- MS4525DO (below FC, centred on FC) -->
+  <rect x="610" y="764" width="240" height="72" rx="6" class="box"/>
+  <text x="730" y="794" text-anchor="middle" class="label">MS4525DO</text>
+  <text x="730" y="808" text-anchor="middle" class="sublabel">Airspeed Sensor</text>
+  <text x="730" y="822" text-anchor="middle" class="sublabel">(differential pressure)</text>
 
   <!-- PM03D -->
   <rect x="70" y="780" width="220" height="72" rx="6" class="box"/>
@@ -156,16 +156,21 @@
   <path d="M870,539 H970 V522 H1090" class="wire"/>
   <path d="M870,557 H970 V626 H1090" class="wire"/>
 
-  <!-- FC bottom → MS4525DO -->
+  <!-- FC bottom → MS4525DO (both centred on x=730) -->
   <path d="M730,606 V764" class="wire"/>
 
-  <!-- Power: Battery → PM03D → FC -->
+  <!-- Power: Battery → PM03D → FC. Enters FC via the top edge
+       (x=650) - kept clear of the PWM bus on the left edge and
+       the airspeed connection on the bottom edge. -->
   <path d="M180,912 V852" class="power"/>
-  <path d="M290,816 H510 V546 H590" class="power"/>
+  <path d="M290,816 H510 V440 H650 V486" class="power"/>
 
-  <!-- RF links (dashed) -->
-  <path d="M210,154 V278" class="rf"/>
-  <path d="M1300,154 V382" class="rf"/>
+  <!-- RF links (dashed). GX12 sits directly above DBR4 (straight
+       drop). Ground Station's link doglegs right around the DBR4
+       box before dropping into RFD900x, since RFD900x sits in the
+       same column directly below DBR4. -->
+  <path d="M1100,154 V278" class="rf"/>
+  <path d="M1310,154 V250 H1400 V418 H1330" class="rf"/>
 
   <!-- ── Link labels: left side ──────────────────────────── -->
   <g><rect x="304" y="262" width="126" height="18" class="lbg"/>
@@ -203,23 +208,23 @@
   <text x="956" y="642" text-anchor="middle" class="linklabel">RTK</text></g>
 
   <!-- INT-07 label -->
-  <g><rect x="668" y="704" width="84" height="18" class="lbg"/>
-  <text x="710" y="717" text-anchor="middle" class="linklabel">INT-07: I2C</text></g>
+  <g><rect x="688" y="704" width="84" height="18" class="lbg"/>
+  <text x="730" y="717" text-anchor="middle" class="linklabel">INT-07: I2C</text></g>
 
   <!-- Power labels -->
   <g><rect x="192" y="870" width="90" height="18" class="lbg"/>
   <text x="237" y="883" text-anchor="middle" class="linklabel" fill="#b5651d">VBat (6S)</text></g>
 
-  <g><rect x="430" y="530" width="148" height="18" class="lbg"/>
-  <text x="504" y="543" text-anchor="middle" class="linklabel" fill="#b5651d">INT-01: 5V power / telemetry</text></g>
+  <g><rect x="436" y="530" width="148" height="18" class="lbg"/>
+  <text x="510" y="543" text-anchor="middle" class="linklabel" fill="#b5651d">INT-01: 5V power / telemetry</text></g>
 
   <!-- RF link labels -->
-  <g><rect x="140" y="192" width="200" height="34" class="lbg"/>
-  <text x="240" y="206" text-anchor="middle" class="linklabel">INT-08: ExpressLRS Gemini-X</text>
-  <text x="240" y="220" text-anchor="middle" class="linklabel">2.4GHz + 900MHz</text></g>
+  <g><rect x="1000" y="196" width="200" height="34" class="lbg"/>
+  <text x="1100" y="210" text-anchor="middle" class="linklabel">INT-08: ExpressLRS Gemini-X</text>
+  <text x="1100" y="224" text-anchor="middle" class="linklabel">2.4GHz + 900MHz</text></g>
 
-  <g><rect x="1170" y="192" width="178" height="18" class="lbg"/>
-  <text x="1259" y="205" text-anchor="middle" class="linklabel">900MHz Telemetry Link</text></g>
+  <g><rect x="1275" y="241" width="160" height="18" class="lbg"/>
+  <text x="1355" y="254" text-anchor="middle" class="linklabel">900MHz Telemetry Link</text></g>
 
   <!-- ── Legend ───────────────────────────────────────────── -->
   <rect x="1090" y="724" width="280" height="148" rx="6" class="box"/>
