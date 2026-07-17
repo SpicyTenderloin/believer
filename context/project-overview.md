@@ -1,6 +1,6 @@
 ﻿# Project Overview - Believer UAV
 
-A comprehensive reference for AI tools working on this repo. For the public-facing project description and roadmap, see [`docs/project-overview.md`](../docs/project-overview.md).
+A comprehensive reference for AI tools working on this repo. For the public-facing project description and roadmap, see [`docs/project/project-overview.md`](../docs/project/project-overview.md).
 
 ---
 
@@ -58,7 +58,7 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 - `RC_MAP_ARM_SW` = Channel 5 (SD switch)
 - `RC_MAP_KILL_SW` = Channel 7 (SF switch, inverted)
 - GR1 flight mode selector = Channel 6
-- Full parameter dump: `params/believer-parameters.params`
+- Full parameter dump: `docs/operations/Pixhawk Parameter Backup/believer-parameters.params`
 
 ---
 
@@ -78,26 +78,29 @@ believer/
 │   ├── authorities.md               ← Standing permissions granted to Claude
 │   ├── academic-integrity.md        ← QUT conduct and AI use policy
 │   └── CHANGELOG.md                 ← All notable changes, most recent first
-├── docs/                            ← Engineering documentation
-│   ├── ICD.md                       ← Interface control document
-│   ├── manual.md                    ← Operating manual (flight modes, procedures)
-│   ├── build-checklist.md           ← Flight-readiness dashboard and work-package task tracking
-│   ├── project-roadmap.md           ← Future capability work not required for current flight-readiness
-│   ├── flight-modes.md              ← PX4 fixed-wing flight mode behaviour and configuring parameters
-│   ├── project-overview.md          ← Public-facing project background and roadmap
-│   ├── project-timeline.md          ← Milestone history and phase roadmap
-│   ├── purchase-history/
-│   │   ├── purchase-history.md      ← Component purchases (cost, funder, installed status)
-│   │   └── invoices/                ← Purchase invoices, named <vendor>-<item>-<date>.pdf
-│   ├── reference/                   ← Formal docs kept in original format (proposal, signed funding application)
-│   ├── test-reports/                ← Dated test/session reports (one file per session)
-│   ├── requirements/                ← System requirements documents (one file per subsystem)
+├── docs/                            ← Engineering documentation, split by purpose
+│   ├── engineering/                 ← How the aircraft is built and works
+│   │   ├── ICD.md                   ← Interface control document
+│   │   ├── flight-modes.md          ← PX4 fixed-wing flight mode behaviour and configuring parameters
+│   │   ├── requirements/            ← System requirements documents (one file per subsystem)
+│   │   └── test-reports/            ← Dated test/session reports (one file per session)
+│   ├── operations/                  ← How the aircraft is flown, and supporting backups
+│   │   ├── manual.md                ← Operating manual (flight modes, procedures)
+│   │   ├── GX12 Radio Backup/       ← Full EdgeTX SD card backup (restore image)
+│   │   │   └── MODELS/model00.yml   ← GX12 model config - channel/mixer definitions
+│   │   └── Pixhawk Parameter Backup/
+│   │       ├── parameter-change-log.md    ← Narrative PX4 parameter change history
+│   │       └── believer-parameters.params ← Full PX4 parameter dump (raw backup)
+│   ├── project/                     ← Project status, history, and admin
+│   │   ├── build-checklist.md       ← Flight-readiness dashboard and work-package task tracking
+│   │   ├── project-roadmap.md       ← Future capability work not required for current flight-readiness
+│   │   ├── project-overview.md      ← Public-facing project background and roadmap
+│   │   ├── project-timeline.md      ← Milestone history and phase roadmap
+│   │   ├── purchase-history/
+│   │   │   ├── purchase-history.md  ← Component purchases (cost, funder, installed status)
+│   │   │   └── invoices/            ← Purchase invoices, named <vendor>-<item>-<date>.pdf
+│   │   └── governance/              ← Formal docs kept in original format (proposal, signed funding application)
 │   └── assets/                      ← Diagrams and photos referenced by docs
-├── params/
-│   ├── parameter-change-log.md      ← Narrative PX4 parameter change history
-│   └── believer-parameters.params   ← Full PX4 parameter dump (raw backup)
-├── GX12 Backup/                     ← Full EdgeTX SD card backup (restore image)
-│   └── MODELS/model00.yml           ← GX12 model config - channel/mixer definitions
 └── Component datasheets/            ← Manufacturer datasheets for installed components only
 ```
 
@@ -117,8 +120,8 @@ believer/
 
 ## Current open items (summary)
 
-See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/build-checklist.md` (CG correction, battery retention, servo rail UBEC, DBR4 relocation, MN3110 propulsion install/thrust test, Stabilized-mode yaw investigation). Remaining information gaps:
+See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md` (CG correction, battery retention, servo rail UBEC, DBR4 relocation, MN3110 propulsion install/thrust test, Stabilized-mode yaw investigation). Remaining information gaps:
 
 - ZED-F9P RTK antenna not installed - RTK capability unavailable until fitted (the aircraft can fly on GPS 1/M8N alone; not itself a flight blocker)
-- MS4525DO I2C pull-up resistor configuration not confirmed (port and address are documented in `docs/ICD.md` INT-07)
+- MS4525DO I2C pull-up resistor configuration not confirmed (port and address are documented in `docs/engineering/ICD.md` INT-07)
 - ESC model and supported protocol (PWM/DShot) not yet captured; compatibility with the purchased T-MOTOR MN3110 KV700 motors not yet confirmed

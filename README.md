@@ -1,6 +1,6 @@
 # Believer Fixed Wing
 
-Engineering documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV - a long-range BVLOS observation drone built by the QUT Aerospace Society (QUTAS). See [docs/project-overview.md](docs/project-overview.md) for the project background and roadmap.
+Engineering documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV - a long-range BVLOS observation drone built by the QUT Aerospace Society (QUTAS). See [docs/project/project-overview.md](docs/project/project-overview.md) for the project background and roadmap.
 
 ## AI-enabled workflow
 
@@ -14,20 +14,24 @@ AI use on this project is open and acknowledged. See [`context/academic-integrit
 
 ## Repository contents
 
-- `docs/` - engineering documentation, written as clean as-built records (not working notes)
-  - `manual.md` - flight modes, switch mapping, pre-flight checklist, and operating procedures
-  - `ICD.md` - interface control document: all physical, electrical, and data interfaces between avionics subsystems
-  - `build-checklist.md` - build completion, retention checks, and flight controller configuration checklist
-  - `project-overview.md` - project background, purpose, roadmap, and team
-  - `purchase-history/` - component purchase log (`purchase-history.md`) with cost, funder, and installed status, plus its `invoices/` subfolder
-  - `reference/` - formal reference documents in their original format (signed proposal, funding application)
-  - `test-reports/` - dated test/session reports, one file per session
-  - `requirements/` - system requirements documents, one file per subsystem
+- `docs/` - engineering documentation, written as clean as-built records (not working notes), split by purpose
+  - `engineering/` - how the aircraft is built and works
+    - `ICD.md` - interface control document: all physical, electrical, and data interfaces between avionics subsystems
+    - `flight-modes.md` - PX4 fixed-wing flight mode behaviour and configuring parameters
+    - `requirements/` - system requirements documents, one file per subsystem
+    - `test-reports/` - dated test/session reports, one file per session
+  - `operations/` - how the aircraft is flown, and the backups that support that
+    - `manual.md` - flight modes, switch mapping, pre-flight checklist, and operating procedures
+    - `GX12 Radio Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter, kept in full for restore purposes
+    - `Pixhawk Parameter Backup/` - `parameter-change-log.md` (narrative log of every PX4 parameter change and the reason behind it) and `believer-parameters.params` (full PX4 parameter dump, raw backup)
+  - `project/` - project status, history, and admin
+    - `build-checklist.md` - build completion, retention checks, and flight controller configuration checklist
+    - `project-roadmap.md` - future capability work not required for current flight-readiness
+    - `project-overview.md` - project background, purpose, roadmap, and team
+    - `project-timeline.md` - milestone history and phase roadmap
+    - `purchase-history/` - component purchase log (`purchase-history.md`) with cost, funder, and installed status, plus its `invoices/` subfolder
+    - `governance/` - formal reference documents in their original format (signed proposal, funding application)
   - `assets/` - diagrams and photos referenced by the docs above
-- `params/` - flight controller configuration
-  - `parameter-change-log.md` - narrative log of every PX4 parameter change and the reason behind it
-  - `believer-parameters.params` - full PX4 parameter dump (raw backup)
-- `GX12 Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter, kept in full for restore purposes
 - `Component datasheets/` - manufacturer datasheets and manuals for components currently installed in the aircraft
 
 ## `context/` - project memory for AI tools

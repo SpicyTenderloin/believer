@@ -36,4 +36,4 @@ Initial in-person review of the Believer airframe and avionics with BNEMAC, foll
 - Investigate motor start synchronisation
 - Investigate Stabilize flight mode behaviour
 
-Full detail and task tracking: [`docs/build-checklist.md`](../build-checklist.md). Provenance and decision history: [`context/project-notes.md`](../../context/project-notes.md).
+Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md). Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).

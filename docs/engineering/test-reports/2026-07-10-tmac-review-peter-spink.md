@@ -45,4 +45,4 @@ System review with Peter Spink (TMAC), covering power distribution, propulsion, 
 - Characterise the new motor/propeller/ESC combination (thrust, efficiency)
 - Future: control surface hinges, radio timer widget, radio flight-mode audio cues, RFD900x powered from PM03D, MotoCalc airframe characterisation
 
-Full detail and task tracking: [`docs/build-checklist.md`](../build-checklist.md). Provenance and decision history: [`context/project-notes.md`](../../context/project-notes.md).
+Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md). Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).

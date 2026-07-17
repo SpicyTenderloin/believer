@@ -1,6 +1,6 @@
 ﻿# Believer Flight Manual
 
-Operating manual for the Believer fixed-wing UAV. For wiring/pinout/parameter detail, see [ICD.md](ICD.md) and [../params/parameter-change-log.md](../params/parameter-change-log.md).
+Operating manual for the Believer fixed-wing UAV. For wiring/pinout/parameter detail, see [ICD.md](../engineering/ICD.md) and `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
 
 ## 1. Aircraft Summary
 
@@ -27,9 +27,9 @@ RC link: Radiomaster GX12 transmitter → DBR4 receiver (ExpressLRS, dual-band 2
 
 For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGroundControl shows the active/inactive direction is actually wrong.
 
-![GX12 front view with switch functions annotated](assets/gx12-front-switches.png)
+![GX12 front view with switch functions annotated](../assets/gx12-front-switches.png)
 
-![GX12 top view with switch functions annotated](assets/gx12-top-switches.png)
+![GX12 top view with switch functions annotated](../assets/gx12-top-switches.png)
 
 ## 3. Flight Modes (GR1 Switch Group)
 
@@ -48,9 +48,9 @@ GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a 
 
 CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly. CH10 (Return) similarly overrides GR1 and commands the aircraft to climb and fly back to the home position. CH11 (Offboard) overrides GR1 to hand control to a companion computer - not currently used, since that companion computer is a future project phase.
 
-For full detail on each mode's behaviour and the PX4 parameters that configure it, see [`flight-modes.md`](flight-modes.md).
+For full detail on each mode's behaviour and the PX4 parameters that configure it, see [`flight-modes.md`](../engineering/flight-modes.md).
 
-![QGroundControl Flight Modes configuration](assets/flight-modes-config.png)
+![QGroundControl Flight Modes configuration](../assets/flight-modes-config.png)
 
 ## 4. Pre-Flight Safety State
 
@@ -102,8 +102,8 @@ Intended safe startup condition, to be verified before every flight:
 21. With propellers removed, arm the vehicle in Manual mode.
 22. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs: verify correct direction of movement, full and unrestricted travel across the entire stick range, and that all travel limits are set correctly.
 23. Switch to Stabilized mode and confirm all flight control surfaces respond appropriately to changes in aircraft attitude.
-24. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](assets/motor-rotation-direction.png)).
-25. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](assets/flight-modes-config.png)).
+24. Confirm the motors rotate in the correct direction. Viewed from behind the aircraft looking forward, the left-hand motor must rotate anticlockwise and the right-hand motor must rotate clockwise (see [assets/motor-rotation-direction.png](../assets/motor-rotation-direction.png)).
+25. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](../assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](../assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](../assets/flight-modes-config.png)).
 26. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
 27. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
 28. Disarm the vehicle before proceeding.
@@ -127,4 +127,4 @@ Two people are required: a **pilot** operating the GX12 and a **handler** who ho
 38. Pilot: hold Stabilized mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
 39. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
 
-See also [build-checklist.md](build-checklist.md) for the build, retention, and configuration checklist.
+See also [build-checklist.md](../project/build-checklist.md) for the build, retention, and configuration checklist.

@@ -20,7 +20,7 @@ From the original project proposal (2026-01-25):
 | Mid-term | 3–6 months | Flight controller tuning, implementation of robust failsafe procedures, expansion of flight-testing activities, strengthening of industry and testing facility engagement. |
 | Long-term | 6–12+ months | Integration of companion computer and camera payload, development of advanced autonomous and sensing capabilities, platform optimisation for research and teaching use. |
 
-The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup in [ICD.md](ICD.md) and [manual.md](manual.md).
+The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup in [ICD.md](../engineering/ICD.md) and [manual.md](../operations/manual.md).
 
 ## Team & Contacts
 
@@ -31,11 +31,11 @@ The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup i
 ## Related documents
 
 - [project-timeline.md](project-timeline.md) - milestone history and phase roadmap
-- [ICD.md](ICD.md) - interface control document (avionics interfaces)
-- [manual.md](manual.md) - flight modes, switch mapping, operating procedures
-- [flight-modes.md](flight-modes.md) - PX4 flight mode behaviour and configuring parameters
+- [ICD.md](../engineering/ICD.md) - interface control document (avionics interfaces)
+- [manual.md](../operations/manual.md) - flight modes, switch mapping, operating procedures
+- [flight-modes.md](../engineering/flight-modes.md) - PX4 flight mode behaviour and configuring parameters
 - [build-checklist.md](build-checklist.md) - flight-readiness dashboard and work-package task tracking
 - [project-roadmap.md](project-roadmap.md) - future capability work not required for current flight-readiness
 - [purchase-history/purchase-history.md](purchase-history/purchase-history.md) - component purchases, with invoices under `purchase-history/invoices/`
-- [../params/parameter-change-log.md](../params/parameter-change-log.md) - PX4 parameter change history
-- [reference/](reference/) - original proposal and funding application materials
+- `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` - PX4 parameter change history
+- [governance/](governance/) - original proposal and funding application materials

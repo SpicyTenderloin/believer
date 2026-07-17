@@ -30,11 +30,11 @@ Documents under `docs/` are engineering records - they should read as if written
 
 ## Exceptions
 
-`docs/purchase-history/purchase-history.md`, `params/parameter-change-log.md`, and `docs/test-reports/` are transactional logs by nature - dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
+`docs/project/purchase-history/purchase-history.md`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`, and `docs/engineering/test-reports/` are transactional logs by nature - dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
 
-Test reports are named `docs/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one file per session.
+Test reports are named `docs/engineering/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one file per session.
 
-`docs/build-checklist.md` is also an exception: each task may carry a collapsed `<details><summary>Background and engineering notes</summary>` block holding provenance (who found/recommended it, and when) that would otherwise be stripped per the rules above. This is deliberate - the checklist is a work-package tracker where that context is load-bearing for whoever picks up the task, and it stays collapsed so the primary document still reads cleanly. The main task body (status, priority, scope, acceptance criteria) still follows the as-built-fact standard.
+`docs/project/build-checklist.md` is also an exception: each task may carry a collapsed `<details><summary>Background and engineering notes</summary>` block holding provenance (who found/recommended it, and when) that would otherwise be stripped per the rules above. This is deliberate - the checklist is a work-package tracker where that context is load-bearing for whoever picks up the task, and it stays collapsed so the primary document still reads cleanly. The main task body (status, priority, scope, acceptance criteria) still follows the as-built-fact standard.
 
 ## Format conventions
 
@@ -43,5 +43,5 @@ Test reports are named `docs/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one
 - Top-level sections use `##`, subsections use `###`.
 - Tables are preferred over prose for structured data.
 - No trailing changelog blocks at the bottom of individual documents - all changes go in `context/CHANGELOG.md`.
-- System requirements documents are named `docs/requirements/<subsystem>-requirements.md`, one file per subsystem, following the same Document/Revision/Date/Status header and Revision History table convention as `docs/ICD.md`.
-- **Do not use em-dashes (—) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `context/`, `params/`, and the repo root.
+- System requirements documents are named `docs/engineering/requirements/<subsystem>-requirements.md`, one file per subsystem, following the same Document/Revision/Date/Status header and Revision History table convention as `docs/engineering/ICD.md`.
+- **Do not use em-dashes (—) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `context/`, and the repo root.

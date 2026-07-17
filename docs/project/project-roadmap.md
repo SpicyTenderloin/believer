@@ -1,6 +1,6 @@
 # Future Capability Roadmap
 
-Capabilities not required for current flight-readiness but planned for later phases of the project. Current build and flight-readiness work is tracked in [`docs/build-checklist.md`](build-checklist.md).
+Capabilities not required for current flight-readiness but planned for later phases of the project. Current build and flight-readiness work is tracked in [`docs/project/build-checklist.md`](build-checklist.md).
 
 | Category | Task | Notes |
 |---|---|---|

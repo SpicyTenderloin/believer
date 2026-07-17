@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `params/believer-parameters.params` (exported 2026-07-06).
+Values reflect `believer-parameters.params` (exported 2026-07-06), in this same folder.
 
 ---
 
@@ -98,7 +98,7 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `PWM_MAIN_MIN2` | 800 | V-tail right minimum PWM. Lowered from 1000 (2026-07-06) to give the servo more usable travel. |
 | `PWM_MAIN_REV` | 6 (0b00000110) | Output reversal bitmask: bits 1 and 2 set = MAIN 2 (V-tail right) and MAIN 3 (left aileron) reversed. Changed from 5 (0b00000101, MAIN 1 + MAIN 3) on 2026-07-06 as part of the ruddervator direction fix. |
 
-PWM limits and disarmed values per output are documented in `docs/ICD.md` (INT-02a through INT-02f).
+PWM limits and disarmed values per output are documented in `docs/engineering/ICD.md` (INT-02a through INT-02f).
 
 ## Geofence
 

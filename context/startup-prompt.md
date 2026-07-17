@@ -22,7 +22,7 @@ Read them in order - each one builds on the last.
 
 1. **[`context/project-overview.md`](project-overview.md)** - full project background, current build state (components, actuator mapping, key parameters), and the complete repo file-structure map. Start here to understand what exists and where.
 
-2. **[`context/project-notes.md`](project-notes.md)** - confirmed technical facts about the aircraft and avionics, plus the provenance and decision history behind them (what was confirmed, when, what alternatives were ruled out). This is the companion to `docs/ICD.md`.
+2. **[`context/project-notes.md`](project-notes.md)** - confirmed technical facts about the aircraft and avionics, plus the provenance and decision history behind them (what was confirmed, when, what alternatives were ruled out). This is the companion to `docs/engineering/ICD.md`.
 
 3. **[`context/directives.md`](directives.md)** - standing working conventions: how files are organized, what gets extracted vs. kept, when to commit/push, how to handle unknowns.
 
@@ -42,14 +42,15 @@ Read them in order - each one builds on the last.
 
 | File | Purpose |
 |---|---|
-| [`docs/ICD.md`](../docs/ICD.md) | Interface control document - all avionics interfaces: serial ports, RC channel map, power, GPS, sensors |
-| [`docs/manual.md`](../docs/manual.md) | Operating manual - flight modes, GR1 switch map, failsafe config, pre-flight checklist |
-| [`docs/build-checklist.md`](../docs/build-checklist.md) | Build completion, retention checks, and configuration checklist |
-| [`docs/purchase-history/purchase-history.md`](../docs/purchase-history/purchase-history.md) | All component purchases - unit cost, total with shipping, who paid (University/Julian personal), installed status |
-| [`docs/project-overview.md`](../docs/project-overview.md) | Public-facing project background, purpose, roadmap, and team |
-| [`params/parameter-change-log.md`](../params/parameter-change-log.md) | Narrative log of every PX4 parameter change and the reason behind it |
-| [`params/believer-parameters.params`](../params/believer-parameters.params) | Full PX4 parameter dump (raw backup) |
-| [`GX12 Backup/MODELS/model00.yml`](../GX12%20Backup/MODELS/model00.yml) | GX12 EdgeTX model config - mixer definitions for all RC channels |
+| [`docs/engineering/ICD.md`](../docs/engineering/ICD.md) | Interface control document - all avionics interfaces: serial ports, RC channel map, power, GPS, sensors |
+| [`docs/operations/manual.md`](../docs/operations/manual.md) | Operating manual - flight modes, GR1 switch map, failsafe config, pre-flight checklist |
+| [`docs/engineering/flight-modes.md`](../docs/engineering/flight-modes.md) | PX4 fixed-wing flight mode behaviour and configuring parameters |
+| [`docs/project/build-checklist.md`](../docs/project/build-checklist.md) | Flight-readiness dashboard and work-package task tracking |
+| [`docs/project/purchase-history/purchase-history.md`](../docs/project/purchase-history/purchase-history.md) | All component purchases - unit cost, total with shipping, who paid (University/Julian personal), installed status |
+| [`docs/project/project-overview.md`](../docs/project/project-overview.md) | Public-facing project background, purpose, roadmap, and team |
+| `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` | Narrative log of every PX4 parameter change and the reason behind it |
+| `docs/operations/Pixhawk Parameter Backup/believer-parameters.params` | Full PX4 parameter dump (raw backup) |
+| `docs/operations/GX12 Radio Backup/MODELS/model00.yml` | GX12 EdgeTX model config - mixer definitions for all RC channels |
 
 ---
 

@@ -13,10 +13,10 @@ This document defines the physical, electrical, and data interfaces between the 
 
 ## 2. Reference Documents
 
-- Believer Project Proposal (QUTAS, 2026-01-25) - `docs/reference/`
-- QUTAS EER Funding Application (2026-05-20) - `docs/reference/`
-- Purchase invoices - `docs/purchase-history/invoices/`
-- PX4 parameter change history - `params/parameter-change-log.md`
+- Believer Project Proposal (QUTAS, 2026-01-25) - `docs/project/reference/`
+- QUTAS EER Funding Application (2026-05-20) - `docs/project/reference/`
+- Purchase invoices - `docs/project/purchase-history/invoices/`
+- PX4 parameter change history - `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`
 - Component datasheets - `Component datasheets/`
 
 ## 3. System Description
@@ -27,7 +27,7 @@ The servo rail is electrically isolated from the main flight controller power su
 
 ## 4. System Block Diagram
 
-![Believer ICD Block Diagram](assets/icd-block-diagram.svg)
+![Believer ICD Block Diagram](../assets/icd-block-diagram.svg)
 
 ## 5. Interface Summary
 
@@ -47,7 +47,7 @@ The servo rail is electrically isolated from the main flight controller power su
 | INT-07 | Airspeed sensor | I2C | FC | MS4525DO differential pressure sensor |
 | INT-08 | RC transmitter link | RF, ExpressLRS dual-band (2.4GHz/900MHz) | Radiomaster GX12 transmitter | Radiomaster DBR4 receiver |
 
-Open items against this interface set are tracked in [context/open-items.md](../context/open-items.md).
+Open items against this interface set are tracked in [context/open-items.md](../../context/open-items.md).
 
 ## 6. Interface Definitions
 
@@ -74,7 +74,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Right Aileron | MAIN 5 | 1100 | 1900 | 1500 | 1500 | No |
 | Right Motor | MAIN 6 | 1100 | 1900 | 1000 | 1000 | No |
 
-![PX4 Actuator Output Configuration](assets/actuator-output-config.png)
+![PX4 Actuator Output Configuration](../assets/actuator-output-config.png)
 
 #### Connected Devices
 
@@ -99,7 +99,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Speed @ 4.8V / 6.0V | 0.15 / 0.13 sec/60° |
 | Spline | 23T |
 
-![Emax ES3054 tail servo](assets/emax-es3054-tail-servo.jpg)
+![Emax ES3054 tail servo](../assets/emax-es3054-tail-servo.jpg)
 
 **Aileron Servos (MAIN 3, MAIN 5) - Hitec HS-5125MG**
 
@@ -113,7 +113,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Speed @ 4.8V / 6.0V | 0.17 / 0.13 sec/60° |
 | Spline | Micro 25T |
 
-![Hitec HS-5125MG wing servo](assets/hitec-hs5125mg-wing-servo.jpg)
+![Hitec HS-5125MG wing servo](../assets/hitec-hs5125mg-wing-servo.jpg)
 
 **Motors (MAIN 4, MAIN 6) - T-Motor U5 v2.0**
 
@@ -130,15 +130,15 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Internal resistance | 116mΩ |
 | ESC | T-Motor (model TBD - see open items) |
 | Propeller | 11x7" (Hobbyrama LP11X7E) |
-| Propeller rotation | Outward contra-rotating; both propellers currently fitted are the same handedness - temporary, pending the T-MOTOR MN3110 KV700 upgrade (`docs/build-checklist.md` PROP-01), which uses a matched standard/pusher propeller pair from installation |
+| Propeller rotation | Outward contra-rotating; both propellers currently fitted are the same handedness - temporary, pending the T-MOTOR MN3110 KV700 upgrade (`docs/project/build-checklist.md` PROP-01), which uses a matched standard/pusher propeller pair from installation |
 
-![T-Motor U5 v2.0 front view](assets/tmotor-u5-front.jpg)
+![T-Motor U5 v2.0 front view](../assets/tmotor-u5-front.jpg)
 
-![T-Motor U5 v2.0 side view](assets/tmotor-u5-side.jpg)
+![T-Motor U5 v2.0 side view](../assets/tmotor-u5-side.jpg)
 
-![T-Motor ESC front](assets/tmotor-esc-front.jpg)
+![T-Motor ESC front](../assets/tmotor-esc-front.jpg)
 
-![T-Motor ESC back](assets/tmotor-esc-back.jpg)
+![T-Motor ESC back](../assets/tmotor-esc-back.jpg)
 
 ### INT-03 - RC Control Link (TELEM1)
 
@@ -175,13 +175,13 @@ A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled ov
 | CH11 | Offboard | Inverted in EdgeTX |
 | CH12 | Spare / future buzzer or payload | Mixed from SH switch in EdgeTX; no PX4 function currently assigned |
 
-![PX4 Flight Modes / Switch Settings Configuration](assets/flight-modes-config.png)
+![PX4 Flight Modes / Switch Settings Configuration](../assets/flight-modes-config.png)
 
 #### GX12 Physical Switch Locations
 
-![GX12 front view with switch functions annotated](assets/gx12-front-switches.png)
+![GX12 front view with switch functions annotated](../assets/gx12-front-switches.png)
 
-![GX12 top view with switch functions annotated](assets/gx12-top-switches.png)
+![GX12 top view with switch functions annotated](../assets/gx12-top-switches.png)
 
 #### Flight-Mode Mapping (GR1)
 
@@ -215,7 +215,7 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 
 Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the Normal mode default.
 
-![RFD900x Pinout Diagram](assets/rfd900-pinout-diagram.png)
+![RFD900x Pinout Diagram](../assets/rfd900-pinout-diagram.png)
 
 #### RFD900x Connector Pinout (full 16-pin)
 
@@ -257,7 +257,7 @@ SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART.
 |---|---|
 | `GPS_2_GNSS` | 29 |
 
-Antenna not yet fitted - tracked as a maiden flight blocker in [build-checklist.md](build-checklist.md).
+Antenna not yet fitted - tracked as a maiden flight blocker in [build-checklist.md](../project/build-checklist.md).
 
 ### INT-07 - Airspeed Sensor (I2C)
 
@@ -281,7 +281,7 @@ Packet rate: 100Hz Full.
 
 ## 7. Open Items
 
-Tracked in [context/open-items.md](../context/open-items.md).
+Tracked in [context/open-items.md](../../context/open-items.md).
 
 ## 8. Revision History
 

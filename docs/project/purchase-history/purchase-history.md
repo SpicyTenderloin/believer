@@ -41,4 +41,4 @@ Approved via the QUTAS EER club activity funding application (signed 2026-05-20/
 | MatekSys Power Distribution Board | $45 | Power distribution between battery and modules |
 | Battery Velcro Straps | $4 | High-strength battery straps |
 
-The original project proposal (2026-01-25, see [`../reference/Believer Project Proposal.pdf`](../reference/Believer%20Project%20Proposal.pdf)) budgeted these same upgrades at **$1,030 total**, without the MatekSys PDB or Velcro straps - those two items were added later in the EER funding application above.
+The original project proposal (2026-01-25, see [`../governance/Believer Project Proposal.pdf`](../governance/Believer%20Project%20Proposal.pdf)) budgeted these same upgrades at **$1,030 total**, without the MatekSys PDB or Velcro straps - those two items were added later in the EER funding application above.

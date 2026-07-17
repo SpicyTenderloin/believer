@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-17 (continued x2)
+- Restructured `docs/` from a flat file list into three purpose-based subfolders, per user request:
+  - `docs/engineering/` - `ICD.md`, `flight-modes.md`, `requirements/`, `test-reports/` (how the aircraft is built and works)
+  - `docs/operations/` - `manual.md`, plus the top-level `GX12 Backup/` and `params/` folders moved and renamed in: `GX12 Radio Backup/` and `Pixhawk Parameter Backup/` (how the aircraft is flown, and the backups that support that)
+  - `docs/project/` - `build-checklist.md`, `project-roadmap.md`, `project-overview.md`, `project-timeline.md`, `purchase-history/`, and `docs/reference/` renamed to `governance/` (project status, history, and admin)
+  - `docs/assets/` stays at `docs/` root, shared by all three
+- Rewrote every internal cross-reference repo-wide to match (relative links in every moved document, plus path mentions in `context/directives.md`, `style-guide.md`, `project-overview.md`, `open-items.md`, `project-notes.md`, `startup-prompt.md`, `academic-integrity.md`, `README.md`). Historical narrative in this CHANGELOG and in documents' own Revision History tables was left untouched - those describe what was true at the time, not current file locations.
+- `context/directives.md`: rewrote the "File organisation" section to describe the new three-way split and the reasoning behind it.
+
 ## 2026-07-17 (continued)
 - `docs/ICD.md` (Rev 1.5 -> 1.6): cross-checked every value in the INT-02a-f actuator table against the actual exported parameters (`params/believer-parameters.params`) - found the table had never matched them since it was first written (Rev 1.0, 2026-07-03, before the 2026-07-05 radio calibration and 2026-07-06 ruddervator direction fix). Corrected: MAIN 1 Min/Max 1100/1900 -> 800/2000us and Reversed Yes -> No; MAIN 2 Min/Max 1100/1900 -> 800/2000us and Reversed No -> Yes; MAIN 3 Min/Max 1100/1900 -> 1000/2000us; MAIN 4 and MAIN 6 Min/Max 1000/2000 -> 1100/1900us (MAIN 5 already matched). Also replaced the stale "reverse-pitch prop TBD, see open items" note (that open item was resolved 2026-07-16) with a reference to the pending MN3110 upgrade.
 - `docs/assets/icd-block-diagram.svg`: corrected the MAIN 1/MAIN 2 "reversed" labels to match the ICD fix above (swapped which V-tail channel is marked reversed); updated the diagram's own revision footer, which had been stuck reading "Rev 1.4" since before the Rev 1.5 redraw.

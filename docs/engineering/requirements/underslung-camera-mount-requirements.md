@@ -17,9 +17,9 @@ The camera supports the mission's observation objectives (shark spotting, threat
 
 ## 3. Reference Documents
 
-- `docs/purchase-history/purchase-history.md` - IMX335 5MP USB Camera purchase record
+- `docs/project/purchase-history/purchase-history.md` - IMX335 5MP USB Camera purchase record
 - `context/project-notes.md` - future/planned capability notes
-- `docs/project-roadmap.md` - Camera mount task (future capability work)
+- `docs/project/project-roadmap.md` - Camera mount task (future capability work)
 - `context/open-items.md` - open dependencies against this subsystem
 
 ## 3a. Candidate Camera Module (Reference Only)
@@ -73,7 +73,7 @@ The manufacturer page does not mention landing gear/pad details or an explicit c
 | REQ-CAM-10 | The mount shall attach to the underside of the fuselage on the centreline, between the two landing pads - the location the airframe manufacturer's documentation designates for a camera mount - clear of the battery, GPS modules, pitot tube, and existing avionics wiring. |
 | REQ-CAM-11 | The mount shall be removable without disassembling surrounding airframe structure, to allow camera servicing/replacement. |
 | REQ-CAM-12 | The mount and camera assembly shall not shift the aircraft's CG outside the currently verified envelope (15mm aft of the front wing spar centreline, ~25% MAC) beyond a tolerance to be defined once camera and companion computer masses are known. Combined with the companion computer and any other payload, total added mass shall stay within the airframe's rated payload capacity (~670g per the manufacturer, see Section 3b). |
-| REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/manual.md`) - a belly-mounted camera is a first point of ground contact by default. The camera shall be mounted internally to the fuselage, with the lens protruding through a cutout in the belly skin such that the lens face sits recessed 3mm from the outer belly surface. |
+| REQ-CAM-13 | **The mount shall protect the camera and lens from ground-strike damage during landing.** Believer has no landing gear and lands belly-down (per the assisted hand-launch procedure in `docs/operations/manual.md`) - a belly-mounted camera is a first point of ground contact by default. The camera shall be mounted internally to the fuselage, with the lens protruding through a cutout in the belly skin such that the lens face sits recessed 3mm from the outer belly surface. |
 | REQ-CAM-14 | The belly cutout shall be sized to avoid vignetting the lens's field of view at the 3mm recess depth where possible. Full avoidance may not be achievable with a very wide FOV lens - this is a limitation of the specific camera module chosen, which may itself not be appropriate if so. |
 | REQ-CAM-15 | The mount shall be a two-part modular design: a female base permanently fixed to the airframe, and a male carrier that holds the camera and secures into the female base. The female base and the male-to-female mating interface (attachment geometry/mechanism) shall be fixed and shall not change between camera modules. |
 | REQ-CAM-16 | A new male carrier may be designed for each camera module, custom-fitted to that specific camera's footprint (up to a maximum envelope of 50mm x 50mm), while always conforming to the fixed mating interface of REQ-CAM-15. |
@@ -108,7 +108,7 @@ The interface between the camera and the companion computer itself is out of sco
 - Operating temperature range for the candidate module is inconsistent between sources: two independent sources (Core Electronics product page, a separate web search) give -10°C to 60°C; the user's direct read of the primary Waveshare wiki page gave 10°C to 60°C (no minus sign). Worth a second look at the primary page for a possible dropped minus sign - not reconciled.
 - Internal clearance behind the belly skin: the candidate module's lens alone is 36.94mm long - needs confirming against available fuselage depth at whatever location is chosen (REQ-CAM-10).
 
-Tracked in [context/open-items.md](../../context/open-items.md).
+Tracked in [context/open-items.md](../../../context/open-items.md).
 
 ## 6. Revision History
 

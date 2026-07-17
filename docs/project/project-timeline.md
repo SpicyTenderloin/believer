@@ -57,7 +57,7 @@ Complete the remaining Critical and Urgent items above and conduct the first tes
 Key outcomes:
 - Aircraft demonstrated airworthy under manual control
 - PID gains validated and tuned for stable flight
-- Pre-flight checklist (see [manual.md](manual.md)) exercised end-to-end
+- Pre-flight checklist (see [manual.md](../operations/manual.md)) exercised end-to-end
 
 ### Phase 2 - Expanded Flight Testing and Consolidation (Target: TBD)
 

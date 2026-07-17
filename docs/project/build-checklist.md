@@ -11,7 +11,7 @@ Milestone definitions:
 - **Ground-test readiness** - required before the aircraft is run under power for bench or ground testing (e.g. static thrust runs)
 - **Flight clearance** - required before the aircraft is released for a test flight
 
-Future capability work (payload, autonomy) that is not required for current flight-readiness is tracked separately in [`docs/project-roadmap.md`](project-roadmap.md).
+Future capability work (payload, autonomy) that is not required for current flight-readiness is tracked separately in [`docs/project/project-roadmap.md`](project-roadmap.md).
 
 ---
 
@@ -53,7 +53,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 <details>
 <summary>Background and engineering notes</summary>
 
-CG confirmed out of balance during the 2026-07-10 TMAC review with Peter Spink - approximately 350g of ballast needed in the nose. See [`docs/test-reports/2026-07-10-tmac-review-peter-spink.md`](test-reports/2026-07-10-tmac-review-peter-spink.md).
+CG confirmed out of balance during the 2026-07-10 TMAC review with Peter Spink - approximately 350g of ballast needed in the nose. See [`docs/engineering/test-reports/2026-07-10-tmac-review-peter-spink.md`](../engineering/test-reports/2026-07-10-tmac-review-peter-spink.md).
 
 </details>
 
@@ -153,7 +153,7 @@ Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone t
 - Propellers produce forward thrust with correct contra-rotation.
 - No wiring, connectors, or ESCs become abnormally hot during a bench run.
 - Motor outputs respond to the correct PX4 channels (Actuators page).
-- Installation recorded in `docs/ICD.md` and this document.
+- Installation recorded in `docs/engineering/ICD.md` and this document.
 
 <details>
 <summary>Background and engineering notes</summary>
@@ -175,7 +175,7 @@ The T-Motor U5 v2.0 KV400 motors were found to produce inadequate thrust during 
 **Acceptance criteria**
 - Measured thrust-to-weight ratio recorded.
 - Result reviewed against the target ratio needed for reliable hand-launch and climb performance.
-- Result logged as a dated entry under `docs/test-reports/`.
+- Result logged as a dated entry under `docs/engineering/test-reports/`.
 
 <details>
 <summary>Background and engineering notes</summary>
@@ -462,7 +462,7 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 ## Recurring Airworthiness Verification
 
-These are physical checks, not one-time tasks - they must be re-verified on the stated interval and after any maintenance that could disturb them. "Last verified" and "Evidence" are TBD until a dated verification pass is logged (see `context/open-items.md`); pre-flight items should ultimately be folded into the pre-flight checklist in [`docs/manual.md`](manual.md) rather than duplicated here.
+These are physical checks, not one-time tasks - they must be re-verified on the stated interval and after any maintenance that could disturb them. "Last verified" and "Evidence" are TBD until a dated verification pass is logged (see `context/open-items.md`); pre-flight items should ultimately be folded into the pre-flight checklist in [`docs/operations/manual.md`](../operations/manual.md) rather than duplicated here.
 
 | Check | Interval | Last verified | Evidence |
 |---|---|---|---|
@@ -523,4 +523,4 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 
 ## Future Capability Roadmap
 
-Payload and autonomy work not required for current flight-readiness has moved to [`docs/project-roadmap.md`](project-roadmap.md).
+Payload and autonomy work not required for current flight-readiness has moved to [`docs/project/project-roadmap.md`](project-roadmap.md).
