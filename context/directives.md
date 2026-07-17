@@ -12,6 +12,7 @@ Standing conventions for working in this repo. Update this file when the user gi
     - `docs/requirements/` - system requirements documents, one file per subsystem
     - `docs/build-checklist.md` - current flight-readiness dashboard and work-package task tracking
     - `docs/project-roadmap.md` - future capability work not required for current flight-readiness
+    - `docs/flight-modes.md` - PX4 fixed-wing flight mode behaviour and configuring parameters, cross-referenced against official PX4 documentation
   - `params/` - parameter change logs / flight controller parameter files
   - `Component datasheets/` - manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
   - `GX12 Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter (model config, radio config, firmware, stock assets)

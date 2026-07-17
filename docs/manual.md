@@ -35,18 +35,20 @@ For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a
 
 GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a time), mapped to CH6 and used as the main PX4 flight-mode selector.
 
-| GX12 Button | PX4 Mode | Use |
-|---|---|---|
-| SW1 | Manual | Direct-control backup; avoid for normal launch |
-| SW2 | Stabilized | Startup/default and hand-launch mode |
-| SW3 | Altitude | Holds altitude; pilot still flies direction |
-| SW4 | Position | GPS-assisted track/altitude holding |
-| SW5 | Mission | Future autonomous missions only |
-| SW6 | Hold | Backup access to Loiter/Hold |
+| GX12 Button | PX4 Mode | Behaviour | Use |
+|---|---|---|---|
+| SW1 | Manual | Sticks drive the control surfaces directly - no self-levelling | Direct-control backup; avoid for normal launch |
+| SW2 | Stabilized | Centring the sticks levels the aircraft; altitude and heading drift freely | Startup/default and hand-launch mode |
+| SW3 | Altitude | As Stabilized, plus altitude is held automatically; heading still drifts | Holds altitude; pilot still flies direction |
+| SW4 | Position | As Altitude, plus GPS holds ground track against wind | GPS-assisted track/altitude holding |
+| SW5 | Mission | Autonomous; flies a pre-uploaded waypoint mission | Future autonomous missions only |
+| SW6 | Hold | Autonomous; circles the engagement point at the current altitude | Backup access to Loiter/Hold |
 
 **Hold vs. Loiter:** these are the same PX4 mode - "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude - it cannot stop and hover like a multirotor.
 
-CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly.
+CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly. CH10 (Return) similarly overrides GR1 and commands the aircraft to climb and fly back to the home position. CH11 (Offboard) overrides GR1 to hand control to a companion computer - not currently used, since that companion computer is a future project phase.
+
+For full detail on each mode's behaviour and the PX4 parameters that configure it, see [`flight-modes.md`](flight-modes.md).
 
 ![QGroundControl Flight Modes configuration](assets/flight-modes-config.png)
 
