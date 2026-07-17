@@ -33,7 +33,9 @@ The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup i
 - [project-timeline.md](project-timeline.md) - milestone history and phase roadmap
 - [ICD.md](ICD.md) - interface control document (avionics interfaces)
 - [manual.md](manual.md) - flight modes, switch mapping, operating procedures
-- [build-checklist.md](build-checklist.md) - build, retention, and configuration checklist
+- [flight-modes.md](flight-modes.md) - PX4 flight mode behaviour and configuring parameters
+- [build-checklist.md](build-checklist.md) - flight-readiness dashboard and work-package task tracking
+- [project-roadmap.md](project-roadmap.md) - future capability work not required for current flight-readiness
 - [purchase-history/purchase-history.md](purchase-history/purchase-history.md) - component purchases, with invoices under `purchase-history/invoices/`
 - [../params/parameter-change-log.md](../params/parameter-change-log.md) - PX4 parameter change history
 - [reference/](reference/) - original proposal and funding application materials

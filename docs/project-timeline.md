@@ -16,25 +16,35 @@
 | 2026-07-02 | Motor, ESC, and servo interfaces documented; system block diagram updated |
 | 2026-07-03 | Flight controller configuration phase substantially complete: sensor calibration (accel/gyro/mag/airspeed), GPS 1 (M8N) operational, battery and power monitor configured, RC and flight modes verified, motor and ESC mapping confirmed, failsafe configured, geofence configured (Return action, 120m AGL ceiling) |
 | 2026-07-05 | Visited BNEMAC (Brisbane Northside Electric Model Aero Club) - met Ross Dennington and club members for an initial system review and discussion of findings |
+| 2026-07-06 | T-MOTOR MN3110 KV700 motors purchased to replace the T-Motor U5 v2.0 KV400 units, per the BNEMAC inadequate-thrust finding; ruddervator direction fix applied (`PWM_MAIN_REV`); current parameter export taken |
+| 2026-07-10 | Visited TMAC (Tingalpa Model Aero Club) - system review and live RC tuning session with Peter Spink, covering power distribution, propulsion, RC equipment, and CG |
+| 2026-07-14 | 9x6" standard/pusher propeller pair purchased for the MN3110 motors, sized via MotoCalc modelling with Peter Spink, resolving the reverse-pitch propeller sourcing item |
+| 2026-07-16 | Build checklist restructured into a flight-readiness dashboard and engineering work packages; future capability work split into `project-roadmap.md`; ICD block diagram redrawn |
+| 2026-07-17 | `flight-modes.md` added, documenting PX4 flight mode behaviour and configuring parameters against official PX4 documentation; ICD actuator table (INT-02a-f) corrected against the actual exported parameters |
 
 ---
 
 ## Current Status
 
-The aircraft is in the **late configuration phase**, working through the remaining Critical and Urgent items on the build checklist before the first flight. The flight controller is configured and all primary interfaces are operational. Outstanding items are tracked in [build-checklist.md](build-checklist.md).
+The aircraft is in the **late configuration phase**, working through the Critical and Urgent items on the flight-readiness dashboard before the first flight. The flight controller is configured and all primary interfaces are operational. Full task detail, dependencies, and acceptance criteria are tracked in [build-checklist.md](build-checklist.md); this section summarises it.
 
 ### Remaining before first flight
 
-**Critical (must be resolved before any flight):**
-- Motor and ESC replacement decision (pending thrust-to-weight ground test)
-- Motor PWM min/max limits
+**Critical (must be resolved and verified before flight clearance):**
+- Install and validate the T-MOTOR MN3110 KV700 propulsion system, then demonstrate acceptable static thrust (PROP-01, PROP-02)
+- Install a dedicated 5V servo rail UBEC (PWR-01)
+- Correct the centre of gravity (AF-01)
+- Fit positive battery retention (AF-02)
+- Relocate the DBR4 receiver and verify antenna orientation (RF-01)
+- Investigate the lack of yaw authority in Stabilized mode (CTL-01)
 
 **Urgent (should be resolved before first flight):**
-- Pitot tube permanent mount
-- Pitot tube clearance verification
-- Flight controller PID tuning
-- Source and install reverse-pitch propeller (current props are matched handedness, not a true contra-rotating pair)
-- Investigate flight mode behaviour (Stabilize mode)
+- Motor start synchronisation and PWM min/max limits (PROP-03, PROP-04)
+- Flight controller PID tuning (CTL-02)
+- Enter the missing control-surface trim values from the 2026-07-10 TMAC session (CTL-03)
+- Pitot tube permanent mount and clearance verification (NAV-01, NAV-02)
+- Motor/ESC inspection-bay cover bolts (AF-03)
+- RFD900x antenna installation (RF-02)
 
 ---
 
@@ -58,7 +68,7 @@ Key activities:
 - Wiring tidy and cable management
 - Autonomous mode testing: Position hold, Mission, Return to Launch
 - Geofence and failsafe behaviour verified in flight
-- Motor/ESC upgrade evaluation: thrust-to-weight ground test to confirm whether higher-KV motors are required; complete reverse-pitch propeller fitment for correct contra-rotation
+- Characterise the final propulsion system (motor/ESC/propeller/airframe) in MotoCalc
 
 ### Phase 3 - Companion Computer and Camera Integration (Target: TBD)
 

@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.5 |
-| **Date** | 2026-07-16 |
+| **Revision** | 1.6 |
+| **Date** | 2026-07-17 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -67,12 +67,12 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 
 | Control Input | PWM Output | Min (µs) | Max (µs) | Disarmed (µs) | Trim (µs) | Reversed |
 |---|---|---|---|---|---|---|
-| V-Tail Left | MAIN 1 | 1100 | 1900 | 1500 | 1500 | Yes |
-| V-Tail Right | MAIN 2 | 1100 | 1900 | 1500 | 1500 | No |
-| Left Aileron | MAIN 3 | 1100 | 1900 | 1500 | 1500 | Yes |
-| Left Motor | MAIN 4 | 1000 | 2000 | 1000 | 1000 | No |
+| V-Tail Left | MAIN 1 | 800 | 2000 | 1500 | 1500 | No |
+| V-Tail Right | MAIN 2 | 800 | 2000 | 1500 | 1500 | Yes |
+| Left Aileron | MAIN 3 | 1000 | 2000 | 1500 | 1500 | Yes |
+| Left Motor | MAIN 4 | 1100 | 1900 | 1000 | 1000 | No |
 | Right Aileron | MAIN 5 | 1100 | 1900 | 1500 | 1500 | No |
-| Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
+| Right Motor | MAIN 6 | 1100 | 1900 | 1000 | 1000 | No |
 
 ![PX4 Actuator Output Configuration](assets/actuator-output-config.png)
 
@@ -130,7 +130,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Internal resistance | 116mΩ |
 | ESC | T-Motor (model TBD - see open items) |
 | Propeller | 11x7" (Hobbyrama LP11X7E) |
-| Propeller rotation | Outward contra-rotating; both propellers currently fitted are the same handedness - reverse-pitch prop TBD, see open items |
+| Propeller rotation | Outward contra-rotating; both propellers currently fitted are the same handedness - temporary, pending the T-MOTOR MN3110 KV700 upgrade (`docs/build-checklist.md` PROP-01), which uses a matched standard/pusher propeller pair from installation |
 
 ![T-Motor U5 v2.0 front view](assets/tmotor-u5-front.jpg)
 
@@ -302,3 +302,4 @@ Tracked in [context/open-items.md](../context/open-items.md).
 | 1.3 | 2026-07-06 | Updated `MAV_1_MODE` (OSD -> Normal) per the current parameter export; flagged that the BATTERY_STATUS extras.txt override has not been re-verified against Normal mode's default rate |
 | 1.4 | 2026-07-16 | Removed a stray UTF-8 BOM causing garbled rendering; added the PM03D's 3A servo rail current limit, confirmed against the manufacturer datasheet (`Component datasheets/holybro-pm03d-manual.pdf`) |
 | 1.5 | 2026-07-16 | Recreated the block diagram: fixed a routing bug where the GX12-DBR4 RF link visually terminated on the V-Tail Left servo box instead of the DBR4 box; regrouped ground equipment (GX12, Ground Station) together above their onboard RF counterparts; rerouted the Ground Station-RFD900x link around the DBR4 box instead of crossing through it; rerouted PM03D-FC power to enter via the FC's top edge, clear of the PWM bus and airspeed connection; re-centred the MS4525DO box under the FC; updated the propeller label (11x4.7" -> 11x7" Hobbyrama LP11X7E) and revision footer |
+| 1.6 | 2026-07-17 | Corrected the INT-02a-f actuator table against the actual exported parameters (`params/believer-parameters.params`), which it had never matched since the table was first written (Rev 1.0, before the 2026-07-05/07-06 radio calibration and ruddervator direction fix): MAIN 1 Min/Max corrected to 800/2000us and Reversed corrected to No; MAIN 2 Min/Max corrected to 800/2000us and Reversed corrected to Yes; MAIN 3 Min/Max corrected to 1000/2000us; MAIN 4 and MAIN 6 Min/Max corrected to 1100/1900us. Updated the stale "reverse-pitch prop TBD" note (resolved by the 2026-07-14 9x6" propeller purchase) to reference the pending MN3110 upgrade instead |

@@ -35,7 +35,7 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 | SparkFun ZED-F9P | RTK GPS (secondary) | GPS 2 UART |
 | Radiomaster DBR4 | ELRS Gemini dual-band RC receiver | Telem_1 (460800 8N1) |
 | RFD900x | Long-range telemetry radio | Telem_2 (57600 8N1) |
-| MS4525DO | I2C airspeed sensor | I2C (wiring TBD) |
+| MS4525DO | I2C airspeed sensor | Pixhawk 6X I2C, JST-GH 4-pin (address 0x28) |
 | Turnigy 8000mAh 6S | Main battery | PM03D |
 | Radiomaster GX12 Crush (Iron Grey) | RC transmitter (ground-side) | ExpressLRS Gemini-X |
 | T-Motor U5 v2.0 (KV400) | Main propulsion motors (x2, one per wing) | FC MAIN 4, MAIN 6 (via ESC) |
@@ -46,8 +46,8 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 ### Actuator mapping (MAIN outputs)
 | Output | Function |
 |---|---|
-| MAIN 1 | V-Tail Left (reversed) |
-| MAIN 2 | V-Tail Right |
+| MAIN 1 | V-Tail Left |
+| MAIN 2 | V-Tail Right (reversed) |
 | MAIN 3 | Left Aileron (reversed) |
 | MAIN 4 | Left Motor |
 | MAIN 5 | Right Aileron |
@@ -81,8 +81,11 @@ believer/
 ├── docs/                            ← Engineering documentation
 │   ├── ICD.md                       ← Interface control document
 │   ├── manual.md                    ← Operating manual (flight modes, procedures)
-│   ├── build-checklist.md           ← Build completion, retention checks, and configuration checklist
+│   ├── build-checklist.md           ← Flight-readiness dashboard and work-package task tracking
+│   ├── project-roadmap.md           ← Future capability work not required for current flight-readiness
+│   ├── flight-modes.md              ← PX4 fixed-wing flight mode behaviour and configuring parameters
 │   ├── project-overview.md          ← Public-facing project background and roadmap
+│   ├── project-timeline.md          ← Milestone history and phase roadmap
 │   ├── purchase-history/
 │   │   ├── purchase-history.md      ← Component purchases (cost, funder, installed status)
 │   │   └── invoices/                ← Purchase invoices, named <vendor>-<item>-<date>.pdf
@@ -104,6 +107,8 @@ believer/
 
 - **ICD.md** is the primary technical reference - avionics interfaces, serial port config, RC channel map, power system. When in doubt about what's connected to what, check here.
 - **manual.md** covers flight operations: flight modes, GR1 switch mapping, failsafe config, pre-flight checklist.
+- **flight-modes.md** is the companion to manual.md for flight modes - PX4 mode behaviour and the parameters that configure each one, cross-referenced against official PX4 documentation.
+- **build-checklist.md** is the current flight-readiness dashboard and work-package task tracker; **project-roadmap.md** holds future capability work split out of it.
 - **purchase-history.md** tracks every component purchased, who paid, and whether it's installed.
 - **parameter-change-log.md** narrates every PX4 parameter change with the reason - use this to understand *why* parameters are set the way they are.
 - **project-notes.md** (context) is the companion to ICD.md - it holds the provenance and decision history behind the facts in the ICD, so the ICD itself stays clean.
@@ -112,8 +117,8 @@ believer/
 
 ## Current open items (summary)
 
-See `context/open-items.md` for the full list. Key blockers for maiden flight:
+See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/build-checklist.md` (CG correction, battery retention, servo rail UBEC, DBR4 relocation, MN3110 propulsion install/thrust test, Stabilized-mode yaw investigation). Remaining information gaps:
 
-- ZED-F9P RTK antenna not installed - confirmed maiden flight blocker
-- MS4525DO I2C wiring not documented
-- Motors/ESCs model/KV/ESC protocol not yet captured
+- ZED-F9P RTK antenna not installed - RTK capability unavailable until fitted (the aircraft can fly on GPS 1/M8N alone; not itself a flight blocker)
+- MS4525DO I2C pull-up resistor configuration not confirmed (port and address are documented in `docs/ICD.md` INT-07)
+- ESC model and supported protocol (PWM/DShot) not yet captured; compatibility with the purchased T-MOTOR MN3110 KV700 motors not yet confirmed

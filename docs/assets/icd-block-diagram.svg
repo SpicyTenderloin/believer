@@ -26,7 +26,7 @@
 
   <!-- Title -->
   <text x="750" y="32" text-anchor="middle" class="title">Believer Fixed-Wing UAV - ICD Block Diagram</text>
-  <text x="750" y="52" text-anchor="middle" class="subtitle">ICD-BELIEVER-001 Rev 1.4 - 2026-07-16</text>
+  <text x="750" y="52" text-anchor="middle" class="subtitle">ICD-BELIEVER-001 Rev 1.6 - 2026-07-17</text>
 
   <!-- Ground equipment (grouped top-right, above their onboard RF counterparts) -->
   <rect x="1000" y="72" width="200" height="82" rx="6" class="groundbox"/>
@@ -56,13 +56,13 @@
   <rect x="70" y="238" width="230" height="68" rx="6" class="box"/>
   <text x="185" y="260" text-anchor="middle" class="label">V-Tail Left Servo</text>
   <text x="185" y="274" text-anchor="middle" class="sublabel">Emax ES3054</text>
-  <text x="185" y="288" text-anchor="middle" class="sublabel">MAIN 1 (PWM, reversed)</text>
+  <text x="185" y="288" text-anchor="middle" class="sublabel">MAIN 1 (PWM)</text>
 
   <!-- MAIN 2 - V-Tail Right (ES3054) -->
   <rect x="70" y="316" width="230" height="68" rx="6" class="box"/>
   <text x="185" y="338" text-anchor="middle" class="label">V-Tail Right Servo</text>
   <text x="185" y="352" text-anchor="middle" class="sublabel">Emax ES3054</text>
-  <text x="185" y="366" text-anchor="middle" class="sublabel">MAIN 2 (PWM)</text>
+  <text x="185" y="366" text-anchor="middle" class="sublabel">MAIN 2 (PWM, reversed)</text>
 
   <!-- MAIN 3 - Left Aileron (HS-5125MG) -->
   <rect x="70" y="394" width="230" height="68" rx="6" class="box"/>
