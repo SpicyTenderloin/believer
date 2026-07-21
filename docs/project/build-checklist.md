@@ -142,8 +142,8 @@ Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone t
 - **Depends on:** None
 
 **Scope**
-- Confirm the installed ESCs are compatible with the T-MOTOR MN3110 KV700 motors.
-- Remove the T-Motor U5 v2.0 KV400 motors and install the MN3110 KV700 motors.
+- Remove the T-Motor U5 v2.0 KV400 motors and their currently-fitted (unidentified-model) ESCs.
+- Install the MN3110 KV700 motors and the two acquired T-Motor AIR 40A ESCs (one per motor).
 - Fit the matched 9x6" standard/pusher propeller pair for correct contra-rotation from the start.
 - Verify left/right motor assignment and rotation direction.
 - Recheck PX4 PWM output mapping (MAIN 4 = left motor, MAIN 6 = right motor).
@@ -158,7 +158,7 @@ Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone t
 <details>
 <summary>Background and engineering notes</summary>
 
-The T-Motor U5 v2.0 KV400 motors were found to produce inadequate thrust during the 2026-07-05 BNEMAC inspection. T-MOTOR MN3110 KV700 motors were purchased 2026-07-06 to replace them. The 9x6" propeller pair was purchased 2026-07-14, sized using MotoCalc modelling with Peter Spink during the 2026-07-10 TMAC review. Propeller diameter is constrained to 11" by 150mm motor-shaft-to-ground clearance (no landing gear fitted) - the 9x6" pair clears comfortably. ESC compatibility with the MN3110 KV700 is tracked as an open item (`context/open-items.md`).
+The T-Motor U5 v2.0 KV400 motors were found to produce inadequate thrust during the 2026-07-05 BNEMAC inspection. T-MOTOR MN3110 KV700 motors were purchased 2026-07-06 to replace them. The 9x6" propeller pair was purchased 2026-07-14, sized using MotoCalc modelling with Peter Spink during the 2026-07-10 TMAC review. Propeller diameter is constrained to 11" by 150mm motor-shaft-to-ground clearance (no landing gear fitted) - the 9x6" pair clears comfortably. Two T-Motor AIR 40A ESCs acquired 2026-07-17 to pair with the new motors (40A continuous / 60A 10s peak, well above the MN3110 KV700's 21A max continuous draw), replacing the currently-fitted ESCs of unidentified model (`context/open-items.md`).
 
 </details>
 

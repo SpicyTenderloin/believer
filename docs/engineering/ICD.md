@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.6 |
+| **Revision** | 1.7 |
 | **Date** | 2026-07-17 |
 | **Status** | Draft |
 
@@ -128,7 +128,7 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Max continuous current (180s) | 30A |
 | Max continuous power (180s) | 850W |
 | Internal resistance | 116mΩ |
-| ESC | T-Motor (model TBD - see open items) |
+| ESC | T-Motor (model TBD - see open items); two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 upgrade, not yet installed - see `docs/project/build-checklist.md` PROP-01 |
 | Propeller | 11x7" (Hobbyrama LP11X7E) |
 | Propeller rotation | Outward contra-rotating; both propellers currently fitted are the same handedness - temporary, pending the T-MOTOR MN3110 KV700 upgrade (`docs/project/build-checklist.md` PROP-01), which uses a matched standard/pusher propeller pair from installation |
 
@@ -139,6 +139,20 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 ![T-Motor ESC front](../assets/tmotor-esc-front.jpg)
 
 ![T-Motor ESC back](../assets/tmotor-esc-back.jpg)
+
+**Replacement ESC (acquired, not yet installed) - T-Motor AIR 40A**
+
+Two units acquired to pair with the T-MOTOR MN3110 KV700 upgrade (one per motor); to replace the currently-fitted, unidentified ESCs shown above. Installation tracked under `docs/project/build-checklist.md` PROP-01.
+
+| Characteristic | Value |
+|---|---|
+| Continuous current | 40A |
+| Peak current | 60A (10s) |
+| Voltage range | 2-6S LiPo |
+| Weight | 26g |
+| Dimensions | 68 x 25 x 8.7mm |
+| BEC | None |
+| Signal input | Analog PWM/OneShot-style, up to 621Hz refresh rate (per manufacturer); DShot support not confirmed |
 
 ### INT-03 - RC Control Link (TELEM1)
 
@@ -303,3 +317,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 1.4 | 2026-07-16 | Removed a stray UTF-8 BOM causing garbled rendering; added the PM03D's 3A servo rail current limit, confirmed against the manufacturer datasheet (`Component datasheets/holybro-pm03d-manual.pdf`) |
 | 1.5 | 2026-07-16 | Recreated the block diagram: fixed a routing bug where the GX12-DBR4 RF link visually terminated on the V-Tail Left servo box instead of the DBR4 box; regrouped ground equipment (GX12, Ground Station) together above their onboard RF counterparts; rerouted the Ground Station-RFD900x link around the DBR4 box instead of crossing through it; rerouted PM03D-FC power to enter via the FC's top edge, clear of the PWM bus and airspeed connection; re-centred the MS4525DO box under the FC; updated the propeller label (11x4.7" -> 11x7" Hobbyrama LP11X7E) and revision footer |
 | 1.6 | 2026-07-17 | Corrected the INT-02a-f actuator table against the actual exported parameters (`params/believer-parameters.params`), which it had never matched since the table was first written (Rev 1.0, before the 2026-07-05/07-06 radio calibration and ruddervator direction fix): MAIN 1 Min/Max corrected to 800/2000us and Reversed corrected to No; MAIN 2 Min/Max corrected to 800/2000us and Reversed corrected to Yes; MAIN 3 Min/Max corrected to 1000/2000us; MAIN 4 and MAIN 6 Min/Max corrected to 1100/1900us. Updated the stale "reverse-pitch prop TBD" note (resolved by the 2026-07-14 9x6" propeller purchase) to reference the pending MN3110 upgrade instead |
+| 1.7 | 2026-07-17 | Recorded two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 motor upgrade (not yet installed - `docs/project/build-checklist.md` PROP-01); added a spec table for the incoming ESC alongside the existing currently-fitted-ESC photos |
