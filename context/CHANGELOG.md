@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-17 (continued x3)
+- Added `docs/engineering/requirements/power-distribution-board-requirements.md` (SRD-BELIEVER-PDB-001, Rev 0.2): requirements for a bespoke power distribution board to replace the Holybro PM03D, motivated by its undersized XT-30 motor outputs and 3A-limited servo BEC (see `docs/project/build-checklist.md` PWR-01). Requirements cover: XT90 battery input; four 40A-rated XT60 distribution outputs; a fixed 5V/10A servo-rail buck converter (isolated from the FC supply, matching the current architecture) and a second 5/9/12V-configurable 10A buck for future payload use; battery telemetry replicated on the same 6-pin 2.00mm CLIK-Mate connector/pinout as the PM03D so the FC-side harness needs no changes; input decoupling capacitance; and a four-sided connector layout (battery input and telemetry on opposite sides, the four XT60 ports split across the other two). Fact-checked the XT30 connector current rating per user request - found no single authoritative number (30A hobby-marketed vs 15A per one distributor's technical listing vs ~15-20A common practical derating), recorded as reference data rather than asserted fact. Cross-referenced the T-Motor MN3110 KV700's actual max continuous current (21A, from the manufacturer) against the outgoing U5 v2.0 (30A) as sizing justification for the 40A port rating. Left five items open (spare port purpose, size/weight envelope, capacitor sizing and current-sense range - both dependent on the still-unresolved ESC model, ESC connector type, environmental range).
+- `context/open-items.md`: added the new PDB open items.
+
 ## 2026-07-17 (continued x2)
 - Restructured `docs/` from a flat file list into three purpose-based subfolders, per user request:
   - `docs/engineering/` - `ICD.md`, `flight-modes.md`, `requirements/`, `test-reports/` (how the aircraft is built and works)
