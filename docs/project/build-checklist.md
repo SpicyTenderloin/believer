@@ -96,15 +96,6 @@ Identified during the 2026-07-10 TMAC review with Peter Spink - the battery curr
 **Scope**
 - Inspect and tidy all internal wiring; ensure cables are routed clear of moving parts, control linkages, and propeller arcs; secure with cable ties or sleeving as required.
 
-### AF-05 - Launch dolly
-
-- [ ] **Status:** Not started
-- **Priority:** NON-CRITICAL
-- **Depends on:** None
-
-**Scope**
-- Design and build a launch dolly.
-
 ### AF-06 - Control surface hinges
 
 - [ ] **Status:** Not started
@@ -417,15 +408,6 @@ Identified during the 2026-07-10 TMAC review with Peter Spink.
 
 </details>
 
-### RF-02 - Install RFD900x antennas
-
-- [ ] **Status:** Not started
-- **Priority:** URGENT
-- **Depends on:** None
-
-**Scope**
-- Install the smaller RFD900x antennas onto the externalised 900MHz SMA connectors.
-
 ### RF-03 - Radio flight-mode audio cues
 
 - [ ] **Status:** Not started
@@ -472,8 +454,9 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 | Avionics bay mounting bolt torque | After maintenance | TBD | TBD |
 | GPS (M8N) mounting bolt torque | After maintenance | TBD | TBD |
 | DBR4/GX12 antenna orientation and security | Before every flight | TBD | TBD |
+| RFD900x antenna security | Before every flight | TBD | TBD |
 
-Battery retention will be added to this table once AF-02 is complete (no positive retention exists yet to verify). RFD900x antenna security will be added once RF-02 is complete.
+Battery retention will be added to this table once AF-02 is complete (no positive retention exists yet to verify).
 
 ---
 
@@ -516,6 +499,7 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 ### RC, telemetry and RF
 - [x] RC link installation - RC receiver installed and configured with antennas
 - [x] Antenna externalisation - DBR4/GX12 antennas moved externally
+- [x] RFD900x antenna installation - smaller RFD900x antennas installed onto the externalised 900MHz SMA connectors (RF-02)
 
 </details>
 
