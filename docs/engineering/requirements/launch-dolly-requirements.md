@@ -3,21 +3,23 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-DOLLY-001 |
-| **Revision** | 0.1 |
+| **Revision** | 0.2 |
 | **Date** | 2026-07-17 |
 | **Status** | Draft |
 
 ## 1. Scope
 
-This document defines the requirements for a launch dolly: a temporary, releasable ground-roll cart that supports the Believer during takeoff acceleration and separates from the aircraft at or before rotation. It does not cover permanent landing gear (the airframe has none - see Section 3a) or the existing assisted hand-launch procedure, which this dolly is intended to supplement rather than replace (see Section 2 and Open Items).
+This document defines the requirements for a launch dolly: a temporary, releasable ground-roll cart that supports the Believer during takeoff acceleration and separates from the aircraft at or before rotation. It does not cover permanent landing gear (the airframe has none - see Section 3a) or the existing assisted hand-launch procedure, which remains available as a fallback (see Section 2).
 
 ## 2. Purpose and Concept of Operations
 
-Believer currently departs exclusively via a two-person assisted hand launch (`docs/operations/manual.md`, Assisted Hand Launch section): a handler holds the aircraft at shoulder height and throws it forward into wind on the pilot's call, at 75-100% throttle. This works, but places the full launch speed and attitude in the handler's hands, physically limits how heavy/fast the aircraft can practically get before hand-launch becomes impractical, and carries some risk to the handler from the propeller arcs during the throw.
+Believer currently departs exclusively via a two-person assisted hand launch (`docs/operations/manual.md`, Assisted Hand Launch section): a handler holds the aircraft at shoulder height and throws it forward into wind on the pilot's call, at 75-100% throttle. This works, but if anything goes wrong during the throw (mistimed release, a stumble, an incorrect launch attitude or speed), the aircraft is more exposed to damage than it would be accelerating to flying speed under its own power and rotating off a ground roll, the way a wheeled aircraft departs.
 
-A launch dolly gives the aircraft a powered ground roll to flying speed before departure, the way a fixed-wing aircraft without permanent landing gear is conventionally launched: the dolly cradles the fuselage, rolls down the field under the aircraft's own thrust, and falls away cleanly the instant the aircraft rotates and lifts off - after which the dolly is retrieved and reused for the next flight. This is standard practice for foam/composite airframes (Believer's case) that don't carry permanent gear for weight reasons.
+A launch dolly gives the aircraft that powered ground roll before departure, the way a fixed-wing aircraft without permanent landing gear is conventionally launched: the dolly cradles the fuselage, rolls down the field under the aircraft's own thrust, and falls away cleanly the instant the aircraft rotates and lifts off - after which the dolly is retrieved and reused for the next flight. This is standard practice for foam/composite airframes (Believer's case) that don't carry permanent gear for weight reasons.
 
-**What isn't yet established:** whether the dolly is meant to fully replace hand-launch, or serve as an alternative method for specific conditions (e.g. once the aircraft gets heavier with payload, or on days/fields where a ground roll is more practical than a handler). This document assumes the dolly is an additional option, not a mandatory replacement, per REQ-DOL-30 - confirm with the user.
+The dolly is intended to reduce the aircraft's exposure to hand-launch failure modes - it is not necessarily a mandatory replacement for hand launch, which remains available as a fallback (e.g. if the dolly is unavailable or the site is unsuitable for a ground roll).
+
+**Target operating surface:** standard grass runways, with some level of unevenness expected and tolerated (per user confirmation) - see REQ-DOL-13/14.
 
 ## 3. Reference Documents
 
@@ -70,20 +72,21 @@ From `docs/engineering/flight-modes.md`, as-configured PX4 parameters (not yet t
 |---|---|
 | REQ-DOL-10 | The dolly's cradle shall match the fuselage belly profile at its support/contact location(s), clear of the pitot tube, GPS antennas, and any underslung equipment (e.g. the future camera mount, `docs/engineering/requirements/underslung-camera-mount-requirements.md`). Exact contact geometry is an open item (Section 6). |
 | REQ-DOL-11 | The dolly shall maintain propeller ground clearance at least equal to the current no-gear reference (150mm motor-shaft-to-ground, Section 3a) throughout the ground roll, accounting for any pitch/squat under acceleration. |
-| REQ-DOL-12 | The dolly and its wheels/axles shall be rated for the aircraft's MTOW (5.5kg, Section 3a) plus dynamic loading from an uneven field surface. |
-| REQ-DOL-13 | Wheel size and type shall suit the launch surface(s) actually used (grass/turf vs. paved) - not yet confirmed, see Open Items. |
+| REQ-DOL-12 | The dolly and its wheels/axles shall be rated for the aircraft's MTOW (5.5kg, Section 3a) plus dynamic loading from an uneven grass surface. |
+| REQ-DOL-13 | Wheels shall be sized and tyred for standard grass runway use (not paved-only hard-wheel castors). |
+| REQ-DOL-14 | The dolly shall tolerate the unevenness typical of a standard grass runway (ruts, tussocks, minor undulation) without losing directional control, inducing premature separation from the aircraft, or damaging the aircraft. Exact bump/undulation magnitude not yet quantified - see Open Items. |
 
 ### 4.3 Environmental
 
 | ID | Requirement |
 |---|---|
-| REQ-DOL-20 | The dolly shall operate reliably on the field surfaces used by the project's flying sites (BNEMAC, TMAC) - specific surface characteristics (grass length, firmness, unevenness) not yet documented. |
+| REQ-DOL-20 | The dolly shall operate reliably on standard grass runway surfaces at the project's flying sites (BNEMAC, TMAC), including some unevenness (REQ-DOL-14). |
 
 ### 4.4 Interface
 
 | ID | Requirement |
 |---|---|
-| REQ-DOL-30 | The dolly shall be an additional launch method alongside the existing assisted hand launch (`docs/operations/manual.md`), not a replacement for it, unless the user confirms otherwise. |
+| REQ-DOL-30 | The dolly shall be usable alongside the existing assisted hand launch (`docs/operations/manual.md`), which remains available as a fallback - not necessarily a mandatory replacement for it. |
 | REQ-DOL-31 | Use of the dolly shall not require any change to the aircraft's current pre-flight configuration or PX4 parameters beyond what a normal hand-launch pre-flight already requires. |
 
 ### 4.5 Maintainability and Operations
@@ -103,11 +106,10 @@ The following are known to matter but aren't specified yet, pending the open ite
 
 ## 6. Open Items
 
-- Driving motivation for the dolly (Section 2) - full hand-launch replacement vs. an additional option for specific conditions - not confirmed with the user.
 - Fuselage belly profile and dimensions at the intended cradle location(s) (REQ-DOL-10) - not yet measured.
 - Target release/rotation speed and aircraft attitude during the ground roll - not yet defined (Section 3b gives only rough reference bounds).
 - Retention/release mechanism - not yet decided.
-- Launch surface type(s) at BNEMAC/TMAC (REQ-DOL-13, REQ-DOL-20) - not yet documented.
+- Quantified unevenness the dolly must tolerate (REQ-DOL-14) - "some level of unevenness" confirmed qualitatively, but no bump height/frequency spec yet.
 - Whether the dolly needs to handle crosswind/directional stability during the roll, or is intended for calm/near-headwind conditions only.
 
 Tracked in [context/open-items.md](../../../context/open-items.md).
@@ -117,3 +119,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | Rev | Date | Description |
 |---|---|---|
 | 0.1 | 2026-07-17 | Initial draft |
+| 0.2 | 2026-07-17 | Resolved the driving motivation (Section 2) per user confirmation - reduces the aircraft's exposure to hand-launch failure-mode damage, not necessarily a mandatory replacement; resolved target surface as standard grass runways with some unevenness (REQ-DOL-13, new REQ-DOL-14, REQ-DOL-20) |

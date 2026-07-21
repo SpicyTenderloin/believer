@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-17 (continued x7)
+- `context/project-notes.md`: recorded that no PDF datasheet exists for the Pixhawk 6X (Holybro documents it as a web-based site only), confirmed with the user.
+- `docs/engineering/requirements/launch-dolly-requirements.md` (Rev 0.1 -> 0.2): resolved the driving motivation per user confirmation - the dolly reduces the aircraft's exposure to hand-launch failure-mode damage (mistimed release, stumble, wrong attitude/speed) by letting it accelerate to flying speed and rotate under its own power, similar to a wheeled departure; hand-launch remains available as a fallback rather than being mandatorily replaced. Resolved the target surface as standard grass runways with some tolerated unevenness (REQ-DOL-13, new REQ-DOL-14, REQ-DOL-20).
+- `context/open-items.md`: narrowed the launch dolly item to what's still actually open (cradle geometry, target speed/attitude, retention mechanism, and the still-unquantified bump spec).
+
 ## 2026-07-17 (continued x6)
 - Added `docs/engineering/requirements/launch-dolly-requirements.md` (SRD-BELIEVER-DOLLY-001, Rev 0.1): requirements for a releasable ground-roll launch cart, expanding on the former AF-05 task. Very little was previously established beyond the task existing, so most of the document is reference data (airframe dimensions, no-landing-gear/belly-landing constraint, current hand-launch procedure, airspeed parameters as a rough release-speed proxy) plus a substantial open-items list (cradle geometry, target release speed/attitude, retention mechanism, launch surface type, and whether the dolly replaces or supplements hand-launch).
 - `docs/project/build-checklist.md`: marked RF-02 (RFD900x antenna installation) complete per user confirmation - moved from the F. RC/Telemetry/RF section into Completed Work, and added "RFD900x antenna security" to the Recurring Airworthiness Verification table now that there's something to verify. Removed AF-05 (Launch dolly) - moved to the future capability roadmap instead of active build tracking, now that it has its own requirements document (task IDs are not reused/renumbered when an item moves out).

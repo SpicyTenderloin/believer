@@ -19,7 +19,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 
 ## Flight Controller - history
 - **Original build** (per Jan 2026 proposal): ArduPlane on a Matek F405-Wing FC, u-blox NEO-7 GPS, RFD900 telemetry pair, RC control via QGroundControl joystick passthrough (no dedicated RC link at that time).
-- **Current build**: upgraded to a **Holybro Pixhawk 6X running PX4** (confirmed by user 2026-06-21; firmware also indicated by the QGroundControl "Actuators Config" UI - PWM MAIN/AUX/UAVCAN tabs are PX4-specific - and by the filename `believer_PX4_Parameter_Change_Log.xlsx`).
+- **Current build**: upgraded to a **Holybro Pixhawk 6X running PX4** (confirmed by user 2026-06-21; firmware also indicated by the QGroundControl "Actuators Config" UI - PWM MAIN/AUX/UAVCAN tabs are PX4-specific - and by the filename `believer_PX4_Parameter_Change_Log.xlsx`). No PDF datasheet exists in `Component datasheets/` - Holybro documents the 6X entirely as a web-based site (docs.holybro.com), not a downloadable PDF (checked 2026-07-17, confirmed with the user).
 - Servo rail is electrically isolated from the main Pixhawk power supply; requires an independent 5V feed from the power distribution board.
 - `SENS_BOARD_ROT` = Yaw 180° (corrects FC orientation relative to airframe).
 
