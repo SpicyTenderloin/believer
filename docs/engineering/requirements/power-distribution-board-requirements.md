@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-PDB-001 |
-| **Revision** | 0.3 |
+| **Revision** | 0.4 |
 | **Date** | 2026-07-17 |
 | **Status** | Draft |
 
@@ -70,15 +70,11 @@ For comparison, the outgoing T-Motor U5 v2.0 is rated 30A / 850W continuous (180
 | BEC | None |
 | Signal input | Analog PWM/OneShot-style, up to 621Hz refresh rate; DShot support not confirmed |
 
-**XT30 connector current rating - fact-check (user asked to verify the "20A" figure):**
+**PM03D per-port XT-30 current rating - fact-check (user asked specifically what the PM03D's own battery-voltage output ports are rated for, not the generic XT30 connector):**
 
-This did not resolve to one clean number - sources disagree meaningfully:
+**Holybro does not publish a per-port rating for the PM03D's XT-30 outputs anywhere** - checked the PDF manual (`Component datasheets/holybro-pm03d-manual.pdf`), the official product page (holybro.com), and Holybro's own power-module comparison table (docs.holybro.com). All three give only the aggregate board rating - Rated current 60A / Max current 120A (<60s) / Max current sensing 164A, entering via the single XT-60 battery input and shared across everything downstream: both XT-30 outputs, the corner solder pads, and all the regulated BEC rails combined. There is no engineering basis for treating either individual XT-30 port as good for anywhere near the full 60-120A board figure once both ports (and everything else) are loaded simultaneously.
 
-- Hobbyist/marketing sources (HobbyKing and similar) commonly advertise XT30 as **30A continuous / 40A burst**.
-- TME (an electronic-component distributor, not a hobby shop) lists the Amass XT30U-M/F technical rating as **15A**.
-- Community consensus in RC/UAV forums frequently recommends derating XT30 to roughly **15-20A continuous** in practice, since the 30A marketing figure is widely considered achievable only briefly before the connector's small contact area overheats in sustained high-current use.
-
-So "20A" is a reasonable, commonly-cited practical figure, but not a single authoritative datasheet number - treat it as within the right range rather than as verified fact. What is not in question: even the most generous reading (30A) is below the 40A-per-port requirement in Section 4, and the PM03D's manual does not state a per-port XT-30 rating at all, only the overall 60A board rating shared across everything downstream of the XT-60 input. This is the practical case for a bespoke board regardless of exactly which XT30 number is used.
+For a generic sense of what the XT-30 connector *itself* is physically capable of (independent of what Holybro chooses to rate this specific board at), sources disagree: hobbyist/marketing sources (HobbyKing and similar) commonly advertise 30A continuous/40A burst; TME (an electronic-component distributor) lists the Amass XT30U-M/F technical rating as 15A; RC/UAV community consensus commonly derates to ~15-20A continuous in sustained high-current use. So "20A" is a reasonable practical figure for the connector itself, but it isn't a number Holybro states for this board - the real finding is that **Holybro doesn't specify a per-port rating at all**, which is itself the practical case for a bespoke board with connectors explicitly rated per-port (REQ-PDB-11).
 
 ## 4. Requirements
 
@@ -158,3 +154,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.1 | 2026-07-17 | Initial draft |
 | 0.2 | 2026-07-17 | Added REQ-PDB-52: four-sided connector layout - battery input and FC telemetry on opposite sides, the four XT60 distribution ports split across the remaining two sides |
 | 0.3 | 2026-07-17 | Recorded the two acquired T-Motor AIR 40A ESCs (Section 3a); resolved the spare-port-purpose open item per user confirmation (REQ-PDB-11: two ports committed to the motors, two held as spare capacity for undefined future loads) and reworked REQ-PDB-12/31 sizing accordingly rather than assuming worst-case draw on all four ports; updated REQ-PDB-40/70 now that the ESC model is known |
+| 0.4 | 2026-07-17 | Corrected the XT30 fact-check per user clarification - the question was the PM03D's own per-port XT-30 rating, not the generic connector. Confirmed against three Holybro sources (PDF manual, product page, power-module comparison table) that Holybro does not publish a per-port rating anywhere; only the aggregate 60A/120A board rating exists, shared across both XT-30 outputs plus every other downstream connection |

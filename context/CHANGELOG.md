@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-07-17 (continued x5)
+- Sourced and added datasheets to `Component datasheets/`: `ina228-datasheet.pdf` (moved/renamed from a copy the user placed in the repo root - official TI datasheet, SLYS021A), `tmotor-air-40a-esc-manual.pdf` (official T-Motor AIR series manual, confirms the acquired ESC's spec table), `tmotor-mn3110-kv700-motor-datasheet.pdf` (official T-Motor/LigPower datasheet covering the KV470/700/780 family), `tmotor-u5-kv400-motor-test-report.pdf` (manufacturer load-test report - no full datasheet exists for the U5 v2.0). All downloaded and content-verified before saving (each PDF was actually read, not just linked). Attempted the Hitec HS-5125MG's official datasheet (hiteccs.hitecrcd.com) but hit a TLS handshake failure against that host - not resolved; Emax ES3054 and the Holybro Pixhawk 6X still have no official downloadable PDF (checked fresh - the 6X's documentation is web-based only, no consolidated PDF).
+- `context/directives.md`: broadened the `Component datasheets/` policy - now also covers components already acquired with an active install task in `docs/project/build-checklist.md` (not just currently-installed ones), since the AIR 40A ESC and MN3110 KV700 datasheets are for parts still pending PROP-01.
+- `context/project-notes.md`: updated Motors/ESCs/Power sections with datasheet cross-references and corrected stale "no PDF" claims for the U5, MN3110, and INA228 entries.
+- `docs/engineering/ICD.md` (Rev 1.7 -> 1.8): cross-referenced the four new datasheets from INT-01 and the Motors/ESC spec tables.
+
 ## 2026-07-17 (continued x4)
 - `docs/engineering/ICD.md` (Rev 1.6 -> 1.7): recorded two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 motor upgrade (40A continuous / 60A 10s peak, 2-6S, 26g, no BEC) - not yet installed. Added a spec table for the incoming ESC, distinct from the currently-fitted (unidentified-model) ESC photos which remain accurate for the as-built state until PROP-01 swaps them.
 - `context/open-items.md`: narrowed the ESC-model open item - the currently-fitted ESC is still unidentified, but the replacement is now known and confirmed compatible (40A vs the motor's 21A max draw); updated the PDB open items now that the ESC model is known.

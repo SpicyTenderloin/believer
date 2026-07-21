@@ -24,7 +24,7 @@ Standing conventions for working in this repo. Update this file when the user gi
   - `Component datasheets/` - manufacturer datasheets, named `<component>-datasheet.pdf` / `<component>-manual.pdf`
   - `context/` - this folder: persistent project memory and directives for Claude
 
-- **`Component datasheets/` holds datasheets only for components currently installed in the aircraft.** Exception: the Radiomaster GX12 (ground-side transmitter) also gets a manual here, given how heavily its switch/channel mapping is referenced throughout the ICD and manual. Still excluded: purchased-but-unused components (MatekSys PDB, Holybro PM06 V2) and not-yet-installed components (IMX335 camera). When no official manufacturer PDF exists, note the gap rather than fabricating one.
+- **`Component datasheets/` holds datasheets for components currently installed in the aircraft, plus components already acquired with an active install task tracked in `docs/project/build-checklist.md`** (e.g. the T-MOTOR MN3110 KV700 motors and T-Motor AIR 40A ESCs - not yet installed, but tracked under PROP-01). Exception: the Radiomaster GX12 (ground-side transmitter) also gets a manual here, given how heavily its switch/channel mapping is referenced throughout the ICD and manual. Still excluded: purchased-but-unused components with no install plan (MatekSys PDB, Holybro PM06 V2) and future-phase components with no active install task (IMX335 camera). When no official manufacturer PDF exists, note the gap rather than fabricating one.
 
 - Source material handling:
   - Working/scratch documents (e.g. Word docs, spreadsheets dropped in the root for context) are deleted once their content is extracted into the relevant Markdown docs.
