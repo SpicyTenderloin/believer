@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.8 |
-| **Date** | 2026-07-17 |
+| **Revision** | 1.9 |
+| **Date** | 2026-08-19 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -23,7 +23,7 @@ This document defines the physical, electrical, and data interfaces between the 
 
 The Believer is a V-tail, twin-motor fixed-wing airframe. The flight controller is a Holybro Pixhawk 6X running PX4. Centre of gravity is located 15mm aft of the front wing spar carbon rod centreline, approximately 25% of the mean aerodynamic chord (MAC).
 
-The servo rail is electrically isolated from the main flight controller power supply and is fed independently at 5V from the power module.
+The servo rail is electrically isolated from the main flight controller power supply and is fed independently at 5V from a dedicated UBEC (see INT-01).
 
 ## 4. System Block Diagram
 
@@ -33,13 +33,13 @@ The servo rail is electrically isolated from the main flight controller power su
 
 | ID | Interface | Type | Endpoint A | Endpoint B |
 |---|---|---|---|---|
-| INT-01 | Power distribution | Power | Holybro PM03D power module | FC, servo rail (5V) |
+| INT-01 | Power distribution | Power | Holybro PM03D power module, ZTW UBEC 10A | FC, servo rail (5V) |
 | INT-02a | V-Tail Left servo (MAIN 1) | PWM | FC MAIN 1 | Emax ES3054 |
 | INT-02b | V-Tail Right servo (MAIN 2) | PWM | FC MAIN 2 | Emax ES3054 |
 | INT-02c | Left Aileron servo (MAIN 3) | PWM | FC MAIN 3 | Hitec HS-5125MG |
-| INT-02d | Left Motor (MAIN 4) | PWM | FC MAIN 4 | T-Motor U5 v2.0 (via ESC) |
+| INT-02d | Left Motor (MAIN 4) | PWM | FC MAIN 4 | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
 | INT-02e | Right Aileron servo (MAIN 5) | PWM | FC MAIN 5 | Hitec HS-5125MG |
-| INT-02f | Right Motor (MAIN 6) | PWM | FC MAIN 6 | T-Motor U5 v2.0 (via ESC) |
+| INT-02f | Right Motor (MAIN 6) | PWM | FC MAIN 6 | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
 | INT-03 | RC control link | Serial, TELEM1 | FC | Radiomaster DBR4 receiver |
 | INT-04 | Telemetry link | Serial, TELEM2 | FC | RFD900x radio modem |
 | INT-05 | GPS 1 (primary) | Serial, GPS1 UART | FC | M8N GPS module |
@@ -53,13 +53,23 @@ Open items against this interface set are tracked in [context/open-items.md](../
 
 ### INT-01 - Power Distribution
 
-Power module: Holybro PM03D.
+Power module: Holybro PM03D. Servo rail: dedicated ZTW UBEC 10A, installed 2026-08-19.
 
 | Characteristic | Value |
 |---|---|
 | Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled; `Component datasheets/ina228-datasheet.pdf`) |
 | Battery | 6S LiPo (`BAT1_N_CELLS` = 6S) |
-| Servo rail | 5V, electrically isolated from main FC supply, 3A max (per Holybro PM03D datasheet - all BEC-derived outputs on this module share the same 3A rating) |
+| Servo rail | 5V, electrically isolated from main FC supply, fed by a dedicated ZTW UBEC 10A (peak) / 6A continuous, adjustable 5.0/5.5/6.0V output, set to 5.0V. The PM03D's 3A-limited BEC no longer supplies the servo bus. |
+
+**Servo Rail UBEC - ZTW UBEC 10A**
+
+| Characteristic | Value |
+|---|---|
+| Output voltage | Adjustable 5.0V / 5.5V / 6.0V (set to 5.0V) |
+| Continuous current | 6A |
+| Peak current | 10A |
+
+A servo-rail load test (control surfaces under stress, servo rail voltage monitored on an oscilloscope) is tracked as a non-blocking follow-up - see `docs/project/build-checklist.md` PWR-03.
 
 ### INT-02a through INT-02f - Actuator Outputs (PWM MAIN 1-6)
 
@@ -67,14 +77,27 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 
 | Control Input | PWM Output | Min (µs) | Max (µs) | Disarmed (µs) | Trim (µs) | Reversed |
 |---|---|---|---|---|---|---|
-| V-Tail Left | MAIN 1 | 800 | 2000 | 1500 | 1500 | No |
-| V-Tail Right | MAIN 2 | 800 | 2000 | 1500 | 1500 | Yes |
-| Left Aileron | MAIN 3 | 1000 | 2000 | 1500 | 1500 | Yes |
-| Left Motor | MAIN 4 | 1100 | 1900 | 1000 | 1000 | No |
-| Right Aileron | MAIN 5 | 1100 | 1900 | 1500 | 1500 | No |
-| Right Motor | MAIN 6 | 1100 | 1900 | 1000 | 1000 | No |
+| V-Tail Left | MAIN 1 | 1100 | 2000 | 1500 | 1500 | No |
+| V-Tail Right | MAIN 2 | 1100 | 2000 | 1500 | 1500 | Yes |
+| Left Aileron | MAIN 3 | 1200 | 1760 | 1520 | 1520 | Yes |
+| Left Motor | MAIN 4 | 1000 | 2000 | 1000 | 1000 | No |
+| Right Aileron | MAIN 5 | 1230 | 1900 | 1550 | 1550 | No |
+| Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
 ![PX4 Actuator Output Configuration](../assets/actuator-output-config.png)
+
+#### Control Surface Mixing
+
+Roll/pitch/yaw torque contribution and mixer trim per control surface, as configured on the Actuators page (`CA_SV_CSx_*` parameters).
+
+| Servo | Surface | Roll Torque | Pitch Torque | Yaw Torque | Mixer Trim |
+|---|---|---|---|---|---|
+| 1 | Left Aileron | -0.50 | 0.00 | 0.00 | -0.08 |
+| 2 | Right Aileron | 0.50 | 0.00 | 0.00 | -0.03 |
+| 3 | Left V-Tail | 0.00 | 0.50 | 0.85 | 0.00 |
+| 4 | Right V-Tail | 0.00 | 0.50 | -0.85 | 0.00 |
+
+Mixer trim values (aileron) are the finalised trims from the 2026-07-10 TMAC tuning session with Peter Spink, entered 2026-08-19. Pitch and yaw on the V-tail servos are both driven through PX4's ruddervator mixing (Section on the V-tail actuator outputs above).
 
 #### Connected Devices
 
@@ -83,9 +106,9 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | MAIN 1 | V-Tail Left | Emax ES3054 (V-tail servo) |
 | MAIN 2 | V-Tail Right | Emax ES3054 (V-tail servo) |
 | MAIN 3 | Left Aileron | Hitec HS-5125MG (wing servo) |
-| MAIN 4 | Left Motor | T-Motor U5 v2.0 (via ESC) |
+| MAIN 4 | Left Motor | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
 | MAIN 5 | Right Aileron | Hitec HS-5125MG (wing servo) |
-| MAIN 6 | Right Motor | T-Motor U5 v2.0 (via ESC) |
+| MAIN 6 | Right Motor | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
 
 **V-Tail Servos (MAIN 1, MAIN 2) - Emax ES3054**
 
@@ -115,36 +138,23 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 
 ![Hitec HS-5125MG wing servo](../assets/hitec-hs5125mg-wing-servo.jpg)
 
-**Motors (MAIN 4, MAIN 6) - T-Motor U5 v2.0**
+**Motors (MAIN 4, MAIN 6) - T-MOTOR MN3110 KV700**
+
+Installed 2026-08-19, replacing the T-Motor U5 v2.0 KV400 motors.
 
 | Characteristic | Value |
 |---|---|
-| KV | 400 |
-| Configuration | 12N14P |
-| Weight | 156g (excl. cables) |
-| Dimensions | Φ42.5 x 37.5mm |
-| Shaft diameter | 5mm |
-| Voltage range | 3-8S LiPo |
-| Max continuous current (180s) | 30A |
-| Max continuous power (180s) | 850W |
-| Internal resistance | 116mΩ |
-| ESC | T-Motor (model TBD - see open items); two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 upgrade, not yet installed - see `docs/project/build-checklist.md` PROP-01 |
-| Propeller | 11x7" (Hobbyrama LP11X7E) |
-| Propeller rotation | Outward contra-rotating; both propellers currently fitted are the same handedness - temporary, pending the T-MOTOR MN3110 KV700 upgrade (`docs/project/build-checklist.md` PROP-01), which uses a matched standard/pusher propeller pair from installation |
+| KV | 700 |
+| Max continuous current | 21A |
+| ESC | T-Motor AIR 40A (one per motor) |
+| Propeller | 11x7" (Hobbyrama LP11X7E), carried over from the previous motor installation |
+| Propeller rotation | Both propellers rotate clockwise (viewed from the body reference plane) - same handedness, not contra-rotating. Confirmed not a problem for the maiden flight; contra-rotation is not required. |
 
-Manufacturer load-test report: `Component datasheets/tmotor-u5-kv400-motor-test-report.pdf` (no full datasheet found).
+Datasheet: `Component datasheets/tmotor-mn3110-kv700-motor-datasheet.pdf` (covers the KV470/700/780 family). The previously-fitted T-Motor U5 v2.0 KV400 motors have been removed; their load-test report remains at `Component datasheets/tmotor-u5-kv400-motor-test-report.pdf` for historical reference.
 
-![T-Motor U5 v2.0 front view](../assets/tmotor-u5-front.jpg)
+**ESCs (MAIN 4, MAIN 6) - T-Motor AIR 40A**
 
-![T-Motor U5 v2.0 side view](../assets/tmotor-u5-side.jpg)
-
-![T-Motor ESC front](../assets/tmotor-esc-front.jpg)
-
-![T-Motor ESC back](../assets/tmotor-esc-back.jpg)
-
-**Replacement ESC (acquired, not yet installed) - T-Motor AIR 40A**
-
-Two units acquired to pair with the T-MOTOR MN3110 KV700 upgrade (one per motor); to replace the currently-fitted, unidentified ESCs shown above. Installation tracked under `docs/project/build-checklist.md` PROP-01.
+Installed 2026-08-19 (one per motor), replacing the previously-fitted, unidentified-model ESCs. Calibrated so both motors start simultaneously on throttle-up.
 
 | Characteristic | Value |
 |---|---|
@@ -158,9 +168,13 @@ Two units acquired to pair with the T-MOTOR MN3110 KV700 upgrade (one per motor)
 
 Manual: `Component datasheets/tmotor-air-40a-esc-manual.pdf`.
 
+Static thrust has been bench-tested and appears adequate but is not yet conclusively verified; throttle curve/mapping may also need remapping. Both tracked separately under `docs/project/build-checklist.md` (PROP-02, PROP-06).
+
 ### INT-03 - RC Control Link (TELEM1)
 
 Radiomaster DBR4 dual-band (2.4GHz/900MHz) ExpressLRS receiver, connected to FC TELEM1. Operating mode: ELRS Hybrid switch mode with MAVLink enabled. Paired transmitter: Radiomaster GX12 (INT-08).
+
+Relocated 2026-08-19 to the rear of the aircraft, away from the main avionics bay. Antenna orientation (orthogonal mounting) is tracked separately - see `docs/project/build-checklist.md` RF-05.
 
 | Parameter | Value |
 |---|---|
@@ -206,11 +220,13 @@ A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled ov
 | Switch Position | PX4 Mode |
 |---|---|
 | SW1 | Manual |
-| SW2 | Stabilized |
-| SW3 | Altitude |
-| SW4 | Position |
-| SW5 | Mission |
-| SW6 | Hold |
+| SW2 | Acro |
+| SW3 | Stabilized |
+| SW4 | Altitude |
+| SW5 | Position |
+| SW6 | Mission |
+
+Hold was removed from the GR1 group and replaced with Acro (2026-08-19) - Hold and CH8's Loiter override commanded the same PX4 mode, so the GR1 slot was freed for Acro rather than duplicating Hold. Hold remains reachable via CH8 (`RC_MAP_LOITER_SW`), unchanged.
 
 ### INT-04 - Telemetry Link (TELEM2)
 
@@ -323,3 +339,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 1.6 | 2026-07-17 | Corrected the INT-02a-f actuator table against the actual exported parameters (`params/believer-parameters.params`), which it had never matched since the table was first written (Rev 1.0, before the 2026-07-05/07-06 radio calibration and ruddervator direction fix): MAIN 1 Min/Max corrected to 800/2000us and Reversed corrected to No; MAIN 2 Min/Max corrected to 800/2000us and Reversed corrected to Yes; MAIN 3 Min/Max corrected to 1000/2000us; MAIN 4 and MAIN 6 Min/Max corrected to 1100/1900us. Updated the stale "reverse-pitch prop TBD" note (resolved by the 2026-07-14 9x6" propeller purchase) to reference the pending MN3110 upgrade instead |
 | 1.7 | 2026-07-17 | Recorded two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 motor upgrade (not yet installed - `docs/project/build-checklist.md` PROP-01); added a spec table for the incoming ESC alongside the existing currently-fitted-ESC photos |
 | 1.8 | 2026-07-17 | Cross-referenced newly-sourced datasheets: INA228 (INT-01), T-Motor U5 KV400 load-test report, and T-Motor AIR 40A ESC manual - all added to `Component datasheets/` |
+| 1.9 | 2026-08-19 | Recorded the MN3110 KV700/AIR 40A propulsion install (replacing the U5 KV400 motors and previously-fitted ESCs), the dedicated servo-rail UBEC (replacing PM03D as the servo rail source), DBR4 relocation to the rear of the aircraft, and the finalised aileron trim/V-tail yaw mixing values from the 2026-07-10 TMAC session. Updated the INT-02a-f actuator table and added a Control Surface Mixing subsection against the current exported parameters and QGroundControl Actuators Config screenshot. Updated the GR1 flight-mode mapping (Acro added, Hold removed from the group, still reachable via CH8) |

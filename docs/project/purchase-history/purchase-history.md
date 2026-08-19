@@ -4,7 +4,7 @@ Tracks components purchased for the Believer project. Invoiced items link to the
 
 **To date, $1,379.00 AUD of funding was allocated to this project, of which $981.08 AUD has been spent.**
 
-(University-funded items only.)
+(University-funded items only.) Separately, Julian has personally spent **$252.33 AUD** on components not drawn against this allocation - see the Julian (personal) total row below.
 
 | Date | Item | Vendor | Qty | Unit Cost | Total (incl. shipping) | Paid By | Installed | Order / Tracking # | Invoice | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -21,10 +21,11 @@ Tracks components purchased for the Believer project. Invoiced items link to the
 | 2026-07-04 | 11x7" Electric Propeller (LP11X7E) | Hobbyrama | 2 | $9.95 AUD | $19.90 AUD | Julian (personal) | Yes | Trans #117526 | [link](invoices/hobbyrama-propellers-2026-07-04.jpg) | Replaces prior 11x4.7" propellers (unbranded, not separately invoiced); both units are the same handedness. Superseded by the 9x6" standard/pusher pair purchased 2026-07-14 for the new T-MOTOR MN3110 KV700 motors |
 | 2026-07-06 | T-MOTOR MN3110 KV700 Brushless Motor | T-MOTOR Official Store (Alibaba.com) | 2 | 353.71 CNY | 787.16 CNY ($169.87 AUD) | Julian (personal) | No | Notice B1020260706059997 | [link](invoices/tmotor-mn3110-kv700-motors-2026-07-06.pdf) | Higher-KV replacement for the T-Motor U5 v2.0 KV400 motors; not yet fitted - pending the thrust-to-weight ground test |
 | 2026-07-14 | 9x6" GEMFAN Propeller (standard/tractor rotation) | Shop1105187756 Store (Alibaba.com) | 1 | 35.30 CNY | 42.70 CNY ($9.23 AUD) | Julian (personal) | No | Notice B1020260714024962 | [link](invoices/gemfan-9x6-standard-propeller-2026-07-14.pdf) | For the T-MOTOR MN3110 KV700 motor upgrade, size selected via MotoCalc modelling with Peter Spink (TMAC), 2026-07-10. AUD figure prorated from the combined $19.07 AUD total for both propeller invoices |
-| 2026-07-14 | 9x6" Gemfan APC Nylon Propeller (pusher/reverse rotation) | Shop1105166501 Store (Alibaba.com) | 1 | 37.65 CNY | 45.56 CNY ($9.84 AUD) | Julian (personal) | No | Notice B1020260714025041 | [link](invoices/gemfan-9x6-pusher-propeller-2026-07-14.pdf) | Reverse-pitch pair for correct contra-rotation with the new motors; resolves the previously open reverse-pitch propeller sourcing item. AUD figure prorated from the combined $19.07 AUD total for both propeller invoices |
+| 2026-07-14 | 9x6" Gemfan APC Nylon Propeller (pusher/reverse rotation) | Shop1105166501 Store (Alibaba.com) | 1 | 37.65 CNY | 45.56 CNY ($9.84 AUD) | Julian (personal) | No | Notice B1020260714025041 | [link](invoices/gemfan-9x6-pusher-propeller-2026-07-14.pdf) | Reverse-pitch pair originally sized for contra-rotation with the new motors; not installed - the MN3110 install (2026-08-19) carried over the existing 11x7" Hobbyrama props instead, both same handedness, confirmed acceptable for the maiden flight |
+| 2026-07-13 | ZTW UBEC 10A (adjustable 5.0/5.5/6.0V output, 10A peak / 6A continuous) | Amazon.com.au (Amazon Export Sales LLC) | 1 | $39.54 AUD (excl. GST) | $43.49 AUD (incl. 10% GST; no shipping charged) | Julian (personal) | Yes | Order no. 503-9096661-8019814 | [link](invoices/amazon-ztw-ubec-10a-2026-07-13.pdf) | Dedicated 5V servo rail UBEC, resolves PWR-01; installed 2026-08-19, replacing the PM03D as the servo rail supply (ICD INT-01) |
 | | **University total** | | | | **$981.08 AUD** | University | | | | Approved budget $1,379.00 AUD - **$397.92 AUD remaining**. |
-| | **Julian (personal) total** | | | | **$208.84 AUD** | Julian (personal) | | | | Hobbyrama propellers + T-MOTOR motors + Gemfan propellers. Excludes the PM03D (477.53 CNY, not converted to AUD). |
-| | **All parties total** | | | | **$1,189.92 AUD** | | | | | University + Julian (personal), AUD-denominated items only; excludes the PM03D CNY line above. |
+| | **Julian (personal) total** | | | | **$252.33 AUD** | Julian (personal) | | | | Hobbyrama propellers + T-MOTOR motors + Gemfan propellers + ZTW UBEC. Excludes the PM03D (477.53 CNY, not converted to AUD). |
+| | **All parties total** | | | | **$1,233.41 AUD** | | | | | University + Julian (personal), AUD-denominated items only; excludes the PM03D CNY line above. |
 
 ## Funding application budget (for reference)
 

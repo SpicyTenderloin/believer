@@ -38,13 +38,15 @@ GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a 
 | GX12 Button | PX4 Mode | Behaviour | Use |
 |---|---|---|---|
 | SW1 | Manual | Sticks drive the control surfaces directly - no self-levelling | Direct-control backup; avoid for normal launch |
-| SW2 | Stabilized | Centring the sticks levels the aircraft; altitude and heading drift freely | Startup/default and hand-launch mode |
-| SW3 | Altitude | As Stabilized, plus altitude is held automatically; heading still drifts | Holds altitude; pilot still flies direction |
-| SW4 | Position | As Altitude, plus GPS holds ground track against wind | GPS-assisted track/altitude holding |
-| SW5 | Mission | Autonomous; flies a pre-uploaded waypoint mission | Future autonomous missions only |
-| SW6 | Hold | Autonomous; circles the engagement point at the current altitude | Backup access to Loiter/Hold |
+| SW2 | Acro | Sticks command roll/pitch rate directly - no self-levelling, but centring the sticks stops rotation | Startup/default switch position; direct-response flying |
+| SW3 | Stabilized | Centring the sticks levels the aircraft; altitude and heading drift freely | Hand-launch mode |
+| SW4 | Altitude | As Stabilized, plus altitude is held automatically; heading still drifts | Holds altitude; pilot still flies direction |
+| SW5 | Position | As Altitude, plus GPS holds ground track against wind | GPS-assisted track/altitude holding |
+| SW6 | Mission | Autonomous; flies a pre-uploaded waypoint mission | Future autonomous missions only |
 
-**Hold vs. Loiter:** these are the same PX4 mode - "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude - it cannot stop and hover like a multirotor.
+**GR1 defaults to SW2 (Acro) at startup** - since 2026-08-19 this is no longer Stabilized. Always confirm the active flight mode in QGroundControl and deliberately select Stabilized (SW3) before hand-launch; do not assume the default switch position.
+
+**Hold vs. Loiter:** these are the same PX4 mode - "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. Hold is no longer in the GR1 group (freed 2026-08-19 for Acro, since it duplicated CH8) - it is reachable directly via CH8. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude - it cannot stop and hover like a multirotor.
 
 CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly. CH10 (Return) similarly overrides GR1 and commands the aircraft to climb and fly back to the home position. CH11 (Offboard) overrides GR1 to hand control to a companion computer - not currently used, since that companion computer is a future project phase.
 
@@ -59,7 +61,7 @@ Intended safe startup condition, to be verified before every flight:
 | Channel | State |
 |---|---|
 | CH5 (Arm) | Disarmed |
-| CH6 (Flight mode) | SW2 selected: Stabilized |
+| CH6 (Flight mode) | SW3 selected: Stabilized |
 | CH7 (Kill) | Inactive |
 | CH8 (Loiter) | Inactive |
 | CH9 (Flaperons) | Up / disabled |
@@ -119,7 +121,7 @@ Intended safe startup condition, to be verified before every flight:
 Two people are required: a **pilot** operating the GX12 and a **handler** who holds and throws the aircraft. The handler must not approach the aircraft until the pilot signals ready.
 
 32. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
-33. Pilot: select Stabilized mode (GR1 SW2) and confirm throttle is at minimum.
+33. Pilot: select Stabilized mode (GR1 SW3) and confirm throttle is at minimum.
 34. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
 35. Pilot: arm the aircraft (CH5) and advance throttle to approximately 75-100%.
 36. Pilot: call "launch" (or pre-agreed signal).

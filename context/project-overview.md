@@ -30,7 +30,8 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 | Component | Role | Interface |
 |---|---|---|
 | Holybro Pixhawk 6X | Flight controller, PX4 firmware | - |
-| Holybro PM03D | Power module - battery telemetry (INA228) + 5V servo rail | FC power input |
+| Holybro PM03D | Power module - battery telemetry (INA228) | FC power input |
+| ZTW UBEC 10A | 5V servo rail power (replaces PM03D for this role) | Servo rail |
 | u-blox NEO-M8N | Primary GPS | GPS 1 UART |
 | SparkFun ZED-F9P | RTK GPS (secondary) | GPS 2 UART |
 | Radiomaster DBR4 | ELRS Gemini dual-band RC receiver | Telem_1 (460800 8N1) |
@@ -38,8 +39,8 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 | MS4525DO | I2C airspeed sensor | Pixhawk 6X I2C, JST-GH 4-pin (address 0x28) |
 | Turnigy 8000mAh 6S | Main battery | PM03D |
 | Radiomaster GX12 Crush (Iron Grey) | RC transmitter (ground-side) | ExpressLRS Gemini-X |
-| T-Motor U5 v2.0 (KV400) | Main propulsion motors (x2, one per wing) | FC MAIN 4, MAIN 6 (via ESC) |
-| T-Motor ESC (model TBD) | Motor ESCs (x2) | FC PWM signal; drives T-Motor U5 v2.0 |
+| T-MOTOR MN3110 (KV700) | Main propulsion motors (x2, one per wing) | FC MAIN 4, MAIN 6 (via ESC) |
+| T-Motor AIR 40A | Motor ESCs (x2) | FC PWM signal; drives T-MOTOR MN3110 |
 | Hitec HS-5125MG | Aileron servos (x2, one per wing) | FC MAIN 3, MAIN 5 |
 | Emax ES3054 | V-tail servos (x2, one per V-tail surface) | FC MAIN 1, MAIN 2 |
 
@@ -57,7 +58,8 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 - `SENS_BOARD_ROT` = Yaw 180°
 - `RC_MAP_ARM_SW` = Channel 5 (SD switch)
 - `RC_MAP_KILL_SW` = Channel 7 (SF switch, inverted)
-- GR1 flight mode selector = Channel 6
+- GR1 flight mode selector = Channel 6 (Manual, Acro, Stabilized, Altitude, Position, Mission)
+- `COM_PREARM_MODE` = Always (2) - allows actuating control surfaces while disarmed
 - Full parameter dump: `docs/operations/Pixhawk Parameter Backup/believer-parameters.params`
 
 ---
@@ -120,8 +122,8 @@ believer/
 
 ## Current open items (summary)
 
-See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md` (CG correction, battery retention, servo rail UBEC, DBR4 relocation, MN3110 propulsion install/thrust test, Stabilized-mode yaw investigation). Remaining information gaps:
+See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md` (CG correction, battery retention, static thrust verification, throttle curve/mapping verification). Remaining information gaps:
 
 - ZED-F9P RTK antenna not installed - RTK capability unavailable until fitted (the aircraft can fly on GPS 1/M8N alone; not itself a flight blocker)
 - MS4525DO I2C pull-up resistor configuration not confirmed (port and address are documented in `docs/engineering/ICD.md` INT-07)
-- ESC model and supported protocol (PWM/DShot) not yet captured; compatibility with the purchased T-MOTOR MN3110 KV700 motors not yet confirmed
+- Static thrust from the newly-installed MN3110 KV700/AIR 40A propulsion system appears decent but is not yet conclusively verified; throttle curve/mapping may also need remapping (tracked as two separate tasks)
