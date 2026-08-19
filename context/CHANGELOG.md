@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-19 (continued)
+
+- `docs/project/build-checklist.md`: added silicone RTV securing of the DBR4 antenna bases/connectors to RF-05's scope (renamed "Mount and secure DBR4 antennas orthogonally"), per Julian - standard practice for damping vibration and preventing fatigue at RF antenna connectors/solder joints on RC airframes.
+- `context/open-items.md`: updated the RF-05 open item to mention RTV securing alongside orthogonal mounting.
+
 ## 2026-08-19
 
 - Replaced `docs/operations/Pixhawk Parameter Backup/believer-parameters.params` with the current FC export (was `parameters_19_08_2026.params`, dropped in the repo root by Julian). Notable confirmed-intentional changes: `COM_PREARM_MODE` 0 -> 2 (Always, allows actuating control surfaces while disarmed); `COM_FLTMODE2-6` remapped to add Acro at SW2 and drop Hold from the GR1 group (Manual/Acro/Stabilized/Altitude/Position/Mission); `PWM_MAIN_MIN1/2` 800 -> 1100 (V-tail); `PWM_MAIN_MIN3`/`MAX3`/`DIS3` -> 1200/1760/1520 (left aileron); `PWM_MAIN_MIN5`/`DIS5` -> 1230/1550 (right aileron); `PWM_MAIN_MIN4/6`/`MAX4/6` -> 1000/2000 (both motors); `CA_SV_CS0_TRIM`/`CS1_TRIM` -> -0.08/-0.03 (aileron mixer trim, finalised TMAC values); `CA_SV_CS2_TRQ_Y`/`CS3_TRQ_Y` 0.50 -> 0.85 (V-tail yaw mixing gain). `BAT_LOW_THR` was found at 12% in the supplied export (temporarily lowered for bench testing per Julian) and corrected back to 20% in the saved backup - the physical FC still needs the same correction, tracked in `context/open-items.md`. Refreshed accelerometer/gyroscope(IMU2)/barometer/magnetometer calibration values.

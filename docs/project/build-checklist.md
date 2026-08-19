@@ -461,7 +461,7 @@ Identified during the 2026-07-10 TMAC review with Peter Spink. Relocated 2026-08
 
 </details>
 
-### RF-05 - Mount DBR4 antennas orthogonally
+### RF-05 - Mount and secure DBR4 antennas orthogonally
 
 - [ ] **Status:** Not started
 - **Priority:** URGENT
@@ -469,11 +469,12 @@ Identified during the 2026-07-10 TMAC review with Peter Spink. Relocated 2026-08
 
 **Scope**
 - Mount the DBR4's antennas orthogonally to each other for optimal dual-band diversity reception.
+- Secure each antenna base/connector with silicone RTV to damp vibration and prevent fatigue at the connector or solder joint.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separately. Does not block the maiden flight - the receiver has plenty of range without orthogonal mounting - but should be done soon for optimal reception.
+Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separately. Does not block the maiden flight - the receiver has plenty of range without orthogonal mounting - but should be done soon for optimal reception. RTV securing added 2026-08-19 per Julian - standard practice for RF antenna leads/connectors on RC airframes.
 
 </details>
 
