@@ -480,7 +480,7 @@ Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separat
 
 ### RF-03 - Radio flight-mode audio cues
 
-- [ ] **Status:** Not started
+- [x] **Status:** Complete
 - **Priority:** NON-CRITICAL
 - **Depends on:** None
 
@@ -490,13 +490,13 @@ Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separat
 <details>
 <summary>Background and engineering notes</summary>
 
-Recommended by Peter Spink (TMAC, 2026-07-10).
+Recommended by Peter Spink (TMAC, 2026-07-10). Configured 2026-08-19.
 
 </details>
 
 ### RF-04 - Radio timer widget
 
-- [ ] **Status:** Not started
+- [x] **Status:** Complete
 - **Priority:** NON-CRITICAL
 - **Depends on:** None
 
@@ -506,7 +506,7 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 <details>
 <summary>Background and engineering notes</summary>
 
-Recommended by Peter Spink (TMAC, 2026-07-10).
+Recommended by Peter Spink (TMAC, 2026-07-10). Added 2026-08-19.
 
 </details>
 
@@ -573,6 +573,8 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Antenna externalisation - DBR4/GX12 antennas moved externally
 - [x] RFD900x antenna installation - smaller RFD900x antennas installed onto the externalised 900MHz SMA connectors (RF-02)
 - [x] DBR4 relocation - moved to the rear of the aircraft, away from the main avionics bay, 2026-08-19 (RF-01)
+- [x] Radio flight-mode audio cues - accompanying sounds configured on the GX12 for flight-mode awareness, 2026-08-19 (RF-03)
+- [x] Radio timer widget - added to the GX12 telemetry screen, 2026-08-19 (RF-04)
 
 </details>
 

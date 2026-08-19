@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-19 (continued x2)
+
+- `docs/project/build-checklist.md`: closed RF-03 (radio flight-mode audio cues) and RF-04 (radio timer widget), both configured on the GX12 - moved into Completed Work.
+
 ## 2026-08-19 (continued)
 
 - `docs/project/build-checklist.md`: added silicone RTV securing of the DBR4 antenna bases/connectors to RF-05's scope (renamed "Mount and secure DBR4 antennas orthogonally"), per Julian - standard practice for damping vibration and preventing fatigue at RF antenna connectors/solder joints on RC airframes.
