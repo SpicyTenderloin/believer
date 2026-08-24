@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20
+
+- Added `docs/engineering/requirements/custom-airframe-requirements.md` (SRD-BELIEVER-AIRFRAME-001, Rev 0.1): initial requirements for a new custom-designed airframe to replace the commercial MakeFlyEasy Believer airframe. Covers accessibility/modularity (tool-less hatches, non-glued components, modular mounting points), quick-release wings with connectorised wing-root electrical interfaces, centralised flight controller placement, RF/EMI separation between emitting components and the FC/GPS, contra-rotating propulsion, reuse of currently-owned avionics/propulsion where practical, adjustable battery mounting for CG trim, endurance-focused performance, mass/wingspan targets (<=4kg, <=3m), grass-runway landing gear, and an underslung gimbal camera pod plus forward FPV mount - based on requirements supplied by Julian, plus additional suggested requirements (wiring/connector standardisation, propeller-to-landing-gear clearance, positive battery retention, endurance/payload mass targets, transport/assembly-time consideration). Flagged a significant cross-document implication in Section 5: the existing launch dolly (`launch-dolly-requirements.md`) was motivated by the current airframe's lack of landing gear, which this new airframe's own landing gear may partially or fully supersede.
+- `docs/project/project-roadmap.md`: added the custom airframe as a new roadmap item, cross-referencing its requirements document.
+- `context/open-items.md`: added the custom airframe's open items (RF/EMI separation research, GPS occlusion angle, tail configuration, construction method, fabrication path, gimbal/FPV specifics, endurance/payload targets, landing-gear/launch-dolly overlap).
+
 ## 2026-08-19 (continued x2)
 
 - `docs/project/build-checklist.md`: closed RF-03 (radio flight-mode audio cues) and RF-04 (radio timer widget), both configured on the GX12 - moved into Completed Work.
