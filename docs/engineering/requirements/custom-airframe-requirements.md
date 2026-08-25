@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.5 |
+| **Revision** | 0.6 |
 | **Date** | 2026-08-20 |
 | **Status** | Draft |
 
@@ -125,6 +125,7 @@ Sources:
 |---|---|
 | REQ-AF-60 | The airframe shall provide an underslung mount for a gimbal-stabilised camera pod, capable of accepting a range of camera sizes and masses via a modular, swappable carrier interface - extending the fixed-base/swappable-carrier philosophy already established in `underslung-camera-mount-requirements.md`. The actual size/mass range to be supported is not yet well-defined and needs further investigation - see Section 5. |
 | REQ-AF-61 | The airframe shall provide a forward-facing mount for an FPV camera. |
+| REQ-AF-62 | The underslung gimbal camera pod mount shall incorporate impact protection (e.g. a breakaway mount, shock-absorbing standoffs, or a recessed/shielded position) to protect the camera payload from damage during a hard landing or belly strike - it is expected to be the airframe's single highest-value component. |
 
 ### 4.8 Performance
 
@@ -164,3 +165,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.3 | 2026-08-20 | Corrected the launch dolly relationship per Julian - the new airframe's landing gear will make the dolly obsolete once built, not a neutral separate decision as Rev 0.2 stated. Renamed Section 4.6 to "Launch, Landing Gear and Ground Operations" and added REQ-AF-52: a structural launch interface capable of accepting a catapult launch system, as a desirable additional departure method alongside grass-runway takeoff and hand-launch; added the catapult system's open items (system type, hard-point location, load rating, release mechanism) to Section 5 |
 | 0.4 | 2026-08-20 | Corrected REQ-AF-52 per Julian - hand-launch is not a requirement for this airframe; removed it from the list of departure methods the catapult interface sits alongside, leaving only grass-runway takeoff (REQ-AF-50) |
 | 0.5 | 2026-08-20 | Added REQ-AF-27 per Julian - the flight controller shall be mounted on vibration-damping isolation, attenuating motor/propulsion vibration to protect IMU sensor data quality |
+| 0.6 | 2026-08-20 | Added REQ-AF-62 per Julian - the gimbal camera pod mount shall incorporate impact protection against hard-landing/belly-strike damage, given it is expected to be the airframe's highest-value single component |

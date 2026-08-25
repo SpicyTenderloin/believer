@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x6)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.5 -> 0.6): added REQ-AF-62 per Julian - the gimbal camera pod mount shall incorporate impact protection against hard-landing/belly-strike damage, given it's expected to be the airframe's highest-value single component.
+
 ## 2026-08-20 (continued x5)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.4 -> 0.5): added REQ-AF-27 per Julian - the flight controller shall be mounted on vibration-damping isolation to attenuate motor/propulsion vibration and protect IMU sensor data quality. This had been flagged as a suggested addition in earlier review but not yet incorporated.
