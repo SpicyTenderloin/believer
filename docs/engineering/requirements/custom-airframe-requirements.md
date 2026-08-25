@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.6 |
+| **Revision** | 0.7 |
 | **Date** | 2026-08-20 |
 | **Status** | Draft |
 
@@ -110,6 +110,8 @@ Sources:
 | REQ-AF-40 | The battery mount shall allow the battery's fore-aft position to be adjusted to trim the aircraft's centre of gravity, without modifying or re-fabricating the mount itself. |
 | REQ-AF-41 | The battery bay shall positively retain the battery under flight loads at any adjusted position - not rely on friction fit alone (see the current Believer's AF-02 lesson learned, `docs/project/build-checklist.md`). |
 | REQ-AF-42 | The airframe shall accommodate the custom PDB under development (`power-distribution-board-requirements.md`) as its power distribution and servo-rail supply. |
+| REQ-AF-43 | The airframe's centre of gravity shall target 25-30% of the wing's Mean Aerodynamic Chord (MAC). This is a provisional target based on the current Believer's confirmed, known-stable operating point (~25% MAC, `context/project-notes.md`) - it shall be validated and refined via a stability/tail-volume analysis once the new wing and tail are designed (Section 5). |
+| REQ-AF-44 | The battery slide mount (REQ-AF-40) shall provide fore-aft adjustment travel equivalent to at least ±5% MAC of CG movement, so build tolerance and equipment/payload mass variance can be trimmed out via the mount itself without requiring supplementary ballast - avoiding a repeat of the current airframe's need for ~350g of nose ballast (`context/project-notes.md`). |
 
 ### 4.6 Launch, Landing Gear and Ground Operations
 
@@ -153,6 +155,7 @@ Sources:
 - **Camera pod size/mass range (REQ-AF-60)**: acknowledged as ill-defined and needing further investigation - what range of camera modules the pod should realistically accommodate (from something IMX335-sized up to a larger gimbal-mounted payload) is not yet settled.
 - **Payload mass budget (REQ-AF-71)**: the 30-minute mission-time target is set, but the payload mass allowance it should be designed against is not - the current Believer's manufacturer-quoted ~670g payload capacity is a reference starting point only, not a target for the new design.
 - **Regulatory weight class**: staying at or under 4kg (REQ-AF-02) is worth checking against CASA's RPA weight categories once the design mass is firmer, in case a small margin either way changes the applicable operating rules for BVLOS flight.
+- **CG target precision (REQ-AF-43)**: 25-30% MAC is a provisional target carried over from the current Believer's known-stable operating point, not a value derived for the new wing/tail. A proper stability/tail-volume analysis is needed once those are designed, and may move this range.
 
 Tracked in [context/open-items.md](../../../context/open-items.md).
 
@@ -166,3 +169,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.4 | 2026-08-20 | Corrected REQ-AF-52 per Julian - hand-launch is not a requirement for this airframe; removed it from the list of departure methods the catapult interface sits alongside, leaving only grass-runway takeoff (REQ-AF-50) |
 | 0.5 | 2026-08-20 | Added REQ-AF-27 per Julian - the flight controller shall be mounted on vibration-damping isolation, attenuating motor/propulsion vibration to protect IMU sensor data quality |
 | 0.6 | 2026-08-20 | Added REQ-AF-62 per Julian - the gimbal camera pod mount shall incorporate impact protection against hard-landing/belly-strike damage, given it is expected to be the airframe's highest-value single component |
+| 0.7 | 2026-08-20 | Added REQ-AF-43 (CG target, 25-30% MAC, provisional pending a stability/tail-volume analysis on the new wing/tail) and REQ-AF-44 (battery slide adjustment travel, at least ±5% MAC) per Julian, to avoid repeating the current airframe's need for supplementary ballast |

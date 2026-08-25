@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x7)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.6 -> 0.7): added REQ-AF-43 (CG target, 25-30% MAC - a provisional figure carried over from the current Believer's known-stable operating point, to be validated via a stability/tail-volume analysis once the new wing/tail are designed) and REQ-AF-44 (battery slide adjustment travel, at least ±5% MAC), per Julian - intended to avoid repeating the current airframe's need for ~350g of supplementary ballast.
+
 ## 2026-08-20 (continued x6)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.5 -> 0.6): added REQ-AF-62 per Julian - the gimbal camera pod mount shall incorporate impact protection against hard-landing/belly-strike damage, given it's expected to be the airframe's highest-value single component.
