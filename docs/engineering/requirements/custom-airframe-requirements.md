@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.4 |
+| **Revision** | 0.5 |
 | **Date** | 2026-08-20 |
 | **Status** | Draft |
 
@@ -93,6 +93,7 @@ Sources:
 | REQ-AF-24 | Wiring shall use a connector standard per signal/power class, supporting the modularity and connectorised-wing goals in Section 4.2. The specific standard is not yet decided and is primarily an avionics-subsystem concern rather than an airframe one - this requirement is intentionally left general; the airframe design shall simply accommodate whatever standard the avionics subsystem settles on. |
 | REQ-AF-25 | Wiring runs shall be routed clear of control-surface linkages and propeller arcs. |
 | REQ-AF-26 | Signal wiring shall be organised into neat, traceable looms with clean, direct routing - not bundled in with power wiring or routed haphazardly - while remaining easily accessible for inspection and fault-finding. |
+| REQ-AF-27 | The flight controller shall be mounted on vibration-damping isolation (e.g. anti-vibration grommets or a damped tray), attenuating motor- and propulsion-induced vibration transmitted through the airframe structure to protect IMU sensor data quality. |
 
 ### 4.4 Propulsion
 
@@ -162,3 +163,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.2 | 2026-08-20 | Resolved review feedback from Julian: softened the connector-standard requirement (REQ-AF-24) to reflect it's primarily an avionics-subsystem concern, not yet decided; added a signal-loom organisation/traceability requirement (REQ-AF-26); added Section 3b recording RF/EMI separation research against PX4/ArduPilot official documentation (no fixed numeric minimum exists in either - qualitative "maximum practical separation" is the actual guidance; added a quantified antenna-to-antenna wavelength-separation requirement, REQ-AF-22, since that is better-established RF practice); set an explicit 30-minute minimum mission-time target (REQ-AF-71); reworded the camera pod requirement (REQ-AF-60) to note the camera size/mass range it should support is not yet defined; added Section 4.9 (Human Factors and Logistics) with firm transport (fits a standard passenger car) and assembly-time (<5 minutes, no tools) requirements; reworded the propeller clearance requirement (REQ-AF-32) to specify no ground/airframe strike and no grass-cutting/uneven-terrain risk; clarified the launch dolly relationship - it continues supporting the current Believer independently, not superseded by this document; confirmed tail configuration is intentionally left open to the team |
 | 0.3 | 2026-08-20 | Corrected the launch dolly relationship per Julian - the new airframe's landing gear will make the dolly obsolete once built, not a neutral separate decision as Rev 0.2 stated. Renamed Section 4.6 to "Launch, Landing Gear and Ground Operations" and added REQ-AF-52: a structural launch interface capable of accepting a catapult launch system, as a desirable additional departure method alongside grass-runway takeoff and hand-launch; added the catapult system's open items (system type, hard-point location, load rating, release mechanism) to Section 5 |
 | 0.4 | 2026-08-20 | Corrected REQ-AF-52 per Julian - hand-launch is not a requirement for this airframe; removed it from the list of departure methods the catapult interface sits alongside, leaving only grass-runway takeoff (REQ-AF-50) |
+| 0.5 | 2026-08-20 | Added REQ-AF-27 per Julian - the flight controller shall be mounted on vibration-damping isolation, attenuating motor/propulsion vibration to protect IMU sensor data quality |

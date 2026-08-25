@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x5)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.4 -> 0.5): added REQ-AF-27 per Julian - the flight controller shall be mounted on vibration-damping isolation to attenuate motor/propulsion vibration and protect IMU sensor data quality. This had been flagged as a suggested addition in earlier review but not yet incorporated.
+
 ## 2026-08-20 (continued x4)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.3 -> 0.4): corrected REQ-AF-52 per Julian - hand-launch is not a requirement for this airframe; the catapult launch interface now sits alongside grass-runway takeoff (REQ-AF-50) only.
