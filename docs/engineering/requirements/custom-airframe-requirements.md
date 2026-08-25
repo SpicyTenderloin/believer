@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.3 |
+| **Revision** | 0.4 |
 | **Date** | 2026-08-20 |
 | **Status** | Draft |
 
@@ -116,7 +116,7 @@ Sources:
 |---|---|
 | REQ-AF-50 | The airframe shall be fitted with landing gear suitable for takeoff and landing from grass fields with a usable runway length of 100m or less. |
 | REQ-AF-51 | The landing gear shall tolerate the unevenness typical of an informal grass runway. A quantified bump/unevenness spec has not yet been defined for this project - the same open item already exists against the launch dolly (`launch-dolly-requirements.md` Section 6) and should be resolved once, then shared by both documents. |
-| REQ-AF-52 | The airframe shall provide a structural launch interface (e.g. a reinforced fuselage hard point or catapult hook) capable of accepting a catapult launch system, as an additional departure method alongside grass-runway takeoff (REQ-AF-50) and hand-launch. Catapult system type/spec, hard-point location, structural load rating, and release mechanism are not yet defined - see Section 5. |
+| REQ-AF-52 | The airframe shall provide a structural launch interface (e.g. a reinforced fuselage hard point or catapult hook) capable of accepting a catapult launch system, as an additional departure method alongside grass-runway takeoff (REQ-AF-50). Catapult system type/spec, hard-point location, structural load rating, and release mechanism are not yet defined - see Section 5. |
 
 ### 4.7 Payload - Camera Systems
 
@@ -161,3 +161,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.1 | 2026-08-20 | Initial draft, based on requirements supplied by Julian (accessibility/modularity, quick-release wings, connectorised wing roots, centralised FC, RF/EMI and GPS separation, contra-rotating props, component reuse, adjustable battery CG trim, endurance/stability/efficiency focus, mass/wingspan targets, tool-less access, grass-runway landing gear, gimbal camera pod, forward FPV mount) plus additional suggested requirements (standardised connector/wiring strategy, propeller-to-landing-gear clearance, positive battery retention, endurance/payload mass targets, transport/assembly-time consideration) - pending team review |
 | 0.2 | 2026-08-20 | Resolved review feedback from Julian: softened the connector-standard requirement (REQ-AF-24) to reflect it's primarily an avionics-subsystem concern, not yet decided; added a signal-loom organisation/traceability requirement (REQ-AF-26); added Section 3b recording RF/EMI separation research against PX4/ArduPilot official documentation (no fixed numeric minimum exists in either - qualitative "maximum practical separation" is the actual guidance; added a quantified antenna-to-antenna wavelength-separation requirement, REQ-AF-22, since that is better-established RF practice); set an explicit 30-minute minimum mission-time target (REQ-AF-71); reworded the camera pod requirement (REQ-AF-60) to note the camera size/mass range it should support is not yet defined; added Section 4.9 (Human Factors and Logistics) with firm transport (fits a standard passenger car) and assembly-time (<5 minutes, no tools) requirements; reworded the propeller clearance requirement (REQ-AF-32) to specify no ground/airframe strike and no grass-cutting/uneven-terrain risk; clarified the launch dolly relationship - it continues supporting the current Believer independently, not superseded by this document; confirmed tail configuration is intentionally left open to the team |
 | 0.3 | 2026-08-20 | Corrected the launch dolly relationship per Julian - the new airframe's landing gear will make the dolly obsolete once built, not a neutral separate decision as Rev 0.2 stated. Renamed Section 4.6 to "Launch, Landing Gear and Ground Operations" and added REQ-AF-52: a structural launch interface capable of accepting a catapult launch system, as a desirable additional departure method alongside grass-runway takeoff and hand-launch; added the catapult system's open items (system type, hard-point location, load rating, release mechanism) to Section 5 |
+| 0.4 | 2026-08-20 | Corrected REQ-AF-52 per Julian - hand-launch is not a requirement for this airframe; removed it from the list of departure methods the catapult interface sits alongside, leaving only grass-runway takeoff (REQ-AF-50) |

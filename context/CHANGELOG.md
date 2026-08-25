@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x4)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.3 -> 0.4): corrected REQ-AF-52 per Julian - hand-launch is not a requirement for this airframe; the catapult launch interface now sits alongside grass-runway takeoff (REQ-AF-50) only.
+
 ## 2026-08-20 (continued x3)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.2 -> 0.3): renamed Section 4.6 to "Launch, Landing Gear and Ground Operations" and added REQ-AF-52, a desirable structural interface for a catapult launch system, per Julian - additional departure method alongside grass-runway takeoff and hand-launch; catapult system type, hard-point location, load rating, and release mechanism are all open.
