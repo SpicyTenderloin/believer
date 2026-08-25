@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x3)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.2 -> 0.3): renamed Section 4.6 to "Launch, Landing Gear and Ground Operations" and added REQ-AF-52, a desirable structural interface for a catapult launch system, per Julian - additional departure method alongside grass-runway takeoff and hand-launch; catapult system type, hard-point location, load rating, and release mechanism are all open.
+- `context/open-items.md`: added the catapult launch interface open items to the custom airframe entry.
+
 ## 2026-08-20 (continued x2)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md`: corrected the launch dolly relationship per Julian - the new airframe's landing gear (REQ-AF-50) **will** make the launch dolly obsolete once built, not a neutral "separate future decision" as Rev 0.2 had it.

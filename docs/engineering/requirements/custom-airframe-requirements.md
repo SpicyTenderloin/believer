@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.2 |
+| **Revision** | 0.3 |
 | **Date** | 2026-08-20 |
 | **Status** | Draft |
 
@@ -110,12 +110,13 @@ Sources:
 | REQ-AF-41 | The battery bay shall positively retain the battery under flight loads at any adjusted position - not rely on friction fit alone (see the current Believer's AF-02 lesson learned, `docs/project/build-checklist.md`). |
 | REQ-AF-42 | The airframe shall accommodate the custom PDB under development (`power-distribution-board-requirements.md`) as its power distribution and servo-rail supply. |
 
-### 4.6 Landing Gear and Ground Operations
+### 4.6 Launch, Landing Gear and Ground Operations
 
 | ID | Requirement |
 |---|---|
 | REQ-AF-50 | The airframe shall be fitted with landing gear suitable for takeoff and landing from grass fields with a usable runway length of 100m or less. |
 | REQ-AF-51 | The landing gear shall tolerate the unevenness typical of an informal grass runway. A quantified bump/unevenness spec has not yet been defined for this project - the same open item already exists against the launch dolly (`launch-dolly-requirements.md` Section 6) and should be resolved once, then shared by both documents. |
+| REQ-AF-52 | The airframe shall provide a structural launch interface (e.g. a reinforced fuselage hard point or catapult hook) capable of accepting a catapult launch system, as an additional departure method alongside grass-runway takeoff (REQ-AF-50) and hand-launch. Catapult system type/spec, hard-point location, structural load rating, and release mechanism are not yet defined - see Section 5. |
 
 ### 4.7 Payload - Camera Systems
 
@@ -142,6 +143,7 @@ Sources:
 
 - **GPS sky-occlusion numeric target (REQ-AF-23)**: PX4/ArduPilot documentation doesn't define one either (Section 3b) - "minimum practical occlusion" is the requirement as written; only open if the team wants a specific angle for detailed design.
 - **Landing gear vs. launch dolly**: this airframe's landing gear (REQ-AF-50) will make the launch dolly (`launch-dolly-requirements.md`) obsolete once built. The dolly remains in active use/development in the meantime, supporting the current Believer airframe while this new airframe is being developed. No action needed against the dolly document now; it should be formally retired/marked superseded once the new airframe's landing gear is flying.
+- **Catapult launch interface (REQ-AF-52)**: catapult system type (bungee, pneumatic, electric winch, etc.) not yet chosen or specified - whether the club already owns or plans a specific system is unknown. Hard-point location, structural load rating, and the tow/release mechanism all depend on that choice and are undefined until it's made.
 - **Tail configuration**: intentionally left open to the team's design judgement (V-tail, conventional, or other). The current Believer is V-tail, listed in Section 3a as reference only - not carried forward as a requirement.
 - **Construction material/method**: not yet decided (composite, foam/EPO, built-up balsa/ply, or a hybrid) - affects weight, crash-repairability, cost, and fabrication path.
 - **Fabrication/build path**: scratch-build in-house vs. a commissioned/contracted build vs. a heavily modified kit - not yet decided, out of scope for this requirements document, but will need its own tracking once design starts (mirrors the same open item already flagged for the custom PDB).
@@ -158,3 +160,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 |---|---|---|
 | 0.1 | 2026-08-20 | Initial draft, based on requirements supplied by Julian (accessibility/modularity, quick-release wings, connectorised wing roots, centralised FC, RF/EMI and GPS separation, contra-rotating props, component reuse, adjustable battery CG trim, endurance/stability/efficiency focus, mass/wingspan targets, tool-less access, grass-runway landing gear, gimbal camera pod, forward FPV mount) plus additional suggested requirements (standardised connector/wiring strategy, propeller-to-landing-gear clearance, positive battery retention, endurance/payload mass targets, transport/assembly-time consideration) - pending team review |
 | 0.2 | 2026-08-20 | Resolved review feedback from Julian: softened the connector-standard requirement (REQ-AF-24) to reflect it's primarily an avionics-subsystem concern, not yet decided; added a signal-loom organisation/traceability requirement (REQ-AF-26); added Section 3b recording RF/EMI separation research against PX4/ArduPilot official documentation (no fixed numeric minimum exists in either - qualitative "maximum practical separation" is the actual guidance; added a quantified antenna-to-antenna wavelength-separation requirement, REQ-AF-22, since that is better-established RF practice); set an explicit 30-minute minimum mission-time target (REQ-AF-71); reworded the camera pod requirement (REQ-AF-60) to note the camera size/mass range it should support is not yet defined; added Section 4.9 (Human Factors and Logistics) with firm transport (fits a standard passenger car) and assembly-time (<5 minutes, no tools) requirements; reworded the propeller clearance requirement (REQ-AF-32) to specify no ground/airframe strike and no grass-cutting/uneven-terrain risk; clarified the launch dolly relationship - it continues supporting the current Believer independently, not superseded by this document; confirmed tail configuration is intentionally left open to the team |
+| 0.3 | 2026-08-20 | Corrected the launch dolly relationship per Julian - the new airframe's landing gear will make the dolly obsolete once built, not a neutral separate decision as Rev 0.2 stated. Renamed Section 4.6 to "Launch, Landing Gear and Ground Operations" and added REQ-AF-52: a structural launch interface capable of accepting a catapult launch system, as a desirable additional departure method alongside grass-runway takeoff and hand-launch; added the catapult system's open items (system type, hard-point location, load rating, release mechanism) to Section 5 |
