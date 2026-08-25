@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x2)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md`: corrected the launch dolly relationship per Julian - the new airframe's landing gear (REQ-AF-50) **will** make the launch dolly obsolete once built, not a neutral "separate future decision" as Rev 0.2 had it.
+- `docs/engineering/requirements/launch-dolly-requirements.md` (Rev 0.2 -> 0.3): added a note (Section 1) that this is an interim solution for the current Believer airframe, expected to be made obsolete by the new custom airframe's landing gear once built.
+- `docs/project/project-roadmap.md`: updated the launch dolly roadmap entry to note it's an interim measure expected to be superseded by the custom airframe.
+
 ## 2026-08-20 (continued)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.1 -> 0.2): resolved Julian's review feedback on the initial draft - softened the connector-standard requirement (REQ-AF-24) to note it's primarily an avionics-subsystem concern; added a signal-loom organisation/traceability requirement (REQ-AF-26); researched RF/EMI separation against PX4 and ArduPilot's official documentation (Section 3b) - found neither specifies a fixed numeric minimum, only qualitative "maximum practical separation" guidance, with magnetic interference falling off as the cube of distance as the physical basis; added a quantified antenna-to-antenna separation requirement (REQ-AF-22, ~12cm/one wavelength at 2.4GHz, a general RF design principle rather than a PX4/ArduPilot figure); set an explicit 30-minute minimum mission-time target (REQ-AF-71); noted the camera pod's size/mass range needs further investigation (REQ-AF-60); added Section 4.9 with firm transport (standard passenger car) and assembly-time (<5 minutes, no tools) requirements; reworded the propeller clearance requirement around no ground/airframe strike and no grass-cutting risk (REQ-AF-32); clarified the launch dolly continues supporting the current Believer airframe independently, not superseded by the new airframe; confirmed tail configuration is intentionally left open to the team.

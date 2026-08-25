@@ -3,13 +3,15 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-DOLLY-001 |
-| **Revision** | 0.2 |
-| **Date** | 2026-07-17 |
+| **Revision** | 0.3 |
+| **Date** | 2026-08-20 |
 | **Status** | Draft |
 
 ## 1. Scope
 
 This document defines the requirements for a launch dolly: a temporary, releasable ground-roll cart that supports the Believer during takeoff acceleration and separates from the aircraft at or before rotation. It does not cover permanent landing gear (the airframe has none - see Section 3a) or the existing assisted hand-launch procedure, which remains available as a fallback (see Section 2).
+
+**This is an interim solution for the current Believer airframe.** A custom-designed replacement airframe is in early requirements development and will include its own landing gear (`docs/engineering/requirements/custom-airframe-requirements.md` REQ-AF-50), which is expected to make the launch dolly obsolete once built. The dolly remains in active use/development for the current airframe in the meantime.
 
 ## 2. Purpose and Concept of Operations
 
@@ -120,3 +122,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 |---|---|---|
 | 0.1 | 2026-07-17 | Initial draft |
 | 0.2 | 2026-07-17 | Resolved the driving motivation (Section 2) per user confirmation - reduces the aircraft's exposure to hand-launch failure-mode damage, not necessarily a mandatory replacement; resolved target surface as standard grass runways with some unevenness (REQ-DOL-13, new REQ-DOL-14, REQ-DOL-20) |
+| 0.3 | 2026-08-20 | Noted (Section 1) that this dolly is an interim solution for the current Believer airframe, expected to be made obsolete by the landing gear on the new custom-designed replacement airframe once built (`docs/engineering/requirements/custom-airframe-requirements.md`) |

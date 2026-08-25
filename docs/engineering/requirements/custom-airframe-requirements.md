@@ -25,7 +25,7 @@ The new airframe is intended as an endurance-focused observation platform for th
 - `context/project-notes.md` - current Believer airframe manufacturer specs (baseline reference only)
 - `docs/engineering/ICD.md` - current avionics interfaces; most currently-fitted avionics are candidates to carry over (Section 3a)
 - `docs/engineering/requirements/power-distribution-board-requirements.md` - custom PDB, expected to carry over onto the new airframe
-- `docs/engineering/requirements/launch-dolly-requirements.md` - existing ground-roll launch cart concept for the current Believer airframe, continuing in active use/development independently of this document; whether the new airframe still needs it once it has its own landing gear is a future decision (Section 5)
+- `docs/engineering/requirements/launch-dolly-requirements.md` - existing ground-roll launch cart concept for the current Believer airframe, which has no landing gear. This new airframe's own landing gear (REQ-AF-50) will make the launch dolly obsolete once built; the dolly remains in active use/development in the meantime, supporting the current Believer
 - `docs/engineering/requirements/underslung-camera-mount-requirements.md` - existing modular camera mount philosophy (fixed female base, swappable male carrier), extended here to a gimbal pod
 - `context/open-items.md`
 
@@ -141,7 +141,7 @@ Sources:
 ## 5. Open Items
 
 - **GPS sky-occlusion numeric target (REQ-AF-23)**: PX4/ArduPilot documentation doesn't define one either (Section 3b) - "minimum practical occlusion" is the requirement as written; only open if the team wants a specific angle for detailed design.
-- **Landing gear vs. launch dolly**: the launch dolly continues to support the current Believer airframe during custom airframe development and is not affected by this document - see `launch-dolly-requirements.md`. Whether the new airframe (with its own landing gear, REQ-AF-50) still has a use for the dolly once built is a separate future decision, not a current conflict.
+- **Landing gear vs. launch dolly**: this airframe's landing gear (REQ-AF-50) will make the launch dolly (`launch-dolly-requirements.md`) obsolete once built. The dolly remains in active use/development in the meantime, supporting the current Believer airframe while this new airframe is being developed. No action needed against the dolly document now; it should be formally retired/marked superseded once the new airframe's landing gear is flying.
 - **Tail configuration**: intentionally left open to the team's design judgement (V-tail, conventional, or other). The current Believer is V-tail, listed in Section 3a as reference only - not carried forward as a requirement.
 - **Construction material/method**: not yet decided (composite, foam/EPO, built-up balsa/ply, or a hybrid) - affects weight, crash-repairability, cost, and fabrication path.
 - **Fabrication/build path**: scratch-build in-house vs. a commissioned/contracted build vs. a heavily modified kit - not yet decided, out of scope for this requirements document, but will need its own tracking once design starts (mirrors the same open item already flagged for the custom PDB).

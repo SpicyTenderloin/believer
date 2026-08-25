@@ -6,7 +6,7 @@ Capabilities not required for current flight-readiness but planned for later pha
 |---|---|---|
 | Airframe | Custom airframe | New custom-designed airframe to replace the commercial MakeFlyEasy Believer airframe - see `docs/engineering/requirements/custom-airframe-requirements.md` |
 | Power | Custom power distribution board | Bespoke PDB to replace the Holybro PM03D - see `docs/engineering/requirements/power-distribution-board-requirements.md` |
-| Airframe | Launch dolly | Releasable ground-roll launch cart, supplementing the current assisted hand launch - see `docs/engineering/requirements/launch-dolly-requirements.md` |
+| Airframe | Launch dolly | Releasable ground-roll launch cart, supplementing the current assisted hand launch - see `docs/engineering/requirements/launch-dolly-requirements.md`. Interim solution for the current Believer airframe - expected to be made obsolete by the custom airframe's own landing gear once built |
 | Airframe | Parachute/payload bay servo | Install a servo in the parachute bay and wire it for parachute or payload deployment |
 | Avionics | Companion computer mount | Design and install a mount for the companion computer inside the airframe |
 | Avionics | Camera mount | Design and install a mount for the IMX335 5MP USB camera |
