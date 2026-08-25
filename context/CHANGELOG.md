@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-20 (continued x8)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.7 -> 0.8): corrected REQ-AF-43/44 per Julian - the 25-30% MAC CG target and ±5% MAC adjustment travel assumed a conventional tailed configuration and don't transfer to a flying wing, which has no tail moment arm and typically needs a much narrower CG band plus finer adjustment resolution. Both requirements now derive the CG range and adjustment travel from a stability analysis matched to whichever tail configuration is chosen, keeping the conventional-tail figures only as a provisional reference point.
+
 ## 2026-08-20 (continued x7)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.6 -> 0.7): added REQ-AF-43 (CG target, 25-30% MAC - a provisional figure carried over from the current Believer's known-stable operating point, to be validated via a stability/tail-volume analysis once the new wing/tail are designed) and REQ-AF-44 (battery slide adjustment travel, at least ±5% MAC), per Julian - intended to avoid repeating the current airframe's need for ~350g of supplementary ballast.
