@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.1 |
+| **Revision** | 0.2 |
 | **Date** | 2026-08-20 |
 | **Status** | Draft |
 
@@ -25,7 +25,7 @@ The new airframe is intended as an endurance-focused observation platform for th
 - `context/project-notes.md` - current Believer airframe manufacturer specs (baseline reference only)
 - `docs/engineering/ICD.md` - current avionics interfaces; most currently-fitted avionics are candidates to carry over (Section 3a)
 - `docs/engineering/requirements/power-distribution-board-requirements.md` - custom PDB, expected to carry over onto the new airframe
-- `docs/engineering/requirements/launch-dolly-requirements.md` - existing ground-roll launch cart concept, developed against the current airframe's lack of landing gear; its relationship to this document's landing gear requirement is an open item (Section 5)
+- `docs/engineering/requirements/launch-dolly-requirements.md` - existing ground-roll launch cart concept for the current Believer airframe, continuing in active use/development independently of this document; whether the new airframe still needs it once it has its own landing gear is a future decision (Section 5)
 - `docs/engineering/requirements/underslung-camera-mount-requirements.md` - existing modular camera mount philosophy (fixed female base, swappable male carrier), extended here to a gimbal pod
 - `context/open-items.md`
 
@@ -44,6 +44,22 @@ Recorded here as a starting point for the new design - none of it is itself a re
 | MS4525DO | Airspeed sensor |
 | T-MOTOR MN3110 KV700 + T-Motor AIR 40A ESC | Propulsion (x2) |
 | Hitec HS-5125MG / Emax ES3054 | Control surface servos - contingent on tail configuration (Section 5) |
+
+## 3b. RF/EMI Separation - Research Findings (Reference Only)
+
+Researched 2026-08-20 against PX4 and ArduPilot's official documentation, per Julian's request. Recorded here as reference data - none of it is itself a requirement (the actual requirements are REQ-AF-21 to REQ-AF-23).
+
+- **No fixed numeric minimum separation distance exists in official PX4 or ArduPilot documentation.** Both projects' guidance for GPS/compass placement relative to ESCs, power wiring, motors, and other RF/EMI sources is qualitative only - "mount as far away from motor/ESC power lines and other sources of EMI as possible" (PX4, [Mounting a Compass (or GNSS/Compass)](https://docs.px4.io/main/en/assembly/mount_gps_compass)) and "use a mast up and away from magnetic sources" / "keep wires between the PDB, ESCs and battery as short as possible" (ArduPilot, [Magnetic Interference](https://ardupilot.org/copter/docs/common-magnetic-interference.html)). Neither document gives a target distance in mm/cm/inches. ArduPilot's [Cable Design Guidelines](https://ardupilot.org/plane/docs/common-cabling-guide.html) similarly say to "separate UART cables from high-power wires and sensitive sensors" without a number.
+- **Physical basis for "as far as possible"**: ArduPilot's documentation notes magnetic field strength falls off with the cube of distance from the source - so even a modest increase in separation gives a disproportionately large reduction in interference. This is the underlying reason the official guidance is "maximise practical separation" rather than a fixed minimum: past a certain point the returns diminish sharply, but there's no single distance at which interference becomes "safe."
+- **Antenna-to-antenna separation** is a different, better-quantified problem, governed by general RF antenna design practice rather than UAV-specific documentation: same-band antennas benefit from at least one wavelength of separation for good diversity/pattern independence - roughly 12cm at 2.4GHz. This is a general RF engineering principle, not a PX4/ArduPilot-specific figure.
+- A third-party FPV build guide (not an official PX4/ArduPilot source) cites 15mm of physical separation between signal and power wiring as reducing coupled noise by roughly 90% - included here for context, but treated as a lower-confidence, non-authoritative figure rather than a design target.
+
+**Practical implication for this airframe**: design to the qualitative principle (maximum practical separation between the FC/compass/GPS and every RF/EMI-emitting component), rather than trying to hit a specific number - there isn't an authoritative one to hit. The one place a real number applies is antenna-to-antenna spacing on the same band (~12cm at 2.4GHz).
+
+Sources:
+- [Mounting a Compass (or GNSS/Compass) - PX4 Guide](https://docs.px4.io/main/en/assembly/mount_gps_compass)
+- [Magnetic Interference - ArduPilot Copter documentation](https://ardupilot.org/copter/docs/common-magnetic-interference.html)
+- [Cable Design Guidelines - ArduPilot Plane documentation](https://ardupilot.org/plane/docs/common-cabling-guide.html)
 
 ## 4. Requirements
 
@@ -71,10 +87,12 @@ Recorded here as a starting point for the new design - none of it is itself a re
 | ID | Requirement |
 |---|---|
 | REQ-AF-20 | The flight controller shall be mounted centrally, at or close to the airframe's centre of gravity, consistent with current practice. |
-| REQ-AF-21 | RF/EMI-emitting components (PDB and ESC switching noise, RC receiver, telemetry modem and its antenna, any future VTX, and any USB 3 device) shall be positioned at the greatest practical separation from the flight controller and its compass. A documented minimum-separation guideline has not yet been established for this project - see Section 5. |
-| REQ-AF-22 | GPS antennas/receivers shall be separated from the RF/EMI-emitting components in REQ-AF-21, and mounted with minimum occlusion of the sky (clear of carbon-fibre structure, wings, and other obstructions). A specific obstruction-angle target is an open item - see Section 5. |
-| REQ-AF-23 | Wiring shall use a consistent, documented connector standard per signal/power class (e.g. a single power connector family, a single low-current signal connector family), supporting the modularity and connectorised-wing goals in Section 4.2. |
-| REQ-AF-24 | Wiring runs shall be routed clear of control-surface linkages and propeller arcs. |
+| REQ-AF-21 | RF/EMI-emitting components (PDB and ESC switching noise, RC receiver, telemetry modem and its antenna, any future VTX, and any USB 3 device) shall be positioned at the greatest practical separation from the flight controller and its compass/GPS. Neither PX4 nor ArduPilot's official documentation specifies a fixed minimum distance for this - both state the principle qualitatively ("as far away as possible") rather than a numeric threshold (Section 3b). "Greatest practical separation" is therefore the requirement itself, not a placeholder for a number to be filled in later. |
+| REQ-AF-22 | Same-band RF antennas (e.g. the DBR4's 2.4GHz link and any 2.4GHz payload radio) shall be separated by at least one wavelength (~12cm at 2.4GHz) to support diversity reception, per general RF antenna design practice (Section 3b). |
+| REQ-AF-23 | GPS antennas/receivers shall be separated from the RF/EMI-emitting components in REQ-AF-21, and mounted with minimum occlusion of the sky (clear of carbon-fibre structure, wings, and other obstructions). A specific obstruction-angle target is not defined by PX4/ArduPilot documentation either - "minimum practical occlusion" is the requirement; a numeric target is an open item if the team wants one for detailed design (Section 5). |
+| REQ-AF-24 | Wiring shall use a connector standard per signal/power class, supporting the modularity and connectorised-wing goals in Section 4.2. The specific standard is not yet decided and is primarily an avionics-subsystem concern rather than an airframe one - this requirement is intentionally left general; the airframe design shall simply accommodate whatever standard the avionics subsystem settles on. |
+| REQ-AF-25 | Wiring runs shall be routed clear of control-surface linkages and propeller arcs. |
+| REQ-AF-26 | Signal wiring shall be organised into neat, traceable looms with clean, direct routing - not bundled in with power wiring or routed haphazardly - while remaining easily accessible for inspection and fault-finding. |
 
 ### 4.4 Propulsion
 
@@ -82,7 +100,7 @@ Recorded here as a starting point for the new design - none of it is itself a re
 |---|---|
 | REQ-AF-30 | The airframe shall retain a twin-motor configuration with true contra-rotating propellers by design - not the current interim same-direction workaround on the existing Believer. |
 | REQ-AF-31 | The design shall reuse the currently-owned T-MOTOR MN3110 KV700 motors and T-Motor AIR 40A ESCs where the new airframe's sizing and performance targets allow. |
-| REQ-AF-32 | Propeller-to-ground and propeller-to-structure clearance shall accommodate the landing gear configuration (Section 4.6) without requiring folding propellers, consistent with current practice. |
+| REQ-AF-32 | Propeller-to-ground and propeller-to-structure clearance shall be sufficient, given the landing gear configuration (Section 4.6), that the propellers do not strike the ground or the airframe, do not cut grass, and do not risk striking uneven terrain during normal takeoff, landing, and ground handling. Folding propellers are not required if this clearance is met by design. |
 
 ### 4.5 Power and Battery
 
@@ -103,7 +121,7 @@ Recorded here as a starting point for the new design - none of it is itself a re
 
 | ID | Requirement |
 |---|---|
-| REQ-AF-60 | The airframe shall provide an underslung mount for a gimbal-stabilised camera pod, capable of accepting a range of camera payloads via a modular, swappable carrier interface - extending the fixed-base/swappable-carrier philosophy already established in `underslung-camera-mount-requirements.md`. |
+| REQ-AF-60 | The airframe shall provide an underslung mount for a gimbal-stabilised camera pod, capable of accepting a range of camera sizes and masses via a modular, swappable carrier interface - extending the fixed-base/swappable-carrier philosophy already established in `underslung-camera-mount-requirements.md`. The actual size/mass range to be supported is not yet well-defined and needs further investigation - see Section 5. |
 | REQ-AF-61 | The airframe shall provide a forward-facing mount for an FPV camera. |
 
 ### 4.8 Performance
@@ -111,18 +129,25 @@ Recorded here as a starting point for the new design - none of it is itself a re
 | ID | Requirement |
 |---|---|
 | REQ-AF-70 | The wing and airframe shall be designed for aerodynamic efficiency (e.g. higher aspect ratio, low parasitic drag) consistent with the endurance-focused mission in REQ-AF-01. |
+| REQ-AF-71 | The airframe shall target a minimum mission (flight) time of 30 minutes. A firm payload-mass budget to design the airframe and camera pod against is not yet defined - see Section 5. |
+
+### 4.9 Human Factors and Logistics
+
+| ID | Requirement |
+|---|---|
+| REQ-AF-90 | The disassembled airframe (wings removed per REQ-AF-13) shall fit within a standard passenger car for transport, without requiring a roof rack, trailer, or van. |
+| REQ-AF-91 | Two people shall be able to assemble the airframe from its transport/storage configuration to flight-ready in under 5 minutes, using no tools - consistent with the quick-release wings (REQ-AF-13) and tool-less hatches (REQ-AF-15). |
 
 ## 5. Open Items
 
-- **RF/EMI minimum separation guideline (REQ-AF-21)**: not yet researched for this project. PX4/ArduPilot documentation and general RF design practice likely have applicable rules of thumb (antenna-to-antenna, antenna-to-FC/compass, and power-wiring-to-receiver separation) - recommend a dedicated research pass before finalising the avionics bay layout, rather than asserting specific distances here without verification.
-- **GPS sky-occlusion angle target (REQ-AF-22)**: not yet defined.
-- **Landing gear vs. launch dolly overlap**: `launch-dolly-requirements.md` was developed specifically because the current Believer has no landing gear and must hand-launch/belly-land. Since this new airframe will have its own landing gear (REQ-AF-50), the launch dolly may become partially or fully unnecessary. Needs a decision once landing gear is designed - flagging now so it isn't missed later.
-- **Tail configuration**: not yet decided (V-tail, conventional, or other). The current Believer is V-tail, listed in Section 3a as reference only - not carried forward as a requirement.
+- **GPS sky-occlusion numeric target (REQ-AF-23)**: PX4/ArduPilot documentation doesn't define one either (Section 3b) - "minimum practical occlusion" is the requirement as written; only open if the team wants a specific angle for detailed design.
+- **Landing gear vs. launch dolly**: the launch dolly continues to support the current Believer airframe during custom airframe development and is not affected by this document - see `launch-dolly-requirements.md`. Whether the new airframe (with its own landing gear, REQ-AF-50) still has a use for the dolly once built is a separate future decision, not a current conflict.
+- **Tail configuration**: intentionally left open to the team's design judgement (V-tail, conventional, or other). The current Believer is V-tail, listed in Section 3a as reference only - not carried forward as a requirement.
 - **Construction material/method**: not yet decided (composite, foam/EPO, built-up balsa/ply, or a hybrid) - affects weight, crash-repairability, cost, and fabrication path.
 - **Fabrication/build path**: scratch-build in-house vs. a commissioned/contracted build vs. a heavily modified kit - not yet decided, out of scope for this requirements document, but will need its own tracking once design starts (mirrors the same open item already flagged for the custom PDB).
 - **Gimbal axis count** for the camera pod (REQ-AF-60) and **FPV camera mount angle/adjustability** (REQ-AF-61) not yet defined.
-- **Endurance/range target and payload mass budget**: not yet defined. Recommend setting explicit numeric targets (e.g. a loiter-time or range figure, and a payload mass allowance) so the wing/structure design in Section 4.8 and the camera pod in Section 4.7 have concrete budgets to design against - the current Believer's manufacturer-quoted ~90km range and ~670g payload capacity are a reference starting point only, not a target for the new design.
-- **Transport/storage envelope and target field-assembly time**: not yet defined - recommend setting these once the wing quick-release mechanism (REQ-AF-13) is designed, since they're closely linked.
+- **Camera pod size/mass range (REQ-AF-60)**: acknowledged as ill-defined and needing further investigation - what range of camera modules the pod should realistically accommodate (from something IMX335-sized up to a larger gimbal-mounted payload) is not yet settled.
+- **Payload mass budget (REQ-AF-71)**: the 30-minute mission-time target is set, but the payload mass allowance it should be designed against is not - the current Believer's manufacturer-quoted ~670g payload capacity is a reference starting point only, not a target for the new design.
 - **Regulatory weight class**: staying at or under 4kg (REQ-AF-02) is worth checking against CASA's RPA weight categories once the design mass is firmer, in case a small margin either way changes the applicable operating rules for BVLOS flight.
 
 Tracked in [context/open-items.md](../../../context/open-items.md).
@@ -132,3 +157,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | Rev | Date | Description |
 |---|---|---|
 | 0.1 | 2026-08-20 | Initial draft, based on requirements supplied by Julian (accessibility/modularity, quick-release wings, connectorised wing roots, centralised FC, RF/EMI and GPS separation, contra-rotating props, component reuse, adjustable battery CG trim, endurance/stability/efficiency focus, mass/wingspan targets, tool-less access, grass-runway landing gear, gimbal camera pod, forward FPV mount) plus additional suggested requirements (standardised connector/wiring strategy, propeller-to-landing-gear clearance, positive battery retention, endurance/payload mass targets, transport/assembly-time consideration) - pending team review |
+| 0.2 | 2026-08-20 | Resolved review feedback from Julian: softened the connector-standard requirement (REQ-AF-24) to reflect it's primarily an avionics-subsystem concern, not yet decided; added a signal-loom organisation/traceability requirement (REQ-AF-26); added Section 3b recording RF/EMI separation research against PX4/ArduPilot official documentation (no fixed numeric minimum exists in either - qualitative "maximum practical separation" is the actual guidance; added a quantified antenna-to-antenna wavelength-separation requirement, REQ-AF-22, since that is better-established RF practice); set an explicit 30-minute minimum mission-time target (REQ-AF-71); reworded the camera pod requirement (REQ-AF-60) to note the camera size/mass range it should support is not yet defined; added Section 4.9 (Human Factors and Logistics) with firm transport (fits a standard passenger car) and assembly-time (<5 minutes, no tools) requirements; reworded the propeller clearance requirement (REQ-AF-32) to specify no ground/airframe strike and no grass-cutting/uneven-terrain risk; clarified the launch dolly relationship - it continues supporting the current Believer independently, not superseded by this document; confirmed tail configuration is intentionally left open to the team |
