@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-26 (continued x3)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 1.1 -> 1.2): corrected methodology per Julian - requirements shall be derived primarily from mission need, not the current Believer airframe's specifications. REQ-AF-73/75 no longer use the Believer's 15/20 m/s figures as targets; both now call for a mission-based trade study (endurance, area-coverage rate, sensor motion-blur tolerance, regional wind conditions) that hasn't been run yet, with the Believer's figures demoted to non-authoritative context in Section 3d. Added a design-philosophy statement to Section 2, and the specific missing mission inputs to Section 5. Audited the rest of the document against this principle - other requirements were found to already be either genuinely mission/user-derived (mass, wingspan, mission time, landing gear, payload) or, for CG (REQ-AF-43/44), not mission-derivable at all and already properly caveated as provisional reference data pending real analysis - no further changes needed there.
+
 ## 2026-08-26 (continued x2)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 1.0 -> 1.1): split airspeed into two distinct requirements per Julian - REQ-AF-73 is now a single-point design cruise speed (15 m/s, the current Believer's actual as-flown trim) to optimise the wing/propulsion system's efficiency around, rather than a range; new REQ-AF-75 sets a top-speed target (20 m/s), referenced against the current airframe's `FW_AIRSPD_MAX` and the original manufacturer's recommended cruise speed - both landing independently on the same figure. Added Section 3d recording this airspeed reference data.
