@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-26 (continued x5)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 1.2 -> 1.3): ran the design cruise speed trade study, per Julian's request. Added Section 3e, benchmarking against comparable mission-class survey/mapping UAS - Quantum Systems Trinity F90+ (5.0kg/2.394m, 17 m/s optimal cruise, 12 m/s in-cruise wind tolerance - closest match to this project's mass/wingspan targets), WingtraOne (16 m/s operational cruise), and senseFly eBee X - rather than the Believer, per the Rev 1.2 methodology correction. Cross-checked against a motion-blur/GSD calculation using the IMX335 as an illustrative sensor stand-in (actual payload camera still unselected), confirming 16 m/s is not motion-blur-limited at the 60-100m operating altitude band for any reasonable daylight shutter speed. Resolved REQ-AF-73 to a provisional 16 m/s design cruise speed and REQ-AF-75 to a provisional 25 m/s top speed target; both flagged for final validation once the payload camera is chosen and site-specific wind data is gathered.
+
 ## 2026-08-26 (continued x4)
 
 - Moved and renamed four invoices dropped in the repo root into `docs/project/purchase-history/invoices/`: SparkFun ZED-F9P (Order #000243169, 2026-03-09), HobbyKing Turnigy Graphene 8000mAh battery (Order #103088165, 2026-03-10), Core Electronics IMX335 camera (Order #1000666876, 2026-03-10), and Holybro PM06 V2 power module (Order #15996, 2026-03-10).
