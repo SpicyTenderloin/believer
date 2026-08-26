@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-26 (continued)
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.9 -> 1.0): added Section 3c researching operating altitude, per Julian's request - confirmed CASA's 120m AGL standard operating ceiling (CASR Part 101) via casa.gov.au, and researched mission-informed typical altitude: the Westpac Little Ripper/SharkSpotter shark-spotting program flies at ~60m AGL; published UAV remote-sensing studies found the clearest vegetation/soil spectral separation at 60m AGL (degrading by 80-100m) while LAI/NDVI correlation peaks at 80-100m AGL; precision-agriculture row-crop surveys typically fly 80-120m AGL. Added REQ-AF-74 (typical mission operating altitude, 60-100m AGL) and strengthened REQ-AF-72's regulatory citation; resolved the mission-specific-altitude open item on this basis.
+
 ## 2026-08-26
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.8 -> 0.9): added REQ-AF-72 (max operating altitude, 120m AGL, referenced against the project's existing `GF_MAX_VER_DIST` geofence ceiling) and REQ-AF-73 (cruise airspeed target, 15-20 m/s, referenced against the current Believer's `FW_AIRSPD_TRIM` and the original manufacturer's recommended cruise speed) per Julian. Flagged mission-specific operating altitude (e.g. shark spotting likely needs a lower observation altitude than the 120m regulatory ceiling) and the full stall/max airspeed envelope as open items pending the new wing's aerodynamic design.

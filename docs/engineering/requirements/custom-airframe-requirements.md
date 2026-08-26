@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.9 |
+| **Revision** | 1.0 |
 | **Date** | 2026-08-26 |
 | **Status** | Draft |
 
@@ -60,6 +60,29 @@ Sources:
 - [Mounting a Compass (or GNSS/Compass) - PX4 Guide](https://docs.px4.io/main/en/assembly/mount_gps_compass)
 - [Magnetic Interference - ArduPilot Copter documentation](https://ardupilot.org/copter/docs/common-magnetic-interference.html)
 - [Cable Design Guidelines - ArduPilot Plane documentation](https://ardupilot.org/plane/docs/common-cabling-guide.html)
+
+## 3c. Operating Altitude - Research Findings (Reference Only)
+
+Researched 2026-08-26 per Julian's request. Recorded here as reference data - the requirements themselves are REQ-AF-72 and REQ-AF-74.
+
+**Regulatory maximum:**
+- Under CASR Part 101 standard operating conditions, RPA must not be flown higher than 120m (400ft) AGL; exceeding this requires a specific CASA approval, which is out of scope for this airframe's baseline design. This matches the project's current PX4 geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`).
+
+**Mission-informed typical altitude:**
+- **Shark spotting**: the Westpac Little Ripper/SharkSpotter program (developed with UTS, operated by Surf Life Saving NSW) flies its detection drones at approximately 60m above sea level, sufficient to visually detect sharks to around 2m water depth.
+- **Ecosystem/vegetation monitoring**: published UAV remote-sensing research found the clearest spectral separation between vegetation and bare soil at 60m AGL (M-statistic 2.74), degrading noticeably by 80m and 100m AGL (1.86 and 1.55 respectively); Leaf Area Index correlation with NDVI peaked in the 80-100m AGL range in a separate study.
+- **Agricultural observation**: typical precision-agriculture UAV surveys for row crops fly at 80-120m AGL (3-10cm ground sample distance); orchard/vineyard surveys fly higher, 120-150m AGL, to clear canopy height. A mid-altitude band of roughly 120-160m AGL is cited as a general accuracy/coverage balance point for broader-area agricultural surveys, though this exceeds the CASA ceiling above.
+
+**Synthesis**: the project's three mission types don't share one ideal altitude. Shark spotting and fine vegetation/soil discrimination favour the lower end (~60m AGL); broader agricultural or ecosystem-area coverage favours the upper end (~100m AGL, and would prefer more if the regulatory ceiling didn't cap it). All of this sits comfortably at or below the 120m regulatory limit, so REQ-AF-72 is not itself the binding constraint on sensor performance for any of the three missions - the mission itself, not the regulation, sets the more restrictive altitude in most cases.
+
+Sources:
+- [Flight approvals and permissions - Civil Aviation Safety Authority](https://www.casa.gov.au/drones/flight-authorisations/flight-approvals-and-permissions)
+- [Part 101 - Micro and Excluded RPA Operations, Plain English Guide - CASA](https://www.casa.gov.au/sites/default/files/2021-08/part-101-micro-excluded-rpa-operations-plain-english-guide.pdf)
+- [Westpac Little Ripper takes shark patrol to the skies - Particle (Scitech)](https://particle.scitech.org.au/science-society/westpac-little-ripper-takes-shark-patrol-to-the-skies/)
+- [Life-saving technology for Australian beaches - University of Technology Sydney](https://www.uts.edu.au/case-studies/life-saving-technology-australian-beaches)
+- Quantifying the Effects of UAV Flight Altitude on the Multispectral Monitoring Accuracy of Soil Moisture and Maize Phenotypic Parameters, *Agronomy* (2025), [doi.org/10.3390/agronomy15092137](https://doi.org/10.3390/agronomy15092137)
+- [Assessing Optimal Flight Parameters for Generating Accurate Multispectral Orthomosaicks by UAV to Support Site-Specific Crop Management - MDPI Remote Sensing](https://www.mdpi.com/2072-4292/7/10/12793)
+- [Agriculture Drone Mapping & Field Analytics Guide - Skyebrowse](https://www.skyebrowse.com/news/posts/agriculture-field-analytics)
 
 ## 4. Requirements
 
@@ -135,8 +158,9 @@ Sources:
 |---|---|
 | REQ-AF-70 | The wing and airframe shall be designed for aerodynamic efficiency (e.g. higher aspect ratio, low parasitic drag) consistent with the endurance-focused mission in REQ-AF-01. |
 | REQ-AF-71 | The airframe shall target a minimum mission (flight) time of 30 minutes. A firm payload-mass budget to design the airframe and camera pod against is not yet defined - see Section 5. |
-| REQ-AF-72 | The airframe shall be designed for a maximum operating altitude of 120m AGL, consistent with the project's current standard RPAS operating ceiling (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). Operation above this altitude would require separate regulatory authorisation and is out of scope for this design. |
+| REQ-AF-72 | The airframe shall be designed for a maximum operating altitude of 120m AGL, matching CASA's standard RPA operating conditions under CASR Part 101 (Section 3c). Operation above this altitude would require a specific CASA approval and is out of scope for this design. This also matches the project's current geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). |
 | REQ-AF-73 | The airframe shall target a cruise airspeed in the range of 15-20 m/s, referenced against the current Believer's configured trim airspeed (`FW_AIRSPD_TRIM` = 15 m/s, `docs/engineering/flight-modes.md`) and the original airframe manufacturer's recommended cruise speed (20 m/s, `context/project-notes.md`). This is a provisional design target - the final cruise speed, and the stall/min/max airspeed envelope around it, shall be set by the new wing's aerodynamic design once complete. |
+| REQ-AF-74 | The airframe's typical mission operating altitude shall be in the range of 60-100m AGL, informed by mission-specific remote sensing practice (Section 3c): shark-spotting and fine vegetation/soil discrimination favour the lower end (~60m AGL), while broader agricultural or ecosystem-area coverage favours the upper end (~100m AGL). This range retains comfortable margin below the 120m regulatory ceiling (REQ-AF-72). |
 
 ### 4.9 Human Factors and Logistics
 
@@ -157,7 +181,6 @@ Sources:
 - **Camera pod size/mass range (REQ-AF-60)**: acknowledged as ill-defined and needing further investigation - what range of camera modules the pod should realistically accommodate (from something IMX335-sized up to a larger gimbal-mounted payload) is not yet settled.
 - **Payload mass budget (REQ-AF-71)**: the 30-minute mission-time target is set, but the payload mass allowance it should be designed against is not - the current Believer's manufacturer-quoted ~670g payload capacity is a reference starting point only, not a target for the new design.
 - **Regulatory weight class**: staying at or under 4kg (REQ-AF-02) is worth checking against CASA's RPA weight categories once the design mass is firmer, in case a small margin either way changes the applicable operating rules for BVLOS flight.
-- **Mission-specific operating altitude (REQ-AF-72)**: 120m AGL is a regulatory ceiling, not a mission-optimised observation altitude - e.g. shark spotting may call for flying well below that ceiling for visual/camera detection range. A target operating altitude band for each mission type is not yet defined.
 - **Airspeed envelope (REQ-AF-73)**: only a provisional cruise range is set; stall speed and max airspeed for the new wing are design outputs, not yet known.
 - **CG target precision (REQ-AF-43/44)**: 25-30% MAC and ±5% MAC adjustment travel are provisional figures carried over from the current Believer's conventional-tail, known-stable operating point - they explicitly do not apply if a flying wing is chosen (Section 3, tail configuration open item), which would need its own, likely much narrower, CG band and a finer-resolution adjustment mechanism. A proper stability analysis matched to whichever configuration is chosen is needed before either requirement can be finalised.
 
@@ -176,3 +199,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.7 | 2026-08-20 | Added REQ-AF-43 (CG target, 25-30% MAC, provisional pending a stability/tail-volume analysis on the new wing/tail) and REQ-AF-44 (battery slide adjustment travel, at least ±5% MAC) per Julian, to avoid repeating the current airframe's need for supplementary ballast |
 | 0.8 | 2026-08-20 | Corrected REQ-AF-43/44 per Julian - the 25-30% MAC / ±5% MAC figures assumed a conventional tailed configuration and don't apply to a flying wing, which has no tail moment arm and typically needs a much narrower CG band and finer adjustment resolution. Reworded both requirements to derive the CG range/target and adjustment travel from a stability analysis matched to whichever tail configuration is chosen, with the conventional-tail figures kept only as a provisional reference point |
 | 0.9 | 2026-08-26 | Added REQ-AF-72 (max operating altitude, 120m AGL, referenced against the project's existing geofence ceiling) and REQ-AF-73 (cruise airspeed target, 15-20 m/s, referenced against the current Believer's trim airspeed and manufacturer-recommended cruise speed) per Julian; flagged mission-specific operating altitude and the full stall/max airspeed envelope as open items pending the new wing's aerodynamic design |
+| 1.0 | 2026-08-26 | Added Section 3c researching operating altitude against CASA's CASR Part 101 standard operating conditions and mission-specific remote sensing practice (shark-spotting precedent, vegetation/soil spectral discrimination studies, precision-agriculture survey altitudes), per Julian's request. Strengthened REQ-AF-72's regulatory citation; added REQ-AF-74, a 60-100m AGL typical mission operating altitude informed by that research. Resolved the mission-specific-altitude open item on this basis |
