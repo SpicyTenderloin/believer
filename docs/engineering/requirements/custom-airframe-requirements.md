@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 1.0 |
+| **Revision** | 1.1 |
 | **Date** | 2026-08-26 |
 | **Status** | Draft |
 
@@ -84,6 +84,18 @@ Sources:
 - [Assessing Optimal Flight Parameters for Generating Accurate Multispectral Orthomosaicks by UAV to Support Site-Specific Crop Management - MDPI Remote Sensing](https://www.mdpi.com/2072-4292/7/10/12793)
 - [Agriculture Drone Mapping & Field Analytics Guide - Skyebrowse](https://www.skyebrowse.com/news/posts/agriculture-field-analytics)
 
+## 3d. Airspeed Reference Data (Reference Only)
+
+Recorded here as sizing reference data - none of it is itself a requirement (the requirements are REQ-AF-73 and REQ-AF-75).
+
+| Source | Speed | Notes |
+|---|---|---|
+| Current Believer `FW_AIRSPD_TRIM` (as-flown) | 15 m/s | The actual configured and flight-tested cruise trim on the current airframe - the more authoritative figure, since it reflects real flight behaviour rather than a catalogue spec |
+| Current Believer `FW_AIRSPD_MAX` | 20 m/s | Upper bound of the current airframe's controlled airspeed envelope |
+| Original airframe manufacturer's recommended cruise speed | 20 m/s | Published spec (en.makeflyeasy.com, `context/project-notes.md`) - notably faster than what the aircraft is actually trimmed and flown at |
+
+The manufacturer's "recommended cruise" and the current airframe's actual flown trim disagree by a wide margin (20 vs 15 m/s) - rather than treating this as a contradiction to resolve, it's used here as two different reference points for two different new requirements: the as-flown 15 m/s informs the efficiency-optimised design cruise speed (REQ-AF-73), and the manufacturer figure (which independently matches the current `FW_AIRSPD_MAX`) informs the top-speed target (REQ-AF-75).
+
 ## 4. Requirements
 
 ### 4.1 Functional / Mission
@@ -159,8 +171,9 @@ Sources:
 | REQ-AF-70 | The wing and airframe shall be designed for aerodynamic efficiency (e.g. higher aspect ratio, low parasitic drag) consistent with the endurance-focused mission in REQ-AF-01. |
 | REQ-AF-71 | The airframe shall target a minimum mission (flight) time of 30 minutes. A firm payload-mass budget to design the airframe and camera pod against is not yet defined - see Section 5. |
 | REQ-AF-72 | The airframe shall be designed for a maximum operating altitude of 120m AGL, matching CASA's standard RPA operating conditions under CASR Part 101 (Section 3c). Operation above this altitude would require a specific CASA approval and is out of scope for this design. This also matches the project's current geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). |
-| REQ-AF-73 | The airframe shall target a cruise airspeed in the range of 15-20 m/s, referenced against the current Believer's configured trim airspeed (`FW_AIRSPD_TRIM` = 15 m/s, `docs/engineering/flight-modes.md`) and the original airframe manufacturer's recommended cruise speed (20 m/s, `context/project-notes.md`). This is a provisional design target - the final cruise speed, and the stall/min/max airspeed envelope around it, shall be set by the new wing's aerodynamic design once complete. |
+| REQ-AF-73 | The airframe's wing and propulsion system shall be optimised for maximum aerodynamic/propulsive efficiency at a design cruise speed of 15 m/s, matching the current Believer's actual flight-tested trim airspeed (`FW_AIRSPD_TRIM`, `docs/engineering/flight-modes.md`) - the real-world flown value, rather than the original manufacturer's book-recommended figure (Section 3d). This is the single speed the wing loading, airfoil, and propeller pitch should be optimised around for best endurance; it is provisional pending the new wing's actual drag polar. |
 | REQ-AF-74 | The airframe's typical mission operating altitude shall be in the range of 60-100m AGL, informed by mission-specific remote sensing practice (Section 3c): shark-spotting and fine vegetation/soil discrimination favour the lower end (~60m AGL), while broader agricultural or ecosystem-area coverage favours the upper end (~100m AGL). This range retains comfortable margin below the 120m regulatory ceiling (REQ-AF-72). |
+| REQ-AF-75 | The airframe shall be capable of a top speed (level flight, full throttle) of at least 20 m/s, giving margin above the design cruise speed (REQ-AF-73) for headwind penetration and mission flexibility. Referenced against the current Believer's configured `FW_AIRSPD_MAX` (20 m/s) and the original manufacturer's recommended cruise speed (also 20 m/s, `context/project-notes.md`) - both independently landing on the same figure (Section 3d). Provisional pending the new wing's aerodynamic design. |
 
 ### 4.9 Human Factors and Logistics
 
@@ -181,7 +194,7 @@ Sources:
 - **Camera pod size/mass range (REQ-AF-60)**: acknowledged as ill-defined and needing further investigation - what range of camera modules the pod should realistically accommodate (from something IMX335-sized up to a larger gimbal-mounted payload) is not yet settled.
 - **Payload mass budget (REQ-AF-71)**: the 30-minute mission-time target is set, but the payload mass allowance it should be designed against is not - the current Believer's manufacturer-quoted ~670g payload capacity is a reference starting point only, not a target for the new design.
 - **Regulatory weight class**: staying at or under 4kg (REQ-AF-02) is worth checking against CASA's RPA weight categories once the design mass is firmer, in case a small margin either way changes the applicable operating rules for BVLOS flight.
-- **Airspeed envelope (REQ-AF-73)**: only a provisional cruise range is set; stall speed and max airspeed for the new wing are design outputs, not yet known.
+- **Airspeed envelope (REQ-AF-73/75)**: design cruise (15 m/s) and top speed (20 m/s) targets are set, but stall speed and the rest of the controlled-airspeed envelope for the new wing are design outputs, not yet known - both targets are provisional pending the new wing's actual drag polar.
 - **CG target precision (REQ-AF-43/44)**: 25-30% MAC and ±5% MAC adjustment travel are provisional figures carried over from the current Believer's conventional-tail, known-stable operating point - they explicitly do not apply if a flying wing is chosen (Section 3, tail configuration open item), which would need its own, likely much narrower, CG band and a finer-resolution adjustment mechanism. A proper stability analysis matched to whichever configuration is chosen is needed before either requirement can be finalised.
 
 Tracked in [context/open-items.md](../../../context/open-items.md).
@@ -200,3 +213,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.8 | 2026-08-20 | Corrected REQ-AF-43/44 per Julian - the 25-30% MAC / ±5% MAC figures assumed a conventional tailed configuration and don't apply to a flying wing, which has no tail moment arm and typically needs a much narrower CG band and finer adjustment resolution. Reworded both requirements to derive the CG range/target and adjustment travel from a stability analysis matched to whichever tail configuration is chosen, with the conventional-tail figures kept only as a provisional reference point |
 | 0.9 | 2026-08-26 | Added REQ-AF-72 (max operating altitude, 120m AGL, referenced against the project's existing geofence ceiling) and REQ-AF-73 (cruise airspeed target, 15-20 m/s, referenced against the current Believer's trim airspeed and manufacturer-recommended cruise speed) per Julian; flagged mission-specific operating altitude and the full stall/max airspeed envelope as open items pending the new wing's aerodynamic design |
 | 1.0 | 2026-08-26 | Added Section 3c researching operating altitude against CASA's CASR Part 101 standard operating conditions and mission-specific remote sensing practice (shark-spotting precedent, vegetation/soil spectral discrimination studies, precision-agriculture survey altitudes), per Julian's request. Strengthened REQ-AF-72's regulatory citation; added REQ-AF-74, a 60-100m AGL typical mission operating altitude informed by that research. Resolved the mission-specific-altitude open item on this basis |
+| 1.1 | 2026-08-26 | Split airspeed into two distinct requirements per Julian: reworded REQ-AF-73 as a single-point design cruise speed (15 m/s, the current Believer's actual as-flown trim) to optimise wing/propulsion efficiency around, rather than a range; added REQ-AF-75, a top-speed target (20 m/s) referenced against the current airframe's `FW_AIRSPD_MAX` and the original manufacturer's recommended cruise speed. Added Section 3d recording the airspeed reference data and the rationale for using the manufacturer's and as-flown figures for two different requirements rather than treating their disagreement as a contradiction |
