@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-AIRFRAME-001 |
-| **Revision** | 0.8 |
-| **Date** | 2026-08-20 |
+| **Revision** | 0.9 |
+| **Date** | 2026-08-26 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -135,6 +135,8 @@ Sources:
 |---|---|
 | REQ-AF-70 | The wing and airframe shall be designed for aerodynamic efficiency (e.g. higher aspect ratio, low parasitic drag) consistent with the endurance-focused mission in REQ-AF-01. |
 | REQ-AF-71 | The airframe shall target a minimum mission (flight) time of 30 minutes. A firm payload-mass budget to design the airframe and camera pod against is not yet defined - see Section 5. |
+| REQ-AF-72 | The airframe shall be designed for a maximum operating altitude of 120m AGL, consistent with the project's current standard RPAS operating ceiling (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). Operation above this altitude would require separate regulatory authorisation and is out of scope for this design. |
+| REQ-AF-73 | The airframe shall target a cruise airspeed in the range of 15-20 m/s, referenced against the current Believer's configured trim airspeed (`FW_AIRSPD_TRIM` = 15 m/s, `docs/engineering/flight-modes.md`) and the original airframe manufacturer's recommended cruise speed (20 m/s, `context/project-notes.md`). This is a provisional design target - the final cruise speed, and the stall/min/max airspeed envelope around it, shall be set by the new wing's aerodynamic design once complete. |
 
 ### 4.9 Human Factors and Logistics
 
@@ -155,6 +157,8 @@ Sources:
 - **Camera pod size/mass range (REQ-AF-60)**: acknowledged as ill-defined and needing further investigation - what range of camera modules the pod should realistically accommodate (from something IMX335-sized up to a larger gimbal-mounted payload) is not yet settled.
 - **Payload mass budget (REQ-AF-71)**: the 30-minute mission-time target is set, but the payload mass allowance it should be designed against is not - the current Believer's manufacturer-quoted ~670g payload capacity is a reference starting point only, not a target for the new design.
 - **Regulatory weight class**: staying at or under 4kg (REQ-AF-02) is worth checking against CASA's RPA weight categories once the design mass is firmer, in case a small margin either way changes the applicable operating rules for BVLOS flight.
+- **Mission-specific operating altitude (REQ-AF-72)**: 120m AGL is a regulatory ceiling, not a mission-optimised observation altitude - e.g. shark spotting may call for flying well below that ceiling for visual/camera detection range. A target operating altitude band for each mission type is not yet defined.
+- **Airspeed envelope (REQ-AF-73)**: only a provisional cruise range is set; stall speed and max airspeed for the new wing are design outputs, not yet known.
 - **CG target precision (REQ-AF-43/44)**: 25-30% MAC and ±5% MAC adjustment travel are provisional figures carried over from the current Believer's conventional-tail, known-stable operating point - they explicitly do not apply if a flying wing is chosen (Section 3, tail configuration open item), which would need its own, likely much narrower, CG band and a finer-resolution adjustment mechanism. A proper stability analysis matched to whichever configuration is chosen is needed before either requirement can be finalised.
 
 Tracked in [context/open-items.md](../../../context/open-items.md).
@@ -171,3 +175,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.6 | 2026-08-20 | Added REQ-AF-62 per Julian - the gimbal camera pod mount shall incorporate impact protection against hard-landing/belly-strike damage, given it is expected to be the airframe's highest-value single component |
 | 0.7 | 2026-08-20 | Added REQ-AF-43 (CG target, 25-30% MAC, provisional pending a stability/tail-volume analysis on the new wing/tail) and REQ-AF-44 (battery slide adjustment travel, at least ±5% MAC) per Julian, to avoid repeating the current airframe's need for supplementary ballast |
 | 0.8 | 2026-08-20 | Corrected REQ-AF-43/44 per Julian - the 25-30% MAC / ±5% MAC figures assumed a conventional tailed configuration and don't apply to a flying wing, which has no tail moment arm and typically needs a much narrower CG band and finer adjustment resolution. Reworded both requirements to derive the CG range/target and adjustment travel from a stability analysis matched to whichever tail configuration is chosen, with the conventional-tail figures kept only as a provisional reference point |
+| 0.9 | 2026-08-26 | Added REQ-AF-72 (max operating altitude, 120m AGL, referenced against the project's existing geofence ceiling) and REQ-AF-73 (cruise airspeed target, 15-20 m/s, referenced against the current Believer's trim airspeed and manufacturer-recommended cruise speed) per Julian; flagged mission-specific operating altitude and the full stall/max airspeed envelope as open items pending the new wing's aerodynamic design |

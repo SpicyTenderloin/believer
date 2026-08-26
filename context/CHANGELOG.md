@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-26
+
+- `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.8 -> 0.9): added REQ-AF-72 (max operating altitude, 120m AGL, referenced against the project's existing `GF_MAX_VER_DIST` geofence ceiling) and REQ-AF-73 (cruise airspeed target, 15-20 m/s, referenced against the current Believer's `FW_AIRSPD_TRIM` and the original manufacturer's recommended cruise speed) per Julian. Flagged mission-specific operating altitude (e.g. shark spotting likely needs a lower observation altitude than the 120m regulatory ceiling) and the full stall/max airspeed envelope as open items pending the new wing's aerodynamic design.
+
 ## 2026-08-20 (continued x8)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 0.7 -> 0.8): corrected REQ-AF-43/44 per Julian - the 25-30% MAC CG target and ±5% MAC adjustment travel assumed a conventional tailed configuration and don't transfer to a flying wing, which has no tail moment arm and typically needs a much narrower CG band plus finer adjustment resolution. Both requirements now derive the CG range and adjustment travel from a stability analysis matched to whichever tail configuration is chosen, keeping the conventional-tail figures only as a provisional reference point.
