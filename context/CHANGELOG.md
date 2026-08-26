@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-26 (continued x4)
+
+- Moved and renamed four invoices dropped in the repo root into `docs/project/purchase-history/invoices/`: SparkFun ZED-F9P (Order #000243169, 2026-03-09), HobbyKing Turnigy Graphene 8000mAh battery (Order #103088165, 2026-03-10), Core Electronics IMX335 camera (Order #1000666876, 2026-03-10), and Holybro PM06 V2 power module (Order #15996, 2026-03-10).
+- `docs/project/purchase-history/purchase-history.md`: replaced four previous shopping-list estimates with confirmed invoice figures now that the actual invoices were located - Turnigy battery ($152.85 est. -> $129.67 confirmed AUD), SparkFun ZED-F9P ($272.95 est. -> ~$467 AUD, converted from a USD invoice), Core Electronics IMX335 camera ($63.68 est. -> $74.01 confirmed AUD), and Holybro PM06 ($22.04 est. -> ~$82 AUD, converted from a USD invoice). The two USD invoices (SparkFun, PM06) were converted using an approximate 1.44 AUD/USD rate for early March 2026 - web research could not confirm the precise daily or card-charged rate, flagged in `context/open-items.md`. Net effect: University total revised from ~$981.08 AUD to ~$1,222.98 AUD, remaining approved-budget margin down from ~$397.92 AUD to ~$156.02 AUD. All-parties total updated to ~$1,475.31 AUD.
+- `context/open-items.md`: added the AUD conversion precision item for the two USD invoices.
+
 ## 2026-08-26 (continued x3)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 1.1 -> 1.2): corrected methodology per Julian - requirements shall be derived primarily from mission need, not the current Believer airframe's specifications. REQ-AF-73/75 no longer use the Believer's 15/20 m/s figures as targets; both now call for a mission-based trade study (endurance, area-coverage rate, sensor motion-blur tolerance, regional wind conditions) that hasn't been run yet, with the Believer's figures demoted to non-authoritative context in Section 3d. Added a design-philosophy statement to Section 2, and the specific missing mission inputs to Section 5. Audited the rest of the document against this principle - other requirements were found to already be either genuinely mission/user-derived (mass, wingspan, mission time, landing gear, payload) or, for CG (REQ-AF-43/44), not mission-derivable at all and already properly caveated as provisional reference data pending real analysis - no further changes needed there.
