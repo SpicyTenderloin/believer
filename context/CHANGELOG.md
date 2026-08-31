@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-31 (continued)
+
+- Added `docs/engineering/references/` and moved in Weishäupl, McLay & Sóbester, "Experimental evaluation of the drag curves of small fixed wing UAVs" (*The Aeronautical Journal*, 2024), dropped in the repo root by Julian. The paper's "FliTePlat" test platform is explicitly built on the MakeFlyEasy airframe (same manufacturer as the Believer) and its geometry/performance table matches the Believer's manufacturer specs closely (wingspan, length, MTOW, and cruise speed all exact or near-exact matches) - very likely the same commercial airframe or an extremely close sibling. The paper does not name the motor manufacturer/model/KV anywhere. Extracted its wind-tunnel-measured drag polar (CD0=0.0503, K=0.0764, CL0=0.2570, CLα=0.1122/deg) and other facts (measured 1g stall speed 11 m/s, VNE 37 m/s, load factor limits 0.2-3.8g) into `context/project-notes.md`.
+- `docs/project/build-checklist.md`: added CTL-10 (Critical) - set `FW_AIRSPD_STALL` to 11 m/s per the paper's measured value, and raise `FW_AIRSPD_MIN` (currently 10 m/s, below the newly-informed stall speed - a genuine safety gap in automatic flight modes, not just a documentation issue) to a value with real margin above stall. Cross-referenced the paper's drag polar into PROP-05's scope as a stronger alternative/supplement to the generic Eppler 374 MotoCalc approach.
+- `context/open-items.md`: added the `FW_AIRSPD_MAX`/broader TECS reconsideration (lower priority, tracked separately from the CTL-10 safety fix) and whether to adopt the paper's drag polar more broadly for performance estimation.
+
 ## 2026-08-31
 
 - `docs/project/build-checklist.md`: added a sustained full-throttle current/temperature monitoring acceptance criterion to PROP-02, per a finding from Julian's brief (<20s) full-throttle bench test (2026-08-31) - the PDB reported 60-65A total current draw (~30-32.5A per motor), roughly 45-55% above the MN3110 KV700's rated 21A continuous current, though well within the AIR 40A ESC and battery's capability. Not a concern for a brief burst, but sustained-duration thermal safety is unverified - PROP-02 should not be considered conclusive on this point until a longer run is tested.

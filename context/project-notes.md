@@ -106,6 +106,31 @@ Julian met with Peter Spink at the Tingalpa Model Aero Club (TMAC) for a system 
 - Motor start desynchronisation (motors not starting together) attributed to ESC calibration, correctable via QGroundControl - to be done alongside the new motor installation.
 - Aileron differential (20mm up / 1.5mm down) and V-tail rudder mix adjusted live during the session; throttle expo removed (was 20%, now 0%). New trim values from this session are still to be provided by Julian - tracked in `context/open-items.md`.
 
+## Airframe Aerodynamic Characterisation - Weishäupl et al. 2024 - 2026-08-31
+
+Julian provided an academic paper - Weishäupl, McLay & Sóbester, "Experimental evaluation of the drag curves of small fixed wing UAVs," *The Aeronautical Journal* 128 (2024), pp. 655-684 - now archived at `docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf`. The paper's "FliTePlat" test platform is explicitly built on the MakeFlyEasy airframe (their reference [12], the same manufacturer as the Believer), and its Table 1 geometry matches the Believer's manufacturer specs closely: wingspan 1.96m (exact), length 1.07m (exact), fuselage height 0.18m (close), MTOW 5.5kg (exact), manufacturer cruise speed 20m/s (exact). Reference area is quoted as 0.488m² vs the Believer's documented 51dm² (0.51m²) - close but not identical, a ~4% difference not fully reconciled. This is very likely the same commercial airframe, or an extremely close sibling model.
+
+**The paper does not name the motor manufacturer, model, or KV rating anywhere** - propulsion is only described generically as "two wing-mounted electric motors." Propeller used in their testing: 12" diameter, 6" pitch, 2 blades - differs from the Believer's current 11x7 Hobbyrama prop, so not directly transferable for prop-specific modelling (the drag polar coefficients below are airframe-level and prop-independent, however).
+
+**Wind-tunnel-measured drag polar (their most reliable "clean" reference, Table 2):**
+
+| Coefficient | Value |
+|---|---|
+| CD0 (zero-lift drag) | 0.0503 |
+| K (induced drag constant) | 0.0764 |
+| CL0 (zero-AoA lift coefficient) | 0.2570 |
+| CLα (lift curve slope) | 0.1122 /deg |
+
+Derived performance (their Table 3, wind tunnel reference): L/Dmax = 8.07, max range 114km, max endurance 157min.
+
+**Other extracted facts:**
+- Measured 1g stall airspeed: 11 m/s. This is notably higher than the Believer's current `FW_AIRSPD_STALL` = 7 m/s, which `docs/engineering/flight-modes.md` already flags as an untuned PX4 generic default rather than a measured value - worth a closer look given this real-world data point from a very similar airframe.
+- Max dive airspeed (VNE, flutter-limited): 37 m/s.
+- Load factor limits: 0.2 to 3.8g, mostly wing-deformation limited rather than structural failure.
+- Confirms the same operational profile as the Believer: no conventional undercarriage, hand-launch or trolley-launch departure, belly-landing recovery, V-tail with ailerons and ruddervators.
+
+**Open strategic question**: this is a real, wind-tunnel-measured whole-airframe drag polar, which is a stronger basis for performance estimation than modelling the wing alone against the generic Eppler 374 stand-in currently used for PROP-05 (`docs/project/build-checklist.md`). Not yet decided whether to use these coefficients directly (e.g. via the Brequet range/endurance equations the paper itself uses) instead of, or alongside, the MotoCalc/E374 approach.
+
 ## Propulsion Install, Servo UBEC, Flight Mode Restructure - 2026-08-19
 
 Julian provided a batch of updates via a fresh FC parameter export (`parameters_19_08_2026.params`), a QGroundControl Actuators Config screenshot, and a UBEC invoice, cross-checked against the previous parameter backup by diff:

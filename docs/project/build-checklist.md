@@ -28,6 +28,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Airframe | AF-01: Correct centre of gravity | Not started |
 | Airframe | AF-02: Fit positive battery retention | Not started |
 | Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
+| Flight controls | CTL-10: Update airspeed envelope parameters against measured data | Not started |
 
 ---
 
@@ -202,6 +203,7 @@ Split out as its own task 2026-08-19, separate from static thrust verification (
 **Scope**
 - Model the Believer airframe and the final motor/ESC/propeller combination in MotoCalc to optimise efficiency.
 - Use a generic Eppler 374 (E374) aerofoil in the MotoCalc model, per Julian's guidance (recorded as "EPLA 374" - understood to mean the Eppler 374, a common generic low-Reynolds-number RC aerofoil; flag if a different aerofoil was actually meant).
+- Cross-check the resulting model against the wind-tunnel-measured drag polar in `docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf` (CD0=0.0503, K=0.0764, CL0=0.2570, CLα=0.1122/deg) - a real measured drag polar for what is very likely the same commercial airframe, and a stronger basis than the generic E374 wing-only model. Not yet decided whether to use this data directly (e.g. via the Brequet range/endurance equations) instead of, or alongside, the MotoCalc/E374 approach - see `context/project-notes.md`.
 
 <details>
 <summary>Background and engineering notes</summary>
@@ -363,6 +365,29 @@ Observed by Julian, 2026-08-28. Not yet root-caused; radio calibration is a susp
 <summary>Background and engineering notes</summary>
 
 Raised by Julian, 2026-08-28. The parameter's exact role and correct target value for this PX4 version/airframe have not yet been confirmed against PX4 documentation - verify before setting.
+
+</details>
+
+### CTL-10 - Update airspeed envelope parameters against measured data
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
+- **Depends on:** None
+
+**Scope**
+- Set `FW_AIRSPD_STALL` to 11 m/s, per the 1g stall speed measured in Weishäupl et al. 2024 (`docs/engineering/references/`) for what is very likely the same commercial airframe - currently 7 m/s, an untuned PX4 generic default.
+- Review and raise `FW_AIRSPD_MIN` (currently 10 m/s) - it is presently set *below* the newly-informed 11 m/s stall speed, which is a genuine safety gap: `FW_AIRSPD_MIN` is the floor TECS will command down to in Altitude/Position/Mission modes, so as configured it could in principle command an airspeed at or below actual stall. A reasonable margin above stall (e.g. ~13-14 m/s, comfortably below the existing 15 m/s `FW_AIRSPD_TRIM`) should be set instead.
+
+**Acceptance criteria**
+- `FW_AIRSPD_STALL` set to 11 m/s.
+- `FW_AIRSPD_MIN` set to a value with a real margin above the measured stall speed, confirmed less than `FW_AIRSPD_TRIM`.
+- Updated values recorded in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` and `docs/engineering/flight-modes.md`.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised by Julian, 2026-08-31, following the discovery of Weishäupl et al. 2024, a wind-tunnel drag/performance characterisation of what is very likely the same commercial MakeFlyEasy airframe as the Believer (matching wingspan, length, MTOW, and manufacturer cruise speed exactly). The paper's measured 1g stall speed (11 m/s) is well above the Believer's current generic-default `FW_AIRSPD_STALL` (7 m/s) and, more importantly, above the currently-configured `FW_AIRSPD_MIN` (10 m/s) - the latter discrepancy is a real safety gap in automatic flight modes, not just a documentation accuracy issue. `FW_AIRSPD_MAX` (20 m/s) and the broader TECS/performance parameters are a separate, larger exercise tied to whether the paper's measured drag polar (CD0/K/CL0/CLα) is adopted more broadly - tracked in `context/open-items.md`, not part of this task's scope.
 
 </details>
 
