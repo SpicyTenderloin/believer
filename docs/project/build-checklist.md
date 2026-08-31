@@ -27,6 +27,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Propulsion | PROP-06: Verify throttle curve/mapping | Not started |
 | Airframe | AF-01: Correct centre of gravity | Not started |
 | Airframe | AF-02: Fit positive battery retention | Not started |
+| Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
 
 ---
 
@@ -118,45 +119,38 @@ Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone t
 **Scope**
 - Apply paint job as required.
 
----
+### AF-08 - Secure motor mounting plates with polyurethane glue
 
-## B. Propulsion System
-
-### PROP-01 - Install and validate MN3110 propulsion system
-
-- [x] **Status:** Complete
+- [ ] **Status:** Not started
 - **Priority:** CRITICAL
-- **Milestone:** Ground-test readiness
+- **Milestone:** Flight clearance
 - **Depends on:** None
 
 **Scope**
-- Remove the T-Motor U5 v2.0 KV400 motors and their previously-fitted (unidentified-model) ESCs.
-- Install the MN3110 KV700 motors and the two acquired T-Motor AIR 40A ESCs (one per motor).
-- Verify left/right motor assignment and rotation direction.
-- Recheck PX4 PWM output mapping (MAIN 4 = left motor, MAIN 6 = right motor).
+- Secure both motor mounting plates with polyurethane glue to ensure the motors are mounted properly and do not induce vibrations that could damage the motors or destabilise the aircraft.
+- Use a tack-style polyurethane glue that can reasonably easily be removed later, and that does not impede removing the motor covers or disassembling the wing.
 
 **Acceptance criteria**
-- Both motors rotate in the documented directions.
-- Propellers produce forward thrust.
-- No wiring, connectors, or ESCs become abnormally hot during a bench run.
-- Motor outputs respond to the correct PX4 channels (Actuators page).
-- Installation recorded in `docs/engineering/ICD.md` and this document.
+- Both motor mounting plates secured with no play or looseness.
+- Motor covers and wing can still be removed/disassembled without excessive force or damage.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-The T-Motor U5 v2.0 KV400 motors were found to produce inadequate thrust during the 2026-07-05 BNEMAC inspection. T-MOTOR MN3110 KV700 motors were purchased 2026-07-06 to replace them. Two T-Motor AIR 40A ESCs acquired 2026-07-17 to pair with the new motors (40A continuous / 60A 10s peak, well above the MN3110 KV700's 21A max continuous draw), replacing the previously-fitted ESCs of unidentified model.
-
-Installed 2026-08-19, carrying over the existing 11x7" Hobbyrama LP11X7E propellers rather than the 9x6" Gemfan standard/pusher pair purchased 2026-07-14 for contra-rotation - both propellers rotate clockwise (viewed from the body reference plane), same handedness. Confirmed acceptable: contra-rotation is not required for the maiden flight. The 9x6" Gemfan pair is not installed (see `docs/project/purchase-history/purchase-history.md`).
+Raised by Julian, 2026-08-28 - considered critical to ensuring the motors are properly mounted and do not induce vibration, which could damage the motors themselves or destabilise the aircraft. Must be complete before the maiden flight.
 
 </details>
+
+---
+
+## B. Propulsion System
 
 ### PROP-02 - Static thrust-to-weight ground test
 
 - [ ] **Status:** In progress
 - **Priority:** CRITICAL
 - **Milestone:** Ground-test readiness
-- **Depends on:** PROP-01
+- **Depends on:** PROP-01 (complete - see Completed Work)
 
 **Scope**
 - Conduct a bench/ground test measuring static thrust from both motors at full throttle against the aircraft's all-up weight.
@@ -173,46 +167,12 @@ Originally raised against the U5 KV400 motors following the inadequate-thrust fi
 
 </details>
 
-### PROP-03 - Motor start synchronisation
-
-- [x] **Status:** Complete
-- **Priority:** URGENT
-- **Milestone:** Ground-test readiness
-- **Depends on:** PROP-01
-
-**Scope**
-- Recalibrate both ESCs via QGroundControl so both motors start simultaneously on throttle-up.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-One motor was observed starting before the other during the 2026-07-05 BNEMAC inspection. Root cause confirmed as ESC calibration by Peter Spink at the 2026-07-10 TMAC review. Recalibrated as part of the MN3110/AIR 40A install (PROP-01, 2026-08-19) - both motors now start simultaneously.
-
-</details>
-
-### PROP-04 - Motor PWM min/max limits
-
-- [x] **Status:** Complete
-- **Priority:** URGENT
-- **Milestone:** Ground-test readiness
-- **Depends on:** PROP-01
-
-**Scope**
-- Set and verify minimum and maximum PWM duty cycle for both ESCs to ensure correct throttle range.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Set 2026-08-19: both motors (MAIN 4, MAIN 6) at 1000-2000us min/max, confirmed against `docs/operations/Pixhawk Parameter Backup/believer-parameters.params` and the QGroundControl Actuators Config screenshot.
-
-</details>
-
 ### PROP-06 - Verify throttle curve/mapping
 
 - [ ] **Status:** Not started
 - **Priority:** CRITICAL
 - **Milestone:** Ground-test readiness
-- **Depends on:** PROP-01
+- **Depends on:** PROP-01 (complete - see Completed Work)
 
 **Scope**
 - Review throttle stick input to motor PWM output mapping for both motors following the MN3110 KV700/AIR 40A install; remap the throttle curve if needed for appropriate low/mid/high-throttle response.
@@ -237,11 +197,12 @@ Split out as its own task 2026-08-19, separate from static thrust verification (
 
 **Scope**
 - Model the Believer airframe and the final motor/ESC/propeller combination in MotoCalc to optimise efficiency.
+- Use a generic Eppler 374 (E374) aerofoil in the MotoCalc model, per Julian's guidance (recorded as "EPLA 374" - understood to mean the Eppler 374, a common generic low-Reynolds-number RC aerofoil; flag if a different aerofoil was actually meant).
 
 <details>
 <summary>Background and engineering notes</summary>
 
-MotoCalc introduced by Peter Spink during the 2026-07-10 TMAC review and used to select a 9x6" propeller pair. Airfoil modelling method used for that selection is uncertain - treat calculated figures with reservation until this task confirms them against the as-installed system. The as-installed propellers (11x7" Hobbyrama LP11X7E, PROP-01) differ from the modelled 9x6" pair, so this characterisation now needs to be run against the actual fitted combination rather than the original MotoCalc selection.
+MotoCalc introduced by Peter Spink during the 2026-07-10 TMAC review and used to select a 9x6" propeller pair. Airfoil modelling method used for that selection is uncertain - treat calculated figures with reservation until this task confirms them against the as-installed system. The as-installed propellers (11x7" Hobbyrama LP11X7E, PROP-01) differ from the modelled 9x6" pair, so this characterisation now needs to be run against the actual fitted combination rather than the original MotoCalc selection. Julian advised 2026-08-28 to use a generic Eppler 374 aerofoil in the model, in the absence of a precisely characterised airfoil for the current wing.
 
 </details>
 
@@ -249,34 +210,11 @@ MotoCalc introduced by Peter Spink during the 2026-07-10 TMAC review and used to
 
 ## C. Electrical Power
 
-### PWR-01 - Install dedicated 5V servo UBEC
-
-- [x] **Status:** Complete
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Install a separate 5V UBEC capable of 8-10A to supply the servo rail.
-
-**Acceptance criteria**
-- Servo rail voltage remains within specification under full control-surface load (all servos moving simultaneously).
-- PM03D's 3A rail is confirmed no longer supplying the servo bus.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-The PM03D servo rail is limited to 3A per the manufacturer datasheet (confirmed against `Component datasheets/holybro-pm03d-manual.pdf`), which is insufficient for the servo load. Identified during the 2026-07-10 TMAC review with Peter Spink.
-
-Installed 2026-08-19: ZTW UBEC 10A (peak) / 6A continuous, wired to the servo rail in place of the PM03D. Confirmed functional; the PM03D no longer powers the servo rail. Full load verification under an oscilloscope is tracked separately as PWR-03 and does not block maiden flight.
-
-</details>
-
 ### PWR-03 - Servo rail load test under oscilloscope
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** PWR-01
+- **Depends on:** PWR-01 (complete - see Completed Work)
 
 **Scope**
 - With the flight control surface servos under stress (moving simultaneously / against load), monitor the servo rail voltage on an oscilloscope to confirm it does not drop out of specification.
@@ -308,54 +246,14 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 ## D. Flight Controls and PX4 Configuration
 
-### CTL-01 - Investigate Stabilized-mode yaw behaviour
-
-- [x] **Status:** Complete
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Investigate PX4 flight mode configuration and behaviour in Stabilized mode.
-
-**Acceptance criteria**
-- Root cause of the missing yaw authority identified.
-- Yaw response in Stabilized mode confirmed correct on the bench (Actuators page / hardware-in-the-loop check as available).
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Stabilize mode observed to behave differently than expected during the 2026-07-05 BNEMAC inspection. No yaw authority in Stabilized mode confirmed during the 2026-07-10 TMAC session with Peter Spink.
-
-Resolved 2026-08-19: the direct, high-authority yaw response the team originally expected from Stabilized mode is properly Acro mode's behaviour, not Stabilized's. Acro was added to the GR1 flight-mode group (replacing the redundant duplicate Hold position) to provide it - see `docs/engineering/flight-modes.md` Section 4.2. The V-tail yaw mixing gain was also raised from 0.50 to 0.85 as part of finalising the 2026-07-10 TMAC trim values (`docs/engineering/ICD.md` Control Surface Mixing).
-
-</details>
-
 ### CTL-02 - Flight controller (roll/pitch/yaw) tuning
 
 - [ ] **Status:** Not started
 - **Priority:** URGENT
-- **Depends on:** CTL-01
+- **Depends on:** CTL-01 (complete - see Completed Work)
 
 **Scope**
 - Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights.
-
-### CTL-03 - Enter missing trim values from the 2026-07-10 TMAC session
-
-- [x] **Status:** Complete
-- **Priority:** URGENT
-- **Depends on:** None
-
-**Scope**
-- Julian to provide the final aileron trim values from the 2026-07-10 TMAC tuning session.
-- Enter the trim values in EdgeTX and confirm against stick-neutral surface position.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-During the 2026-07-10 TMAC session, aileron differential (20mm up / 1.5mm down) and V-tail rudder mix were adjusted live with Peter Spink, and aileron trim was adjusted but the new values were not recorded. Entered 2026-08-19: mixer trim -0.08 (left aileron) and -0.03 (right aileron), confirmed against the QGroundControl Actuators Config screenshot and the exported parameters - see `docs/engineering/ICD.md` Control Surface Mixing.
-
-</details>
 
 ### CTL-04 - Configure dual/tri-rate switch-selectable deflection
 
@@ -365,21 +263,76 @@ During the 2026-07-10 TMAC session, aileron differential (20mm up / 1.5mm down) 
 
 **Scope**
 - Configure switch-selectable high/low control surface deflection rates in EdgeTX.
-
-### CTL-05 - Maintain clean-install procedure
-
-- [x] **Status:** Complete
-- **Priority:** NON-CRITICAL
-- **Depends on:** None
-
-**Scope**
-- Document all parameter changes and the build log.
-- Re-configure the flight controller from scratch before each test flight.
+- Low-rate position: 50% aileron rate. Elevator and rudder unchanged (full rate) on both switch positions.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Addressed as an ongoing repository practice rather than a one-off task: every parameter change is narrated in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`, the full build history is logged in `context/CHANGELOG.md`, and dated backups of both the PX4 parameter export and the GX12 EdgeTX radio configuration are kept under `docs/operations/`. Closed 2026-08-19 per user confirmation.
+Low-rate aileron detail (50%) added per Julian, 2026-08-28.
+
+</details>
+
+### CTL-06 - Configure aileron differential across full travel range
+
+- [ ] **Status:** Not started
+- **Priority:** URGENT
+- **Depends on:** None
+
+**Scope**
+- Investigate and configure proper aileron differential throughout the full range of aileron travel, not just at the PWM endpoints as currently configured.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised by Julian, 2026-08-28: the aileron differential currently only accounts for differential at the endpoints of the PWM range, not throughout the full range of travel. This refines the differential adjustment previously logged as part of "Control surface deflection limits and expo" (Completed Work) - that entry covered endpoint differential and trim only; proper full-range differential shaping is this task's scope.
+
+</details>
+
+### CTL-07 - Configure aileron-to-rudder mixing
+
+- [ ] **Status:** Not started
+- **Priority:** NON-CRITICAL
+- **Depends on:** None
+
+**Scope**
+- Configure 10% aileron-to-rudder mixing, so that commanding roll also produces a small proportional rudder deflection.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Requested by Julian, 2026-08-28, likely to help coordinate turns / compensate for adverse yaw.
+
+</details>
+
+### CTL-08 - Investigate control surface deflection reaching limits before full stick travel
+
+- [ ] **Status:** Not started
+- **Priority:** URGENT
+- **Depends on:** None
+
+**Scope**
+- Investigate why flight control surfaces reach their maximum configured deflection while there is still travel remaining in the radio gimbal/stick. Determine root cause and resolve - potentially a radio calibration issue.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Observed by Julian, 2026-08-28. Not yet root-caused; radio calibration is a suspected but unconfirmed fix.
+
+</details>
+
+### CTL-09 - Update WEIGHT_BASE parameter
+
+- [ ] **Status:** Not started
+- **Priority:** URGENT
+- **Depends on:** None
+
+**Scope**
+- Update the `WEIGHT_BASE` PX4 parameter to reflect the aircraft's actual weight.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised by Julian, 2026-08-28. The parameter's exact role and correct target value for this PX4 version/airframe have not yet been confirmed against PX4 documentation - verify before setting.
 
 </details>
 
@@ -405,43 +358,11 @@ Addressed as an ongoing repository practice rather than a one-off task: every pa
 **Scope**
 - Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air; check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient.
 
-### NAV-03 - External mount for ZED-F9P
-
-- [x] **Status:** Complete
-- **Priority:** URGENT
-- **Depends on:** None
-
-**Scope**
-- Install an external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Completed 2026-08-28.
-
-</details>
-
-### NAV-04 - GPS 2 antenna installation
-
-- [x] **Status:** Complete
-- **Priority:** URGENT
-- **Depends on:** NAV-03
-
-**Scope**
-- Install the antenna on the SparkFun ZED-F9P RTK GPS breakout.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Completed 2026-08-28. The aircraft can fly on M8N (GPS 1) alone, but RTK capability remains unavailable until NAV-05 (protocol/GNSS configuration and GPS lock confirmation) is also complete - `GPS_2_CONFIG` is still disabled pending that task.
-
-</details>
-
 ### NAV-05 - GPS 2 (ZED-F9P) configuration and validation
 
 - [ ] **Status:** In progress
 - **Priority:** URGENT
-- **Depends on:** NAV-04
+- **Depends on:** NAV-04 (complete - see Completed Work)
 
 **Scope**
 - Configure protocol and GNSS constellation settings.
@@ -451,28 +372,11 @@ Completed 2026-08-28. The aircraft can fly on M8N (GPS 1) alone, but RTK capabil
 
 ## F. RC, Telemetry and RF
 
-### RF-01 - Relocate DBR4 receiver
-
-- [x] **Status:** Complete
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Move the DBR4 receiver away from sensitive avionics (flight computer).
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Identified during the 2026-07-10 TMAC review with Peter Spink. Relocated 2026-08-19 to the rear of the aircraft, away from the main avionics bay. Split from the original combined relocate/orthogonal-mounting task - antenna orientation is now tracked separately as RF-05.
-
-</details>
-
 ### RF-05 - Mount and secure DBR4 antennas orthogonally
 
 - [ ] **Status:** Not started
 - **Priority:** URGENT
-- **Depends on:** RF-01
+- **Depends on:** RF-01 (complete - see Completed Work)
 
 **Scope**
 - Mount the DBR4's antennas orthogonally to each other for optimal dual-band diversity reception.
@@ -482,38 +386,6 @@ Identified during the 2026-07-10 TMAC review with Peter Spink. Relocated 2026-08
 <summary>Background and engineering notes</summary>
 
 Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separately. Does not block the maiden flight - the receiver has plenty of range without orthogonal mounting - but should be done soon for optimal reception. RTV securing added 2026-08-19 per Julian - standard practice for RF antenna leads/connectors on RC airframes.
-
-</details>
-
-### RF-03 - Radio flight-mode audio cues
-
-- [x] **Status:** Complete
-- **Priority:** NON-CRITICAL
-- **Depends on:** None
-
-**Scope**
-- Configure accompanying sounds on the GX12 for flight-mode awareness.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Recommended by Peter Spink (TMAC, 2026-07-10). Configured 2026-08-19.
-
-</details>
-
-### RF-04 - Radio timer widget
-
-- [x] **Status:** Complete
-- **Priority:** NON-CRITICAL
-- **Depends on:** None
-
-**Scope**
-- Add a timer widget to the GX12 telemetry screen.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Recommended by Peter Spink (TMAC, 2026-07-10). Added 2026-08-19.
 
 </details>
 
@@ -556,7 +428,7 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Motor and ESC installation and configuration - T-MOTOR MN3110 KV700 motors and T-Motor AIR 40A ESCs installed (PROP-01); PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page; motor start synchronisation confirmed (PROP-03); motor PWM min/max set to 1000-2000us on both motors (PROP-04)
 - [x] Control surface PWM mapping and direction - PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction
 - [x] Primary control expo - 30% exponential set on aileron, elevator, and rudder; throttle expo removed
-- [x] Control surface deflection limits and expo - radio calibration matched stick travel to the configured PWM deflection limits; aileron differential and V-tail rudder mix adjusted, final trim values entered 2026-08-19 (CTL-03)
+- [x] Control surface deflection limits and expo - radio calibration matched stick travel to the configured PWM deflection limits; aileron differential (endpoints only - full-range differential now tracked separately as CTL-06) and V-tail rudder mix adjusted, final trim values entered 2026-08-19 (CTL-03)
 
 ### Electrical power
 - [x] Battery installation - battery installed

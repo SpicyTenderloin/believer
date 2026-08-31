@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-28 (continued)
+
+- `docs/project/build-checklist.md`: restructured per Julian - completed tasks (PROP-01/03/04, PWR-01, CTL-01/03/05, NAV-03/04, RF-01/03/04) removed from their active work-package sections now that they're migrated into Completed Work, rather than existing in both places; "Depends on" references to now-completed tasks annotated "(complete - see Completed Work)" for traceability. Detailed provenance for the removed entries remains in `context/project-notes.md` and this changelog, consistent with how `docs/engineering/ICD.md` and `context/project-notes.md` already divide current-state vs. provenance content.
+- `docs/project/build-checklist.md`: added new tasks per Julian - AF-08 (secure motor mounting plates with polyurethane/tack glue, Critical, must be complete before maiden flight - added to the Current Flight-Readiness Status table); CTL-06 (configure aileron differential across the full travel range, not just PWM endpoints - corrects the earlier Completed Work claim that differential was fully adjusted, which only covered the endpoints); CTL-07 (10% aileron-to-rudder mixing); CTL-08 (investigate control surfaces reaching max deflection before full radio stick travel, possibly a radio calibration issue); CTL-09 (update `WEIGHT_BASE` PX4 parameter - exact role/target value not yet confirmed against PX4 documentation, flagged for verification). Added detail to CTL-04 (dual/tri-rate switch): low-rate position is 50% aileron rate, elevator/rudder unchanged. Updated PROP-05's scope to use a generic Eppler 374 (E374) aerofoil in the MotoCalc model, per Julian's guidance (recorded as "EPLA 374" - understood as Eppler 374, flagged for confirmation if a different aerofoil was meant).
+- Verified `docs/operations/manual.md`'s pre-flight checklist already includes a step (15) to update `SENS_BARO_QNH` to the current ambient barometric pressure reading - no change needed, per Julian's request to confirm this step exists.
+
 ## 2026-08-28
 
 - `docs/project/build-checklist.md`: closed NAV-03 (external mount for ZED-F9P) and NAV-04 (GPS 2 antenna installation), both completed 2026-08-28 per Julian - moved into Completed Work. Also caught CTL-05 (clean-install procedure), which had been marked Complete since 2026-08-19 but was never added to the Completed Work summary - added it now. RTK capability remains unavailable pending NAV-05 (protocol/GNSS configuration and GPS lock confirmation), which is unaffected by this update.
