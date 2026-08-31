@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-28 (continued x3)
+
+- `docs/engineering/ICD.md` (Rev 2.0 -> 2.1) and `context/project-notes.md`: corrected `GPS_1_GNSS` from the documented 21 to the actual live value, 0 (Default) - caught while reviewing GPS parameter recommendations with Julian; the M8N has a confirmed working GPS lock at 0, so the documentation was stale rather than the live configuration being wrong.
+
 ## 2026-08-28 (continued x2)
 
 - Researched PX4's dual-GPS handling per Julian's question about making the ZED-F9P the "primary" GPS - this PX4 version (1.16.1rc) has no simple primary-GPS toggle; instead `SENS_GPS_MASK` (currently 7 in the exported parameters) either blends both receivers by reported accuracy or locks onto one exclusively. Julian chose blending (recommended) - the ZED-F9P is expected to dominate the blend once enabled, especially with RTK corrections, while the M8N remains an automatic fallback if it drops out.

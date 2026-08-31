@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.0 |
+| **Revision** | 2.1 |
 | **Date** | 2026-08-28 |
 | **Status** | Draft |
 
@@ -280,7 +280,7 @@ M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
 |---|---|
 | `GPS_1_CONFIG` | GPS 1 |
 | `GPS_1_PROTOCOL` | u-blox |
-| `GPS_1_GNSS` | 21 |
+| `GPS_1_GNSS` | 0 (Default) |
 | `GPS_UBX_DYNMODEL` | Airborne <4g |
 
 ### INT-06 - GPS 2 / RTK
@@ -341,3 +341,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 1.8 | 2026-07-17 | Cross-referenced newly-sourced datasheets: INA228 (INT-01), T-Motor U5 KV400 load-test report, and T-Motor AIR 40A ESC manual - all added to `Component datasheets/` |
 | 1.9 | 2026-08-19 | Recorded the MN3110 KV700/AIR 40A propulsion install (replacing the U5 KV400 motors and previously-fitted ESCs), the dedicated servo-rail UBEC (replacing PM03D as the servo rail source), DBR4 relocation to the rear of the aircraft, and the finalised aileron trim/V-tail yaw mixing values from the 2026-07-10 TMAC session. Updated the INT-02a-f actuator table and added a Control Surface Mixing subsection against the current exported parameters and QGroundControl Actuators Config screenshot. Updated the GR1 flight-mode mapping (Acro added, Hold removed from the group, still reachable via CH8) |
 | 2.0 | 2026-08-28 | Updated INT-06: recorded the ZED-F9P external mount and antenna installation (NAV-03/NAV-04), removed the stale "antenna not yet fitted, maiden flight blocker" note (superseded and was never actually a hard blocker), and documented the decision to blend GPS 1/GPS 2 via `SENS_GPS_MASK` rather than designate a single "primary" GPS, per Julian - pending NAV-05 confirming the parameter's bit semantics for the installed PX4 version |
+| 2.1 | 2026-08-28 | Corrected `GPS_1_GNSS` in INT-05 from 21 to 0 (Default) - the documented value never matched the live exported parameters, caught during a review of GPS parameter recommendations |
