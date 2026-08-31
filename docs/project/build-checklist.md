@@ -202,7 +202,33 @@ Split out as its own task 2026-08-19, separate from static thrust verification (
 <details>
 <summary>Background and engineering notes</summary>
 
-MotoCalc introduced by Peter Spink during the 2026-07-10 TMAC review and used to select a 9x6" propeller pair. Airfoil modelling method used for that selection is uncertain - treat calculated figures with reservation until this task confirms them against the as-installed system. The as-installed propellers (11x7" Hobbyrama LP11X7E, PROP-01) differ from the modelled 9x6" pair, so this characterisation now needs to be run against the actual fitted combination rather than the original MotoCalc selection. Julian advised 2026-08-28 to use a generic Eppler 374 aerofoil in the model, in the absence of a precisely characterised airfoil for the current wing.
+MotoCalc introduced by Peter Spink during the 2026-07-10 TMAC review and used to select a 9x6" propeller pair. Airfoil modelling method used for that selection is uncertain - treat calculated figures with reservation until this task confirms them against the as-installed system. The as-installed propellers (11x7" Hobbyrama LP11X7E, PROP-01) differ from the modelled 9x6" pair, so this characterisation now needs to be run against the actual fitted combination rather than the original MotoCalc selection. Julian advised 2026-08-28 to use a generic Eppler 374 aerofoil in the model, in the absence of a precisely characterised airfoil for the current wing - see PROP-07 for measuring the real airfoil as a future refinement.
+
+</details>
+
+### PROP-07 - Measure wing airfoil for accurate MotoCalc characterisation
+
+- [ ] **Status:** Not started
+- **Priority:** NON-CRITICAL
+- **Depends on:** None
+
+**Scope**
+- Physically measure the wing's actual airfoil profile, per MotoCalc's "Wing Airfoil Measurements" dialog, so PROP-05 can use the real section instead of the generic Eppler 374 stand-in. From a datum line parallel to the horizontal stabiliser's chord line, measure (negative values for anything below the datum):
+  - Wing leading edge height (LE HEIGHT)
+  - Wing trailing edge height (TE HEIGHT)
+  - Leading edge to trailing edge (CHORD)
+  - Upper surface height at thickest point (UH)
+  - Lower surface height at thickest point (LH)
+  - Height of chord line at thickest point (CH)
+
+**Acceptance criteria**
+- All six measurements recorded, with the chord station they were taken at noted (airfoil section can vary along the span).
+- Values entered into MotoCalc via "From Measurements..." and cross-checked against the generic Eppler 374 result used in PROP-05.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised by Julian, 2026-08-28, while working through the MotoCalc "Coeff..." airfoil dialog for PROP-05. The real Believer airfoil has never been characterised - only outline dimensions (wingspan, wing area, MTOW) are documented, from the original manufacturer's page (en.makeflyeasy.com, `context/project-notes.md`) - so PROP-05 is proceeding with a generic Eppler 374 stand-in in the meantime. This task supersedes that approximation with real measurements once done. Julian provided a reference screenshot of MotoCalc's measurement dialog and diagram - pending being added to `docs/assets/` (Claude cannot extract images pasted in chat directly; needs the file dropped into the repo).
 
 </details>
 

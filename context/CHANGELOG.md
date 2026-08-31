@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-28 (continued x4)
+
+- `docs/project/build-checklist.md`: added PROP-07 (measure the wing's real airfoil for accurate MotoCalc characterisation - LE/TE height, chord, upper/lower surface height and chord-line height at the thickest point) per Julian, non-critical - supersedes the generic Eppler 374 stand-in currently used for PROP-05 once done. Reference screenshot of MotoCalc's measurement dialog is pending being added to `docs/assets/` - Claude cannot extract images pasted directly in chat, so the file needs to be dropped into the repo the same way other attachments have been.
+
 ## 2026-08-28 (continued x3)
 
 - `docs/engineering/ICD.md` (Rev 2.0 -> 2.1) and `context/project-notes.md`: corrected `GPS_1_GNSS` from the documented 21 to the actual live value, 0 (Default) - caught while reviewing GPS parameter recommendations with Julian; the M8N has a confirmed working GPS lock at 0, so the documentation was stale rather than the live configuration being wrong.
