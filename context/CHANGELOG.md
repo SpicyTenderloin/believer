@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-31
+
+- `docs/project/build-checklist.md`: added a sustained full-throttle current/temperature monitoring acceptance criterion to PROP-02, per a finding from Julian's brief (<20s) full-throttle bench test (2026-08-31) - the PDB reported 60-65A total current draw (~30-32.5A per motor), roughly 45-55% above the MN3110 KV700's rated 21A continuous current, though well within the AIR 40A ESC and battery's capability. Not a concern for a brief burst, but sustained-duration thermal safety is unverified - PROP-02 should not be considered conclusive on this point until a longer run is tested.
+- `context/project-notes.md`: recorded the current-draw finding.
+
 ## 2026-08-28 (continued x4)
 
 - `docs/project/build-checklist.md`: added PROP-07 (measure the wing's real airfoil for accurate MotoCalc characterisation - LE/TE height, chord, upper/lower surface height and chord-line height at the thickest point) per Julian, non-critical - supersedes the generic Eppler 374 stand-in currently used for PROP-05 once done. Reference screenshot of MotoCalc's measurement dialog is pending being added to `docs/assets/` - Claude cannot extract images pasted directly in chat, so the file needs to be dropped into the repo the same way other attachments have been.

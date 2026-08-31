@@ -154,16 +154,20 @@ Raised by Julian, 2026-08-28 - considered critical to ensuring the motors are pr
 
 **Scope**
 - Conduct a bench/ground test measuring static thrust from both motors at full throttle against the aircraft's all-up weight.
+- Include a sustained full-throttle run (approaching the motor's 180s continuous rating window, not just a brief burst), monitoring total current draw and motor temperature throughout - see background notes.
 
 **Acceptance criteria**
 - Measured thrust-to-weight ratio recorded.
 - Result reviewed against the target ratio needed for reliable hand-launch and climb performance.
+- Sustained full-throttle current draw and motor temperature recorded, and reviewed against the MN3110 KV700's 21A continuous rating (not just a brief-burst reading).
 - Result logged as a dated entry under `docs/engineering/test-reports/`.
 
 <details>
 <summary>Background and engineering notes</summary>
 
 Originally raised against the U5 KV400 motors following the inadequate-thrust finding at the 2026-07-05 BNEMAC inspection. Repeated 2026-08-19 following the MN3110 KV700/AIR 40A install (PROP-01): a basic bench thrust test showed decent thrust, but it remains unclear whether it is sufficient - measured thrust-to-weight ratio and a pass/fail against the target ratio are still needed. Kept as a separate task from throttle curve/mapping verification (PROP-06).
+
+A brief (<20s) full-throttle test (2026-08-31, Julian) had the PDB reporting 60-65A total current draw - approximately 30-32.5A per motor, assuming an even split. This is comfortably within the T-Motor AIR 40A ESC's 40A continuous rating and the battery's capability, but is roughly 45-55% above the MN3110 KV700's own rated max continuous current (21A, a 180s/3-minute rating per the datasheet). A brief burst at this level is not itself a concern, but it does not confirm whether sustained full-throttle operation (e.g. a longer climb-out) is thermally safe for the motors - hence the added sustained-run acceptance criterion above, rather than treating the brief test as conclusive either way.
 
 </details>
 
