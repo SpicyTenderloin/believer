@@ -2,7 +2,7 @@
 
 Information gaps still to confirm with the user. Resolved items (Telem_1 protocol/baud, GPS_1 protocol/port, GX12 role, PDB model, RC channel/switch map) have been moved into `docs/engineering/ICD.md`, `docs/operations/manual.md`, and `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
 
-- [ ] GPS_2 (ZED-F9P RTK breakout): RTK correction source (base station? NTRIP?) - port (GPS 2 UART) and GNSS constellation config confirmed
+- [ ] GPS_2 (ZED-F9P RTK breakout): RTK correction source (base station? NTRIP?) - port (GPS 2 UART) and GNSS constellation config confirmed. Also confirm `SENS_GPS_MASK`'s exact bit semantics against the PX4 documentation for the installed firmware version, to verify it produces the intended GPS 1/GPS 2 blended solution (decided 2026-08-28, not a single fixed "primary" GPS) - see `docs/project/build-checklist.md` NAV-05
 - [ ] I2C airspeed sensor (MS4525DO): pull-up resistor configuration not confirmed (port - Pixhawk 6X I2C, JST-GH 4-pin - and address 0x28 are confirmed in `docs/engineering/ICD.md` INT-07)
 - [ ] `BAT_LOW_THR` on the physical FC: temporarily lowered to 12% for bench testing on 2026-08-19; Julian confirmed it should be reset to 20% but had not yet done so on the physical flight controller at the time of this update (the archived backup and docs already reflect the intended 20% value) - verify the live FC matches before the next flight
 - [ ] `MAV_1_MODE` changed from 3 (OSD) to 0 (Normal) (2026-07-06); the `BATTERY_STATUS` 10Hz override in `/fs/microsd/etc/extras.txt` was tuned against OSD mode's 0.5Hz default and has not been re-verified under Normal mode

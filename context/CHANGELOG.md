@@ -2,6 +2,13 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-28 (continued x2)
+
+- Researched PX4's dual-GPS handling per Julian's question about making the ZED-F9P the "primary" GPS - this PX4 version (1.16.1rc) has no simple primary-GPS toggle; instead `SENS_GPS_MASK` (currently 7 in the exported parameters) either blends both receivers by reported accuracy or locks onto one exclusively. Julian chose blending (recommended) - the ZED-F9P is expected to dominate the blend once enabled, especially with RTK corrections, while the M8N remains an automatic fallback if it drops out.
+- `docs/engineering/ICD.md` (Rev 1.9 -> 2.0): updated INT-06 - recorded the ZED-F9P mount/antenna installation, removed the stale "antenna not fitted, maiden flight blocker" note, and documented the GPS blending decision pending NAV-05 confirming `SENS_GPS_MASK`'s exact bit semantics for this firmware version.
+- `docs/project/build-checklist.md`: added the `SENS_GPS_MASK` blending confirmation to NAV-05's scope.
+- `context/project-notes.md`, `context/open-items.md`: recorded the blending decision and the open item to verify `SENS_GPS_MASK`'s bit semantics before relying on it.
+
 ## 2026-08-28 (continued)
 
 - `docs/project/build-checklist.md`: restructured per Julian - completed tasks (PROP-01/03/04, PWR-01, CTL-01/03/05, NAV-03/04, RF-01/03/04) removed from their active work-package sections now that they're migrated into Completed Work, rather than existing in both places; "Depends on" references to now-completed tasks annotated "(complete - see Completed Work)" for traceability. Detailed provenance for the removed entries remains in `context/project-notes.md` and this changelog, consistent with how `docs/engineering/ICD.md` and `context/project-notes.md` already divide current-state vs. provenance content.

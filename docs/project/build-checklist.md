@@ -367,6 +367,7 @@ Raised by Julian, 2026-08-28. The parameter's exact role and correct target valu
 **Scope**
 - Configure protocol and GNSS constellation settings.
 - Confirm GPS lock.
+- Confirm `SENS_GPS_MASK` (currently 7 in the exported parameters) produces a blended GPS 1/GPS 2 solution weighted by reported accuracy, rather than a single fixed "primary" receiver - verify the parameter's exact bit semantics against the PX4 documentation for the installed firmware version before relying on it. Decision (2026-08-28, Julian): blend, not exclusive-use, so the M8N remains an automatic fallback if the ZED-F9P drops out.
 
 ---
 

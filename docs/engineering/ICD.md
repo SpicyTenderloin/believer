@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 1.9 |
-| **Date** | 2026-08-19 |
+| **Revision** | 2.0 |
+| **Date** | 2026-08-28 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -285,13 +285,13 @@ M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
 
 ### INT-06 - GPS 2 / RTK
 
-SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART.
+SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART. External mount and antenna installed 2026-08-28 (`docs/project/build-checklist.md` NAV-03/NAV-04).
 
 | Parameter | Value |
 |---|---|
 | `GPS_2_GNSS` | 29 |
 
-Antenna not yet fitted - tracked as a maiden flight blocker in [build-checklist.md](../project/build-checklist.md).
+`GPS_2_CONFIG` remains disabled pending protocol/GNSS configuration and GPS lock confirmation (NAV-05). Once enabled, GPS 1 (M8N) and GPS 2 (ZED-F9P) are intended to be blended by PX4 rather than one designated "primary" - `SENS_GPS_MASK` (currently 7 in the exported parameters) governs this; NAV-05 should confirm its bit semantics against the PX4 documentation for the installed firmware version and verify it produces the intended blended behaviour, weighting the more accurate receiver (expected to be the ZED-F9P, particularly once RTK corrections are available) while retaining the M8N as an automatic fallback.
 
 ### INT-07 - Airspeed Sensor (I2C)
 
@@ -340,3 +340,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 1.7 | 2026-07-17 | Recorded two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 motor upgrade (not yet installed - `docs/project/build-checklist.md` PROP-01); added a spec table for the incoming ESC alongside the existing currently-fitted-ESC photos |
 | 1.8 | 2026-07-17 | Cross-referenced newly-sourced datasheets: INA228 (INT-01), T-Motor U5 KV400 load-test report, and T-Motor AIR 40A ESC manual - all added to `Component datasheets/` |
 | 1.9 | 2026-08-19 | Recorded the MN3110 KV700/AIR 40A propulsion install (replacing the U5 KV400 motors and previously-fitted ESCs), the dedicated servo-rail UBEC (replacing PM03D as the servo rail source), DBR4 relocation to the rear of the aircraft, and the finalised aileron trim/V-tail yaw mixing values from the 2026-07-10 TMAC session. Updated the INT-02a-f actuator table and added a Control Surface Mixing subsection against the current exported parameters and QGroundControl Actuators Config screenshot. Updated the GR1 flight-mode mapping (Acro added, Hold removed from the group, still reachable via CH8) |
+| 2.0 | 2026-08-28 | Updated INT-06: recorded the ZED-F9P external mount and antenna installation (NAV-03/NAV-04), removed the stale "antenna not yet fitted, maiden flight blocker" note (superseded and was never actually a hard blocker), and documented the decision to blend GPS 1/GPS 2 via `SENS_GPS_MASK` rather than designate a single "primary" GPS, per Julian - pending NAV-05 confirming the parameter's bit semantics for the installed PX4 version |
