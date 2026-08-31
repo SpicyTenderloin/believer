@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-08-28
+
+- `docs/project/build-checklist.md`: closed NAV-03 (external mount for ZED-F9P) and NAV-04 (GPS 2 antenna installation), both completed 2026-08-28 per Julian - moved into Completed Work. Also caught CTL-05 (clean-install procedure), which had been marked Complete since 2026-08-19 but was never added to the Completed Work summary - added it now. RTK capability remains unavailable pending NAV-05 (protocol/GNSS configuration and GPS lock confirmation), which is unaffected by this update.
+- `context/project-notes.md`, `context/project-overview.md`: updated the ZED-F9P GPS_2 status to reflect the mount and antenna are now installed, replacing the stale "no antenna installed - must be fixed before maiden flight" note; RTK correction source and GPS_2_CONFIG re-enablement remain open under NAV-05.
+
 ## 2026-08-26 (continued x5)
 
 - `docs/engineering/requirements/custom-airframe-requirements.md` (Rev 1.2 -> 1.3): ran the design cruise speed trade study, per Julian's request. Added Section 3e, benchmarking against comparable mission-class survey/mapping UAS - Quantum Systems Trinity F90+ (5.0kg/2.394m, 17 m/s optimal cruise, 12 m/s in-cruise wind tolerance - closest match to this project's mass/wingspan targets), WingtraOne (16 m/s operational cruise), and senseFly eBee X - rather than the Believer, per the Rev 1.2 methodology correction. Cross-checked against a motion-blur/GSD calculation using the IMX335 as an illustrative sensor stand-in (actual payload camera still unselected), confirming 16 m/s is not motion-blur-limited at the 60-100m operating altitude band for any reasonable daylight shutter speed. Resolved REQ-AF-73 to a provisional 16 m/s design cruise speed and REQ-AF-75 to a provisional 25 m/s top speed target; both flagged for final validation once the payload camera is chosen and site-specific wind data is gathered.

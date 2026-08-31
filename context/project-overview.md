@@ -124,6 +124,6 @@ believer/
 
 See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md` (CG correction, battery retention, static thrust verification, throttle curve/mapping verification). Remaining information gaps:
 
-- ZED-F9P RTK antenna not installed - RTK capability unavailable until fitted (the aircraft can fly on GPS 1/M8N alone; not itself a flight blocker)
+- ZED-F9P RTK antenna and external mount installed (2026-08-28) - RTK capability still unavailable pending protocol/GNSS configuration and GPS lock confirmation (`docs/project/build-checklist.md` NAV-05); the aircraft can fly on GPS 1/M8N alone, so this is not itself a flight blocker
 - MS4525DO I2C pull-up resistor configuration not confirmed (port and address are documented in `docs/engineering/ICD.md` INT-07)
 - Static thrust from the newly-installed MN3110 KV700/AIR 40A propulsion system appears decent but is not yet conclusively verified; throttle curve/mapping may also need remapping (tracked as two separate tasks)

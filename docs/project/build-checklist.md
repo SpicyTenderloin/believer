@@ -407,16 +407,23 @@ Addressed as an ongoing repository practice rather than a one-off task: every pa
 
 ### NAV-03 - External mount for ZED-F9P
 
-- [ ] **Status:** Not started
+- [x] **Status:** Complete
 - **Priority:** URGENT
 - **Depends on:** None
 
 **Scope**
 - Install an external mounting bracket for the SparkFun ZED-F9P RTK GPS module to allow antenna installation.
 
+<details>
+<summary>Background and engineering notes</summary>
+
+Completed 2026-08-28.
+
+</details>
+
 ### NAV-04 - GPS 2 antenna installation
 
-- [ ] **Status:** Not started
+- [x] **Status:** Complete
 - **Priority:** URGENT
 - **Depends on:** NAV-03
 
@@ -426,7 +433,7 @@ Addressed as an ongoing repository practice rather than a one-off task: every pa
 <details>
 <summary>Background and engineering notes</summary>
 
-The aircraft can fly on M8N (GPS 1) alone, but RTK capability is unavailable until this task and NAV-05 are complete.
+Completed 2026-08-28. The aircraft can fly on M8N (GPS 1) alone, but RTK capability remains unavailable until NAV-05 (protocol/GNSS configuration and GPS lock confirmation) is also complete - `GPS_2_CONFIG` is still disabled pending that task.
 
 </details>
 
@@ -562,11 +569,14 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Failsafe configuration - RC loss, GCS loss, and battery low/critical failsafe behaviour configured and verified
 - [x] Geofence configuration - breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST)
 - [x] Actuate control surfaces while disarmed - COM_PREARM_MODE set to 2 (Always), 2026-08-19
+- [x] Clean-install procedure - maintained as an ongoing repository practice (parameter change log, CHANGELOG, dated parameter/radio backups) rather than a one-off task (CTL-05)
 
 ### Navigation and air-data sensors
 - [x] Airspeed sensor calibration - MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port
 - [x] GPS 1 (M8N) configuration and validation - GPS_1_CONFIG, GPS_1_PROTOCOL, GPS_1_GNSS, and GPS_UBX_DYNMODEL set; GPS lock confirmed
 - [x] Pitot system installation - pitot tube installed and tubing routed (temporary mount - permanent mount tracked under NAV-01)
+- [x] External mount for ZED-F9P - mounting bracket installed to allow antenna installation, 2026-08-28 (NAV-03)
+- [x] GPS 2 antenna installation - antenna fitted to the SparkFun ZED-F9P RTK breakout, 2026-08-28 (NAV-04); protocol/GNSS configuration and GPS lock confirmation still tracked under NAV-05
 
 ### RC, telemetry and RF
 - [x] RC link installation - RC receiver installed and configured with antennas
