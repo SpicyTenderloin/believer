@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.1 |
-| **Date** | 2026-08-19 |
+| **Revision** | 1.2 |
+| **Date** | 2026-08-31 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -58,6 +58,10 @@ Stick input is sent directly to control allocation with no stabilisation or angl
 | `FW_MAN_R_SC` | 1.0 | Roll stick-to-surface scale factor |
 | `FW_MAN_Y_SC` | 1.0 | Yaw stick-to-surface scale factor |
 
+These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all remain at the PX4 default of 1.0 pending `docs/project/build-checklist.md` CTL-08, which is investigating apparent early control-surface saturation observed on the bench.
+
+**Do not interpret bench behaviour in Acro or Stabilized as evidence about these parameters.** On a stationary bench the aircraft cannot physically respond to a commanded rate (Acro) or attitude (Stabilized), so the controller may legitimately drive a surface to its endpoint well before the stick reaches full travel - this is expected closed-loop behaviour in those modes, not necessarily a `FW_MAN_*_SC` or calibration fault. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode, where CTL-08's verification procedure is run.
+
 Used during ground functional checks (`docs/operations/manual.md` step 21-22) and as the emergency direct-control fallback. Not used for launch.
 
 ### 4.2 Acro
@@ -86,7 +90,9 @@ Centring the roll/pitch sticks levels the aircraft's attitude and holds it there
 
 This is the mode used for hand-launch (`docs/operations/manual.md` Section on Assisted Hand Launch), reachable via GR1 SW3. On the V-tail airframe, pitch and yaw commands are both output through the V-tail servos (MAIN 1/2, `docs/engineering/ICD.md` INT-02a/INT-02b) via PX4's ruddervator mixing rather than separate elevator and rudder surfaces.
 
-No yaw authority was observed in Stabilized mode during the 2026-07-10 TMAC session (CTL-01, `docs/project/build-checklist.md`). This has been resolved: the expected direct yaw-stick response is properly Acro mode's behaviour (Section 4.2), not Stabilized's, and Acro has been added to the GR1 group to provide it. The V-tail yaw mixing gain (`CA_SV_CS2_TRQ_Y`/`CA_SV_CS3_TRQ_Y`, `docs/engineering/ICD.md` Control Surface Mixing) was also raised from 0.50 to 0.85 as part of finalising the 2026-07-10 TMAC trim values.
+No yaw authority was observed in Stabilized mode during the 2026-07-10 TMAC session (CTL-01, `docs/project/build-checklist.md`). This has been resolved: the expected direct yaw-stick response is properly Acro mode's behaviour (Section 4.2), not Stabilized's, and Acro has been added to the GR1 group to provide it. The V-tail yaw mixing gain (`CA_SV_CS2_TRQ_Y`/`CA_SV_CS3_TRQ_Y`, `docs/engineering/ICD.md` Control Surface Mixing) was also raised from 0.50 to 0.85 as part of finalising the 2026-07-10 TMAC trim values. **Note (2026-08-31):** a subsequent control-allocation review found this ±0.85 pair was not a validated rudder-mix ratio, and the target is to restore it to the PX4 type-default ±0.50 - the live value remains ±0.85 as of this writing, pending `docs/project/build-checklist.md` CTL-06.
+
+Turn coordination in this and the automatic modes below is governed in part by `FW_RLL_TO_YAW_FF` (roll-to-yaw feedforward gain, currently 0.0 - the PX4 default), which counteracts adverse yaw on roll entry. It remains at 0.0 in the baseline configuration; any change is deferred until flight testing demonstrates meaningful adverse yaw (`docs/project/build-checklist.md` CTL-07) - no non-zero value is currently planned or decided.
 
 ### 4.4 Altitude
 
@@ -181,3 +187,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 |---|---|---|
 | 1.0 | 2026-07-17 | Initial issue |
 | 1.1 | 2026-08-19 | Added Acro mode (Section 4.2, new GR1 SW2); removed Hold from the GR1 group (still reachable via CH8) and renumbered subsequent GR1 positions/sections accordingly. Resolved the Stabilized-mode yaw open item (CTL-01) - the expected direct yaw response is Acro's behaviour, not Stabilized's; also recorded the V-tail yaw mixing gain increase (0.50 -> 0.85) from the finalised TMAC trim values |
+| 1.2 | 2026-08-31 | Following a flight-control configuration review: clarified that `FW_MAN_*_SC` (Section 4.1) apply specifically to full Manual mode and warned against interpreting Acro/Stabilized bench saturation as evidence about them; documented `FW_RLL_TO_YAW_FF` (Section 4.3, currently 0.0, no non-zero value planned pending flight-test evidence); flagged the 2026-08-19 V-tail ±0.85 yaw mixing gain as targeted for restoration to the PX4 default ±0.50, live value unchanged pending CTL-06 |

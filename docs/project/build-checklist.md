@@ -246,15 +246,16 @@ Raised by Julian, 2026-08-28, while working through the MotoCalc "Coeff..." airf
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** PWR-01 (complete - see Completed Work)
+- **Depends on:** PWR-01 (complete - see Completed Work), CTL-06
 
 **Scope**
 - With the flight control surface servos under stress (moving simultaneously / against load), monitor the servo rail voltage on an oscilloscope to confirm it does not drop out of specification.
+- Perform this test using the final endpoint configuration established by CTL-06, not the superseded endpoint values - servo current can increase substantially near high load, binding, or extreme deflection, so a test against superseded endpoints would not represent the final aircraft configuration.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Follow-up verification for the UBEC installed under PWR-01 (2026-08-19). Does not block the maiden flight - the UBEC is installed and confirmed functional; this task confirms rail voltage stability under worst-case servo load.
+Follow-up verification for the UBEC installed under PWR-01 (2026-08-19). Does not block the maiden flight - the UBEC is installed and confirmed functional; this task confirms rail voltage stability under worst-case servo load. Dependency on CTL-06 added 2026-08-31, per the flight-control configuration review.
 
 </details>
 
@@ -282,73 +283,119 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 - [ ] **Status:** Not started
 - **Priority:** URGENT
-- **Depends on:** CTL-01 (complete - see Completed Work)
+- **Depends on:** CTL-01 (complete - see Completed Work), CTL-06, CTL-08
 
 **Scope**
 - Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights.
+- Gains must not be used to compensate for incorrect PWM limits, incorrect actuator types/directions, or premature Manual-mode saturation - those are CTL-06/CTL-08's responsibility, not a controller-tuning workaround.
+- Observe and record adverse-yaw behaviour on roll entry during these flights - this feeds CTL-07's evidence-based decision, though CTL-02 itself remains about closed-loop stability/response, not roll-to-yaw feedforward.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configuration review: tuning gains against an uncertain actuator baseline (unresolved effectiveness coefficients, unmeasured safe PWM endpoints, or unverified Manual-mode scaling) could produce misleading gains or conceal a configuration fault.
+
+</details>
 
 ### CTL-04 - Configure dual/tri-rate switch-selectable deflection
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** None
+- **Depends on:** CTL-08
 
 **Scope**
 - Configure switch-selectable high/low control surface deflection rates in EdgeTX.
 - Low-rate position: 50% aileron rate. Elevator and rudder unchanged (full rate) on both switch positions.
+- The high-rate (normal) transmitter state must first produce the verified baseline response established under CTL-08 before the low-rate position is implemented and checked.
+
+**Acceptance criteria**
+- Revalidated against the final `FW_MAN_R_SC` value once CTL-08 concludes - EdgeTX rate scaling and PX4 Manual scaling can compound (e.g. a 50% transmitter rate combined with a reduced PX4 Manual roll scale could produce substantially less than the intended low-rate authority).
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Low-rate aileron detail (50%) added per Julian, 2026-08-28.
+Low-rate aileron detail (50%) added per Julian, 2026-08-28. Dependency on CTL-08 added 2026-08-31, per the flight-control configuration review, to avoid masking the unresolved early-saturation issue (CTL-08) behind a transmitter-side rate change. The repository distinguishes transmitter rates (EdgeTX) from PX4 actuator effectiveness (`CA_SV_CSx_*`), PWM endpoints, and Manual-mode scaling (`FW_MAN_*_SC`) - these are four separate layers and must not be used interchangeably.
 
 </details>
 
-### CTL-06 - Configure aileron differential across full travel range
+### CTL-06 - Restore and verify control-surface actuator configuration
 
-- [ ] **Status:** Not started
+- [ ] **Status:** In progress
 - **Priority:** URGENT
 - **Depends on:** None
 
 **Scope**
-- Investigate and configure proper aileron differential throughout the full range of aileron travel, not just at the PWM endpoints as currently configured.
+- Restore the V-tail yaw-effectiveness coefficients (`CA_SV_CS2_TRQ_Y`/`CA_SV_CS3_TRQ_Y`) from ±0.85 to the PX4 type-default ±0.50, matching the target baseline: Left Aileron Roll -0.50/Pitch 0/Yaw 0; Right Aileron Roll +0.50/Pitch 0/Yaw 0; Left V-Tail Roll 0/Pitch +0.50/Yaw +0.50; Right V-Tail Roll 0/Pitch +0.50/Yaw -0.50.
+- Retain the established aileron mixer trims (`CA_SV_CS0_TRIM` = -0.08, `CA_SV_CS1_TRIM` = -0.03) during this reset - confirmed correct by Julian, not to be zeroed or replaced. Recheck them after endpoint recalibration.
+- Independently measure and set safe PWM min/max endpoints for MAIN 1, MAIN 2, MAIN 3, and MAIN 5 as the actual safe mechanical limits for each individual servo/surface (preventing excessive deflection, linkage over-centre conditions, structural interference, binding, or unnecessary loading) - not chosen to create an aerodynamic mixing effect. Endpoints may legitimately differ numerically between servos due to installation differences (horn alignment, linkage length, centring, mechanical clearance); any final asymmetry must be justified by the physical installation, not used to approximate aileron differential.
+- Remove any endpoint setting whose only purpose was to claim aileron differential.
+- Verify control direction, neutral position, safe travel, and moderate combined V-tail pitch+yaw operation (see below).
+
+**Acceptance criteria**
+- Live flight controller shows the target effectiveness values above.
+- Each surface reaches its intended safe physical limit without binding.
+- Aileron trims remain correct after recalibration.
+- Final endpoint values recorded in a dated test report (`docs/engineering/test-reports/`), the parameter change log, the ICD, and a fresh parameter export.
+- Not to be marked Complete merely because documentation has been edited - the physical reset and endpoint measurements must first be performed and verified on the aircraft.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Raised by Julian, 2026-08-28: the aileron differential currently only accounts for differential at the endpoints of the PWM range, not throughout the full range of travel. This refines the differential adjustment previously logged as part of "Control surface deflection limits and expo" (Completed Work) - that entry covered endpoint differential and trim only; proper full-range differential shaping is this task's scope.
+Rewritten 2026-08-31 following a flight-control configuration review, superseding the previous "Configure aileron differential across full travel range" framing. Key findings from that review:
+
+- The PX4 Actuators page's Roll/Pitch/Yaw Torque fields are actuator-effectiveness coefficients used by the control allocator (normalized estimates of how effective an actuator is about a given axis, inverted to calculate actuator commands) - not conventional transmitter mixer percentages, and not a direct command for a percentage of servo travel. Increasing a coefficient can *reduce* the requested deflection for a given demanded moment, because PX4 is being told the actuator is more effective.
+- The ±0.85 V-tail yaw values were not a validated "85% rudder mix" - they told PX4 each V-tail surface is 1.7x as effective in yaw as in pitch (since the pitch coefficient stayed at 0.50), with no aerodynamic derivation or flight-test evidence identified supporting that ratio. Restoring ±0.50 does not by itself reduce the physical PWM endpoints - it restores the intended allocation model; actual available servo travel is established separately via PWM calibration.
+- The previous endpoint-based approach conflated two separate configuration purposes (actuator safety limits vs. aerodynamic differential). The installed PX4 1.16.1 control-allocation interface exposes one linear roll/pitch/yaw coefficient per surface and no exposed conventional aileron-differential parameter for independently scaling up/down aileron travel - a finding specific to this PX4 version, not a permanent limitation of all future releases. The decision is therefore **not** to implement software aileron differential in the baseline configuration; it should only be reconsidered if flight testing shows significant adverse yaw or another handling problem that would benefit from it (mechanical linkage differential or a deliberate PX4 software change would be the future options, neither yet selected).
+- Bench observation of V-tail surfaces appearing to saturate under full combined pitch+yaw is not, by itself, evidence of an incorrect mix: with the default matrix, the two ruddervator commands are roughly proportional to P+Y and P-Y, so a surface already at its pitch limit will appear to stop moving as yaw is added (asking it further into the same saturated direction) while the other surface moves back toward neutral. This is expected actuator saturation at an extreme combined command, not necessarily a mixing fault. The acceptance test should verify correct pitch/yaw direction, distinct response at moderate combined inputs, no binding, and safe endpoints - not that both surfaces keep moving independently at the extreme corner of the command envelope.
 
 </details>
 
-### CTL-07 - Configure aileron-to-rudder mixing
+### CTL-07 - Evaluate adverse yaw and roll-to-yaw feedforward
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** None
+- **Depends on:** CTL-06, CTL-08
 
 **Scope**
-- Configure 10% aileron-to-rudder mixing, so that commanding roll also produces a small proportional rudder deflection.
+- No fixed aileron-to-rudder mix is to be configured initially. V-tail Roll Torque values remain 0 (adding non-zero Roll Torque to the V-tail would incorrectly tell PX4 that direct V-tail deflection produces a rolling moment, rather than accompanying a roll command with yaw control).
+- `FW_RLL_TO_YAW_FF` (roll-to-yaw feedforward gain, currently 0.0) remains 0.0 in the baseline configuration - not preemptively set to a fixed value.
+- During flight testing (under CTL-02), observe whether the nose yaws outside the desired turn on roll entry and whether turn coordination is otherwise acceptable (PX4 Stabilized mode already performs a coordinated turn when the roll stick is non-zero).
+- Only if meaningful adverse yaw is demonstrated should `FW_RLL_TO_YAW_FF` be tuned upward in small, documented increments, with the flight-test evidence and rationale recorded alongside the change.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Requested by Julian, 2026-08-28, likely to help coordinate turns / compensate for adverse yaw.
+Rewritten 2026-08-31 following the flight-control configuration review, superseding the previous fixed "10% aileron-to-rudder mixing" requirement. `FW_RLL_TO_YAW_FF` is a controller feedforward term, not a guarantee that a full aileron command produces exactly a specified percentage of full rudder travel - setting it to 0.10 would not be equivalent to a conventional radio mixer labelled "10% aileron to rudder." Additional feedforward should be based on observed adverse yaw rather than assumed necessary before the aircraft has flown in a clean baseline configuration. Deferred until CTL-06 (actuator baseline) and CTL-08 (Manual-mode mapping) are complete, since evaluating adverse yaw meaningfully requires a resolved actuator/scaling configuration first.
 
 </details>
 
-### CTL-08 - Investigate control surface deflection reaching limits before full stick travel
+### CTL-08 - Verify and correct full-Manual stick-to-surface scaling
 
-- [ ] **Status:** Not started
+- [ ] **Status:** In progress
 - **Priority:** URGENT
-- **Depends on:** None
+- **Depends on:** CTL-06
 
 **Scope**
-- Investigate why flight control surfaces reach their maximum configured deflection while there is still travel remaining in the radio gimbal/stick. Determine root cause and resolve - potentially a radio calibration issue.
+- With propellers removed, the radio in its full-rate configuration, and PX4 explicitly placed in Manual mode, check the QGroundControl Radio page for the full normalized input range (approx. -100% to +100%) across the complete roll-gimbal range.
+- Test roll, pitch, and yaw separately, recording stick percentage, normalized actuator behaviour (if available), PWM output, and physical surface deflection for each.
+- Distinguish between three possible causes if early saturation is reproduced in Manual mode: the surface physically reaching a mechanical limit, the PWM output reaching its configured endpoint, or the control allocator reaching its normalized command limit. Mechanical limits and PWM endpoints must be corrected first (i.e. after CTL-06) before considering a reduction to `FW_MAN_R_SC`.
+- If reproduced and mechanical/PWM causes are ruled out, experimentally reduce `FW_MAN_R_SC` (a value near 0.5 is a provisional test hypothesis only, not an approved setting) and refine so full roll-stick travel corresponds to the intended maximum safe aileron travel. Assess pitch (`FW_MAN_P_SC`) and yaw (`FW_MAN_Y_SC`) independently - do not copy the roll value across.
+
+**Acceptance criteria**
+- Full radio input range confirmed correctly reported on the QGroundControl Radio page.
+- Control-surface movement in Manual mode is monotonic and sensible across the full gimbal range.
+- The intended safe endpoint is reached at or near full stick, not substantially before it.
+- Final values for all three `FW_MAN_*_SC` parameters recorded, even if they remain at 1.0.
+- If the apparent early saturation occurs only in Acro or Stabilized but not in Manual, conclude the bench observation was normal closed-loop controller behaviour and make no `FW_MAN_*_SC` adjustment on that basis.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Observed by Julian, 2026-08-28. Not yet root-caused; radio calibration is a suspected but unconfirmed fix.
+Rewritten 2026-08-31 following the flight-control configuration review. The observation is narrowed but not yet root-caused: the QGroundControl Radio page correctly reports ~-100% to +100% across the complete roll-gimbal range, while the ailerons appear to reach maximum deflection at ~±50% stick - this makes a gross RC-input calibration error less likely, but does not by itself confirm `FW_MAN_R_SC` is the cause.
+
+A crucial distinction is the flight mode the observation was made in. `FW_MAN_R_SC`/`FW_MAN_P_SC`/`FW_MAN_Y_SC` scale desired actuator commands specifically in full Manual mode, where stick input goes directly to control allocation. Acro converts stick movement into angular-rate setpoints; Stabilized converts it into attitude behaviour. On a stationary bench, the aircraft cannot respond to a rate or attitude command, so the controller may legitimately drive a surface to saturation before the stick reaches its end - early saturation observed in Acro or Stabilized on the bench is therefore not necessarily a control-travel calibration fault, and this task must confirm the observation reproduces in full Manual mode before concluding `FW_MAN_R_SC` needs adjustment.
+
+None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/engineering/flight-modes.md`. Depends on CTL-06 because the mapping cannot be assessed meaningfully while the endpoint and effectiveness configuration is still being changed.
 
 </details>
 
@@ -484,7 +531,7 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Motor and ESC installation and configuration - T-MOTOR MN3110 KV700 motors and T-Motor AIR 40A ESCs installed (PROP-01); PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page; motor start synchronisation confirmed (PROP-03); motor PWM min/max set to 1000-2000us on both motors (PROP-04)
 - [x] Control surface PWM mapping and direction - PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction
 - [x] Primary control expo - 30% exponential set on aileron, elevator, and rudder; throttle expo removed
-- [x] Control surface deflection limits and expo - radio calibration matched stick travel to the configured PWM deflection limits; aileron differential (endpoints only - full-range differential now tracked separately as CTL-06) and V-tail rudder mix adjusted, final trim values entered 2026-08-19 (CTL-03)
+- [x] Control surface expo and aileron trim - 30% primary-control expo configured; aileron neutral trim values entered 2026-08-19 (CTL-03). **Note (2026-08-31):** the earlier claim that radio calibration had matched stick travel to final PWM deflection limits, and that aileron differential/V-tail rudder mix were finalised, is superseded - full-stick-to-surface mapping is unresolved pending CTL-08, and the endpoint-based differential/±0.85 V-tail yaw values are no longer accepted as the validated baseline; see CTL-06 and CTL-08.
 
 ### Electrical power
 - [x] Battery installation - battery installed
