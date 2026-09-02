@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x14)
+
+- `docs/project/build-checklist.md` CTL-04, `context/project-notes.md`: closed the Acro tri-rate finding - Julian confirmed tri-rate works correctly in Manual mode, supporting the CTL-08 closed-loop-saturation bench artefact explanation over a configuration fault. Not confirmed in real flight, but no further bench investigation needed.
+
 ## 2026-09-02 (continued x13)
 
 Further notes from the same day's Ross Dennington (BNEMAC) review:
