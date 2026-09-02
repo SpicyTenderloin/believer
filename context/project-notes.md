@@ -217,4 +217,6 @@ Investigated by pulling the SD card's `.ulg` logs directly (`E:\log\2026-09-02\`
 
 Rather than a dedicated checklist task, Julian opted to flag this as a lighter open item: for future bench tests, raise or disable `COM_DISARM_LAND` for the duration of testing, then confirm it's restored to its flight-intended value before flight clearance - see `context/open-items.md`. Full findings: `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`.
 
+**PWM-vs-current follow-up:** while the logs were open, also correlated `actuator_outputs` against `battery_status.current_a` directly to answer Julian's question of what PWM value corresponds to ~42A total current draw (~21A/motor - the MN3110 KV700's rated continuous current). Found consistently ~1800-1809us across the two sessions that reached that current level (`07_23_00.ulg`, `07_28_44.ulg`), matching Julian's own ~1800 estimate. Logged as a candidate PROP-08 throttle-ceiling starting point, not yet a confirmed value - it's from incidental brief-burst data, not a dedicated sustained-run test.
+
 See [open-items.md](open-items.md) for what's still missing.

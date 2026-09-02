@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x10)
+
+- `docs/project/build-checklist.md` PROP-08, `context/project-notes.md`: logged a PWM-vs-current data point from the day's thrust-test logs - ~42A total current draw (~21A/motor, the MN3110 KV700's rated continuous current) occurs at approximately 1800-1809us PWM on both motor channels, per correlating `actuator_outputs` against `battery_status.current_a`. Flagged as a candidate throttle-ceiling starting point for PROP-08, not yet confirmed via a dedicated sustained-run test.
+
 ## 2026-09-02 (continued x9)
 
 - `docs/project/build-checklist.md`: removed PROP-09, per Julian - simplified to a lighter open item rather than a dedicated checklist task. Updated PROP-02's background note accordingly.

@@ -220,6 +220,8 @@ Split out as its own task 2026-08-19, separate from static thrust verification (
 
 Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 2026-08-31 overcurrent finding logged under PROP-02: a brief full-throttle test showed ~30-32.5A per motor against the MN3110 KV700's 21A continuous (180s) rating. PROP-02 measures and records this; PROP-08 is the corresponding action item to actually bring sustained draw within the rated limit before flight, rather than leaving it as a documented-but-unaddressed overcurrent condition.
 
+**PWM-vs-current data point (2026-09-02):** correlating `actuator_outputs` against `battery_status.current_a` in the day's thrust-test logs (`07_23_00.ulg`, `07_28_44.ulg`) shows ~42A total current (both motors via the PDB, i.e. ~21A/motor - the MN3110 KV700's rated continuous current) occurring at a PWM output of approximately **1800-1809us** on both motor channels. This is a candidate starting point for a throttle-ceiling limit, pending confirmation via a proper sustained-run test (not just this incidental brief-burst correlation) once the landing-detector auto-disarm workaround (`context/open-items.md` - raise/disable `COM_DISARM_LAND`) allows one to be run cleanly.
+
 </details>
 
 ### PROP-05 - Characterise final propulsion system in MotoCalc
