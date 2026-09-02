@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x5)
+
+- `docs/project/build-checklist.md`: CTL-04 (tri-rate switch-selectable deflection) elevated from Non-critical to Critical/flight-clearance-blocking, per Julian; added to the Current Flight-Readiness Status table. Flagged that CTL-04 still formally depends on CTL-08, which remains Priority: URGENT - not yet reconciled, surfaced for Julian's call rather than silently bumping CTL-08 too.
+
 ## 2026-09-02 (continued x4)
 
 - `docs/project/build-checklist.md`: AF-06 (control surface hinges) elevated from Non-critical to Critical/flight-clearance-blocking, per Julian; added to the Current Flight-Readiness Status table with an acceptance criterion. Added **PROP-08** (Critical/ground-test-readiness-blocking): configure the propulsion system so sustained current draw stays within the MN3110 KV700's 21A continuous rating, following the 2026-08-31 overcurrent finding (~30-32.5A/motor at full throttle, logged under PROP-02) - PROP-02 measures/records, PROP-08 is the action item to actually fix it.

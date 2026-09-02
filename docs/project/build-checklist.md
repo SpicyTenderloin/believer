@@ -30,6 +30,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Airframe | AF-02: Fit positive battery retention | Not started |
 | Airframe | AF-06: Replace control surface hinges | Not started |
 | Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
+| Control | CTL-04: Configure tri-rate switch-selectable deflection | In progress |
 
 ---
 
@@ -318,7 +319,8 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 ### CTL-04 - Configure tri-rate switch-selectable deflection
 
 - [ ] **Status:** In progress
-- **Priority:** NON-CRITICAL
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
 - **Depends on:** CTL-08
 
 **Scope**
@@ -338,6 +340,8 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 Originally scoped 2026-08-28 as a simple dual-rate, aileron-only, low-rate-at-50% plan. Superseded 2026-09-02 by Julian's actual implementation: tri-rate on both aileron and elevator, each locally switch-selected, at 100/70/50%. Dependency on CTL-08 added 2026-08-31, per the flight-control configuration review, to avoid masking the unresolved early-saturation issue behind a transmitter-side rate change - the repository distinguishes transmitter rates (EdgeTX) from PX4 actuator effectiveness (`CA_SV_CSx_*`), PWM endpoints, and Manual-mode scaling (`FW_MAN_*_SC`), which must not be used interchangeably. This task proceeded before CTL-08 formally concluded; flagged rather than silently treated as compliant with the original dependency ordering.
 
 Julian's initial verbal description of this change ("removed offboard flight mode from switch SE which now serves as the elevator rates switch") was documented at first as a full CH9/CH11 reassignment. Diffing the actual radio backup against the previous archived copy on 2026-09-02 showed this was inaccurate - `mixData` for both channels is untouched; only a new, separate `expoData` table was added. Corrected before commit. Lesson recorded: verify configuration claims with safety implications against the source artifact, not a verbal summary alone.
+
+Elevated from Non-critical to Critical/flight-clearance-blocking by Julian, 2026-09-02. Note: this task still formally **Depends on:** CTL-08, which remains Priority: URGENT (not Critical) - CTL-04 being flight-blocking now makes CTL-08 transitively blocking too, unless Julian intends CTL-04's acceptance criteria to be satisfied without waiting on CTL-08's formal conclusion. Flagged rather than silently reconciled.
 
 </details>
 
