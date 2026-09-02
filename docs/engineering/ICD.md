@@ -80,11 +80,13 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | V-Tail Left | MAIN 1 | 1000 | 2000 | 1500 | 1500 | No |
 | V-Tail Right | MAIN 2 | 1000 | 2000 | 1500 | 1500 | Yes |
 | Left Aileron | MAIN 3 | 1100 | 2000 | 1500 | 1500 | Yes |
-| Left Motor | MAIN 4 | 1000 | 2000 | 1000 | 1000 | No |
+| Left Motor | MAIN 4 | 1000 | 1800 | 1000 | 1000 | No |
 | Right Aileron | MAIN 5 | 1100 | 2000 | 1500 | 1500 | No |
-| Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
+| Right Motor | MAIN 6 | 1000 | 1800 | 1000 | 1000 | No |
 
 Endpoints independently remeasured as actual safe mechanical limits per servo and reconfirmed 2026-09-02 (`docs/project/build-checklist.md` CTL-06) - superseding the previous asymmetric values, which had conflated PWM endpoint selection with an attempt at aerodynamic aileron differential (see Control Surface Mixing below and CTL-06's background notes). Disarmed/trim values reset to 1500 across all four control surfaces now that they are no longer being used to approximate differential.
+
+Motor max lowered from 2000 to 1800 on 2026-09-02 (PROP-08) as a throttle ceiling, based on a thrust-test log correlation showing ~42A total current draw (~21A/motor, the MN3110 KV700's 21A continuous rating) at ~1800-1809us. Not yet confirmed via a dedicated sustained-run test - see `docs/project/build-checklist.md` PROP-08.
 
 ![PX4 Actuator Output Configuration](../assets/actuator-output-config.png)
 
@@ -204,9 +206,9 @@ A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled ov
 | CH6 | Flight-mode selector (GR1) | Six-position switch group, defaults to SW2 |
 | CH7 | Emergency kill | Inverted in EdgeTX |
 | CH8 | Loiter / Hold | Latching; overrides the GR1-selected mode |
-| CH9 (SB) | Flaperon control / spare | Inverted in EdgeTX; inactive for maiden flight. Dual-purpose as of 2026-09-02 (CTL-04): SB also locally selects the aileron tri-rate curve (100/70/50%) in EdgeTX - CH9's PX4-facing signal is unchanged |
+| CH9 (SB) | Aileron rate switch (`RC_MAP_FLAPS` cleared 2026-09-02) | Inverted in EdgeTX; still carries the (now PX4-unmapped) Flaperon `mixData` output unchanged. Locally selects the aileron tri-rate curve (100/70/50%, CTL-04) in EdgeTX |
 | CH10 | Return | Inverted in EdgeTX |
-| CH11 (SE) | Offboard | Inverted in EdgeTX. Dual-purpose as of 2026-09-02 (CTL-04): SE also locally selects the elevator tri-rate curve (100/70/50%) in EdgeTX - CH11's PX4-facing signal is unchanged, still mapped to `RC_MAP_OFFB_SW`. This creates an unresolved overlap: flipping elevator rate in flight also moves CH11 - see `docs/project/build-checklist.md` CTL-04 |
+| CH11 (SE) | Elevator rate switch (`RC_MAP_OFFB_SW` cleared 2026-09-02) | Inverted in EdgeTX; still carries the (now PX4-unmapped) Offboard `mixData` output unchanged. Locally selects the elevator tri-rate curve (100/70/50%, CTL-04) in EdgeTX - clearing `RC_MAP_OFFB_SW` resolves the dual-purpose overlap risk flagged 2026-09-02 |
 | CH12 | Spare / future buzzer or payload | Mixed from SH switch in EdgeTX; no PX4 function currently assigned |
 
 ![PX4 Flight Modes / Switch Settings Configuration](../assets/flight-modes-config.png)
@@ -352,3 +354,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.2 | 2026-09-02 | Rewrote INT-05/INT-06: GPS driver instance numbering deliberately swapped relative to physical UART port (instance 1 = ZED-F9P via physical GPS2 port, instance 2 = M8N via physical GPS1 port) - physical wiring unchanged, added an explicit instance-vs-port cross-reference to prevent confusion. Updated the INT-02a-f actuator table with CTL-06's physically remeasured PWM endpoints (superseding the previous asymmetric, differential-approximating values) and the Control Surface Mixing table with the restored ±0.50 V-tail yaw effectiveness and rechecked aileron trims |
 | 2.3 | 2026-09-02 | NAV-05 closed - recorded GPS lock confirmation on both receivers and the QGroundControl-display rationale for the instance swap (QGC's primary GPS status indicator reads driver instance 1; the swap ensures it reflects the RTK-capable ZED-F9P rather than the M8N) |
 | 2.4 | 2026-09-02 | Updated the RC channel map for CTL-04's tri-rate implementation: verified against the actual EdgeTX radio backup (`model00.yml`) that CH9/CH11's `mixData` routing is unchanged - SB and SE remain dual-purpose, still driving Flaperon control (CH9) and Offboard (CH11) exactly as before, while also now locally selecting the aileron/elevator rate curves via a separate `expoData` feature. The overlap between elevator rate switching and `RC_MAP_OFFB_SW` is tracked as an open item and in `docs/project/build-checklist.md` CTL-04 |
+| 2.5 | 2026-09-02 | Verified against a fresh parameter export: `RC_MAP_FLAPS` and `RC_MAP_OFFB_SW` both cleared to 0 (unassigned), resolving the SB/SE dual-purpose overlap - PX4 no longer acts on CH9/CH11 for Flaperon/Offboard, though the underlying `mixData` output on those channels is unchanged. Updated the RC channel map and the INT-02a-f actuator table's motor PWM max (2000 -> 1800, PROP-08 throttle ceiling) |

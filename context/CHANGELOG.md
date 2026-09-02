@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x11)
+
+Verified a fresh parameter export (`params_update.params`, dropped in the repo root by Julian) against the previous archived export before documenting anything as done.
+
+- `RC_MAP_FLAPS`/`RC_MAP_OFFB_SW` both confirmed cleared to 0 (unassigned) - resolves the SB/SE dual-purpose overlap. Updated `docs/engineering/ICD.md` (Rev 2.4 -> 2.5), `docs/engineering/flight-modes.md` (Rev 1.6 -> 1.7), `docs/operations/manual.md`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`; closed the corresponding CTL-04 acceptance criterion and removed the resolved open item.
+- `PWM_MAIN_MAX4`/`MAX6` confirmed lowered from 2000 to 1800 (PROP-08's throttle ceiling, per the earlier PWM-vs-current finding). Updated ICD.md's actuator table and PROP-08's scope; moved PROP-08 to **For review** - applied, but not yet confirmed via a dedicated sustained-run test.
+- Replaced the archived parameter export at `docs/operations/Pixhawk Parameter Backup/believer-parameters.params` with the fresh one; removed the root-dropped copy.
+- `context/project-notes.md`, `context/open-items.md`: recorded the verification and updated the switch-diagram open item to reflect SB/SE's function relabelling (Flaperon/Offboard -> aileron/elevator rate switch).
+
 ## 2026-09-02 (continued x10)
 
 - `docs/project/build-checklist.md` PROP-08, `context/project-notes.md`: logged a PWM-vs-current data point from the day's thrust-test logs - ~42A total current draw (~21A/motor, the MN3110 KV700's rated continuous current) occurs at approximately 1800-1809us PWM on both motor channels, per correlating `actuator_outputs` against `battery_status.current_a`. Flagged as a candidate throttle-ceiling starting point for PROP-08, not yet confirmed via a dedicated sustained-run test.

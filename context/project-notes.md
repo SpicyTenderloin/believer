@@ -219,4 +219,13 @@ Rather than a dedicated checklist task, Julian opted to flag this as a lighter o
 
 **PWM-vs-current follow-up:** while the logs were open, also correlated `actuator_outputs` against `battery_status.current_a` directly to answer Julian's question of what PWM value corresponds to ~42A total current draw (~21A/motor - the MN3110 KV700's rated continuous current). Found consistently ~1800-1809us across the two sessions that reached that current level (`07_23_00.ulg`, `07_28_44.ulg`), matching Julian's own ~1800 estimate. Logged as a candidate PROP-08 throttle-ceiling starting point, not yet a confirmed value - it's from incidental brief-burst data, not a dedicated sustained-run test.
 
+## RC_MAP Cleanup Confirmed and PROP-08 PWM Ceiling Applied - 2026-09-02
+
+Julian provided a fresh parameter export (`params_update.params`, dropped in the repo root), verified by diffing against the previous archived export. Two changes, both confirmed rather than accepted verbally:
+
+- **`RC_MAP_FLAPS` and `RC_MAP_OFFB_SW` both cleared to 0 (unassigned)** (previously 9 and 11) - resolves the SB/SE dual-purpose overlap flagged in the CTL-04 investigation above. PX4 no longer acts on CH9/CH11 for Flaperon control or Offboard mode at all; SB/SE's underlying `mixData` radio output is unchanged, only PX4's interpretation of those channels changed. Offboard is now genuinely unreachable via any switch (previously this was documented, then corrected to "still reachable" after the radio-backup diff, and is now correctly "not reachable" again via a different, verified mechanism). Updated `docs/engineering/ICD.md` (Rev 2.5), `docs/engineering/flight-modes.md` (Rev 1.7), `docs/operations/manual.md`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`, and closed the corresponding CTL-04 acceptance criterion.
+- **`PWM_MAIN_MAX4`/`MAX6` (motor PWM ceiling) lowered from 2000 to 1800** - applying the PWM-vs-current data point from the same day's investigation as a throttle ceiling for PROP-08. Not yet confirmed via a dedicated sustained-run test (still blocked on the `COM_DISARM_LAND` bench-testing workaround), so PROP-08 moved to **For review** rather than Complete.
+
+Other diffed changes were routine (accelerometer/barometer calibration drift, flight UUID counter, internal flight-time tracker) and not otherwise documented. The fresh export replaced the archived copy at `docs/operations/Pixhawk Parameter Backup/believer-parameters.params`.
+
 See [open-items.md](open-items.md) for what's still missing.

@@ -91,9 +91,9 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `RC_MAP_KILL_SW` | 7 (CH7) | Emergency kill switch - SF, inverted in EdgeTX. |
 | `RC_MAP_FLTMODE` | 6 (CH6) | Six-position flight mode selector (GR1). |
 | `RC_MAP_LOITER_SW` | 8 (CH8) | Loiter / Hold override - SA, latching. |
-| `RC_MAP_FLAPS` | 9 (CH9) | Flaperon control - SB, inverted in EdgeTX; inactive for maiden flight. |
+| `RC_MAP_FLAPS` | 0 (unassigned) | Cleared 2026-09-02 (CTL-04) - PX4 no longer acts on any channel for Flaperon control. SB still drives CH9's `mixData` output unchanged in EdgeTX (inactive for maiden flight regardless) and also locally selects the aileron rate curve. |
 | `RC_MAP_RETURN_SW` | 10 (CH10) | Return to Launch - SC, inverted in EdgeTX. |
-| `RC_MAP_OFFB_SW` | 11 (CH11) | Offboard mode - SE, inverted in EdgeTX. |
+| `RC_MAP_OFFB_SW` | 0 (unassigned) | Cleared 2026-09-02 (CTL-04) - PX4 no longer acts on any channel for Offboard mode; resolves the SB/SE dual-purpose overlap risk (flipping elevator rate in flight can no longer trigger Offboard). SE still drives CH11's `mixData` output unchanged in EdgeTX and also locally selects the elevator rate curve. |
 
 ## Actuator Outputs (PWM MAIN)
 
@@ -110,7 +110,7 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `PWM_MAIN_MAX3` / `MAX5` | 2000 | Left/right aileron maximum PWM. Remeasured 2026-09-02, see above - supersedes the previous asymmetric values (1760/1900). |
 | `PWM_MAIN_DIS1-3`, `DIS5` | 1500 | V-tail and aileron disarmed position, reset to plain neutral 2026-09-02 now that endpoints are no longer being used to approximate differential (previously 1520/1550 for the ailerons). |
 | `PWM_MAIN_MIN4` / `MIN6` | 1000 | Motor min PWM (both motors). Set 2026-08-19 to a common 1000-2000us range following the MN3110 KV700/AIR 40A install (PROP-04). |
-| `PWM_MAIN_MAX4` / `MAX6` | 2000 | Motor max PWM (both motors). Set 2026-08-19, see above. |
+| `PWM_MAIN_MAX4` / `MAX6` | 1800 | Motor max PWM (both motors). Lowered from 2000 on 2026-09-02 (PROP-08) as a throttle ceiling to keep sustained current draw within the MN3110 KV700's 21A/motor continuous rating - based on a 2026-09-02 thrust-test log correlation showing ~42A total (~21A/motor) at ~1800-1809us PWM. Not yet confirmed via a dedicated sustained-run test. |
 | `PWM_MAIN_REV` | 6 (0b00000110) | Output reversal bitmask: bits 1 and 2 set = MAIN 2 (V-tail right) and MAIN 3 (left aileron) reversed. Changed from 5 (0b00000101, MAIN 1 + MAIN 3) on 2026-07-06 as part of the ruddervator direction fix. |
 
 PWM limits and disarmed values per output are documented in `docs/engineering/ICD.md` (INT-02a through INT-02f).

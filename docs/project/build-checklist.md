@@ -31,7 +31,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 |---|---|---|
 | Propulsion | PROP-02: Demonstrate acceptable static thrust | In progress |
 | Propulsion | PROP-06: Verify throttle curve/mapping | Not started |
-| Propulsion | PROP-08: Limit current draw to within motor rated continuous current | Not started |
+| Propulsion | PROP-08: Limit current draw to within motor rated continuous current | For review |
 | Airframe | AF-01: Correct centre of gravity | Not started |
 | Airframe | AF-02: Fit positive battery retention | Not started |
 | Airframe | AF-06: Replace control surface hinges | Not started |
@@ -202,17 +202,18 @@ Split out as its own task 2026-08-19, separate from static thrust verification (
 
 ### PROP-08 - Limit current draw to within motor rated continuous current
 
-- [ ] **Status:** Not started
+- [ ] **Status:** For review
 - **Priority:** CRITICAL
 - **Milestone:** Ground-test readiness
 - **Depends on:** PROP-02
 
 **Scope**
-- The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - and Julian's full-throttle current sense corroborates this at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change - to be decided once PROP-02's sustained-run test (temperature behaviour at the current draw level) and PROP-06's throttle curve review are complete.
+- The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - and Julian's full-throttle current sense corroborates this at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change.
+- **Applied 2026-09-02 (Julian):** `PWM_MAIN_MAX4`/`MAX6` (motor PWM ceiling) lowered from 2000 to 1800, confirmed via a fresh parameter export - based on the PWM-vs-current data point below.
 
 **Acceptance criteria**
-- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating.
-- Configuration change applied (e.g. throttle ceiling, current limit, or propeller change) and documented, including any resulting effect on static thrust (PROP-02) or throttle response (PROP-06).
+- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating - **not yet confirmed**: the 1800us figure is from incidental brief-burst data, not a dedicated sustained-run test. Still blocked on the landing-detector auto-disarm workaround (`context/open-items.md` - raise/disable `COM_DISARM_LAND`) needed to run one cleanly.
+- Configuration change applied (e.g. throttle ceiling, current limit, or propeller change) and documented, including any resulting effect on static thrust (PROP-02) or throttle response (PROP-06) - **applied**, effect on PROP-02/PROP-06 not yet re-tested.
 - Result logged as a dated entry under `docs/engineering/test-reports/`.
 
 <details>
@@ -336,14 +337,14 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 
 **Scope**
 - Configure switch-selectable tri-rate control surface deflection in EdgeTX. Implemented 2026-09-02 (Julian): 30% expo confirmed on all flight surfaces; tri-rate (100%/70%/50%) configured on both the aileron and elevator channels via a new EdgeTX `expoData` feature, each locally selected by its existing 3-position switch - aileron rate on SB, elevator rate on SE. Rudder/V-tail yaw not separately rated.
-- Verified against the actual radio backup (`model00.yml`) that this did **not** reassign CH9/CH11: `mixData` routing is byte-for-byte unchanged, so SB still drives CH9 (Flaperon control/spare) and SE still drives CH11 (Offboard) exactly as before. SB/SE are now dual-purpose - they drive their original channel output *and* separately select the local rate curve. This is a more concerning finding than a simple reassignment would have been: `RC_MAP_OFFB_SW` (= 11) is still live, so flipping elevator rate in flight also moves CH11, which could unintentionally cross whatever threshold PX4 uses to engage Offboard, triggering the offboard-loss failsafe since no companion computer is actually streaming setpoints. Tracked in `context/open-items.md`.
+- Verified against the actual radio backup (`model00.yml`) that this did **not** reassign CH9/CH11: `mixData` routing is byte-for-byte unchanged, so SB still drives CH9 and SE still drives CH11 exactly as before, both now also selecting the local rate curve. This meant `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS` were still live on those channels, so flipping elevator rate in flight could have unintentionally crossed whatever threshold PX4 uses to engage Offboard, triggering the offboard-loss failsafe. **Resolved 2026-09-02**: Julian cleared both `RC_MAP_FLAPS` and `RC_MAP_OFFB_SW` to 0 (unassigned) - confirmed via a fresh parameter export - so PX4 no longer acts on CH9/CH11 for either function at all. SB/SE still drive their `mixData` outputs unchanged; only PX4's interpretation of those channels changed.
 - Radio backup uploaded and moved into place 2026-09-02 (`docs/operations/GX12 Radio Backup/`), superseding the previous archived copy.
 
 **Acceptance criteria**
 - Revalidate against the final `FW_MAN_R_SC` value once CTL-08's formal test concludes - EdgeTX rate scaling and PX4 Manual scaling can compound (e.g. a 50% transmitter rate combined with a reduced PX4 Manual roll scale could produce substantially less than the intended low-rate authority). Implemented ahead of CTL-08 concluding, which was this task's original dependency reason - low risk given CTL-08's informal finding that `FW_MAN_R_SC` will likely stay at 1.0, but not yet formally confirmed.
-- Resolve the SB/SE dual-purpose overlap against `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS` (either accept the risk as negligible with a documented reason, or separate the rate-curve switches from CH9/CH11's channel outputs).
+- ~~Resolve the SB/SE dual-purpose overlap against `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS`~~ - **done, 2026-09-02**: both cleared to 0 (unassigned), confirmed via a fresh parameter export.
 - Review maximum deflection, rates, and expo with Ross Dennington (BNEMAC) before the values are treated as final.
-- Switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.png`) confirmed still accurate for CH9/CH11's channel functions (unchanged), with a supplementary annotation added noting the new local rate-curve behaviour on SB/SE - Claude has no image-editing capability, so this needs to be done manually.
+- Switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.png`) updated to label SB/SE as the aileron/elevator rate switches (now their PX4-relevant function, since `RC_MAP_FLAPS`/`RC_MAP_OFFB_SW` are cleared) rather than Flaperon/Offboard - Claude has no image-editing capability, so this needs to be done manually.
 
 <details>
 <summary>Background and engineering notes</summary>
@@ -351,6 +352,8 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 Originally scoped 2026-08-28 as a simple dual-rate, aileron-only, low-rate-at-50% plan. Superseded 2026-09-02 by Julian's actual implementation: tri-rate on both aileron and elevator, each locally switch-selected, at 100/70/50%. Dependency on CTL-08 added 2026-08-31, per the flight-control configuration review, to avoid masking the unresolved early-saturation issue behind a transmitter-side rate change - the repository distinguishes transmitter rates (EdgeTX) from PX4 actuator effectiveness (`CA_SV_CSx_*`), PWM endpoints, and Manual-mode scaling (`FW_MAN_*_SC`), which must not be used interchangeably. This task proceeded before CTL-08 formally concluded; flagged rather than silently treated as compliant with the original dependency ordering.
 
 Julian's initial verbal description of this change ("removed offboard flight mode from switch SE which now serves as the elevator rates switch") was documented at first as a full CH9/CH11 reassignment. Diffing the actual radio backup against the previous archived copy on 2026-09-02 showed this was inaccurate - `mixData` for both channels is untouched; only a new, separate `expoData` table was added. Corrected before commit. Lesson recorded: verify configuration claims with safety implications against the source artifact, not a verbal summary alone.
+
+Same lesson applied to the resolution: `RC_MAP_FLAPS`/`RC_MAP_OFFB_SW` being cleared was confirmed via a fresh parameter export (diffed against the previous archived export) rather than accepted from Julian's description alone.
 
 Elevated from Non-critical to Critical/flight-clearance-blocking by Julian, 2026-09-02. This task formally **Depends on:** CTL-08 - also elevated to Critical the same day, resolving the transitive-blocking gap.
 
