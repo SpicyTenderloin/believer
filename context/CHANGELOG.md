@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x13)
+
+Further notes from the same day's Ross Dennington (BNEMAC) review:
+
+- `docs/project/build-checklist.md` AF-01: recorded Ross's concern that adding ~350g of nose ballast to fix CG works against the airframe's already-marginal thrust relative to its 5.5kg MTOW - flagged as a consideration (mass relocation vs. ballast), not decided.
+- `docs/project/build-checklist.md` AF-08: recorded Ross's opinion that the motor-mount wobble isn't concerning given no pull-out risk, and should reduce once loaded in flight - reassuring, doesn't change the task's scope or status.
+- `docs/project/build-checklist.md` CTL-04: closed the "review with Ross" acceptance criterion (rates/expo reviewed, satisfied) - CTL-04 remains open regardless (FW_MAN_R_SC pending CTL-08, switch diagrams). Added a new finding: the tri-rate switch doesn't appear to work correctly in Acro mode (behaves like dual-rate) - not yet root-caused, possibly related to CTL-08's Acro-saturation finding; Julian to investigate.
+- `context/project-notes.md`: recorded the launch-mechanism discussion (hill launch and catapult raised as options; hand launch confirmed for the maiden flight, unchanged from existing docs) as provenance only, no document changes needed.
+
 ## 2026-09-02 (continued x12)
 
 - Added `docs/engineering/test-reports/2026-09-02-ross-dennington-throttle-thrust-review.md` documenting Ross Dennington's (BNEMAC) review of throttle mapping and static thrust during the day's bench session.

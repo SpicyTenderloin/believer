@@ -61,6 +61,8 @@ Future capability work (payload, autonomy) that is not required for current flig
 
 CG confirmed out of balance during the 2026-07-10 TMAC review with Peter Spink - approximately 350g of ballast needed in the nose. See [`docs/engineering/test-reports/2026-07-10-tmac-review-peter-spink.md`](../engineering/test-reports/2026-07-10-tmac-review-peter-spink.md).
 
+Still out of balance as of the 2026-09-02 Ross Dennington (BNEMAC) review. Ross raised a concern worth flagging against the planned fix: the airframe's manufacturer-rated MTOW is 5.5kg, and thrust margin is already less than ideal (PROP-02/PROP-10) - adding ~350g of dead-weight nose ballast moves all-up weight in the wrong direction relative to that margin. Worth considering whether CG can instead be corrected by relocating existing mass (e.g. the battery, if its position is adjustable) rather than adding ballast, before committing to the ballast approach - not yet decided, Julian's call.
+
 </details>
 
 ### AF-02 - Fit positive battery retention
@@ -141,6 +143,8 @@ Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone t
 <summary>Background and engineering notes</summary>
 
 Raised by Julian, 2026-08-28 - considered critical to ensuring the motors are properly mounted and do not induce vibration, which could damage the motors themselves or destabilise the aircraft. Must be complete before the maiden flight.
+
+Ross Dennington (BNEMAC) inspected the mounting wobble during the 2026-09-02 review and wasn't overly concerned, on the basis that the mounts aren't at risk of pulling out - and noted that once the motors are loaded (thrust pulling the airframe forward in flight, rather than sitting static on the bench), the wobble should reduce significantly since the load direction takes up the play. This is a reassuring second opinion, not a reason to leave the task open - still to be secured with polyurethane glue as planned.
 
 </details>
 
@@ -312,7 +316,8 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 **Acceptance criteria**
 - Revalidate against the final `FW_MAN_R_SC` value once CTL-08's formal test concludes - EdgeTX rate scaling and PX4 Manual scaling can compound (e.g. a 50% transmitter rate combined with a reduced PX4 Manual roll scale could produce substantially less than the intended low-rate authority). Implemented ahead of CTL-08 concluding, which was this task's original dependency reason - low risk given CTL-08's informal finding that `FW_MAN_R_SC` will likely stay at 1.0, but not yet formally confirmed.
 - ~~Resolve the SB/SE dual-purpose overlap against `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS`~~ - **done, 2026-09-02**: both cleared to 0 (unassigned), confirmed via a fresh parameter export.
-- Review maximum deflection, rates, and expo with Ross Dennington (BNEMAC) before the values are treated as final.
+- ~~Review maximum deflection, rates, and expo with Ross Dennington (BNEMAC) before the values are treated as final~~ - **done, 2026-09-02**: Ross reviewed the tri-rates and expo and was satisfied. This review surfaced a new finding - see below.
+- **New finding, 2026-09-02:** the tri-rate switch does not appear to work correctly in Acro mode - only two distinct rate levels were observed instead of three ("dual rate" behaviour). Not yet root-caused; Julian to investigate. Possibly related to CTL-08's finding that Acro's closed-loop rate controller saturates the surface well before full stick on a stationary bench (integral windup against an airframe that can't achieve the commanded rate) - if the controller is already saturating, differences in commanded rate between two of the three EdgeTX rate positions may not show up as distinct surface deflection even though the underlying rate curve is configured correctly. Worth checking in Manual mode (where stick output isn't intercepted by a rate controller) before assuming a configuration fault.
 - Switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.png`) updated to label SB/SE as the aileron/elevator rate switches (now their PX4-relevant function, since `RC_MAP_FLAPS`/`RC_MAP_OFFB_SW` are cleared) rather than Flaperon/Offboard - Claude has no image-editing capability, so this needs to be done manually.
 
 <details>
