@@ -37,6 +37,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Airframe | AF-06: Replace control surface hinges | Not started |
 | Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
 | Control | CTL-04: Configure tri-rate switch-selectable deflection | In progress |
+| Control | CTL-08: Verify and correct full-Manual stick-to-surface scaling | For review |
 
 ---
 
@@ -347,7 +348,7 @@ Originally scoped 2026-08-28 as a simple dual-rate, aileron-only, low-rate-at-50
 
 Julian's initial verbal description of this change ("removed offboard flight mode from switch SE which now serves as the elevator rates switch") was documented at first as a full CH9/CH11 reassignment. Diffing the actual radio backup against the previous archived copy on 2026-09-02 showed this was inaccurate - `mixData` for both channels is untouched; only a new, separate `expoData` table was added. Corrected before commit. Lesson recorded: verify configuration claims with safety implications against the source artifact, not a verbal summary alone.
 
-Elevated from Non-critical to Critical/flight-clearance-blocking by Julian, 2026-09-02. Note: this task still formally **Depends on:** CTL-08, which remains Priority: URGENT (not Critical) - CTL-04 being flight-blocking now makes CTL-08 transitively blocking too, unless Julian intends CTL-04's acceptance criteria to be satisfied without waiting on CTL-08's formal conclusion. Flagged rather than silently reconciled.
+Elevated from Non-critical to Critical/flight-clearance-blocking by Julian, 2026-09-02. This task formally **Depends on:** CTL-08 - also elevated to Critical the same day, resolving the transitive-blocking gap.
 
 </details>
 
@@ -373,7 +374,8 @@ Rewritten 2026-08-31 following the flight-control configuration review, supersed
 ### CTL-08 - Verify and correct full-Manual stick-to-surface scaling
 
 - [ ] **Status:** For review
-- **Priority:** URGENT
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
 - **Depends on:** CTL-06 (complete - see Completed Work)
 
 **Scope**
@@ -401,6 +403,8 @@ A crucial distinction is the flight mode the observation was made in. `FW_MAN_R_
 None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/engineering/flight-modes.md`. CTL-06 (actuator effectiveness and PWM endpoint baseline) is now complete, so this task's own dependency is satisfied and the formal test can proceed on a stable actuator configuration.
 
 Set to **For review**, 2026-09-02, per Julian - the task is at the point of just needing the formal confirmation step (Julian running the logged table test above) rather than further investigative work; not marked Complete since that logged table hasn't been recorded against the acceptance criteria yet.
+
+Elevated from Urgent to Critical/flight-clearance-blocking by Julian, 2026-09-02 - resolves the transitive-blocking flag raised against CTL-04's dependency on this task.
 
 </details>
 

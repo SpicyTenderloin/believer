@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x7)
+
+- `docs/project/build-checklist.md`: CTL-08 elevated from Urgent to Critical/flight-clearance-blocking, per Julian - resolves the transitive-blocking gap flagged against CTL-04's dependency on it. Added to the Current Flight-Readiness Status table.
+
 ## 2026-09-02 (continued x6)
 
 - `docs/project/build-checklist.md`: added a **For review** status (work done, pending formal confirmation against acceptance criteria before Complete) to the Status definitions, alongside Not started/In progress/Complete. Set CTL-08 to For review, per Julian - the informal bench finding stands, formal logged-table confirmation is the only thing outstanding.
