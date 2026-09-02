@@ -29,8 +29,6 @@ Future capability work (payload, autonomy) that is not required for current flig
 
 | Area | Critical blocker | Status |
 |---|---|---|
-| Propulsion | PROP-02: Demonstrate acceptable static thrust | In progress |
-| Propulsion | PROP-06: Verify throttle curve/mapping | Not started |
 | Propulsion | PROP-08: Limit current draw to within motor rated continuous current | For review |
 | Airframe | AF-01: Correct centre of gravity | Not started |
 | Airframe | AF-02: Fit positive battery retention | Not started |
@@ -150,62 +148,12 @@ Raised by Julian, 2026-08-28 - considered critical to ensuring the motors are pr
 
 ## B. Propulsion System
 
-### PROP-02 - Static thrust-to-weight ground test
-
-- [ ] **Status:** In progress
-- **Priority:** CRITICAL
-- **Milestone:** Ground-test readiness
-- **Depends on:** PROP-01 (complete - see Completed Work)
-
-**Scope**
-- Conduct a bench/ground test measuring static thrust from both motors at full throttle against the aircraft's all-up weight.
-- Include a sustained full-throttle run (approaching the motor's 180s continuous rating window, not just a brief burst), monitoring total current draw and motor temperature throughout - see background notes.
-
-**Acceptance criteria**
-- Measured thrust-to-weight ratio recorded.
-- Result reviewed against the target ratio needed for reliable hand-launch and climb performance.
-- Sustained full-throttle current draw and motor temperature recorded, and reviewed against the MN3110 KV700's 21A continuous rating (not just a brief-burst reading).
-- Result logged as a dated entry under `docs/engineering/test-reports/`.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Originally raised against the U5 KV400 motors following the inadequate-thrust finding at the 2026-07-05 BNEMAC inspection. Repeated 2026-08-19 following the MN3110 KV700/AIR 40A install (PROP-01): a basic bench thrust test showed decent thrust, but it remains unclear whether it is sufficient - measured thrust-to-weight ratio and a pass/fail against the target ratio are still needed. Kept as a separate task from throttle curve/mapping verification (PROP-06).
-
-A brief (<20s) full-throttle test (2026-08-31, Julian) had the PDB reporting 60-65A total current draw - approximately 30-32.5A per motor, assuming an even split. This is comfortably within the T-Motor AIR 40A ESC's 40A continuous rating and the battery's capability, but is roughly 45-55% above the MN3110 KV700's own rated max continuous current (21A, a 180s/3-minute rating per the datasheet). A brief burst at this level is not itself a concern, but it does not confirm whether sustained full-throttle operation (e.g. a longer climb-out) is thermally safe for the motors - hence the added sustained-run acceptance criterion above, rather than treating the brief test as conclusive either way.
-
-2026-09-02 thrust test session (with Ross) logged current draw consistent with the above (peaks 29.8-65.9A total across five runs). Two of the five runs cut out mid-full-throttle due to a false PX4 landing-detection auto-disarm, not a power fault - see `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`. Before the next sustained full-throttle run, raise or disable `COM_DISARM_LAND` (currently 2.0s) for the duration of the test, then restore it afterward - see `context/open-items.md`.
-
-</details>
-
-### PROP-06 - Verify throttle curve/mapping
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Ground-test readiness
-- **Depends on:** PROP-01 (complete - see Completed Work)
-
-**Scope**
-- Review throttle stick input to motor PWM output mapping for both motors following the MN3110 KV700/AIR 40A install; remap the throttle curve if needed for appropriate low/mid/high-throttle response.
-
-**Acceptance criteria**
-- Throttle response reviewed across the full stick range on the bench.
-- Any remapping applied and confirmed via the Actuators page.
-- Result logged as a dated entry under `docs/engineering/test-reports/`.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Split out as its own task 2026-08-19, separate from static thrust verification (PROP-02), following the MN3110 KV700/AIR 40A install - initial bench testing suggested the throttle curve may need remapping for the new motor/ESC combination.
-
-</details>
-
 ### PROP-08 - Limit current draw to within motor rated continuous current
 
 - [ ] **Status:** For review
 - **Priority:** CRITICAL
 - **Milestone:** Ground-test readiness
-- **Depends on:** PROP-02
+- **Depends on:** PROP-02 (complete - see Completed Work)
 
 **Scope**
 - The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - and Julian's full-throttle current sense corroborates this at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change.
@@ -225,11 +173,32 @@ Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 
 
 </details>
 
+### PROP-10 - Quantitative thrust measurement on a dedicated motor rig
+
+- [ ] **Status:** Not started
+- **Priority:** NON-CRITICAL
+- **Depends on:** None
+
+**Scope**
+- Measure static thrust from the installed MN3110 KV700/AIR 40A/propeller combination on a dedicated motor test rig (e.g. a load-cell thrust stand), rather than a qualitative in-person assessment.
+
+**Acceptance criteria**
+- Measured thrust-to-weight ratio recorded.
+- Result reviewed against the target ratio needed for reliable hand-launch and climb performance.
+- Result logged as a dated entry under `docs/engineering/test-reports/`.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Split out from PROP-02, 2026-09-02, per Julian - PROP-02 was closed on Ross Dennington's qualitative "felt the thrust" assessment during the day's bench test, explicitly deferring the quantitative motor-rig measurement rather than leaving it blocking flight clearance. Non-critical since PROP-02's qualitative closure already stands as the flight-clearance evidence.
+
+</details>
+
 ### PROP-05 - Characterise final propulsion system in MotoCalc
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** PROP-02
+- **Depends on:** PROP-02 (complete - see Completed Work)
 
 **Scope**
 - Model the Believer airframe and the final motor/ESC/propeller combination in MotoCalc to optimise efficiency.
@@ -512,6 +481,8 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 
 ### Propulsion (MN3110 KV700 / AIR 40A ESC configuration, installed 2026-08-19)
 - [x] Motor and ESC installation and configuration - T-MOTOR MN3110 KV700 motors and T-Motor AIR 40A ESCs installed (PROP-01); PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page; motor start synchronisation confirmed (PROP-03); motor PWM min/max set to 1000-2000us on both motors (PROP-04)
+- [x] Static thrust ground test (PROP-02) - closed 2026-09-02 on Ross Dennington's (BNEMAC) qualitative in-person assessment during a bench thrust-test session; no measured thrust-to-weight ratio taken. A dedicated motor-rig quantitative measurement was explicitly deferred, not lost - tracked separately as PROP-10
+- [x] Throttle curve/mapping verification (PROP-06) - reviewed by Ross Dennington during the same 2026-09-02 session; found appropriate, no remapping applied
 - [x] Control surface PWM mapping and direction - PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction
 - [x] Primary control expo - 30% exponential set on aileron, elevator, and rudder; throttle expo removed
 - [x] Control surface expo and aileron trim - 30% primary-control expo configured; aileron neutral trim values entered 2026-08-19 (CTL-03), later rechecked and updated 2026-09-02 following PWM endpoint recalibration (CTL-06). **Note:** the earlier claim that radio calibration had matched stick travel to final PWM deflection limits, and that aileron differential/V-tail rudder mix were finalised, was superseded 2026-08-31 - the endpoint-based differential/±0.85 V-tail yaw values were never the validated baseline; the actuator effectiveness and PWM endpoint reset is now complete (CTL-06, see below).

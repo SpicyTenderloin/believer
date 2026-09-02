@@ -228,4 +228,14 @@ Julian provided a fresh parameter export (`params_update.params`, dropped in the
 
 Other diffed changes were routine (accelerometer/barometer calibration drift, flight UUID counter, internal flight-time tracker) and not otherwise documented. The fresh export replaced the archived copy at `docs/operations/Pixhawk Parameter Backup/believer-parameters.params`.
 
+## PROP-02/PROP-06 Closed, PROP-10 Split Out - 2026-09-02
+
+Julian met with Ross Dennington (BNEMAC) during the day's bench thrust-test session. Ross reviewed throttle response and was satisfied with the throttle curve/mapping (no remapping applied) - **PROP-06 closed** on that basis. Ross also assessed static thrust qualitatively ("felt the thrust") and judged it acceptable - **PROP-02 closed** on that basis too, per Julian's explicit instruction to reduce its acceptance criteria.
+
+Recorded precisely, per the CTL-08 lesson on evidence bars: PROP-02's original acceptance criteria (measured thrust-to-weight ratio, sustained-run current/temperature check) were **not** met - the task was closed on Ross's qualitative assessment alone, at Julian's explicit direction to reduce the bar. No thrust-to-weight figure exists. The sustained-run current/temperature check remains separately open under PROP-08. The dropped quantitative motor-rig measurement (e.g. a load-cell thrust stand) wasn't discarded - split out as a new task, **PROP-10** (Non-critical), so it stays tracked without blocking flight clearance.
+
+Findings written up in `docs/engineering/test-reports/2026-09-02-ross-dennington-throttle-thrust-review.md`. Both tasks moved to Completed Work in `docs/project/build-checklist.md`.
+
+**CTL-04 not closed**, despite Julian raising it as a candidate: the Ross meeting covered throttle mapping and thrust, not specifically "maximum deflection, rates, and expo" (CTL-04's own Ross-review acceptance criterion), and two other criteria remain open regardless - revalidation against `FW_MAN_R_SC` pending CTL-08's formal conclusion (CTL-08 is For review, not Complete), and the switch-diagram relabelling. Flagged to Julian rather than closed, consistent with the CTL-08 precedent of not silently accepting a lighter bar.
+
 See [open-items.md](open-items.md) for what's still missing.

@@ -2,6 +2,13 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x12)
+
+- Added `docs/engineering/test-reports/2026-09-02-ross-dennington-throttle-thrust-review.md` documenting Ross Dennington's (BNEMAC) review of throttle mapping and static thrust during the day's bench session.
+- `docs/project/build-checklist.md`: **PROP-06 closed** (throttle mapping reviewed by Ross, no remapping needed). **PROP-02 closed** on Ross's qualitative thrust assessment, per Julian's explicit instruction to reduce the original acceptance criteria (measured thrust-to-weight ratio, sustained-run current/temperature check) - recorded precisely which evidence it was actually closed on. Added **PROP-10** (Non-critical) to track the deferred quantitative motor-rig thrust measurement separately, so it isn't lost. Both PROP-02/PROP-06 moved to Completed Work; readiness table and dependency annotations updated.
+- **CTL-04 not closed**, despite being raised as a candidate: the Ross meeting covered throttle mapping and thrust, not CTL-04's own "max deflection, rates, and expo" review criterion, and two other criteria (FW_MAN_R_SC revalidation pending CTL-08, switch-diagram relabelling) remain open. Flagged to Julian rather than silently closed.
+- `context/project-notes.md`, `context/open-items.md`: recorded the closures and the CTL-04 flag; removed the now-resolved PROP-02/PROP-06 open item.
+
 ## 2026-09-02 (continued x11)
 
 Verified a fresh parameter export (`params_update.params`, dropped in the repo root by Julian) against the previous archived export before documenting anything as done.
