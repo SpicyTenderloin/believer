@@ -2,6 +2,14 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x8)
+
+Investigated two unexplained full-throttle motor cutouts from that day's bench thrust-test session with Ross Dennington, by pulling and analysing the flight controller's `.ulg` logs directly (`pyulog`). Root-caused to PX4's fixed-wing landing detector falsely declaring "landed" on the stationary bench and auto-disarming via `COM_DISARM_LAND` (2.0s) - not a brownout, reboot, or power/ESC fault; both cutout events showed nominal battery/5V-rail voltage and a continuous boot clock throughout. A separate, unrelated flight-controller reboot was also found (cause undetermined) in a gap between two earlier sessions that day, with no anomaly in the preceding session's own data.
+
+- Added `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md` with the full findings.
+- `docs/project/build-checklist.md`: added background to PROP-02 noting the interference; added **PROP-09** (Urgent/ground-test-readiness) to resolve the false auto-disarm before further sustained full-throttle bench testing, with a safeguard to restore flight-intended parameters afterward.
+- `context/project-notes.md`, `context/open-items.md`: recorded the investigation and flagged the standalone reboot as unexplained, to watch for recurrence.
+
 ## 2026-09-02 (continued x7)
 
 - `docs/project/build-checklist.md`: CTL-08 elevated from Urgent to Critical/flight-clearance-blocking, per Julian - resolves the transitive-blocking gap flagged against CTL-04's dependency on it. Added to the Current Flight-Readiness Status table.
