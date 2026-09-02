@@ -174,7 +174,7 @@ Originally raised against the U5 KV400 motors following the inadequate-thrust fi
 
 A brief (<20s) full-throttle test (2026-08-31, Julian) had the PDB reporting 60-65A total current draw - approximately 30-32.5A per motor, assuming an even split. This is comfortably within the T-Motor AIR 40A ESC's 40A continuous rating and the battery's capability, but is roughly 45-55% above the MN3110 KV700's own rated max continuous current (21A, a 180s/3-minute rating per the datasheet). A brief burst at this level is not itself a concern, but it does not confirm whether sustained full-throttle operation (e.g. a longer climb-out) is thermally safe for the motors - hence the added sustained-run acceptance criterion above, rather than treating the brief test as conclusive either way.
 
-2026-09-02 thrust test session (with Ross) logged current draw consistent with the above (peaks 29.8-65.9A total across five runs). Two of the five runs cut out mid-full-throttle due to a false PX4 landing-detection auto-disarm, not a power fault - see `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md` and the new PROP-09. This interference needs resolving before a clean sustained full-throttle run (this task's own outstanding acceptance criterion) can be completed.
+2026-09-02 thrust test session (with Ross) logged current draw consistent with the above (peaks 29.8-65.9A total across five runs). Two of the five runs cut out mid-full-throttle due to a false PX4 landing-detection auto-disarm, not a power fault - see `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`. Before the next sustained full-throttle run, raise or disable `COM_DISARM_LAND` (currently 2.0s) for the duration of the test, then restore it afterward - see `context/open-items.md`.
 
 </details>
 
@@ -219,34 +219,6 @@ Split out as its own task 2026-08-19, separate from static thrust verification (
 <summary>Background and engineering notes</summary>
 
 Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 2026-08-31 overcurrent finding logged under PROP-02: a brief full-throttle test showed ~30-32.5A per motor against the MN3110 KV700's 21A continuous (180s) rating. PROP-02 measures and records this; PROP-08 is the corresponding action item to actually bring sustained draw within the rated limit before flight, rather than leaving it as a documented-but-unaddressed overcurrent condition.
-
-</details>
-
-### PROP-09 - Resolve landing-detector auto-disarm interference with bench full-throttle testing
-
-- [ ] **Status:** Not started
-- **Priority:** URGENT
-- **Milestone:** Ground-test readiness
-- **Depends on:** None
-
-**Scope**
-- PX4's fixed-wing landing detector (`LNDFW_VEL_XY_MAX`/`LNDFW_VEL_Z_MAX`/`LNDFW_AIRSPD_MAX`/`LNDFW_XYACC_MAX`/`LNDFW_ROT_MAX`, sustained for `LNDFW_TRIG_TIME` = 2s) intermittently declares "landed" during stationary bench full-throttle testing - confirmed 2026-09-02 in 2 of 5 thrust-test runs - because a bench-restrained aircraft trivially satisfies the detector's velocity/airspeed criteria regardless of throttle. `COM_DISARM_LAND` (2.0s) then auto-disarms the motors mid-command.
-- This is not a flight-safety concern in itself - the same logic is correct, intended behaviour for a genuine landing - but it blocks running a clean sustained full-throttle bench test, needed for PROP-02's sustained-run criterion and PROP-08's current-limit verification.
-- Decide and apply a bench-testing-specific workaround (e.g. temporarily raising or disabling `COM_DISARM_LAND` for the duration of ground testing only), with an explicit, checked step to restore the flight-intended value afterward.
-
-**Acceptance criteria**
-- A documented, repeatable method exists for running a sustained full-throttle bench test without an unplanned landing-triggered auto-disarm.
-- Any parameter(s) temporarily changed for bench testing are confirmed reverted to their flight-intended values, verified via a parameter export, before flight clearance.
-- Result logged as a dated entry under `docs/engineering/test-reports/`.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised 2026-09-02 following investigation of two motor cutouts during that day's thrust testing (with Ross) that Julian suspected might be a flight-controller brownout. Log analysis (`docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`) ruled out any power/reboot cause for both events - battery voltage and the 5V system rail stayed nominal throughout, and the flight controller's boot-relative clock ran continuously across both - and identified the landing detector + `COM_DISARM_LAND` as the actual mechanism instead. Both cutouts occurred while `actuator_motors` showed throttle still commanded above 0.85 at the moment of disarm.
-
-Set to Priority: URGENT since it blocks completing PROP-02's sustained-run criterion, itself Critical - may warrant elevating to Critical, left for Julian's call rather than unilaterally decided, consistent with how the CTL-04/CTL-08 dependency was handled.
-
-A separate, unrelated flight-controller reboot was also found in the same investigation (between the day's 07:28:44 and 07:37:15 sessions) - not correlated with either cutout, cause undetermined; tracked in `context/open-items.md`.
 
 </details>
 

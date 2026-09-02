@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x9)
+
+- `docs/project/build-checklist.md`: removed PROP-09, per Julian - simplified to a lighter open item rather than a dedicated checklist task. Updated PROP-02's background note accordingly.
+- `context/open-items.md`, `context/project-notes.md`, `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`: replaced the PROP-09 references with the flag: for future bench tests, raise or disable `COM_DISARM_LAND` for the duration of testing, then confirm it's restored to its flight-intended value before flight clearance.
+
 ## 2026-09-02 (continued x8)
 
 Investigated two unexplained full-throttle motor cutouts from that day's bench thrust-test session with Ross Dennington, by pulling and analysing the flight controller's `.ulg` logs directly (`pyulog`). Root-caused to PX4's fixed-wing landing detector falsely declaring "landed" on the stationary bench and auto-disarming via `COM_DISARM_LAND` (2.0s) - not a brownout, reboot, or power/ESC fault; both cutout events showed nominal battery/5V-rail voltage and a continuous boot clock throughout. A separate, unrelated flight-controller reboot was also found (cause undetermined) in a gap between two earlier sessions that day, with no anomaly in the preceding session's own data.

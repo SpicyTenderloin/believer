@@ -38,7 +38,7 @@ The PX4 fixed-wing landing detector (`LNDFW_VEL_XY_MAX`=5m/s, `LNDFW_VEL_Z_MAX`=
 
 ## Outstanding
 
-- Decide and apply a bench-testing-specific workaround for the landing-detector auto-disarm (e.g. temporarily adjusting `COM_DISARM_LAND` or the `LNDFW_*` thresholds for the duration of ground testing only), with an explicit step to restore flight-intended values before flight clearance - tracked as PROP-09.
+- For future bench tests: raise or disable `COM_DISARM_LAND` (currently 2.0s) for the duration of testing, then confirm it's restored to its flight-intended value before flight clearance - tracked in `context/open-items.md`.
 - The standalone reboot in the 07:28:44 -> 07:37:15 gap has no identified cause; watch for recurrence.
 
-Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md) PROP-02, PROP-09. Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).
+Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md) PROP-02. Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).

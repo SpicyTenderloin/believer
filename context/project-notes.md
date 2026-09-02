@@ -215,6 +215,6 @@ Investigated by pulling the SD card's `.ulg` logs directly (`E:\log\2026-09-02\`
 
 **Separately, one genuine reboot was found** in the gap between the day's 07:28:44 and 07:37:15 sessions (boot-relative clock resets between them) - but 07:28:44's own log ends with no anomaly (clean, deliberate throttle-down and RC-switch disarm, voltage/5V rail nominal throughout), so this reboot isn't correlated with a full-throttle event; likely a manual power-cycle or connector event while the aircraft was handled between runs. Cause not otherwise determinable, since no log spans the reboot itself. This is what most plausibly explains a "lost connection" observation, if it was noticed in the pause between test runs rather than during an active cutout.
 
-New task **PROP-09** added to resolve the bench-testing interference (a workaround for future sustained full-throttle runs, with a safeguard to restore flight-intended parameters afterward) - see `docs/project/build-checklist.md`. Full findings: `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`.
+Rather than a dedicated checklist task, Julian opted to flag this as a lighter open item: for future bench tests, raise or disable `COM_DISARM_LAND` for the duration of testing, then confirm it's restored to its flight-intended value before flight clearance - see `context/open-items.md`. Full findings: `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md`.
 
 See [open-items.md](open-items.md) for what's still missing.
