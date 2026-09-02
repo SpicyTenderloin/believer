@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued)
+
+- `docs/project/build-checklist.md`: closed NAV-05 - Julian confirmed both GPS receivers achieve a lock under the new instance configuration; moved to Completed Work. Recorded the rationale for the GPS instance swap (QGroundControl's primary GPS status display reads driver instance 1 via `GPS_RAW_INT`; putting the RTK-capable ZED-F9P there ensures the GUI reflects the better receiver rather than under-reporting the M8N's lesser fix) in `docs/engineering/ICD.md` INT-05 (Rev 2.2 -> 2.3) and `context/project-notes.md`.
+- **Reopened CTL-08** per Julian - the 2026-09-01 closure relied on a qualitative bench comparison ("seem to agree better"), not the formal logged test (propellers off, roll/pitch/yaw tested separately, stick%/PWM/deflection recorded at several points per axis) its acceptance criteria actually call for; Julian is running that test himself. Reverted the task back into Section D (was briefly in Completed Work), restored its dependency annotations on CTL-02/CTL-04/CTL-07, and reverted `docs/engineering/flight-modes.md` (Rev 1.4 -> 1.5) and `context/project-notes.md`'s "closed" framing accordingly - `docs/operations/manual.md`'s pre-flight checklist update (Manual-mode-specific proportionality check) was left as-is since it's good general guidance independent of CTL-08's status.
+- `context/open-items.md`: re-added the CTL-08 formal-test item; narrowed the GPS item to what's still open (RTK correction source, `SENS_GPS_MASK` bit-semantics verification).
+
 ## 2026-09-02
 
 Replaced `docs/operations/Pixhawk Parameter Backup/believer-parameters.params` with a fresh FC export (dropped in the repo root as `updated_params.params`), cross-checked by diff against the previous backup. Two changes were flagged and confirmed with Julian before documenting as intentional (see below); everything else matched decisions already made in this conversation.

@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.4 |
+| **Revision** | 1.5 |
 | **Date** | 2026-09-02 |
 | **Status** | Draft |
 
@@ -58,9 +58,9 @@ Stick input is sent directly to control allocation with no stabilisation or angl
 | `FW_MAN_R_SC` | 1.0 | Roll stick-to-surface scale factor |
 | `FW_MAN_Y_SC` | 1.0 | Yaw stick-to-surface scale factor |
 
-These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all confirmed and left at the PX4 default of 1.0 (`docs/project/build-checklist.md` CTL-08, closed 2026-09-01).
+These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all remain at the PX4 default of 1.0 pending `docs/project/build-checklist.md` CTL-08 (reopened 2026-09-02, formal Manual-mode test procedure still to be run).
 
-**Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault; CTL-08 confirmed it was specific to Acro mode (its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate - integral windup - driving a surface to its endpoint well before the stick reaches full travel) and did not reproduce in Manual mode. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
+**Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault. An informal bench comparison narrowed it to Acro mode specifically - consistent with the hypothesis that its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate (integral windup), driving a surface to its endpoint well before the stick reaches full travel - but this has not yet been confirmed via CTL-08's formal, logged Manual-mode test. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
 
 Used during ground functional checks (`docs/operations/manual.md` step 21-22) and as the emergency direct-control fallback. Not used for launch.
 
@@ -192,3 +192,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.2 | 2026-08-31 | Following a flight-control configuration review: clarified that `FW_MAN_*_SC` (Section 4.1) apply specifically to full Manual mode and warned against interpreting Acro/Stabilized bench saturation as evidence about them; documented `FW_RLL_TO_YAW_FF` (Section 4.3, currently 0.0, no non-zero value planned pending flight-test evidence); flagged the 2026-08-19 V-tail ±0.85 yaw mixing gain as targeted for restoration to the PX4 default ±0.50, live value unchanged pending CTL-06 |
 | 1.3 | 2026-09-01 | CTL-08 closed - confirmed the early bench saturation was Acro-mode-specific (rate-controller integral windup against a stationary airframe), did not reproduce in Manual mode; `FW_MAN_*_SC` confirmed and retained at 1.0. Updated Section 4.1 accordingly |
 | 1.4 | 2026-09-02 | CTL-10 closed - updated the Altitude-mode airspeed table (Section 4.4) with the new `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` values, informed by Weishäupl et al. 2024's measured stall speed, cruise speed, and VNE for what is very likely the same commercial airframe |
+| 1.5 | 2026-09-02 | CTL-08 reopened per Julian - the 2026-09-01 closure was based on an informal bench comparison, not the formal logged Manual-mode test its acceptance criteria call for; Julian is running that test himself. Reverted Section 4.1's "closed" framing accordingly |

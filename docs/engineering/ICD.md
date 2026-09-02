@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.2 |
+| **Revision** | 2.3 |
 | **Date** | 2026-09-02 |
 | **Status** | Draft |
 
@@ -276,7 +276,9 @@ Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` co
 
 ### INT-05 - GPS Instance 1 (Primary) - ZED-F9P
 
-**Physical wiring is unchanged from earlier revisions of this document - only the PX4 driver instance numbering has changed, deliberately, as of 2026-09-02.** The SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P) remains physically connected to the FC's **GPS2 UART port**, but `GPS_1_CONFIG` now points PX4's GPS driver **instance 1** at that port, making the RTK-capable unit the primary-numbered GPS instance. External mount and antenna installed 2026-08-28 (`docs/project/build-checklist.md` NAV-03/NAV-04).
+**Physical wiring is unchanged from earlier revisions of this document - only the PX4 driver instance numbering has changed, deliberately, as of 2026-09-02.** The SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P) remains physically connected to the FC's **GPS2 UART port**, but `GPS_1_CONFIG` now points PX4's GPS driver **instance 1** at that port, making the RTK-capable unit the primary-numbered GPS instance. External mount and antenna installed 2026-08-28 (`docs/project/build-checklist.md` NAV-03/NAV-04). GPS lock confirmed on both receivers, 2026-09-02 (NAV-05).
+
+**Rationale for the swap:** QGroundControl's primary GPS status indicator in the flight view reads the `GPS_RAW_INT` MAVLink message, which PX4 populates from GPS driver instance 1. With the ZED-F9P on instance 2 (the pre-2026-09-02 configuration), QGC's main display would have shown the M8N's lesser fix status rather than the actual best-available GPS quality - under-reporting to the pilot. Placing the RTK-capable receiver on instance 1 ensures the primary GUI indicator reflects it.
 
 | Parameter | Value |
 |---|---|
@@ -348,3 +350,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.0 | 2026-08-28 | Updated INT-06: recorded the ZED-F9P external mount and antenna installation (NAV-03/NAV-04), removed the stale "antenna not yet fitted, maiden flight blocker" note (superseded and was never actually a hard blocker), and documented the decision to blend GPS 1/GPS 2 via `SENS_GPS_MASK` rather than designate a single "primary" GPS, per Julian - pending NAV-05 confirming the parameter's bit semantics for the installed PX4 version |
 | 2.1 | 2026-08-28 | Corrected `GPS_1_GNSS` in INT-05 from 21 to 0 (Default) - the documented value never matched the live exported parameters, caught during a review of GPS parameter recommendations |
 | 2.2 | 2026-09-02 | Rewrote INT-05/INT-06: GPS driver instance numbering deliberately swapped relative to physical UART port (instance 1 = ZED-F9P via physical GPS2 port, instance 2 = M8N via physical GPS1 port) - physical wiring unchanged, added an explicit instance-vs-port cross-reference to prevent confusion. Updated the INT-02a-f actuator table with CTL-06's physically remeasured PWM endpoints (superseding the previous asymmetric, differential-approximating values) and the Control Surface Mixing table with the restored ±0.50 V-tail yaw effectiveness and rechecked aileron trims |
+| 2.3 | 2026-09-02 | NAV-05 closed - recorded GPS lock confirmation on both receivers and the QGroundControl-display rationale for the instance swap (QGC's primary GPS status indicator reads driver instance 1; the swap ensures it reflects the RTK-capable ZED-F9P rather than the M8N) |

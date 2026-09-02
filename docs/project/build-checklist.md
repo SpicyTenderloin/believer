@@ -273,7 +273,7 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 - [ ] **Status:** Not started
 - **Priority:** URGENT
-- **Depends on:** CTL-01 (complete - see Completed Work), CTL-06 (complete - see Completed Work), CTL-08 (complete - see Completed Work)
+- **Depends on:** CTL-01 (complete - see Completed Work), CTL-06 (complete - see Completed Work), CTL-08
 
 **Scope**
 - Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights.
@@ -291,7 +291,7 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** CTL-08 (complete - see Completed Work)
+- **Depends on:** CTL-08
 
 **Scope**
 - Configure switch-selectable high/low control surface deflection rates in EdgeTX.
@@ -312,7 +312,7 @@ Low-rate aileron detail (50%) added per Julian, 2026-08-28. Dependency on CTL-08
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** CTL-06 (complete - see Completed Work), CTL-08 (complete - see Completed Work)
+- **Depends on:** CTL-06 (complete - see Completed Work), CTL-08
 
 **Scope**
 - No fixed aileron-to-rudder mix is to be configured initially. V-tail Roll Torque values remain 0 (adding non-zero Roll Torque to the V-tail would incorrectly tell PX4 that direct V-tail deflection produces a rolling moment, rather than accompanying a roll command with yaw control).
@@ -324,6 +324,38 @@ Low-rate aileron detail (50%) added per Julian, 2026-08-28. Dependency on CTL-08
 <summary>Background and engineering notes</summary>
 
 Rewritten 2026-08-31 following the flight-control configuration review, superseding the previous fixed "10% aileron-to-rudder mixing" requirement. `FW_RLL_TO_YAW_FF` is a controller feedforward term, not a guarantee that a full aileron command produces exactly a specified percentage of full rudder travel - setting it to 0.10 would not be equivalent to a conventional radio mixer labelled "10% aileron to rudder." Additional feedforward should be based on observed adverse yaw rather than assumed necessary before the aircraft has flown in a clean baseline configuration. Deferred until CTL-06 (actuator baseline) and CTL-08 (Manual-mode mapping) are complete, since evaluating adverse yaw meaningfully requires a resolved actuator/scaling configuration first.
+
+</details>
+
+### CTL-08 - Verify and correct full-Manual stick-to-surface scaling
+
+- [ ] **Status:** In progress
+- **Priority:** URGENT
+- **Depends on:** CTL-06 (complete - see Completed Work)
+
+**Scope**
+- With propellers removed, the radio in its full-rate configuration, and PX4 explicitly placed in Manual mode, check the QGroundControl Radio page for the full normalized input range (approx. -100% to +100%) across the complete roll-gimbal range.
+- Test roll, pitch, and yaw separately, recording stick percentage, normalized actuator behaviour (if available), PWM output, and physical surface deflection for each - a proper table at several points (e.g. 25/50/75/100% stick) per axis, not a qualitative bench impression.
+- Distinguish between three possible causes if early saturation is reproduced in Manual mode: the surface physically reaching a mechanical limit, the PWM output reaching its configured endpoint, or the control allocator reaching its normalized command limit. Mechanical limits and PWM endpoints have now been corrected (CTL-06, complete) before considering a reduction to `FW_MAN_R_SC`.
+- If reproduced and mechanical/PWM causes are ruled out, experimentally reduce `FW_MAN_R_SC` (a value near 0.5 is a provisional test hypothesis only, not an approved setting) and refine so full roll-stick travel corresponds to the intended maximum safe aileron travel. Assess pitch (`FW_MAN_P_SC`) and yaw (`FW_MAN_Y_SC`) independently - do not copy the roll value across.
+
+**Acceptance criteria**
+- Full radio input range confirmed correctly reported on the QGroundControl Radio page.
+- Control-surface movement in Manual mode is monotonic and sensible across the full gimbal range - confirmed by logged stick%/PWM/deflection data at several points per axis, not a visual impression.
+- The intended safe endpoint is reached at or near full stick, not substantially before it.
+- Final values for all three `FW_MAN_*_SC` parameters recorded, even if they remain at 1.0.
+- If the apparent early saturation occurs only in Acro or Stabilized but not in Manual, conclude the bench observation was normal closed-loop controller behaviour and make no `FW_MAN_*_SC` adjustment on that basis - but this conclusion must be reached from the logged table above, not a qualitative comparison.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Rewritten 2026-08-31 following the flight-control configuration review. The observation is narrowed but not yet root-caused: the QGroundControl Radio page correctly reports ~-100% to +100% across the complete roll-gimbal range, while the ailerons appear to reach maximum deflection at ~±50% stick - this makes a gross RC-input calibration error less likely, but does not by itself confirm `FW_MAN_R_SC` is the cause.
+
+A crucial distinction is the flight mode the observation was made in. `FW_MAN_R_SC`/`FW_MAN_P_SC`/`FW_MAN_Y_SC` scale desired actuator commands specifically in full Manual mode, where stick input goes directly to control allocation. Acro converts stick movement into angular-rate setpoints; Stabilized converts it into attitude behaviour. On a stationary bench, the aircraft cannot respond to a rate or attitude command, so the controller may legitimately drive a surface to saturation before the stick reaches its end - early saturation observed in Acro or Stabilized on the bench is therefore not necessarily a control-travel calibration fault, and this task must confirm the observation reproduces in full Manual mode before concluding `FW_MAN_R_SC` needs adjustment.
+
+**2026-09-01, Julian's informal bench observation:** the early-saturation behaviour was narrowed to Acro mode specifically - in Manual mode, stick position and surface deflection "seem to agree better," consistent with this task's own hypothesis (Acro's rate controller has nothing to null against on a stationary bench, so it saturates the output well before full stick; Manual's direct stick-to-actuator path has no such closed-loop artefact). This task was briefly closed on that basis (2026-09-01), but **reopened 2026-09-02 at Julian's request** - he is running the full formal test procedure above (propellers off, Manual mode, roll/pitch/yaw tested separately, stick%/PWM/deflection logged at several points per axis) rather than accepting the lighter, qualitative bar. A quick bench comparison can't confirm the relationship is monotonic across the whole range, or that all three axes behave the same way (roll could be fine while pitch or yaw has a milder version of the same tendency) - that's what the full table is for.
+
+None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/engineering/flight-modes.md`. CTL-06 (actuator effectiveness and PWM endpoint baseline) is now complete, so this task's own dependency is satisfied and the formal test can proceed on a stable actuator configuration.
 
 </details>
 
@@ -364,17 +396,6 @@ Raised by Julian, 2026-08-28. The parameter's exact role and correct target valu
 
 **Scope**
 - Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air; check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient.
-
-### NAV-05 - GPS 2 (ZED-F9P) configuration and validation
-
-- [ ] **Status:** In progress
-- **Priority:** URGENT
-- **Depends on:** NAV-04 (complete - see Completed Work)
-
-**Scope**
-- ~~Configure protocol and GNSS constellation settings.~~ Done 2026-09-02: `GPS_2_CONFIG` enabled (201, physical GPS1 UART port), `GPS_2_PROTOCOL` = 1 (u-blox), `GPS_2_GNSS` = 29. Also involved a deliberate GPS driver instance/port swap - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference.
-- Confirm GPS lock - still outstanding.
-- Confirm `SENS_GPS_MASK` (currently 7 in the exported parameters) produces a blended GPS instance 1/instance 2 solution weighted by reported accuracy, rather than a single fixed "primary" receiver - verify the parameter's exact bit semantics against the PX4 documentation for the installed firmware version before relying on it. Decision (2026-08-28, Julian): blend, not exclusive-use, so the M8N remains an automatic fallback if the ZED-F9P drops out. Still outstanding.
 
 ---
 
@@ -438,7 +459,6 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Control surface PWM mapping and direction - PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction
 - [x] Primary control expo - 30% exponential set on aileron, elevator, and rudder; throttle expo removed
 - [x] Control surface expo and aileron trim - 30% primary-control expo configured; aileron neutral trim values entered 2026-08-19 (CTL-03), later rechecked and updated 2026-09-02 following PWM endpoint recalibration (CTL-06). **Note:** the earlier claim that radio calibration had matched stick travel to final PWM deflection limits, and that aileron differential/V-tail rudder mix were finalised, was superseded 2026-08-31 - the endpoint-based differential/±0.85 V-tail yaw values were never the validated baseline; the actuator effectiveness and PWM endpoint reset is now complete (CTL-06, see below).
-- [x] Full-Manual stick-to-surface scaling verified - early control-surface saturation observed on the bench was confirmed specific to Acro mode (rate-controller integral windup against a stationary airframe that can never satisfy the commanded rate); Manual mode's direct, open-loop stick-to-actuator mapping shows no such effect. `FW_MAN_R_SC`, `FW_MAN_P_SC`, and `FW_MAN_Y_SC` all confirmed and left at the PX4 default 1.0 (CTL-08), 2026-09-01.
 
 ### Electrical power
 - [x] Battery installation - battery installed
@@ -457,10 +477,11 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 
 ### Navigation and air-data sensors
 - [x] Airspeed sensor calibration - MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port
-- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port; GPS lock confirmed prior to the 2026-09-02 instance renumbering (see below - this device is now PX4 GPS driver instance 2, not instance 1; NAV-05 tracks reconfirming lock under the new configuration)
+- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port (now PX4 GPS driver instance 2, following the 2026-09-02 instance swap - see below)
 - [x] Pitot system installation - pitot tube installed and tubing routed (temporary mount - permanent mount tracked under NAV-01)
 - [x] External mount for ZED-F9P - mounting bracket installed to allow antenna installation, 2026-08-28 (NAV-03)
-- [x] GPS 2 antenna installation - antenna fitted to the SparkFun ZED-F9P RTK breakout, 2026-08-28 (NAV-04); protocol/GNSS configuration and GPS lock confirmation still tracked under NAV-05
+- [x] GPS 2 antenna installation - antenna fitted to the SparkFun ZED-F9P RTK breakout, 2026-08-28 (NAV-04)
+- [x] GPS 2 (ZED-F9P) configuration and validation - protocol/GNSS settings configured; GPS driver instance 1 deliberately swapped to the ZED-F9P (physical GPS2 UART port) so QGroundControl's primary GPS status display (which reads instance 1) reflects the RTK-capable receiver rather than the M8N; both receivers confirmed achieving a lock, 2026-09-02 (NAV-05)
 
 ### RC, telemetry and RF
 - [x] RC link installation - RC receiver installed and configured with antennas
