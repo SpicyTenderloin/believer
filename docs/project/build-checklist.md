@@ -77,15 +77,6 @@ Identified during the 2026-07-10 TMAC review with Peter Spink - the battery curr
 
 </details>
 
-### AF-03 - Motor/ESC inspection-bay cover bolts
-
-- [ ] **Status:** Not started
-- **Priority:** URGENT
-- **Depends on:** None
-
-**Scope**
-- Source and fit appropriately sized replacement bolts for the motor/ESC inspection bay covers; the existing bolts are rounded.
-
 ### AF-04 - Wiring tidy and routing
 
 - [ ] **Status:** Not started
@@ -521,6 +512,7 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Aircraft structural inspection - Believer confirmed structurally ready to fly
 - [x] Wing tape cleanup - excess and temporary tape removed from wings
 - [x] Parachute bay - servo removed, bay taped shut
+- [x] Motor/ESC inspection-bay cover bolts - rounded bolts replaced with appropriately sized fasteners (AF-03)
 
 ### Avionics
 - [x] Flight computer placement - FC located and aligned with aircraft centreline

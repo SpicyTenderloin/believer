@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-01 (continued)
+
+- `docs/project/build-checklist.md`: closed AF-03 (motor/ESC inspection-bay cover bolts - rounded bolts replaced) per Julian - moved from Section A into Completed Work.
+
 ## 2026-09-01
 
 Repository updated from a flight-control configuration review Julian conducted in a separate session (summary brief supplied 2026-09-01, review dated 2026-08-31). Core finding: the PX4 Actuators page's Roll/Pitch/Yaw Torque fields are actuator-effectiveness coefficients for the control allocator, not transmitter mixer percentages - this reframes several 2026-08-19 decisions made under the earlier (incorrect) assumption. Per the review's explicit guidance, only documents describing current decisions/dependencies/open items were updated now; `docs/engineering/ICD.md`, the parameter-change-log, and the `.params` backup still correctly describe the as-found state and are deliberately left untouched until the physical configuration is actually changed and verified on the aircraft.
