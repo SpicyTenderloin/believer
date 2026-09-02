@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.3 |
-| **Date** | 2026-09-01 |
+| **Revision** | 1.4 |
+| **Date** | 2026-09-02 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -100,16 +100,18 @@ As Stabilized, plus the autopilot actively holds altitude and airspeed when the 
 
 | Parameter | Value | Purpose |
 |---|---|---|
-| `FW_AIRSPD_TRIM` | 15 m/s | Cruise airspeed target |
-| `FW_AIRSPD_MIN` | 10 m/s | Minimum controlled airspeed |
-| `FW_AIRSPD_MAX` | 20 m/s | Maximum controlled airspeed |
-| `FW_AIRSPD_STALL` | 7 m/s | Stall speed used by low-speed protection |
+| `FW_AIRSPD_TRIM` | 20 m/s | Cruise airspeed target |
+| `FW_AIRSPD_MIN` | 15 m/s | Minimum controlled airspeed |
+| `FW_AIRSPD_MAX` | 28 m/s | Maximum controlled airspeed |
+| `FW_AIRSPD_STALL` | 11 m/s | Stall speed used by low-speed protection |
 | `FW_T_CLMB_R_SP` | 3 m/s | Commanded climb rate at full pitch-up stick |
 | `FW_T_SINK_R_SP` | 2 m/s | Commanded sink rate at full pitch-down stick |
 | `FW_T_CLMB_MAX` / `FW_T_SINK_MAX` | 5 m/s | Climb/sink rate limits |
 | `FW_MAN_R_MAX` | 45 deg | Maximum commanded roll angle (shared with Stabilized) |
 
 Requires an altitude source (barometer, always available) but not GPS.
+
+Updated 2026-09-02 (`docs/project/build-checklist.md` CTL-10), informed by Weishäupl et al. 2024's measured data for what is very likely the same commercial airframe: `FW_AIRSPD_STALL` set to the paper's measured 1g stall speed (11 m/s, up from the untuned PX4 generic default of 7 m/s); `FW_AIRSPD_MIN` raised to keep real margin above it; `FW_AIRSPD_TRIM` set to 20 m/s, matching both the manufacturer's recommended cruise speed and the paper's figure; `FW_AIRSPD_MAX` raised to 28 m/s, giving margin below the paper's measured VNE (37 m/s, flutter-limited) while comfortably exceeding the new trim speed.
 
 ### 4.5 Position
 
@@ -189,3 +191,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.1 | 2026-08-19 | Added Acro mode (Section 4.2, new GR1 SW2); removed Hold from the GR1 group (still reachable via CH8) and renumbered subsequent GR1 positions/sections accordingly. Resolved the Stabilized-mode yaw open item (CTL-01) - the expected direct yaw response is Acro's behaviour, not Stabilized's; also recorded the V-tail yaw mixing gain increase (0.50 -> 0.85) from the finalised TMAC trim values |
 | 1.2 | 2026-08-31 | Following a flight-control configuration review: clarified that `FW_MAN_*_SC` (Section 4.1) apply specifically to full Manual mode and warned against interpreting Acro/Stabilized bench saturation as evidence about them; documented `FW_RLL_TO_YAW_FF` (Section 4.3, currently 0.0, no non-zero value planned pending flight-test evidence); flagged the 2026-08-19 V-tail ±0.85 yaw mixing gain as targeted for restoration to the PX4 default ±0.50, live value unchanged pending CTL-06 |
 | 1.3 | 2026-09-01 | CTL-08 closed - confirmed the early bench saturation was Acro-mode-specific (rate-controller integral windup against a stationary airframe), did not reproduce in Manual mode; `FW_MAN_*_SC` confirmed and retained at 1.0. Updated Section 4.1 accordingly |
+| 1.4 | 2026-09-02 | CTL-10 closed - updated the Altitude-mode airspeed table (Section 4.4) with the new `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` values, informed by Weishäupl et al. 2024's measured stall speed, cruise speed, and VNE for what is very likely the same commercial airframe |

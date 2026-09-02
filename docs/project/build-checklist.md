@@ -28,7 +28,6 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Airframe | AF-01: Correct centre of gravity | Not started |
 | Airframe | AF-02: Fit positive battery retention | Not started |
 | Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
-| Flight controls | CTL-10: Update airspeed envelope parameters against measured data | Not started |
 
 ---
 
@@ -237,7 +236,7 @@ Raised by Julian, 2026-08-28, while working through the MotoCalc "Coeff..." airf
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** PWR-01 (complete - see Completed Work), CTL-06
+- **Depends on:** PWR-01 (complete - see Completed Work), CTL-06 (complete - see Completed Work)
 
 **Scope**
 - With the flight control surface servos under stress (moving simultaneously / against load), monitor the servo rail voltage on an oscilloscope to confirm it does not drop out of specification.
@@ -274,7 +273,7 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 - [ ] **Status:** Not started
 - **Priority:** URGENT
-- **Depends on:** CTL-01 (complete - see Completed Work), CTL-06, CTL-08 (complete - see Completed Work)
+- **Depends on:** CTL-01 (complete - see Completed Work), CTL-06 (complete - see Completed Work), CTL-08 (complete - see Completed Work)
 
 **Scope**
 - Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights.
@@ -309,43 +308,11 @@ Low-rate aileron detail (50%) added per Julian, 2026-08-28. Dependency on CTL-08
 
 </details>
 
-### CTL-06 - Restore and verify control-surface actuator configuration
-
-- [ ] **Status:** In progress
-- **Priority:** URGENT
-- **Depends on:** None
-
-**Scope**
-- Restore the V-tail yaw-effectiveness coefficients (`CA_SV_CS2_TRQ_Y`/`CA_SV_CS3_TRQ_Y`) from ±0.85 to the PX4 type-default ±0.50, matching the target baseline: Left Aileron Roll -0.50/Pitch 0/Yaw 0; Right Aileron Roll +0.50/Pitch 0/Yaw 0; Left V-Tail Roll 0/Pitch +0.50/Yaw +0.50; Right V-Tail Roll 0/Pitch +0.50/Yaw -0.50.
-- Retain the established aileron mixer trims (`CA_SV_CS0_TRIM` = -0.08, `CA_SV_CS1_TRIM` = -0.03) during this reset - confirmed correct by Julian, not to be zeroed or replaced. Recheck them after endpoint recalibration.
-- Independently measure and set safe PWM min/max endpoints for MAIN 1, MAIN 2, MAIN 3, and MAIN 5 as the actual safe mechanical limits for each individual servo/surface (preventing excessive deflection, linkage over-centre conditions, structural interference, binding, or unnecessary loading) - not chosen to create an aerodynamic mixing effect. Endpoints may legitimately differ numerically between servos due to installation differences (horn alignment, linkage length, centring, mechanical clearance); any final asymmetry must be justified by the physical installation, not used to approximate aileron differential.
-- Remove any endpoint setting whose only purpose was to claim aileron differential.
-- Verify control direction, neutral position, safe travel, and moderate combined V-tail pitch+yaw operation (see below).
-
-**Acceptance criteria**
-- Live flight controller shows the target effectiveness values above.
-- Each surface reaches its intended safe physical limit without binding.
-- Aileron trims remain correct after recalibration.
-- Final endpoint values recorded in a dated test report (`docs/engineering/test-reports/`), the parameter change log, the ICD, and a fresh parameter export.
-- Not to be marked Complete merely because documentation has been edited - the physical reset and endpoint measurements must first be performed and verified on the aircraft.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Rewritten 2026-08-31 following a flight-control configuration review, superseding the previous "Configure aileron differential across full travel range" framing. Key findings from that review:
-
-- The PX4 Actuators page's Roll/Pitch/Yaw Torque fields are actuator-effectiveness coefficients used by the control allocator (normalized estimates of how effective an actuator is about a given axis, inverted to calculate actuator commands) - not conventional transmitter mixer percentages, and not a direct command for a percentage of servo travel. Increasing a coefficient can *reduce* the requested deflection for a given demanded moment, because PX4 is being told the actuator is more effective.
-- The ±0.85 V-tail yaw values were not a validated "85% rudder mix" - they told PX4 each V-tail surface is 1.7x as effective in yaw as in pitch (since the pitch coefficient stayed at 0.50), with no aerodynamic derivation or flight-test evidence identified supporting that ratio. Restoring ±0.50 does not by itself reduce the physical PWM endpoints - it restores the intended allocation model; actual available servo travel is established separately via PWM calibration.
-- The previous endpoint-based approach conflated two separate configuration purposes (actuator safety limits vs. aerodynamic differential). The installed PX4 1.16.1 control-allocation interface exposes one linear roll/pitch/yaw coefficient per surface and no exposed conventional aileron-differential parameter for independently scaling up/down aileron travel - a finding specific to this PX4 version, not a permanent limitation of all future releases. The decision is therefore **not** to implement software aileron differential in the baseline configuration; it should only be reconsidered if flight testing shows significant adverse yaw or another handling problem that would benefit from it (mechanical linkage differential or a deliberate PX4 software change would be the future options, neither yet selected).
-- Bench observation of V-tail surfaces appearing to saturate under full combined pitch+yaw is not, by itself, evidence of an incorrect mix: with the default matrix, the two ruddervator commands are roughly proportional to P+Y and P-Y, so a surface already at its pitch limit will appear to stop moving as yaw is added (asking it further into the same saturated direction) while the other surface moves back toward neutral. This is expected actuator saturation at an extreme combined command, not necessarily a mixing fault. The acceptance test should verify correct pitch/yaw direction, distinct response at moderate combined inputs, no binding, and safe endpoints - not that both surfaces keep moving independently at the extreme corner of the command envelope.
-
-</details>
-
 ### CTL-07 - Evaluate adverse yaw and roll-to-yaw feedforward
 
 - [ ] **Status:** Not started
 - **Priority:** NON-CRITICAL
-- **Depends on:** CTL-06, CTL-08 (complete - see Completed Work)
+- **Depends on:** CTL-06 (complete - see Completed Work), CTL-08 (complete - see Completed Work)
 
 **Scope**
 - No fixed aileron-to-rudder mix is to be configured initially. V-tail Roll Torque values remain 0 (adding non-zero Roll Torque to the V-tail would incorrectly tell PX4 that direct V-tail deflection produces a rolling moment, rather than accompanying a roll command with yaw control).
@@ -373,29 +340,6 @@ Rewritten 2026-08-31 following the flight-control configuration review, supersed
 <summary>Background and engineering notes</summary>
 
 Raised by Julian, 2026-08-28. The parameter's exact role and correct target value for this PX4 version/airframe have not yet been confirmed against PX4 documentation - verify before setting.
-
-</details>
-
-### CTL-10 - Update airspeed envelope parameters against measured data
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Set `FW_AIRSPD_STALL` to 11 m/s, per the 1g stall speed measured in Weishäupl et al. 2024 (`docs/engineering/references/`) for what is very likely the same commercial airframe - currently 7 m/s, an untuned PX4 generic default.
-- Review and raise `FW_AIRSPD_MIN` (currently 10 m/s) - it is presently set *below* the newly-informed 11 m/s stall speed, which is a genuine safety gap: `FW_AIRSPD_MIN` is the floor TECS will command down to in Altitude/Position/Mission modes, so as configured it could in principle command an airspeed at or below actual stall. A reasonable margin above stall (e.g. ~13-14 m/s, comfortably below the existing 15 m/s `FW_AIRSPD_TRIM`) should be set instead.
-
-**Acceptance criteria**
-- `FW_AIRSPD_STALL` set to 11 m/s.
-- `FW_AIRSPD_MIN` set to a value with a real margin above the measured stall speed, confirmed less than `FW_AIRSPD_TRIM`.
-- Updated values recorded in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` and `docs/engineering/flight-modes.md`.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised by Julian, 2026-08-31, following the discovery of Weishäupl et al. 2024, a wind-tunnel drag/performance characterisation of what is very likely the same commercial MakeFlyEasy airframe as the Believer (matching wingspan, length, MTOW, and manufacturer cruise speed exactly). The paper's measured 1g stall speed (11 m/s) is well above the Believer's current generic-default `FW_AIRSPD_STALL` (7 m/s) and, more importantly, above the currently-configured `FW_AIRSPD_MIN` (10 m/s) - the latter discrepancy is a real safety gap in automatic flight modes, not just a documentation accuracy issue. `FW_AIRSPD_MAX` (20 m/s) and the broader TECS/performance parameters are a separate, larger exercise tied to whether the paper's measured drag polar (CD0/K/CL0/CLα) is adopted more broadly - tracked in `context/open-items.md`, not part of this task's scope.
 
 </details>
 
@@ -428,9 +372,9 @@ Raised by Julian, 2026-08-31, following the discovery of Weishäupl et al. 2024,
 - **Depends on:** NAV-04 (complete - see Completed Work)
 
 **Scope**
-- Configure protocol and GNSS constellation settings.
-- Confirm GPS lock.
-- Confirm `SENS_GPS_MASK` (currently 7 in the exported parameters) produces a blended GPS 1/GPS 2 solution weighted by reported accuracy, rather than a single fixed "primary" receiver - verify the parameter's exact bit semantics against the PX4 documentation for the installed firmware version before relying on it. Decision (2026-08-28, Julian): blend, not exclusive-use, so the M8N remains an automatic fallback if the ZED-F9P drops out.
+- ~~Configure protocol and GNSS constellation settings.~~ Done 2026-09-02: `GPS_2_CONFIG` enabled (201, physical GPS1 UART port), `GPS_2_PROTOCOL` = 1 (u-blox), `GPS_2_GNSS` = 29. Also involved a deliberate GPS driver instance/port swap - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference.
+- Confirm GPS lock - still outstanding.
+- Confirm `SENS_GPS_MASK` (currently 7 in the exported parameters) produces a blended GPS instance 1/instance 2 solution weighted by reported accuracy, rather than a single fixed "primary" receiver - verify the parameter's exact bit semantics against the PX4 documentation for the installed firmware version before relying on it. Decision (2026-08-28, Julian): blend, not exclusive-use, so the M8N remains an automatic fallback if the ZED-F9P drops out. Still outstanding.
 
 ---
 
@@ -493,7 +437,7 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Motor and ESC installation and configuration - T-MOTOR MN3110 KV700 motors and T-Motor AIR 40A ESCs installed (PROP-01); PWM output mapping confirmed (MAIN 4 = left motor, MAIN 6 = right motor); motor spin directions verified; motor test conducted via QGroundControl Actuators page; motor start synchronisation confirmed (PROP-03); motor PWM min/max set to 1000-2000us on both motors (PROP-04)
 - [x] Control surface PWM mapping and direction - PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction
 - [x] Primary control expo - 30% exponential set on aileron, elevator, and rudder; throttle expo removed
-- [x] Control surface expo and aileron trim - 30% primary-control expo configured; aileron neutral trim values entered 2026-08-19 (CTL-03). **Note (2026-08-31):** the earlier claim that radio calibration had matched stick travel to final PWM deflection limits, and that aileron differential/V-tail rudder mix were finalised, is superseded - the endpoint-based differential/±0.85 V-tail yaw values are no longer accepted as the validated baseline; see CTL-06 (still open).
+- [x] Control surface expo and aileron trim - 30% primary-control expo configured; aileron neutral trim values entered 2026-08-19 (CTL-03), later rechecked and updated 2026-09-02 following PWM endpoint recalibration (CTL-06). **Note:** the earlier claim that radio calibration had matched stick travel to final PWM deflection limits, and that aileron differential/V-tail rudder mix were finalised, was superseded 2026-08-31 - the endpoint-based differential/±0.85 V-tail yaw values were never the validated baseline; the actuator effectiveness and PWM endpoint reset is now complete (CTL-06, see below).
 - [x] Full-Manual stick-to-surface scaling verified - early control-surface saturation observed on the bench was confirmed specific to Acro mode (rate-controller integral windup against a stationary airframe that can never satisfy the commanded rate); Manual mode's direct, open-loop stick-to-actuator mapping shows no such effect. `FW_MAN_R_SC`, `FW_MAN_P_SC`, and `FW_MAN_Y_SC` all confirmed and left at the PX4 default 1.0 (CTL-08), 2026-09-01.
 
 ### Electrical power
@@ -508,10 +452,12 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Geofence configuration - breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST)
 - [x] Actuate control surfaces while disarmed - COM_PREARM_MODE set to 2 (Always), 2026-08-19
 - [x] Clean-install procedure - maintained as an ongoing repository practice (parameter change log, CHANGELOG, dated parameter/radio backups) rather than a one-off task (CTL-05)
+- [x] Restore and verify control-surface actuator configuration - V-tail yaw effectiveness restored from ±0.85 to the PX4 type-default ±0.50; PWM min/max endpoints for MAIN 1/2/3/5 independently remeasured as actual safe mechanical limits, superseding the previous endpoint-based approximation of aileron differential; aileron trims rechecked and updated (0.05/-0.05); no software aileron differential in the baseline (CTL-06), 2026-09-02
+- [x] Update airspeed envelope parameters against measured data - `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` updated to 11/15/20/28 m/s, informed by Weishäupl et al. 2024's measured stall speed, cruise speed, and VNE for what is very likely the same commercial airframe (CTL-10), 2026-09-02
 
 ### Navigation and air-data sensors
 - [x] Airspeed sensor calibration - MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port
-- [x] GPS 1 (M8N) configuration and validation - GPS_1_CONFIG, GPS_1_PROTOCOL, GPS_1_GNSS, and GPS_UBX_DYNMODEL set; GPS lock confirmed
+- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port; GPS lock confirmed prior to the 2026-09-02 instance renumbering (see below - this device is now PX4 GPS driver instance 2, not instance 1; NAV-05 tracks reconfirming lock under the new configuration)
 - [x] Pitot system installation - pitot tube installed and tubing routed (temporary mount - permanent mount tracked under NAV-01)
 - [x] External mount for ZED-F9P - mounting bracket installed to allow antenna installation, 2026-08-28 (NAV-03)
 - [x] GPS 2 antenna installation - antenna fitted to the SparkFun ZED-F9P RTK breakout, 2026-08-28 (NAV-04); protocol/GNSS configuration and GPS lock confirmation still tracked under NAV-05

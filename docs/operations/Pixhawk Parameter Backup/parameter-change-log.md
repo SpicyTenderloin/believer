@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `believer-parameters.params` (exported 2026-08-19), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
+Values reflect `believer-parameters.params` (exported 2026-09-02), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
 
 ---
 
@@ -43,10 +43,15 @@ Values reflect `believer-parameters.params` (exported 2026-08-19), in this same 
 
 | Parameter | Value | Notes |
 |---|---|---|
-| `GPS_1_CONFIG` | 201 (GPS 1) | Assigns the primary GPS instance to the GPS 1 UART port. |
-| `GPS_1_PROTOCOL` | 1 (u-blox) | Matches the fitted M8N receiver. |
-| `GPS_2_CONFIG` | 0 (Disabled) | GPS 2 port disabled until ZED-F9P antenna and external mount are installed. Re-enable by setting to 202 (GPS 2) and restore GPS_2_GNSS = 29 and GPS_2_PROTOCOL = 1. |
+| `GPS_1_CONFIG` | 202 (physical GPS2 UART port) | Assigns GPS driver instance 1 to the physical GPS2 port, where the ZED-F9P is wired - a deliberate instance/port swap made 2026-09-02 so the RTK-capable receiver is the primary-numbered instance. Physical wiring unchanged. |
+| `GPS_1_PROTOCOL` | 1 (u-blox) | Matches the ZED-F9P (now instance 1). |
+| `GPS_1_GNSS` | 31 | Constellation mask for instance 1 (ZED-F9P). |
+| `GPS_2_CONFIG` | 201 (physical GPS1 UART port) | Assigns GPS driver instance 2 to the physical GPS1 port, where the M8N is wired. Enabled 2026-09-02 (previously 0/Disabled). |
+| `GPS_2_PROTOCOL` | 1 (u-blox) | Matches the M8N (now instance 2). |
+| `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N). |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
+
+GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference. GPS lock confirmation for this configuration is still outstanding (`docs/project/build-checklist.md` NAV-05).
 
 ## Serial Ports
 
@@ -100,8 +105,10 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `PWM_MAIN_FUNC4` | 101 (Motor 1) | MAIN 4 assigned to left motor. |
 | `PWM_MAIN_FUNC5` | 202 (Right Aileron) | MAIN 5 assigned to right aileron. |
 | `PWM_MAIN_FUNC6` | 102 (Motor 2) | MAIN 6 assigned to right motor. |
-| `PWM_MAIN_MIN1` | 1100 | V-tail left minimum PWM. Raised from 800 on 2026-08-19 as part of the finalised actuator config. |
-| `PWM_MAIN_MIN2` | 1100 | V-tail right minimum PWM. Raised from 800 on 2026-08-19 as part of the finalised actuator config. |
+| `PWM_MAIN_MIN1` / `MIN2` | 1000 | V-tail left/right minimum PWM. Independently remeasured 2026-09-02 as the actual safe mechanical limit (CTL-06), superseding the 2026-08-19 value (1100), which had been chosen as part of an endpoint-based approximation of aerodynamic mixing rather than a genuine mechanical-limit measurement. |
+| `PWM_MAIN_MIN3` / `MIN5` | 1100 | Left/right aileron minimum PWM. Remeasured 2026-09-02, see above - supersedes the previous asymmetric values (1200/1230). |
+| `PWM_MAIN_MAX3` / `MAX5` | 2000 | Left/right aileron maximum PWM. Remeasured 2026-09-02, see above - supersedes the previous asymmetric values (1760/1900). |
+| `PWM_MAIN_DIS1-3`, `DIS5` | 1500 | V-tail and aileron disarmed position, reset to plain neutral 2026-09-02 now that endpoints are no longer being used to approximate differential (previously 1520/1550 for the ailerons). |
 | `PWM_MAIN_MIN4` / `MIN6` | 1000 | Motor min PWM (both motors). Set 2026-08-19 to a common 1000-2000us range following the MN3110 KV700/AIR 40A install (PROP-04). |
 | `PWM_MAIN_MAX4` / `MAX6` | 2000 | Motor max PWM (both motors). Set 2026-08-19, see above. |
 | `PWM_MAIN_REV` | 6 (0b00000110) | Output reversal bitmask: bits 1 and 2 set = MAIN 2 (V-tail right) and MAIN 3 (left aileron) reversed. Changed from 5 (0b00000101, MAIN 1 + MAIN 3) on 2026-07-06 as part of the ruddervator direction fix. |
@@ -112,10 +119,10 @@ PWM limits and disarmed values per output are documented in `docs/engineering/IC
 
 | Parameter | Value | Notes |
 |---|---|---|
-| `CA_SV_CS0_TRIM` | -0.08 | Left aileron mixer trim. Entered 2026-08-19, the finalised trim value from the 2026-07-10 TMAC session (CTL-03). |
-| `CA_SV_CS1_TRIM` | -0.03 | Right aileron mixer trim. Entered 2026-08-19, see above. |
-| `CA_SV_CS2_TRQ_Y` | 0.85 | Left V-tail yaw torque (ruddervator mix). Raised from 0.50 on 2026-08-19 as part of finalising the TMAC rudder mix. |
-| `CA_SV_CS3_TRQ_Y` | -0.85 | Right V-tail yaw torque. Raised from -0.50 on 2026-08-19, see above. |
+| `CA_SV_CS0_TRIM` | 0.05 | Left aileron mixer trim. Rechecked and updated 2026-09-02 following CTL-06's PWM endpoint recalibration - supersedes the 2026-08-19 TMAC-session value (-0.08). |
+| `CA_SV_CS1_TRIM` | -0.05 | Right aileron mixer trim. Rechecked 2026-09-02, see above - supersedes the previous value (-0.03). |
+| `CA_SV_CS2_TRQ_Y` | 0.50 | Left V-tail yaw torque. Restored 2026-09-02 to the PX4 type-default (CTL-06) - the 0.85 value set 2026-08-19 had been mistakenly treated as an "85% rudder mix" (a transmitter-mixer percentage), when this is actually an actuator-effectiveness coefficient for the control allocator; see `docs/project/build-checklist.md` CTL-06 for the full explanation. |
+| `CA_SV_CS3_TRQ_Y` | -0.50 | Right V-tail yaw torque. Restored 2026-09-02, see above. |
 
 Full roll/pitch/yaw torque and trim per surface documented in `docs/engineering/ICD.md` (Control Surface Mixing).
 
@@ -130,7 +137,7 @@ Full roll/pitch/yaw torque and trim per surface documented in `docs/engineering/
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-08-19 calibration run.
+Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-09-02 calibration run (accelerometer and magnetometer unchanged from 2026-08-19; barometer and gyroscope refreshed).
 
 ### Accelerometers
 
@@ -159,7 +166,7 @@ Set automatically by QGroundControl calibration procedures. Do not edit manually
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 20.844 |
+| `CAL_BARO0_OFF` | 11.148 |
 
 ### Gyroscopes
 
@@ -171,9 +178,9 @@ Set automatically by QGroundControl calibration procedures. Do not edit manually
 | `CAL_GYRO1_XOFF` | 0.001345 |
 | `CAL_GYRO1_YOFF` | -0.003667 |
 | `CAL_GYRO1_ZOFF` | -0.012162 |
-| `CAL_GYRO2_XOFF` | -0.006264 |
-| `CAL_GYRO2_YOFF` | -0.023828 |
-| `CAL_GYRO2_ZOFF` | -0.020745 |
+| `CAL_GYRO2_XOFF` | -0.006622 |
+| `CAL_GYRO2_YOFF` | -0.024987 |
+| `CAL_GYRO2_ZOFF` | -0.021735 |
 
 ### Magnetometers
 

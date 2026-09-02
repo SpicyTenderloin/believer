@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.1 |
-| **Date** | 2026-08-28 |
+| **Revision** | 2.2 |
+| **Date** | 2026-09-02 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -42,8 +42,8 @@ The servo rail is electrically isolated from the main flight controller power su
 | INT-02f | Right Motor (MAIN 6) | PWM | FC MAIN 6 | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
 | INT-03 | RC control link | Serial, TELEM1 | FC | Radiomaster DBR4 receiver |
 | INT-04 | Telemetry link | Serial, TELEM2 | FC | RFD900x radio modem |
-| INT-05 | GPS 1 (primary) | Serial, GPS1 UART | FC | M8N GPS module |
-| INT-06 | GPS 2 (RTK) | Serial, GPS2 UART | FC | SparkFun GPS-RTK-SMA Breakout (ZED-F9P) |
+| INT-05 | GPS instance 1 (primary, RTK-capable) | Serial, physical GPS2 UART | FC | SparkFun GPS-RTK-SMA Breakout (ZED-F9P) |
+| INT-06 | GPS instance 2 (secondary) | Serial, physical GPS1 UART | FC | M8N GPS module |
 | INT-07 | Airspeed sensor | I2C | FC | MS4525DO differential pressure sensor |
 | INT-08 | RC transmitter link | RF, ExpressLRS dual-band (2.4GHz/900MHz) | Radiomaster GX12 transmitter | Radiomaster DBR4 receiver |
 
@@ -77,12 +77,14 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 
 | Control Input | PWM Output | Min (µs) | Max (µs) | Disarmed (µs) | Trim (µs) | Reversed |
 |---|---|---|---|---|---|---|
-| V-Tail Left | MAIN 1 | 1100 | 2000 | 1500 | 1500 | No |
-| V-Tail Right | MAIN 2 | 1100 | 2000 | 1500 | 1500 | Yes |
-| Left Aileron | MAIN 3 | 1200 | 1760 | 1520 | 1520 | Yes |
+| V-Tail Left | MAIN 1 | 1000 | 2000 | 1500 | 1500 | No |
+| V-Tail Right | MAIN 2 | 1000 | 2000 | 1500 | 1500 | Yes |
+| Left Aileron | MAIN 3 | 1100 | 2000 | 1500 | 1500 | Yes |
 | Left Motor | MAIN 4 | 1000 | 2000 | 1000 | 1000 | No |
-| Right Aileron | MAIN 5 | 1230 | 1900 | 1550 | 1550 | No |
+| Right Aileron | MAIN 5 | 1100 | 2000 | 1500 | 1500 | No |
 | Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
+
+Endpoints independently remeasured as actual safe mechanical limits per servo and reconfirmed 2026-09-02 (`docs/project/build-checklist.md` CTL-06) - superseding the previous asymmetric values, which had conflated PWM endpoint selection with an attempt at aerodynamic aileron differential (see Control Surface Mixing below and CTL-06's background notes). Disarmed/trim values reset to 1500 across all four control surfaces now that they are no longer being used to approximate differential.
 
 ![PX4 Actuator Output Configuration](../assets/actuator-output-config.png)
 
@@ -92,12 +94,12 @@ Roll/pitch/yaw torque contribution and mixer trim per control surface, as config
 
 | Servo | Surface | Roll Torque | Pitch Torque | Yaw Torque | Mixer Trim |
 |---|---|---|---|---|---|
-| 1 | Left Aileron | -0.50 | 0.00 | 0.00 | -0.08 |
-| 2 | Right Aileron | 0.50 | 0.00 | 0.00 | -0.03 |
-| 3 | Left V-Tail | 0.00 | 0.50 | 0.85 | 0.00 |
-| 4 | Right V-Tail | 0.00 | 0.50 | -0.85 | 0.00 |
+| 1 | Left Aileron | -0.50 | 0.00 | 0.00 | 0.05 |
+| 2 | Right Aileron | 0.50 | 0.00 | 0.00 | -0.05 |
+| 3 | Left V-Tail | 0.00 | 0.50 | 0.50 | 0.00 |
+| 4 | Right V-Tail | 0.00 | 0.50 | -0.50 | 0.00 |
 
-Mixer trim values (aileron) are the finalised trims from the 2026-07-10 TMAC tuning session with Peter Spink, entered 2026-08-19. Pitch and yaw on the V-tail servos are both driven through PX4's ruddervator mixing (Section on the V-tail actuator outputs above).
+V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4 type-default ±0.50 (`docs/project/build-checklist.md` CTL-06) - the ±0.85 pair had been mistakenly treated as an "85% rudder mix" (a conventional transmitter-mixer percentage), when these are actually actuator-effectiveness coefficients used by the control allocator; see CTL-06's background notes for the full explanation. Aileron mixer trims rechecked and updated following the CTL-06 PWM endpoint recalibration - no longer the 2026-07-10 TMAC session's original values. Pitch and yaw on the V-tail servos are both driven through PX4's ruddervator mixing (Section on the V-tail actuator outputs above).
 
 #### Connected Devices
 
@@ -272,26 +274,29 @@ Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` co
 | 15 | GPIO1/P1.1 | I/O | Digital I/O, PPM I/O | 3.3V |
 | 16 | GND | - | Ground | 0V |
 
-### INT-05 - GPS 1 (Primary)
+### INT-05 - GPS Instance 1 (Primary) - ZED-F9P
 
-M8N GPS module (u-blox protocol), connected to FC GPS1 UART.
-
-| Parameter | Value |
-|---|---|
-| `GPS_1_CONFIG` | GPS 1 |
-| `GPS_1_PROTOCOL` | u-blox |
-| `GPS_1_GNSS` | 0 (Default) |
-| `GPS_UBX_DYNMODEL` | Airborne <4g |
-
-### INT-06 - GPS 2 / RTK
-
-SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P), connected to FC GPS2 UART. External mount and antenna installed 2026-08-28 (`docs/project/build-checklist.md` NAV-03/NAV-04).
+**Physical wiring is unchanged from earlier revisions of this document - only the PX4 driver instance numbering has changed, deliberately, as of 2026-09-02.** The SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P) remains physically connected to the FC's **GPS2 UART port**, but `GPS_1_CONFIG` now points PX4's GPS driver **instance 1** at that port, making the RTK-capable unit the primary-numbered GPS instance. External mount and antenna installed 2026-08-28 (`docs/project/build-checklist.md` NAV-03/NAV-04).
 
 | Parameter | Value |
 |---|---|
+| `GPS_1_CONFIG` | 202 (physical GPS2 UART port) |
+| `GPS_1_PROTOCOL` | 1 (u-blox) |
+| `GPS_1_GNSS` | 31 |
+
+### INT-06 - GPS Instance 2 (Secondary) - M8N
+
+The u-blox M8N remains physically connected to the FC's **GPS1 UART port**. `GPS_2_CONFIG` now points PX4's GPS driver **instance 2** at that port - the physical wiring has not moved, only the instance numbering.
+
+| Parameter | Value |
+|---|---|
+| `GPS_2_CONFIG` | 201 (physical GPS1 UART port) |
+| `GPS_2_PROTOCOL` | 1 (u-blox) |
 | `GPS_2_GNSS` | 29 |
 
-`GPS_2_CONFIG` remains disabled pending protocol/GNSS configuration and GPS lock confirmation (NAV-05). Once enabled, GPS 1 (M8N) and GPS 2 (ZED-F9P) are intended to be blended by PX4 rather than one designated "primary" - `SENS_GPS_MASK` (currently 7 in the exported parameters) governs this; NAV-05 should confirm its bit semantics against the PX4 documentation for the installed firmware version and verify it produces the intended blended behaviour, weighting the more accurate receiver (expected to be the ZED-F9P, particularly once RTK corrections are available) while retaining the M8N as an automatic fallback.
+**Instance-vs-port cross-reference, to avoid confusion:** PX4's `GPS_x_CONFIG`/`GPS_x_GNSS`/`GPS_x_PROTOCOL` parameters are numbered by **logical driver instance** (1 or 2), which is independent of and now deliberately decoupled from the **physical UART port** number (GPS1 or GPS2) - instance 1 reads the physical GPS2 port (ZED-F9P), instance 2 reads the physical GPS1 port (M8N). Serial port parameters (e.g. `SER_GPS2_BAUD`) are named by **physical port**, not instance, and so apply to whichever device is physically wired there regardless of which instance number reads it. `GPS_UBX_DYNMODEL` (8, Airborne <4g) is a global u-blox driver setting, not scoped to a single instance, and applies to both receivers.
+
+GPS instance 1 (ZED-F9P) and instance 2 (M8N) are blended by PX4 rather than one being treated as an exclusive "primary" - `SENS_GPS_MASK` (currently 7 in the exported parameters) governs this; NAV-05 should confirm its bit semantics against the PX4 documentation for the installed firmware version and verify it produces the intended blended behaviour, weighting the more accurate receiver (expected to be the ZED-F9P, particularly once RTK corrections are available) while retaining the M8N as an automatic fallback. GPS lock confirmation for this configuration is still outstanding - see `docs/project/build-checklist.md` NAV-05.
 
 ### INT-07 - Airspeed Sensor (I2C)
 
@@ -342,3 +347,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 1.9 | 2026-08-19 | Recorded the MN3110 KV700/AIR 40A propulsion install (replacing the U5 KV400 motors and previously-fitted ESCs), the dedicated servo-rail UBEC (replacing PM03D as the servo rail source), DBR4 relocation to the rear of the aircraft, and the finalised aileron trim/V-tail yaw mixing values from the 2026-07-10 TMAC session. Updated the INT-02a-f actuator table and added a Control Surface Mixing subsection against the current exported parameters and QGroundControl Actuators Config screenshot. Updated the GR1 flight-mode mapping (Acro added, Hold removed from the group, still reachable via CH8) |
 | 2.0 | 2026-08-28 | Updated INT-06: recorded the ZED-F9P external mount and antenna installation (NAV-03/NAV-04), removed the stale "antenna not yet fitted, maiden flight blocker" note (superseded and was never actually a hard blocker), and documented the decision to blend GPS 1/GPS 2 via `SENS_GPS_MASK` rather than designate a single "primary" GPS, per Julian - pending NAV-05 confirming the parameter's bit semantics for the installed PX4 version |
 | 2.1 | 2026-08-28 | Corrected `GPS_1_GNSS` in INT-05 from 21 to 0 (Default) - the documented value never matched the live exported parameters, caught during a review of GPS parameter recommendations |
+| 2.2 | 2026-09-02 | Rewrote INT-05/INT-06: GPS driver instance numbering deliberately swapped relative to physical UART port (instance 1 = ZED-F9P via physical GPS2 port, instance 2 = M8N via physical GPS1 port) - physical wiring unchanged, added an explicit instance-vs-port cross-reference to prevent confusion. Updated the INT-02a-f actuator table with CTL-06's physically remeasured PWM endpoints (superseding the previous asymmetric, differential-approximating values) and the Control Surface Mixing table with the restored ±0.50 V-tail yaw effectiveness and rechecked aileron trims |
