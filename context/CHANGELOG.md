@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x6)
+
+- `docs/project/build-checklist.md`: added a **For review** status (work done, pending formal confirmation against acceptance criteria before Complete) to the Status definitions, alongside Not started/In progress/Complete. Set CTL-08 to For review, per Julian - the informal bench finding stands, formal logged-table confirmation is the only thing outstanding.
+
 ## 2026-09-02 (continued x5)
 
 - `docs/project/build-checklist.md`: CTL-04 (tri-rate switch-selectable deflection) elevated from Non-critical to Critical/flight-clearance-blocking, per Julian; added to the Current Flight-Readiness Status table. Flagged that CTL-04 still formally depends on CTL-08, which remains Priority: URGENT - not yet reconciled, surfaced for Julian's call rather than silently bumping CTL-08 too.

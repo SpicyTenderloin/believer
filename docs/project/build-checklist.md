@@ -2,6 +2,12 @@
 
 Tracks build completion, hardware retention checks, and flight controller configuration, organised by engineering work package. Retention and configuration checks should be re-verified periodically and after any maintenance - see [Recurring Airworthiness Verification](#recurring-airworthiness-verification).
 
+Status definitions:
+- **Not started**
+- **In progress**
+- **For review** - the work itself is done; what remains is formal confirmation/sign-off against the task's acceptance criteria before it can be marked Complete
+- **Complete**
+
 Priority definitions:
 - **Critical** - must be correct before flight; incorrect or incomplete state could cause a crash or loss of aircraft
 - **Urgent** - should be done soon; aircraft can fly without it but it represents a meaningful gap
@@ -366,7 +372,7 @@ Rewritten 2026-08-31 following the flight-control configuration review, supersed
 
 ### CTL-08 - Verify and correct full-Manual stick-to-surface scaling
 
-- [ ] **Status:** In progress
+- [ ] **Status:** For review
 - **Priority:** URGENT
 - **Depends on:** CTL-06 (complete - see Completed Work)
 
@@ -393,6 +399,8 @@ A crucial distinction is the flight mode the observation was made in. `FW_MAN_R_
 **2026-09-01, Julian's informal bench observation:** the early-saturation behaviour was narrowed to Acro mode specifically - in Manual mode, stick position and surface deflection "seem to agree better," consistent with this task's own hypothesis (Acro's rate controller has nothing to null against on a stationary bench, so it saturates the output well before full stick; Manual's direct stick-to-actuator path has no such closed-loop artefact). This task was briefly closed on that basis (2026-09-01), but **reopened 2026-09-02 at Julian's request** - he is running the full formal test procedure above (propellers off, Manual mode, roll/pitch/yaw tested separately, stick%/PWM/deflection logged at several points per axis) rather than accepting the lighter, qualitative bar. A quick bench comparison can't confirm the relationship is monotonic across the whole range, or that all three axes behave the same way (roll could be fine while pitch or yaw has a milder version of the same tendency) - that's what the full table is for.
 
 None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/engineering/flight-modes.md`. CTL-06 (actuator effectiveness and PWM endpoint baseline) is now complete, so this task's own dependency is satisfied and the formal test can proceed on a stable actuator configuration.
+
+Set to **For review**, 2026-09-02, per Julian - the task is at the point of just needing the formal confirmation step (Julian running the logged table test above) rather than further investigative work; not marked Complete since that logged table hasn't been recorded against the acceptance criteria yet.
 
 </details>
 
