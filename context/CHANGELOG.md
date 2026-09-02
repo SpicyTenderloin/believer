@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x16)
+
+Consolidated `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md` and `2026-09-02-ross-dennington-review.md` into a single `2026-09-02-bench-thrust-test-review.md`, per Julian - both covered the same session. Updated the live references in `context/project-notes.md` and `context/open-items.md`; earlier changelog entries above are left referencing the filenames that were current at the time, per this log's own history-is-not-rewritten convention.
+
 ## 2026-09-02 (continued x15)
 
 Renamed `docs/engineering/test-reports/2026-09-02-ross-dennington-throttle-thrust-review.md` to `2026-09-02-ross-dennington-review.md` and expanded it to cover the full 2026-09-02 review, not just throttle/thrust - added findings for the CG/weight concern (AF-01), motor-mount wobble opinion (AF-08), tri-rates/expo and the Acro finding (CTL-04), and the launch-mechanism discussion. Updated the two references to the old filename in `context/CHANGELOG.md` and `context/project-notes.md`.
