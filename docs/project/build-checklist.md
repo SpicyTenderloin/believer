@@ -25,8 +25,10 @@ Future capability work (payload, autonomy) that is not required for current flig
 |---|---|---|
 | Propulsion | PROP-02: Demonstrate acceptable static thrust | In progress |
 | Propulsion | PROP-06: Verify throttle curve/mapping | Not started |
+| Propulsion | PROP-08: Limit current draw to within motor rated continuous current | Not started |
 | Airframe | AF-01: Correct centre of gravity | Not started |
 | Airframe | AF-02: Fit positive battery retention | Not started |
+| Airframe | AF-06: Replace control surface hinges | Not started |
 | Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
 
 ---
@@ -88,16 +90,20 @@ Identified during the 2026-07-10 TMAC review with Peter Spink - the battery curr
 ### AF-06 - Control surface hinges
 
 - [ ] **Status:** Not started
-- **Priority:** NON-CRITICAL
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
 - **Depends on:** None
 
 **Scope**
 - Replace the current thin foam-skin hinges with proper hinges.
 
+**Acceptance criteria**
+- All control surface hinges replaced with proper hinges, free of play and fatigue damage.
+
 <details>
 <summary>Background and engineering notes</summary>
 
-Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone to fatigue over time.
+Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone to fatigue over time. Elevated from Non-critical to Critical/flight-blocking by Julian, 2026-09-02.
 
 </details>
 
@@ -181,6 +187,28 @@ A brief (<20s) full-throttle test (2026-08-31, Julian) had the PDB reporting 60-
 <summary>Background and engineering notes</summary>
 
 Split out as its own task 2026-08-19, separate from static thrust verification (PROP-02), following the MN3110 KV700/AIR 40A install - initial bench testing suggested the throttle curve may need remapping for the new motor/ESC combination.
+
+</details>
+
+### PROP-08 - Limit current draw to within motor rated continuous current
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Ground-test readiness
+- **Depends on:** PROP-02
+
+**Scope**
+- The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - and Julian's full-throttle current sense corroborates this at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change - to be decided once PROP-02's sustained-run test (temperature behaviour at the current draw level) and PROP-06's throttle curve review are complete.
+
+**Acceptance criteria**
+- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating.
+- Configuration change applied (e.g. throttle ceiling, current limit, or propeller change) and documented, including any resulting effect on static thrust (PROP-02) or throttle response (PROP-06).
+- Result logged as a dated entry under `docs/engineering/test-reports/`.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 2026-08-31 overcurrent finding logged under PROP-02: a brief full-throttle test showed ~30-32.5A per motor against the MN3110 KV700's 21A continuous (180s) rating. PROP-02 measures and records this; PROP-08 is the corresponding action item to actually bring sustained draw within the rated limit before flight, rather than leaving it as a documented-but-unaddressed overcurrent condition.
 
 </details>
 

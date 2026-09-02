@@ -197,4 +197,12 @@ The switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.pn
 
 - **Routine recalibration**: barometer and gyroscope (instance 2/IMU2) offsets refreshed in the 2026-09-02 parameter export; accelerometer and magnetometer unchanged from the 2026-08-19 calibration run.
 
+## SB/SE RC_MAP Cleanup and New Critical Blockers (AF-06, PROP-08) - 2026-09-02
+
+Julian has begun clearing the SB/SE dual-purpose overlap flagged above: `RC_MAP_OFFB_SW` cleared on the physical FC since the last parameter export was taken, with `RC_MAP_FLAPS` still to be cleared. Not yet reflected in `docs/engineering/ICD.md`/`docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` pending a fresh parameter export to verify both values directly, per the verification lesson above - Julian will provide one next time the plane is connected.
+
+Two checklist changes:
+- **AF-06 (control surface hinges) elevated from Non-critical to Critical/flight-clearance-blocking**, per Julian.
+- **New PROP-08 added (Critical/ground-test-readiness-blocking)**: the 2026-08-31 brief full-throttle overcurrent finding (PROP-02 background - ~30-32.5A/motor against the MN3110 KV700's 21A continuous rating) needs an actual configuration fix, not just further measurement - PROP-02 covers testing/recording; PROP-08 is the corresponding action item (current limit, throttle ceiling, or propeller change) to bring sustained draw within the rated limit.
+
 See [open-items.md](open-items.md) for what's still missing.

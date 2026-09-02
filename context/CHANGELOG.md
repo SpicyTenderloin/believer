@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x4)
+
+- `docs/project/build-checklist.md`: AF-06 (control surface hinges) elevated from Non-critical to Critical/flight-clearance-blocking, per Julian; added to the Current Flight-Readiness Status table with an acceptance criterion. Added **PROP-08** (Critical/ground-test-readiness-blocking): configure the propulsion system so sustained current draw stays within the MN3110 KV700's 21A continuous rating, following the 2026-08-31 overcurrent finding (~30-32.5A/motor at full throttle, logged under PROP-02) - PROP-02 measures/records, PROP-08 is the action item to actually fix it.
+- `context/project-notes.md`, `context/open-items.md`: recorded that Julian has begun clearing the SB/SE dual-purpose overlap (CTL-04) by unmapping `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS` from CH9/CH11 in PX4 - `RC_MAP_OFFB_SW` reportedly cleared already, `RC_MAP_FLAPS` still pending. Not yet reflected in ICD.md/parameter-change-log.md - a fresh parameter export is needed to verify both values before documenting them as done, per the CH9/CH11 verification lesson logged above.
+
 ## 2026-09-02 (continued x3)
 
 Verified Julian's radio backup upload against the previous archived copy before replacing it, per his instruction. Diffing `model00.yml` showed CH9/CH11's `mixData` routing is byte-for-byte unchanged from before - the "(continued x2)" entry below, written from Julian's verbal description alone, incorrectly documented this as CH9/CH11 being reassigned. Corrected across all affected docs before committing (nothing below had been pushed yet):
