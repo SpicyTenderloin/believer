@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-01 (continued x2)
+
+- `docs/project/build-checklist.md`: added an informal finding to CTL-08 - the early control-surface saturation has been narrowed to Acro mode specifically; Manual mode "agrees better" (Julian). Consistent with the review's hypothesis that Acro's rate controller saturates on a stationary bench with no real rate to null against. Not yet the formal recorded Manual-mode test the task's acceptance criteria require, so status/dependencies unchanged.
+- `context/project-notes.md`, `context/open-items.md`: recorded the same finding.
+
 ## 2026-09-01 (continued)
 
 - `docs/project/build-checklist.md`: closed AF-03 (motor/ESC inspection-bay cover bolts - rounded bolts replaced) per Julian - moved from Section A into Completed Work.

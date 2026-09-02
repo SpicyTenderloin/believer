@@ -163,4 +163,8 @@ Julian conducted a flight-control configuration review in a separate session and
 
 **Files deliberately not yet updated**: `docs/engineering/ICD.md`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`, and the `.params` backup still describe the as-found state (±0.85, current endpoints, all three `FW_MAN_*_SC` at 1.0) and must not be replaced with target values until the physical configuration has actually been changed, tested, and re-exported from the live flight controller. `docs/operations/manual.md`'s Manual-mode pre-flight check wording is to be refined after CTL-08 concludes, not now. A new dated test report under `docs/engineering/test-reports/` will be created once the live work is carried out, to serve as the evidence CTL-06 and CTL-08 reference.
 
+## CTL-08 Follow-up - 2026-09-01
+
+Julian reported an informal bench finding: the early control-surface saturation investigated under CTL-08 occurs specifically in Acro mode - in Manual mode, stick position and surface deflection "seem to agree better." This is consistent with the flight-control configuration review's hypothesis (above) that Acro's rate controller, unable to null a commanded rate against a stationary airframe, can saturate its output well before full stick, whereas Manual's direct stick-to-actuator path has no such closed-loop artefact. This is a strong signal that `FW_MAN_R_SC`/`P_SC`/`Y_SC` do not need reducing, but it is an informal/qualitative observation, not the formal recorded Manual-mode test (propellers removed, roll/pitch/yaw tested separately, stick %/PWM/deflection logged) that CTL-08's acceptance criteria require to close the task out.
+
 See [open-items.md](open-items.md) for what's still missing.

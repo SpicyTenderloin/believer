@@ -388,6 +388,8 @@ A crucial distinction is the flight mode the observation was made in. `FW_MAN_R_
 
 None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/engineering/flight-modes.md`. Depends on CTL-06 because the mapping cannot be assessed meaningfully while the endpoint and effectiveness configuration is still being changed.
 
+**Update 2026-09-01 (Julian, informal bench observation, not yet the formal test procedure above):** the early-saturation behaviour has been narrowed to Acro mode specifically - in Manual mode, stick position and surface deflection "seem to agree better." This is consistent with the review's hypothesis: Acro's rate controller has nothing to null against on a stationary bench (commanded rate is never achieved), so it can saturate the output well before full stick, whereas Manual's direct stick-to-actuator path has no such closed-loop artefact. This is a strong signal that `FW_MAN_R_SC` does not need reducing, but it is not yet the formal, recorded confirmation this task's acceptance criteria call for - the systematic Manual-mode test (propellers removed, roll/pitch/yaw tested separately, stick %/PWM/deflection recorded) should still be run to close this task out, since "seem to agree better" is a qualitative impression, not a confirmed monotonic match across the full range.
+
 </details>
 
 ### CTL-09 - Update WEIGHT_BASE parameter
