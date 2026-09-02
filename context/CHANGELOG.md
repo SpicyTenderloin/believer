@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x15)
+
+Renamed `docs/engineering/test-reports/2026-09-02-ross-dennington-throttle-thrust-review.md` to `2026-09-02-ross-dennington-review.md` and expanded it to cover the full 2026-09-02 review, not just throttle/thrust - added findings for the CG/weight concern (AF-01), motor-mount wobble opinion (AF-08), tri-rates/expo and the Acro finding (CTL-04), and the launch-mechanism discussion. Updated the two references to the old filename in `context/CHANGELOG.md` and `context/project-notes.md`.
+
 ## 2026-09-02 (continued x14)
 
 - `docs/project/build-checklist.md` CTL-04, `context/project-notes.md`: closed the Acro tri-rate finding - Julian confirmed tri-rate works correctly in Manual mode, supporting the CTL-08 closed-loop-saturation bench artefact explanation over a configuration fault. Not confirmed in real flight, but no further bench investigation needed.
@@ -17,7 +21,7 @@ Further notes from the same day's Ross Dennington (BNEMAC) review:
 
 ## 2026-09-02 (continued x12)
 
-- Added `docs/engineering/test-reports/2026-09-02-ross-dennington-throttle-thrust-review.md` documenting Ross Dennington's (BNEMAC) review of throttle mapping and static thrust during the day's bench session.
+- Added `docs/engineering/test-reports/2026-09-02-ross-dennington-review.md` (renamed from `...-throttle-thrust-review.md` and expanded, see below) documenting Ross Dennington's (BNEMAC) review of throttle mapping and static thrust during the day's bench session.
 - `docs/project/build-checklist.md`: **PROP-06 closed** (throttle mapping reviewed by Ross, no remapping needed). **PROP-02 closed** on Ross's qualitative thrust assessment, per Julian's explicit instruction to reduce the original acceptance criteria (measured thrust-to-weight ratio, sustained-run current/temperature check) - recorded precisely which evidence it was actually closed on. Added **PROP-10** (Non-critical) to track the deferred quantitative motor-rig thrust measurement separately, so it isn't lost. Both PROP-02/PROP-06 moved to Completed Work; readiness table and dependency annotations updated.
 - **CTL-04 not closed**, despite being raised as a candidate: the Ross meeting covered throttle mapping and thrust, not CTL-04's own "max deflection, rates, and expo" review criterion, and two other criteria (FW_MAN_R_SC revalidation pending CTL-08, switch-diagram relabelling) remain open. Flagged to Julian rather than silently closed.
 - `context/project-notes.md`, `context/open-items.md`: recorded the closures and the CTL-04 flag; removed the now-resolved PROP-02/PROP-06 open item.
