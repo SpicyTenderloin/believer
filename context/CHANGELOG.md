@@ -2,6 +2,24 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-02 (continued x3)
+
+Verified Julian's radio backup upload against the previous archived copy before replacing it, per his instruction. Diffing `model00.yml` showed CH9/CH11's `mixData` routing is byte-for-byte unchanged from before - the "(continued x2)" entry below, written from Julian's verbal description alone, incorrectly documented this as CH9/CH11 being reassigned. Corrected across all affected docs before committing (nothing below had been pushed yet):
+
+- `docs/operations/manual.md`, `docs/engineering/ICD.md`, `docs/engineering/flight-modes.md`, `docs/project/build-checklist.md`, `context/project-notes.md`, `context/open-items.md`: replaced the "CH9/CH11 reassigned, Offboard no longer reachable" framing with the verified "dual-purpose switch" framing - SB/SE still drive CH9 (Flaperon)/CH11 (Offboard) exactly as before via unchanged `mixData`, and separately now also select the aileron/elevator rate curve locally via a new EdgeTX `expoData` feature. Flagged the resulting overlap as an active, unresolved concern: `RC_MAP_OFFB_SW` is still live on channel 11, so changing elevator rate in flight also moves CH11, risking an unintended offboard-loss failsafe trigger.
+- Moved the verified radio backup into place: `docs/operations/GX12 Radio Backup/` replaced wholesale with the new upload.
+- `docs/project/build-checklist.md` CTL-04: added acceptance criterion to review maximum deflection, rates, and expo with Ross Dennington (BNEMAC) before the values are treated as final, per Julian.
+- Noted but not otherwise documented: the new backup also added an Arm timer, mode-announcement custom functions, and an expanded telemetry sensor/screen list - not core to CTL-04.
+- Switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.png`) reassessed: still accurate for CH9/CH11's actual (unchanged) channel functions, so no re-annotation needed for a reassignment that didn't happen - though a supplementary annotation noting the new SB/SE local rate-curve behaviour would help; still pending, Claude has no image-editing capability.
+
+## 2026-09-02 (continued x2)
+
+CTL-04 progressed by Julian: 30% expo confirmed on all flight surfaces; tri-rate (100/70/50%) configured on aileron (CH9/SB) and elevator (CH11/SE) channels, each locally switch-selected - superseding the originally-scoped simple aileron-only dual-rate plan.
+
+- `docs/operations/manual.md`, `docs/engineering/ICD.md`, `docs/engineering/flight-modes.md`: updated RC channel tables/text to note SB/CH9 and SE/CH11 now also drive the aileron/elevator rate curves locally, alongside their existing (unchanged) Flaperon/Offboard channel outputs. ICD.md bumped to Rev 2.4, flight-modes.md to Rev 1.6. (Corrected - see "(continued x3)" above; an initial pass mischaracterized this as a channel reassignment.)
+- `docs/project/build-checklist.md`: rewrote CTL-04 to match the actual implementation (tri-rate on two channels, each locally switch-selected) rather than the original simpler plan; flagged that this proceeded before CTL-08 (its dependency) formally concluded. Status set to In progress pending resolution of the SB/SE dual-purpose overlap.
+- `context/project-notes.md`, `context/open-items.md`: recorded the implementation and the dual-purpose overlap needing resolution.
+
 ## 2026-09-02 (continued)
 
 - `docs/project/build-checklist.md`: closed NAV-05 - Julian confirmed both GPS receivers achieve a lock under the new instance configuration; moved to Completed Work. Recorded the rationale for the GPS instance swap (QGroundControl's primary GPS status display reads driver instance 1 via `GPS_RAW_INT`; putting the RTK-capable ZED-F9P there ensures the GUI reflects the better receiver rather than under-reporting the M8N's lesser fix) in `docs/engineering/ICD.md` INT-05 (Rev 2.2 -> 2.3) and `context/project-notes.md`.

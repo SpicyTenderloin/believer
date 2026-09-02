@@ -287,24 +287,29 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 
 </details>
 
-### CTL-04 - Configure dual/tri-rate switch-selectable deflection
+### CTL-04 - Configure tri-rate switch-selectable deflection
 
-- [ ] **Status:** Not started
+- [ ] **Status:** In progress
 - **Priority:** NON-CRITICAL
 - **Depends on:** CTL-08
 
 **Scope**
-- Configure switch-selectable high/low control surface deflection rates in EdgeTX.
-- Low-rate position: 50% aileron rate. Elevator and rudder unchanged (full rate) on both switch positions.
-- The high-rate (normal) transmitter state must first produce the verified baseline response established under CTL-08 before the low-rate position is implemented and checked.
+- Configure switch-selectable tri-rate control surface deflection in EdgeTX. Implemented 2026-09-02 (Julian): 30% expo confirmed on all flight surfaces; tri-rate (100%/70%/50%) configured on both the aileron and elevator channels via a new EdgeTX `expoData` feature, each locally selected by its existing 3-position switch - aileron rate on SB, elevator rate on SE. Rudder/V-tail yaw not separately rated.
+- Verified against the actual radio backup (`model00.yml`) that this did **not** reassign CH9/CH11: `mixData` routing is byte-for-byte unchanged, so SB still drives CH9 (Flaperon control/spare) and SE still drives CH11 (Offboard) exactly as before. SB/SE are now dual-purpose - they drive their original channel output *and* separately select the local rate curve. This is a more concerning finding than a simple reassignment would have been: `RC_MAP_OFFB_SW` (= 11) is still live, so flipping elevator rate in flight also moves CH11, which could unintentionally cross whatever threshold PX4 uses to engage Offboard, triggering the offboard-loss failsafe since no companion computer is actually streaming setpoints. Tracked in `context/open-items.md`.
+- Radio backup uploaded and moved into place 2026-09-02 (`docs/operations/GX12 Radio Backup/`), superseding the previous archived copy.
 
 **Acceptance criteria**
-- Revalidated against the final `FW_MAN_R_SC` value once CTL-08 concludes - EdgeTX rate scaling and PX4 Manual scaling can compound (e.g. a 50% transmitter rate combined with a reduced PX4 Manual roll scale could produce substantially less than the intended low-rate authority).
+- Revalidate against the final `FW_MAN_R_SC` value once CTL-08's formal test concludes - EdgeTX rate scaling and PX4 Manual scaling can compound (e.g. a 50% transmitter rate combined with a reduced PX4 Manual roll scale could produce substantially less than the intended low-rate authority). Implemented ahead of CTL-08 concluding, which was this task's original dependency reason - low risk given CTL-08's informal finding that `FW_MAN_R_SC` will likely stay at 1.0, but not yet formally confirmed.
+- Resolve the SB/SE dual-purpose overlap against `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS` (either accept the risk as negligible with a documented reason, or separate the rate-curve switches from CH9/CH11's channel outputs).
+- Review maximum deflection, rates, and expo with Ross Dennington (BNEMAC) before the values are treated as final.
+- Switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.png`) confirmed still accurate for CH9/CH11's channel functions (unchanged), with a supplementary annotation added noting the new local rate-curve behaviour on SB/SE - Claude has no image-editing capability, so this needs to be done manually.
 
 <details>
 <summary>Background and engineering notes</summary>
 
-Low-rate aileron detail (50%) added per Julian, 2026-08-28. Dependency on CTL-08 added 2026-08-31, per the flight-control configuration review, to avoid masking the unresolved early-saturation issue (CTL-08) behind a transmitter-side rate change. The repository distinguishes transmitter rates (EdgeTX) from PX4 actuator effectiveness (`CA_SV_CSx_*`), PWM endpoints, and Manual-mode scaling (`FW_MAN_*_SC`) - these are four separate layers and must not be used interchangeably.
+Originally scoped 2026-08-28 as a simple dual-rate, aileron-only, low-rate-at-50% plan. Superseded 2026-09-02 by Julian's actual implementation: tri-rate on both aileron and elevator, each locally switch-selected, at 100/70/50%. Dependency on CTL-08 added 2026-08-31, per the flight-control configuration review, to avoid masking the unresolved early-saturation issue behind a transmitter-side rate change - the repository distinguishes transmitter rates (EdgeTX) from PX4 actuator effectiveness (`CA_SV_CSx_*`), PWM endpoints, and Manual-mode scaling (`FW_MAN_*_SC`), which must not be used interchangeably. This task proceeded before CTL-08 formally concluded; flagged rather than silently treated as compliant with the original dependency ordering.
+
+Julian's initial verbal description of this change ("removed offboard flight mode from switch SE which now serves as the elevator rates switch") was documented at first as a full CH9/CH11 reassignment. Diffing the actual radio backup against the previous archived copy on 2026-09-02 showed this was inaccurate - `mixData` for both channels is untouched; only a new, separate `expoData` table was added. Corrected before commit. Lesson recorded: verify configuration claims with safety implications against the source artifact, not a verbal summary alone.
 
 </details>
 

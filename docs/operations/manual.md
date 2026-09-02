@@ -20,12 +20,14 @@ RC link: Radiomaster GX12 transmitter → DBR4 receiver (ExpressLRS, dual-band 2
 | CH6 | GR1 flight-mode selector | Six positions; starts on SW2 |
 | CH7 | Emergency kill | Inverted in EdgeTX |
 | CH8 | Loiter / Hold | Latching button; overrides GR1-selected mode |
-| CH9 | Flaperon control / spare | Inverted in EdgeTX; inactive for maiden flight |
+| CH9 | Flaperon control / spare | Inverted in EdgeTX; inactive for maiden flight. SB also now locally selects the aileron tri-rate curve (100/70/50%, CTL-04, 2026-09-02) - **dual-purpose**, not a reassignment: SB is still sent to PX4 as CH9 unchanged |
 | CH10 | Return | Inverted in EdgeTX |
-| CH11 | Offboard | Inverted in EdgeTX |
+| CH11 | Offboard | Inverted in EdgeTX. SE also now locally selects the elevator tri-rate curve (100/70/50%, CTL-04, 2026-09-02) - **dual-purpose, not a reassignment: SE is still sent to PX4 as CH11 unchanged, still mapped to `RC_MAP_OFFB_SW`.** Flipping elevator rate in flight also moves CH11 - see the warning below. |
 | CH12 | Spare / future buzzer or payload | Currently unassigned |
 
 For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGroundControl shows the active/inactive direction is actually wrong.
+
+**Caution (added 2026-09-02, CTL-04):** SB and SE are now dual-purpose - they still drive CH9 (Flaperon) and CH11 (Offboard) exactly as before, *and* they now also select the aileron/elevator rate curve locally in EdgeTX. This means changing elevator rate in flight also changes what PX4 sees on CH11, which is still mapped to `RC_MAP_OFFB_SW` - this could unintentionally cross whatever threshold PX4 uses to engage Offboard mode, triggering the offboard-loss failsafe since no companion computer is actually streaming setpoints. Not yet resolved - see `docs/project/build-checklist.md` CTL-04.
 
 ![GX12 front view with switch functions annotated](../assets/gx12-front-switches.png)
 
@@ -48,7 +50,7 @@ GR1 is a six-button switch group on the GX12 (only one of SW1–SW6 active at a 
 
 **Hold vs. Loiter:** these are the same PX4 mode - "Hold" is the formal PX4 name, "Loiter" is the older/common name still used in switch labelling. Hold is no longer in the GR1 group (freed 2026-08-19 for Acro, since it duplicated CH8) - it is reachable directly via CH8. When engaged, the Believer flies a circle around the point where Hold was activated while holding altitude - it cannot stop and hover like a multirotor.
 
-CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly. CH10 (Return) similarly overrides GR1 and commands the aircraft to climb and fly back to the home position. CH11 (Offboard) overrides GR1 to hand control to a companion computer - not currently used, since that companion computer is a future project phase.
+CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has selected and commands Hold directly. CH10 (Return) similarly overrides GR1 and commands the aircraft to climb and fly back to the home position. CH11 (Offboard) overrides GR1 to hand control to a companion computer - not currently used, since that companion computer is a future project phase. As of 2026-09-02, SE (CH11's switch) also locally selects the elevator tri-rate curve in EdgeTX (CTL-04) - see the caution above; this does not remove Offboard's reachability, but means elevator rate changes in flight also move CH11.
 
 For full detail on each mode's behaviour and the PX4 parameters that configure it, see [`flight-modes.md`](../engineering/flight-modes.md).
 
@@ -64,9 +66,9 @@ Intended safe startup condition, to be verified before every flight:
 | CH6 (Flight mode) | SW3 selected: Stabilized |
 | CH7 (Kill) | Inactive |
 | CH8 (Loiter) | Inactive |
-| CH9 (Flaperons) | Up / disabled |
+| CH9 (Aileron rate) | TBD - confirm intended default/starting rate position |
 | CH10 (Return) | Inactive |
-| CH11 (Offboard) | Inactive |
+| CH11 (Elevator rate) | TBD - confirm intended default/starting rate position |
 
 ## 5. Pre-Flight Checklist
 

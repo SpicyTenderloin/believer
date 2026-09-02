@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.5 |
+| **Revision** | 1.6 |
 | **Date** | 2026-09-02 |
 | **Status** | Draft |
 
@@ -38,13 +38,14 @@ PX4 assigns a flight mode to each of up to six switch positions on a single RC c
 
 Remapped 2026-08-19: Acro was added at SW2 and Hold was dropped from the group (Hold and CH8's Loiter override are the same PX4 mode, so keeping Hold in the GR1 group as well was redundant), shifting Stabilized through Mission down one position each. This matches the switch mapping documented in `docs/operations/manual.md` Section 3.
 
-Three further modes are reachable outside the GR1 group, each on its own dedicated switch (see `docs/engineering/ICD.md` RC channel map):
+Two further modes are reachable outside the GR1 group, each on its own dedicated switch (see `docs/engineering/ICD.md` RC channel map):
 
 | Channel | Parameter | Mode | Behaviour |
 |---|---|---|---|
 | CH8 | `RC_MAP_LOITER_SW` = 8 | Hold | Latching; overrides whichever mode GR1 has selected |
 | CH10 | `RC_MAP_RETURN_SW` = 10 | Return | Latching; overrides GR1 |
-| CH11 | `RC_MAP_OFFB_SW` = 11 | Offboard | Latching; overrides GR1 |
+
+**Offboard remains reachable via CH11/SE, unchanged.** As of 2026-09-02, SE is dual-purpose: it still drives CH11/`RC_MAP_OFFB_SW` exactly as before, and now also locally selects the elevator tri-rate curve in EdgeTX (`docs/project/build-checklist.md` CTL-04) - verified against the actual radio backup, not just a verbal description. This means changing elevator rate in flight also moves CH11, which could unintentionally cross whatever threshold PX4 uses to engage Offboard, triggering the offboard-loss failsafe since no companion computer is actually streaming setpoints. Not urgent to resolve before the maiden flight - Offboard was not in operational use anyway - but tracked as an open item and flagged as an active configuration concern, not merely historical. See Section 4.9.
 
 ## 4. Flight Modes
 
@@ -164,11 +165,11 @@ Automatic mode - the aircraft obeys position, velocity, attitude, or actuator se
 | `COM_OF_LOSS_T` | 1.0 s | Timeout before the offboard-loss failsafe triggers |
 | `COM_OBL_RC_ACT` | 0 | Failsafe action taken on offboard loss - see [PX4: Offboard Mode](https://docs.px4.io/main/en/flight_modes/offboard.html) |
 
-Reachable via CH11 (overrides GR1). Not currently used operationally - the companion computer that would drive it is a future project phase (`docs/project/project-roadmap.md`).
+**Still reachable via CH11/SE, unchanged, as of 2026-09-02** - SE is now dual-purpose (CTL-04): it continues to drive CH11/`RC_MAP_OFFB_SW` exactly as before, and separately also selects the elevator tri-rate curve locally in EdgeTX. This creates an unresolved overlap - see Section 3 - since flipping elevator rate in flight also moves CH11. Not currently used operationally regardless - the companion computer that would drive it is a future project phase (`docs/project/project-roadmap.md`) - but the overlap should be resolved before Offboard is ever needed.
 
 ## 5. Failsafe Interactions
 
-Two failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10/CH11 switches:
+Two failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches:
 
 | Failsafe | Parameter | Value | Action |
 |---|---|---|---|
@@ -193,3 +194,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.3 | 2026-09-01 | CTL-08 closed - confirmed the early bench saturation was Acro-mode-specific (rate-controller integral windup against a stationary airframe), did not reproduce in Manual mode; `FW_MAN_*_SC` confirmed and retained at 1.0. Updated Section 4.1 accordingly |
 | 1.4 | 2026-09-02 | CTL-10 closed - updated the Altitude-mode airspeed table (Section 4.4) with the new `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` values, informed by Weishäupl et al. 2024's measured stall speed, cruise speed, and VNE for what is very likely the same commercial airframe |
 | 1.5 | 2026-09-02 | CTL-08 reopened per Julian - the 2026-09-01 closure was based on an informal bench comparison, not the formal logged Manual-mode test its acceptance criteria call for; Julian is running that test himself. Reverted Section 4.1's "closed" framing accordingly |
+| 1.6 | 2026-09-02 | CTL-04's tri-rate implementation added a dual-purpose local rate-curve selection to CH9/CH11's switches (SB/SE) - verified against the actual radio backup that the underlying channel routing is unchanged. Updated Section 3 and Section 4.9 to reflect Offboard remaining reachable via CH11 unchanged, with an unresolved overlap against the elevator rate switch flagged as an open item |
