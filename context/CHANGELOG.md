@@ -2,6 +2,13 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-01 (continued x3)
+
+- `docs/project/build-checklist.md`: closed CTL-08 (full-Manual stick-to-surface scaling) per Julian - the Acro-vs-Manual bench comparison satisfies the task's own documented closing condition (early saturation confined to Acro/Stabilized, normal closed-loop behaviour, no `FW_MAN_*_SC` adjustment needed). `FW_MAN_R_SC`/`FW_MAN_P_SC`/`FW_MAN_Y_SC` confirmed and retained at 1.0. Moved from Section D into Completed Work; updated CTL-02/CTL-04/CTL-07's dependency annotations to reflect CTL-08 is complete (CTL-06 remains open, so those tasks stay blocked).
+- `docs/operations/manual.md`: updated pre-flight checklist steps 22-23 per the review's planned follow-up now that CTL-08 is closed - the control-surface proportionality check is now specified as Manual-mode only, with an explicit note not to interpret Acro/Stabilized bench behaviour the same way; Stabilized-mode check reworded to expect direction-correctness rather than full independent travel, noting safe V-tail saturation under large combined pitch+yaw is not a fault.
+- `docs/engineering/flight-modes.md` (Rev 1.2 -> 1.3): updated Section 4.1 to record CTL-08's closure and the confirmed 1.0 values, explaining the integral-windup mechanism behind the Acro-mode bench artefact.
+- `context/project-notes.md`, `context/open-items.md`: recorded the closure; removed the resolved open item.
+
 ## 2026-09-01 (continued x2)
 
 - `docs/project/build-checklist.md`: added an informal finding to CTL-08 - the early control-surface saturation has been narrowed to Acro mode specifically; Manual mode "agrees better" (Julian). Consistent with the review's hypothesis that Acro's rate controller saturates on a stationary bench with no real rate to null against. Not yet the formal recorded Manual-mode test the task's acceptance criteria require, so status/dependencies unchanged.

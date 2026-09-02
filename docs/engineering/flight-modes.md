@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.2 |
-| **Date** | 2026-08-31 |
+| **Revision** | 1.3 |
+| **Date** | 2026-09-01 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -58,9 +58,9 @@ Stick input is sent directly to control allocation with no stabilisation or angl
 | `FW_MAN_R_SC` | 1.0 | Roll stick-to-surface scale factor |
 | `FW_MAN_Y_SC` | 1.0 | Yaw stick-to-surface scale factor |
 
-These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all remain at the PX4 default of 1.0 pending `docs/project/build-checklist.md` CTL-08, which is investigating apparent early control-surface saturation observed on the bench.
+These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all confirmed and left at the PX4 default of 1.0 (`docs/project/build-checklist.md` CTL-08, closed 2026-09-01).
 
-**Do not interpret bench behaviour in Acro or Stabilized as evidence about these parameters.** On a stationary bench the aircraft cannot physically respond to a commanded rate (Acro) or attitude (Stabilized), so the controller may legitimately drive a surface to its endpoint well before the stick reaches full travel - this is expected closed-loop behaviour in those modes, not necessarily a `FW_MAN_*_SC` or calibration fault. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode, where CTL-08's verification procedure is run.
+**Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault; CTL-08 confirmed it was specific to Acro mode (its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate - integral windup - driving a surface to its endpoint well before the stick reaches full travel) and did not reproduce in Manual mode. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
 
 Used during ground functional checks (`docs/operations/manual.md` step 21-22) and as the emergency direct-control fallback. Not used for launch.
 
@@ -188,3 +188,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.0 | 2026-07-17 | Initial issue |
 | 1.1 | 2026-08-19 | Added Acro mode (Section 4.2, new GR1 SW2); removed Hold from the GR1 group (still reachable via CH8) and renumbered subsequent GR1 positions/sections accordingly. Resolved the Stabilized-mode yaw open item (CTL-01) - the expected direct yaw response is Acro's behaviour, not Stabilized's; also recorded the V-tail yaw mixing gain increase (0.50 -> 0.85) from the finalised TMAC trim values |
 | 1.2 | 2026-08-31 | Following a flight-control configuration review: clarified that `FW_MAN_*_SC` (Section 4.1) apply specifically to full Manual mode and warned against interpreting Acro/Stabilized bench saturation as evidence about them; documented `FW_RLL_TO_YAW_FF` (Section 4.3, currently 0.0, no non-zero value planned pending flight-test evidence); flagged the 2026-08-19 V-tail ±0.85 yaw mixing gain as targeted for restoration to the PX4 default ±0.50, live value unchanged pending CTL-06 |
+| 1.3 | 2026-09-01 | CTL-08 closed - confirmed the early bench saturation was Acro-mode-specific (rate-controller integral windup against a stationary airframe), did not reproduce in Manual mode; `FW_MAN_*_SC` confirmed and retained at 1.0. Updated Section 4.1 accordingly |
