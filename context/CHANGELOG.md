@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x3)
+
+Julian confirmed the custom Li-ion battery has no BMS and supplied per-group internal resistances (charger photo).
+
+- Added `docs/engineering/test-reports/2026-09-26-custom-li-ion-battery.md` (pack configuration, cell datasheet reference, internal resistance, findings, limitations) and moved the charger photo to `docs/assets/custom-li-ion-charger-cell-resistance.png`.
+- Added `Component datasheets/panasonic-ncr20700a-cell-datasheet.pdf` (Panasonic NCR20700A cell datasheet, obtained from a distributor-hosted copy); the cells are installed in the aircraft, per the datasheet-folder convention.
+- `docs/engineering/ICD.md` (Rev 2.6 -> 2.7, header updated): battery rows now record no BMS, the 4.10 V per cell charge target, and the 21.0 mOhm measured internal resistance. `docs/project/build-checklist.md`: battery Completed Work entry updated. `context/project-overview.md`: battery row and open-items summary updated.
+- `context/open-items.md`: replaced the battery items with four (unrecorded pack details; cell group 2 resistance outlier; no BMS and undecided in-flight voltage limit; PX4 battery parameters, now noting the 4.10 V charge target and that `BAT1_R_INTERNAL` is per cell). `context/project-notes.md`: dated provenance entry.
+
 ## 2026-09-26 (continued x2)
 
 - `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`: replaced the imprecise supply-voltage row (it quoted a resting voltage as a loaded one) with a per-run table of resting and loaded voltages, quantified the voltage difference between the 11x7" and 12x6" runs (about 0.3 to 0.7V higher loaded voltage for the 12x6", which by a first-order estimate explains roughly 3 to 6% of the 9 to 12% current gap, not the whole of it), and marked the supply source (battery or bench supply) as TBD. `context/open-items.md`: added the supply source to the unrecorded stand details.

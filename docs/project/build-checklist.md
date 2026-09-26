@@ -412,7 +412,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 
 ### Electrical power
 - [x] Battery installation - battery installed
-- [x] Custom Li-ion flight battery - 6S4P pack (24 NCR20700A cells) built by Julian and fitted as the flight battery, reported 2026-09-26. It places the CG correctly (AF-01) and is retained per AF-02. **Capacity test not yet done**; pack mass, all-up weight, and PX4 battery-estimation parameters for the new chemistry are open - see `context/open-items.md`
+- [x] Custom Li-ion flight battery - 6S4P pack (24 NCR20700A cells) built by Julian and fitted as the flight battery, reported 2026-09-26. It has no BMS, places the CG correctly (AF-01), and is retained per AF-02; charger-measured internal resistance is 21.0 mOhm total, with cell group 2 higher than the rest (`docs/engineering/test-reports/2026-09-26-custom-li-ion-battery.md`). **Capacity test not yet done**; pack mass, all-up weight, and PX4 battery-estimation parameters for the new chemistry are open - see `context/open-items.md`
 - [x] Battery and power monitor configuration - BAT1_N_CELLS = 6 set; voltage and current sensing verified via PM03D (INA228)
 - [x] Dedicated servo rail UBEC - ZTW UBEC 10A installed 2026-08-19, replacing the PM03D as the servo rail supply (PWR-01); functional load test under oscilloscope tracked separately as PWR-03
 
