@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x6)
+
+Julian reported the left motor burning out during a bench simulated flight and asked for the logs to be stitched and analysed for overcurrent.
+
+- Added `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md` and two figures (`docs/assets/bench-simulated-flight-2026-09-26.png`, `bench-simulated-flight-2026-09-26-fault-zoom.png`): stitched current, pack voltage and motor command; findings that there was no sustained overcurrent (about 6 s above 21 A per motor if shared equally) but a fault signature at the end, and abnormal current drawn since.
+- `docs/project/build-checklist.md`: added **PROP-11** (Critical: replace the failed left motor and verify the drive; replacement choice left open) and a dashboard row; noted under PROP-08 that the ~1700us ceiling was still not applied; updated the custom battery entry (capacity test not completed).
+- `context/open-items.md`: added the motor-failure item and rewrote the proposed-parameter-changes item to show what the 2026-09-26 log headers confirm as applied (`WEIGHT_BASE`/`WEIGHT_GROSS` 3.8, `BAT1_V_EMPTY` 3.2, `COM_DISARM_LAND` -1) and not applied (`PWM_MAIN_MAX4`/`MAX6` 1800, `COM_LOW_BAT_ACT` 0, `BAT1_CAPACITY` -1); updated the battery capacity-test item.
+- `context/project-overview.md`, `context/project-notes.md`: blockers summary and dated provenance entry.
+
 ## 2026-09-26 (continued x5)
 
 - `docs/operations/manual.md`: per Julian's decision to keep `COM_DISARM_LAND` at -1 for the maiden flight, extended pre-flight step 16 to check the value and added a "Landing and shutdown" section (steps 40-42: manual disarm with CH5 after landing, keep clear until disarm is confirmed, kill switch if a propeller turns, disconnect the battery). Appended without renumbering the existing steps, so cross-references are unaffected.

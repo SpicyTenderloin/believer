@@ -30,6 +30,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Area | Critical blocker | Status |
 |---|---|---|
 | Propulsion | PROP-08: Limit current draw to within motor rated continuous current | For review |
+| Propulsion | PROP-11: Replace failed left motor and verify the drive | Not started |
 | Control | CTL-04: Configure tri-rate switch-selectable deflection | In progress |
 | Control | CTL-08: Verify and correct full-Manual stick-to-surface scaling | For review |
 
@@ -70,6 +71,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 - The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - and Julian's full-throttle current sense corroborates this at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change.
 - **Applied 2026-09-02 (Julian):** `PWM_MAIN_MAX4`/`MAX6` (motor PWM ceiling) lowered from 2000 to 1800, confirmed via a fresh parameter export - based on the PWM-vs-current data point below.
 - **Revised 2026-09-26 (Julian), pending a parameter export:** thrust-stand characterisation (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`) selected an APC 12x6" propeller and recommends limiting the ESC command to approximately **1700us** - about 19A and 1.7 kgf per motor, against the 21A rating. The 1800us ceiling was derived for the 11x7" propeller; with the 12x6" it would exceed 21A per motor. `PWM_MAIN_MAX4`/`MAX6` needs setting to approximately 1700 and verifying via export.
+- **2026-09-26:** the ~1700us ceiling had still not been applied (the flight controller logs show `PWM_MAIN_MAX4`/`MAX6` = 1800) when the left motor failed during a bench simulated flight, about 6 s after the command reached 1800us, with the total current at 42 to 47 A (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). At 1700us that run drew about 16 A per motor. The ceiling should be applied before any further power-on testing.
 
 **Acceptance criteria**
 - Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating - **not yet confirmed**: the stand sweeps are ramps, not a sustained hold at the ceiling, and the FC-log correlation is brief-burst data. Julian reports `COM_DISARM_LAND` set to -1 (pending export verification), which removes the earlier auto-disarm obstacle to running a sustained test.
@@ -82,6 +84,33 @@ Future capability work (payload, autonomy) that is not required for current flig
 Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 2026-08-31 overcurrent finding logged under PROP-02: a brief full-throttle test showed ~30-32.5A per motor against the MN3110 KV700's 21A continuous (180s) rating. PROP-02 measures and records this; PROP-08 is the corresponding action item to actually bring sustained draw within the rated limit before flight, rather than leaving it as a documented-but-unaddressed overcurrent condition.
 
 **PWM-vs-current data point (2026-09-02):** correlating `actuator_outputs` against `battery_status.current_a` in the day's thrust-test logs (`07_23_00.ulg`, `07_28_44.ulg`) shows ~42A total current (both motors via the PDB, i.e. ~21A/motor - the MN3110 KV700's rated continuous current) occurring at a PWM output of approximately **1800-1809us** on both motor channels. This is a candidate starting point for a throttle-ceiling limit, pending confirmation via a proper sustained-run test (not just this incidental brief-burst correlation) once the landing-detector auto-disarm workaround (`context/open-items.md` - raise/disable `COM_DISARM_LAND`) allows one to be run cleanly.
+
+</details>
+
+### PROP-11 - Replace failed left motor and verify the drive
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Ground-test readiness
+- **Depends on:** None
+
+**Scope**
+- The left MN3110 KV700 burned out during a bench simulated flight on 2026-09-26 (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). Find the cause where possible, decide the replacement (a like-for-like MN3110 KV700 or a different motor), and restore a verified drive.
+- Inspect the left ESC as well as the motor: the logged 102.9 A spike is well above the T-Motor AIR 40A's 40A continuous and 60A 10 s ratings. Also check the right motor and ESC, the power distribution board, and the wiring and connectors.
+
+**Acceptance criteria**
+- Cause identified or, if it cannot be determined, each candidate (motor winding, ESC, mechanical, thermal) checked and recorded.
+- Both ESCs verified good; both motors' phase-to-phase winding resistances balanced and resistance to the case open.
+- Replacement motor chosen with a recorded rationale (rating margin against the roughly 16 to 19 A per motor at the 1700us ceiling, mass, mounting, availability, cost) and installed.
+- A bench run at the applied throttle ceiling of at least 180 s, logged with current and motor temperature, with each motor at or below its rated continuous current.
+- Result logged as a dated entry under `docs/engineering/test-reports/`.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised 2026-09-26 after the failure. The flight controller logs do not show a sustained overcurrent: if the two motors shared equally, the worst rolling 180 s RMS current was about 14 A per motor and only about 6 s exceeded 21 A per motor. The failure looks like an electrical fault in the left drive (current rose at a fixed command, then a 102.9 A sample as the throttle was pulled back, and afterwards the drive draws 2 to 6 times the expected current when driven). Possible contributors are earlier overcurrent exposure (about 30 to 33 A per motor bursts on 2026-08-31 and 2026-09-02, and about 40 s above 42 A total across 2026-09-26's logs, all at the 1800us ceiling) and static-bench heating. Only total current is measured, so the left motor's share and temperature are unknown.
+
+Replacement options are still to be decided: this record deliberately does not pre-empt that choice.
 
 </details>
 
@@ -412,7 +441,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 
 ### Electrical power
 - [x] Battery installation - battery installed
-- [x] Custom Li-ion flight battery - 6S4P pack (24 NCR20700A cells) built by Julian and fitted as the flight battery, reported 2026-09-26. It has no BMS, places the CG correctly (AF-01), and is retained per AF-02; charger-measured internal resistance is 21.0 mOhm total, with cell group 2 higher than the rest (`docs/engineering/test-reports/2026-09-26-custom-li-ion-battery.md`). **Capacity test not yet done**; pack mass, all-up weight, and PX4 battery-estimation parameters for the new chemistry are open - see `context/open-items.md`
+- [x] Custom Li-ion flight battery - 6S4P pack (24 NCR20700A cells) built by Julian and fitted as the flight battery, reported 2026-09-26. It has no BMS, places the CG correctly (AF-01), and is retained per AF-02; charger-measured internal resistance is 21.0 mOhm total, with cell group 2 higher than the rest (`docs/engineering/test-reports/2026-09-26-custom-li-ion-battery.md`). **Capacity test not completed** (attempted 2026-09-26; the run ended at 4.2 Ah discharged when the left motor failed); pack mass, all-up weight, and PX4 battery-estimation parameters for the new chemistry are open - see `context/open-items.md`
 - [x] Battery and power monitor configuration - BAT1_N_CELLS = 6 set; voltage and current sensing verified via PM03D (INA228)
 - [x] Dedicated servo rail UBEC - ZTW UBEC 10A installed 2026-08-19, replacing the PM03D as the servo rail supply (PWR-01); functional load test under oscilloscope tracked separately as PWR-03
 
