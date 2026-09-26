@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x2)
+
+- `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`: replaced the imprecise supply-voltage row (it quoted a resting voltage as a loaded one) with a per-run table of resting and loaded voltages, quantified the voltage difference between the 11x7" and 12x6" runs (about 0.3 to 0.7V higher loaded voltage for the 12x6", which by a first-order estimate explains roughly 3 to 6% of the 9 to 12% current gap, not the whole of it), and marked the supply source (battery or bench supply) as TBD. `context/open-items.md`: added the supply source to the unrecorded stand details.
+
 ## 2026-09-26 (continued)
 
 Julian reported closures, a new flight battery, and thrust-stand results. Verified the stand data against the raw CSV logs (not just the plots) before writing it up.
