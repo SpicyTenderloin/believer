@@ -97,10 +97,13 @@ Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 
 **Scope**
 - The left MN3110 KV700 burned out during a bench simulated flight on 2026-09-26 (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). Find the cause where possible, decide the replacement (a like-for-like MN3110 KV700 or a different motor), and restore a verified drive.
 - Inspect the left ESC as well as the motor: the logged 102.9 A spike is well above the T-Motor AIR 40A's 40A continuous and 60A 10 s ratings. Also check the right motor and ESC, the power distribution board, and the wiring and connectors.
+- The failed left motor melted its 3D-printed PETG mount (per Julian). PETG typically softens at roughly 70 to 80 degrees C, so the mount material is a thermal limit on any replacement motor. In flight the motors get airflow but the ESCs largely do not (per Julian).
 
 **Acceptance criteria**
 - Cause identified or, if it cannot be determined, each candidate (motor winding, ESC, mechanical, thermal) checked and recorded.
 - Both ESCs verified good; both motors' phase-to-phase winding resistances balanced and resistance to the case open.
+- Motor mounts made from a material rated for the motor's worst-case operating temperature (or thermally isolated from the motor base), and both current mounts inspected for heat damage.
+- ESC temperature at the worst-case bench load recorded and shown to be within limits, given the little airflow the ESCs receive in flight.
 - Replacement motor chosen with a recorded rationale (rating margin against the roughly 16 to 19 A per motor at the 1700us ceiling, mass, mounting, availability, cost) and installed.
 - A bench run at the applied throttle ceiling of at least 180 s, logged with current and motor temperature, with each motor at or below its rated continuous current.
 - Result logged as a dated entry under `docs/engineering/test-reports/`.

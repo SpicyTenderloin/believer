@@ -311,4 +311,8 @@ The parameters recorded in the log headers also showed which of Claude's proposa
 
 The choice of replacement motor (like-for-like MN3110 KV700 or a different motor) was deliberately left open at this point and is tracked as PROP-11. Full write-up: `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`.
 
+## Motor Failure: Mount Material and Cooling - 2026-09-26 (later)
+
+Asked how the motors and ESCs are housed, Julian said the motors get airflow over them in flight (in theory) but the ESCs largely do not, the motors are mounted on 3D-printed PETG, and the failed left motor melted its PETG mount. Claude's reading: visibly melting PETG (which typically softens at roughly 70 to 80 degrees C) needs the mount to have been far hotter than a healthy motor at 21 A would make it, so a serious winding fault in the motor is more likely the source of the heat than the ESC, though the logs cannot say whether heat caused the fault or came from it. The second log (`06_16_46`) shows the failed drive was powered again about 30 s after the failure and drew 12 to 14 A at low-to-mid throttle for a few seconds, so some of the heating may have come after the failure. The PETG mount is also a thermal limit on any replacement motor, and the uncooled ESCs make ESC temperature a second open question; both were added to PROP-11 as acceptance criteria. A replacement-motor recommendation was not yet given.
+
 See [open-items.md](open-items.md) for what's still missing.
