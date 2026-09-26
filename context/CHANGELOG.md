@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x4)
+
+Julian reported the aircraft's all-up weight (3.8 kg) and that his charger tops out at 4.15 V per cell, and asked for parameter recommendations. Claude checked the live parameter export and PX4 documentation; **no parameters were changed** - the proposals are recorded only.
+
+- `context/open-items.md`: added the proposed parameter changes (none applied), a low-battery failsafe item (`COM_LOW_BAT_ACT` is 0, warning only), reworded the `COM_DISARM_LAND` item as an open decision given the hand-launch procedure, and updated the battery items for the 3.8 kg weight and the 4.15 V charger limit.
+- `docs/project/build-checklist.md`: PROP-10 thrust-to-weight criterion met (about 0.89 at 3.8 kg; only the target ratio is open); CTL-09 role of `WEIGHT_BASE`/`WEIGHT_GROSS` confirmed against PX4 docs with values proposed; AF-01 entry updated; added a caveat to the failsafe Completed Work entry that the battery thresholds only warn. **Corrected a documentation inaccuracy**: the checklist and parameter log had described a configured battery failsafe when `COM_LOW_BAT_ACT` is 0.
+- `docs/engineering/flight-modes.md` (Rev 1.8 -> 1.9, header updated): Section 5 now shows the low-battery row (warning only). `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`: added a `COM_LOW_BAT_ACT` row and clarified the battery thresholds only warn.
+- `docs/engineering/ICD.md`: battery charge target now 4.10 to 4.15 V per cell. `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md` and `2026-09-26-custom-li-ion-battery.md`: recorded the 3.8 kg all-up weight, the thrust-to-weight ratio, and the charger limit. `context/project-overview.md`, `context/project-notes.md`: updated.
+
 ## 2026-09-26 (continued x3)
 
 Julian confirmed the custom Li-ion battery has no BMS and supplied per-group internal resistances (charger photo).

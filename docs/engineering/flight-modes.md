@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.8 |
+| **Revision** | 1.9 |
 | **Date** | 2026-09-26 |
 | **Status** | Draft |
 
@@ -169,12 +169,13 @@ Automatic mode - the aircraft obeys position, velocity, attitude, or actuator se
 
 ## 5. Failsafe Interactions
 
-Two failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches:
+Two failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches, and a third (low battery) is configured to warn only:
 
 | Failsafe | Parameter | Value | Action |
 |---|---|---|---|
 | RC (control) link loss | `NAV_RCL_ACT` | 2 | Return |
 | Data link (telemetry/GCS) loss | `NAV_DLL_ACT` | 0 | Disabled - no automatic mode change from a lost GCS link alone |
+| Low battery | `COM_LOW_BAT_ACT` | 0 | Warning only - no automatic mode change at the `BAT_LOW_THR`/`BAT_CRIT_THR`/`BAT_EMERGEN_THR` thresholds |
 
 See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) for the full failsafe action enum. Battery failsafe thresholds (`BAT_LOW_THR`, `BAT_CRIT_THR`) and geofence breach action (`GF_ACTION`) are documented in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
 
@@ -196,3 +197,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.6 | 2026-09-02 | CTL-04's tri-rate implementation added a dual-purpose local rate-curve selection to CH9/CH11's switches (SB/SE) - verified against the actual radio backup that the underlying channel routing is unchanged. Updated Section 3 and Section 4.9 to reflect Offboard remaining reachable via CH11 unchanged, with an unresolved overlap against the elevator rate switch flagged as an open item |
 | 1.7 | 2026-09-02 | Verified against a fresh parameter export: `RC_MAP_OFFB_SW` cleared to 0 (unassigned), resolving the CH11/elevator-rate overlap flagged in Rev 1.6. Offboard is now genuinely not reachable via any switch. Updated Section 3 and Section 4.9 accordingly |
 | 1.8 | 2026-09-26 | Updated Section 6 (Open Items): removed the resolved CG item (AF-01) and the stale static-thrust/throttle-mapping item (PROP-02/PROP-06, closed 2026-09-02), replaced with the motor PWM ceiling item (PROP-08). Corrected the document header, which had not been bumped for Rev 1.7 |
+| 1.9 | 2026-09-26 | Section 5 (Failsafe Interactions): added the low-battery row - `COM_LOW_BAT_ACT` is 0 (Warning), so the battery thresholds take no automatic action, which the document previously did not show |

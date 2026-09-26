@@ -96,7 +96,7 @@ Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 
 - **Measurement done, 2026-09-06 to 2026-09-15 (Julian):** RCbenchmark Series 1520 stand, MN3110 KV700 with APC 11x7" and APC 12x6" propellers - about 1.7 kgf per motor (roughly 3.4 kgf across both) at the recommended ~1700us ceiling with the 12x6". See `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`.
 
 **Acceptance criteria**
-- Measured thrust-to-weight ratio recorded - thrust is measured, but the ratio cannot be computed until the all-up weight is recorded (TBD, `context/open-items.md`).
+- Measured thrust-to-weight ratio recorded - **done**: about 3.4 kgf (two motors at the ~1700us ceiling) against the 3.8 kg all-up weight Julian measured on 2026-09-26 is a static thrust-to-weight ratio of about 0.89 (0.84 to 0.95 across the 3.2 to 3.6 kgf range).
 - Result reviewed against the target ratio needed for reliable hand-launch and climb performance - no target ratio has been defined yet.
 - Result logged as a dated entry under `docs/engineering/test-reports/` - done.
 
@@ -105,7 +105,7 @@ Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 
 
 Split out from PROP-02, 2026-09-02, per Julian - PROP-02 was closed on Ross Dennington's qualitative "felt the thrust" assessment during the day's bench test, explicitly deferring the quantitative motor-rig measurement rather than leaving it blocking flight clearance. Non-critical since PROP-02's qualitative closure already stands as the flight-clearance evidence.
 
-Set to For review 2026-09-26 once the stand data existed: the measurement itself is complete, but the acceptance criteria that turn it into a pass/fail (a thrust-to-weight ratio against a defined target) are not yet met. For reference, 3.4 kgf against the 5.5 kg manufacturer MTOW is about 0.62; the real figure depends on the actual all-up weight.
+Set to For review 2026-09-26 once the stand data existed: the measurement itself is complete, but the acceptance criteria that turn it into a pass/fail (a thrust-to-weight ratio against a defined target) are not yet met. For reference, 3.4 kgf against the 5.5 kg manufacturer MTOW would be about 0.62; at the measured 3.8 kg all-up weight it is about 0.89, and the aircraft is at about 69% of MTOW. Only the target ratio is still open - a defined pass/fail number was never set.
 
 </details>
 
@@ -314,9 +314,9 @@ Elevated from Urgent to Critical/flight-clearance-blocking by Julian, 2026-09-02
 <details>
 <summary>Background and engineering notes</summary>
 
-Raised by Julian, 2026-08-28. The parameter's exact role and correct target value for this PX4 version/airframe have not yet been confirmed against PX4 documentation - verify before setting.
+Raised by Julian, 2026-08-28. Role confirmed 2026-09-26 against the PX4 documentation (Advanced TECS Tuning, Weight and Altitude): `WEIGHT_BASE` is the weight at which the basic tuning was performed and `WEIGHT_GROSS` is the actual weight; when both are above zero, `FW_AIRSPD_MIN`, `FW_AIRSPD_STALL`, and `FW_AIRSPD_TRIM` are scaled by the square root of the weight ratio, and the scaling has no effect while the two are equal. Both are currently -1 (unset, no scaling).
 
-The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02), so the aircraft's weight has changed since this task was raised. An all-up weight measurement is needed both for this parameter and to convert the measured static thrust into a thrust-to-weight ratio (PROP-10).
+The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02), so the aircraft's weight has changed since this task was raised. The all-up weight was measured at **3.8 kg** on 2026-09-26. Proposed, not yet applied: set both `WEIGHT_BASE` and `WEIGHT_GROSS` to 3.8, which records the mass with no change to behaviour and lets `WEIGHT_GROSS` be updated when a payload is added. Setting `WEIGHT_BASE` to anything else would rescale the airspeed limits: the current values (stall 11 m/s) came from the Weishaupl et al. 2024 paper, which does not state the mass at which its stall speed was measured, so they are best left as conservative until stall is measured in flight at 3.8 kg.
 
 </details>
 
@@ -392,7 +392,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 - [x] Wing tape cleanup - excess and temporary tape removed from wings
 - [x] Parachute bay - servo removed, bay taped shut
 - [x] Motor/ESC inspection-bay cover bolts - rounded bolts replaced with appropriately sized fasteners (AF-03)
-- [x] Centre of gravity correction (AF-01) - closed 2026-09-26. CG corrected by fitting the custom 6S4P Li-ion battery (see Electrical power) rather than adding the ~350g of nose ballast originally planned, which avoids the extra all-up weight Ross Dennington (BNEMAC) flagged against the ballast approach. Julian tested the pack in the aircraft and confirmed it puts the CG in the right place; no numeric CG measurement, pack mass, or all-up weight has been recorded (TBD, tracked in `context/open-items.md`)
+- [x] Centre of gravity correction (AF-01) - closed 2026-09-26. CG corrected by fitting the custom 6S4P Li-ion battery (see Electrical power) rather than adding the ~350g of nose ballast originally planned, which avoids the extra all-up weight Ross Dennington (BNEMAC) flagged against the ballast approach. Julian tested the pack in the aircraft and confirmed it puts the CG in the right place; no numeric CG measurement or pack mass has been recorded (TBD, tracked in `context/open-items.md`); the all-up weight was later measured at 3.8 kg (2026-09-26), about 69% of the 5.5 kg MTOW
 - [x] Battery retention (AF-02) - closed 2026-09-26. The battery is retained by a single strap plus velcro on its underside, giving positive retention; added to Recurring Airworthiness Verification below
 - [x] Control surface hinges (AF-06) - closed 2026-09-26 by reinforcing all flight-surface hinges with cloth tape, **not** by replacing them with proper hinges as originally scoped. This mitigates, but does not remove, the foam-skin hinge fatigue concern raised by Peter Spink (TMAC, 2026-07-10); proper hinge replacement remains a possible future improvement
 - [x] Motor mounting (AF-08) - closed 2026-09-26. The 3D-printed motor mounting boards were adjusted so the motors have no play, and the motors are fixed to them with blue Loctite, so the polyurethane glue originally scoped was not needed. Removal of the motor covers and wing without excessive force was not separately confirmed
@@ -419,7 +419,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 ### Flight controls and PX4 configuration
 - [x] Sensor calibration - accelerometer, gyroscope, and magnetometer calibration completed in QGroundControl
 - [x] RC and flight mode configuration - RC channel mapping, arm/kill switches (CH5/CH7), and GR1 flight mode selector (CH6) verified; all six GR1 positions confirmed against PX4 flight modes. GR1 remapped 2026-08-19 to add Acro and remove the redundant Hold position (CTL-01) - current mapping is Manual, Acro, Stabilized, Altitude, Position, Mission
-- [x] Failsafe configuration - RC loss, GCS loss, and battery low/critical failsafe behaviour configured and verified
+- [x] Failsafe configuration - RC loss, GCS loss, and battery low/critical thresholds configured and verified. **Note (2026-09-26):** `COM_LOW_BAT_ACT` is 0 (Warning), so the battery thresholds only raise warnings and take no automatic action - see `context/open-items.md`
 - [x] Geofence configuration - breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST)
 - [x] Actuate control surfaces while disarmed - COM_PREARM_MODE set to 2 (Always), 2026-08-19
 - [x] Clean-install procedure - maintained as an ongoing repository practice (parameter change log, CHANGELOG, dated parameter/radio backups) rather than a one-off task (CTL-05)

@@ -60,7 +60,7 @@ Power module: Holybro PM03D. Servo rail: dedicated ZTW UBEC 10A, installed 2026-
 | Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled; `Component datasheets/ina228-datasheet.pdf`) |
 | Battery | Custom 6S4P Li-ion pack (24 NCR20700A cells; `BAT1_N_CELLS` = 6S), no BMS |
 | Battery capacity | TBD (capacity test pending) |
-| Battery charge target | 4.10 V per cell (24.6V) |
+| Battery charge target | 4.10 to 4.15 V per cell (24.6 to 24.9V); the charger's Li-ion maximum is 4.15 V |
 | Battery internal resistance | 21.0 mOhm total (2.9 to 4.6 mOhm per series group, charger-measured) - `docs/engineering/test-reports/2026-09-26-custom-li-ion-battery.md` |
 | Servo rail | 5V, electrically isolated from main FC supply, fed by a dedicated ZTW UBEC 10A (peak) / 6A continuous, adjustable 5.0/5.5/6.0V output, set to 5.0V. The PM03D's 3A-limited BEC no longer supplies the servo bus. |
 

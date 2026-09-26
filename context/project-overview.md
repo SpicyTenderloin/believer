@@ -124,7 +124,7 @@ believer/
 
 See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md`: PROP-08 (motor current ceiling, for review), CTL-04 (tri-rate switch-selectable deflection, in progress), and CTL-08 (Manual-mode stick-to-surface scaling, for review). The CG, battery retention, control-surface hinge, and motor-mount tasks (AF-01, AF-02, AF-06, AF-08) were closed 2026-09-26. Remaining information gaps:
 
-- Custom Li-ion battery (no BMS): capacity test not yet done, pack mass and all-up weight not recorded, cell group 2 has a higher internal resistance than the rest, and the PX4 battery-estimation parameters are still at LiPo-style defaults
+- Custom Li-ion battery (no BMS): capacity test not yet done, pack mass not recorded (all-up weight is 3.8 kg), cell group 2 has a higher internal resistance than the rest, and the PX4 battery-estimation parameters are still at LiPo-style defaults
 - Propeller: an APC 12x6" was selected after thrust-stand testing (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`); purchase and installation status are TBD, and its ground clearance is unchecked
 - Motor PWM ceiling: approximately 1700us recommended for the 12x6" (last export: 1800us), pending a parameter export
 - ZED-F9P RTK correction source (both GPS receivers are confirmed locking; NAV-05 closed)

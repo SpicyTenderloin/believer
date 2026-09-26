@@ -19,8 +19,9 @@ Julian built a custom 6S4P Li-ion flight battery from 24 NCR20700A cells to repl
 | Cell | NCR20700A (Panasonic/Sanyo part number; cell authenticity not verified) |
 | Protection | No BMS - no cell-level low-voltage cut-off, overcurrent, or short-circuit protection |
 | Retention | Single strap plus velcro on the underside (AF-02) |
-| Charger | HOTA F6 Ultra 4x15A, "LiIon-6S (4.10V)" profile - a charge target of 4.10 V per cell (24.6V), below the cell's 4.20V standard charge voltage |
+| Charger | HOTA F6 Ultra 4x15A. The charge in the photo used the "LiIon-6S (4.10V)" profile (24.6V). The charger's Li-ion maximum is 4.15 V per cell (24.9V), so it cannot reach the cell's 4.20V standard charge voltage |
 | Pack mass | TBD (not weighed) |
+| Aircraft all-up weight | 3.8 kg (weighed 2026-09-26, with this battery), about 69% of the 5.5 kg manufacturer MTOW |
 | Measured capacity | TBD (capacity test pending) |
 
 Cell reference values from the manufacturer datasheet (`Component datasheets/panasonic-ncr20700a-cell-datasheet.pdf`; the datasheet states its values are not guaranteed):
@@ -59,7 +60,7 @@ Charger display at the time of the reading: charging, 1.6A, 39W, 24.62V, 5.47 Ah
 - **Voltage sag.** At 21.0 mOhm the pack drops about 0.8V at 38A (two motors at the 1700 us ceiling, `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`), 0.9V at 42A, and 1.4V at 65A (the brief full-throttle peak seen on 2026-08-31). The pack dissipates roughly 30W as heat at 38A. The thrust-stand supply sagged about 0.05 V/A, so this pack is stiffer.
 - **The thrust-stand ceiling should carry over.** Charged to 24.6V and loaded at about 38A, the pack should sit near 23.8V, within about 1% of the 24.0V the stand recorded at 1700 us. To a first-order estimate that keeps the current at about 19A per motor.
 - **Group 2 is the outlier.** At 4.6 mOhm it is about 40% above the mean of the other five groups (3.3 mOhm) and 59% above the best group (2.9 mOhm). A group where one of the four cells is not contributing (for example a poor spot weld or strip) would read about 33% high, so this is consistent with that, though it could equally be one higher-resistance cell. The effect on load voltage is small (about 44 to 68 mV between group 2 and the mean or best group at 40A), but a weak connection can heat under load.
-- **Charge target.** Charging to 4.10 V per cell means the capacity test will read below the datasheet figure even for healthy cells, since the last 0.1V holds a meaningful share of the capacity.
+- **Charge target.** The charger cannot exceed 4.15 V per cell, so the capacity test will read somewhat below the datasheet figure (defined at 4.20V) even for healthy cells; charging to 4.10 V reads lower than 4.15 V.
 - **5.47 Ah is not a capacity measurement.** The starting state of charge is unknown. It is consistent with a pack that started about half charged, but the capacity test will settle it.
 
 ## Limitations
@@ -75,7 +76,7 @@ Charger display at the time of the reading: charging, 1.6A, 39W, 24.62V, 5.47 Ah
 ## Outstanding
 
 - Run the capacity test, logging per-group voltages (especially group 2) through to the end of discharge, and record the measured capacity here.
-- Weigh the pack and record it, then the all-up weight (AF-01 context, PROP-10, CTL-09).
+- Weigh the pack and record it (the all-up weight is already recorded as 3.8 kg).
 - Check the group 2 connections (weld or strip) and re-measure its resistance at rest.
 - Review the PX4 battery parameters for the Li-ion pack - see `context/open-items.md`. `BAT1_R_INTERNAL` is a per-cell figure in PX4, so the measured mean (about 3.5 mOhm per series group) is the comparable value.
 - Decide the in-flight voltage limit for a pack with no BMS and how it is checked before flight.
