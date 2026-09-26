@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Date** | 2026-09-26 (logs timestamped 06:07 to 06:17 UTC) |
-| **Location** | Bench (aircraft restrained, propellers fitted) |
+| **Location** | Bench (propellers fitted; the propeller model is not recorded - the current matches the APC 12x6" thrust-stand curve within a few percent) |
 | **Attendees** | Julian Williams |
 | **Purpose** | Run a bench simulated flight on the custom Li-ion battery to test the pack's capacity and confirm the motors could sustain a flight-like load |
 
@@ -57,20 +57,35 @@ To exceed 21 A RMS over the worst 60 s the left motor would have needed about 63
 
 | Time (s) | Event |
 |---|---|
-| 508 to 511 | Command raised to the 1800 us ceiling; total current 42.4 A at 21.5 V |
-| 511 to 513.5 | Steady 42.4 to 42.7 A at a fixed 1800 us |
+| 508 to 511 | Throttle stick raised to 100%, so the command reached the 1800 us ceiling; total current 42.4 A at 21.5 V |
+| 511 to 513.5 | Stick held at 100%; steady 42.4 to 42.7 A at a fixed 1800 us |
 | 513.5 to 516.0 | **Current climbs from 42.7 A to 46.4 A at a fixed 1800 us**, with the pack voltage nearly unchanged (21.50 to 21.40 V) - a load increase that the command does not explain |
-| 516.2 to 516.6 | Command first eased (1793, 1788, 1782 us) while current rose to 47.6 A |
-| 516.8 | Command pulled back to 1517 us; **one sample of 102.9 A** at 20.25 V |
-| 517.0 onward | Current collapses to 3.2 A, then 0.3 to 0.4 A at idle; disarmed at 541.6 s |
+| 516.0 to 516.4 | Stick eased slightly (98.6%, then 96.2%; command 1793 to 1788 us) while current rose to 47.6 A |
+| 516.6 | Stick pulled to about 34% throttle within 0.2 s |
+| 516.8 | **One sample of 102.9 A** at 20.25 V, with the command already down at 1517 us |
+| 517.0 to 517.4 | Current collapses to 3.2 A, then 0.3 to 0.4 A at idle; stick at minimum by 517.4 s; disarmed at 541.6 s |
 
 The 102.9 A spike is more than double the 44 to 48 A that had been flowing 0.2 to 0.4 s earlier, at a moment when the command was falling. The pack voltage drop across the spike (1.46 V for 68 A, about 21.5 mOhm) matches the charger-measured pack resistance, so the pack and current sensor behaved consistently. Battery telemetry is logged at only 4.9 Hz, so the true peak may have been higher and shorter.
+
+**Other signals checked around the failure:**
+
+- **Flight mode:** Acro for the whole run, so the motor command is the throttle stick passed straight through; the 1800 us ceiling was a held-full stick, not an automatic controller.
+- **Vibration:** the flight controller's accelerometer and gyro vibration metrics stayed level through the last seconds (accelerometer metric about 2.0 at full throttle, 2.07, then 2.00, against 1.9 to 2.1 in the preceding minute) - no growth before the failure, though the metrics are coarse (about 1 Hz).
+- **Flight controller power:** the 5 V rail stayed at 4.86 to 5.05 V through the event and the flight controller never restarted.
+- **Failsafes:** none raised, and no messages were logged between 490 s and the disarm. PX4's motor-failure detector needs ESC telemetry, which this system does not have.
 
 **After the failure (`06_16_46`):** at commands of 1114 to 1381 us the measured current averaged 6.7 A against about 2.0 A expected for two healthy motors (a ratio of 3.3); for example 12.2 A at 1239 us and 14.3 A at 1381 us. Idle current at 1000 us is normal (0.35 A). The drive is still drawing abnormal current whenever it is driven.
 
 **Earlier overcurrent exposure.** Across today's logs the total current exceeded 42 A for about 40 s in total (individual excursions of 3 to 11 s, all at the 1800 us ceiling; the failing run's 6.4 s was not the longest). The motors also saw brief 60 to 66 A total (about 30 to 33 A per motor) bursts on 2026-08-31 and 2026-09-02 with the 11x7" propellers. That earlier stress may have weakened the winding insulation.
 
 **Capacity test.** Not completed: the flight controller counted 4,204 mAh discharged over the whole power-up, from a start of about 24.8 V, against the roughly 12.4 Ah expected. No capacity figure can be derived from this run.
+
+## What the Evidence Supports
+
+- **Supported:** a fault developed in one of the two drives while the throttle was held at 100% for about 5 s; it was not a sustained overcurrent by the measured totals.
+- **Consistent with it:** a winding or insulation breakdown in the motor, or a failure in the ESC's power stage. Either can draw a large battery-side current while the ESC is driving and open up afterwards, which matches the single 102.9 A sample followed by an immediate collapse. The logs cannot separate the two.
+- **Not supported:** a mechanical cause showing as growing vibration (none seen, at coarse resolution), a flight controller or power fault (5 V and the processor were normal), or a pack fault (the voltage drop across the spike matches the pack's measured resistance).
+- **Not known:** which drive failed (both motors always received the identical command, and only total current is logged), the motor's temperature, and the exact shape and duration of the spike (one sample at 4.9 Hz).
 
 ## Limitations
 

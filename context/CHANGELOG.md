@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x7)
+
+- `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`: after Julian asked for exactly what happened, checked further signals from the same log and added them: flight mode was Acro throughout (motor command is the throttle stick directly), the stick was held at 100% for about 5 s then pulled back by Julian at 516.6 s (the 102.9 A sample was logged after that chop began), vibration metrics showed no growth, the 5 V rail and processor were unaffected, and no failsafes fired. Added a "What the Evidence Supports" section separating what is supported, consistent, unsupported and unknown. **Corrected an assumption in the report's location line** (it had said the aircraft was restrained, which was not known; the propeller model is also not recorded).
+
 ## 2026-09-26 (continued x6)
 
 Julian reported the left motor burning out during a bench simulated flight and asked for the logs to be stitched and analysed for overcurrent.
