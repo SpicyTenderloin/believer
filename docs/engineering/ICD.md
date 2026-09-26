@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.4 |
-| **Date** | 2026-09-02 |
+| **Revision** | 2.6 |
+| **Date** | 2026-09-26 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -58,7 +58,8 @@ Power module: Holybro PM03D. Servo rail: dedicated ZTW UBEC 10A, installed 2026-
 | Characteristic | Value |
 |---|---|
 | Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled; `Component datasheets/ina228-datasheet.pdf`) |
-| Battery | 6S LiPo (`BAT1_N_CELLS` = 6S) |
+| Battery | Custom 6S4P Li-ion pack (24 NCR20700A cells; `BAT1_N_CELLS` = 6S) |
+| Battery capacity | TBD (capacity test pending) |
 | Servo rail | 5V, electrically isolated from main FC supply, fed by a dedicated ZTW UBEC 10A (peak) / 6A continuous, adjustable 5.0/5.5/6.0V output, set to 5.0V. The PM03D's 3A-limited BEC no longer supplies the servo bus. |
 
 **Servo Rail UBEC - ZTW UBEC 10A**
@@ -355,3 +356,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.3 | 2026-09-02 | NAV-05 closed - recorded GPS lock confirmation on both receivers and the QGroundControl-display rationale for the instance swap (QGC's primary GPS status indicator reads driver instance 1; the swap ensures it reflects the RTK-capable ZED-F9P rather than the M8N) |
 | 2.4 | 2026-09-02 | Updated the RC channel map for CTL-04's tri-rate implementation: verified against the actual EdgeTX radio backup (`model00.yml`) that CH9/CH11's `mixData` routing is unchanged - SB and SE remain dual-purpose, still driving Flaperon control (CH9) and Offboard (CH11) exactly as before, while also now locally selecting the aileron/elevator rate curves via a separate `expoData` feature. The overlap between elevator rate switching and `RC_MAP_OFFB_SW` is tracked as an open item and in `docs/project/build-checklist.md` CTL-04 |
 | 2.5 | 2026-09-02 | Verified against a fresh parameter export: `RC_MAP_FLAPS` and `RC_MAP_OFFB_SW` both cleared to 0 (unassigned), resolving the SB/SE dual-purpose overlap - PX4 no longer acts on CH9/CH11 for Flaperon/Offboard, though the underlying `mixData` output on those channels is unchanged. Updated the RC channel map and the INT-02a-f actuator table's motor PWM max (2000 -> 1800, PROP-08 throttle ceiling) |
+| 2.6 | 2026-09-26 | Updated the power system characteristics table for the custom 6S4P Li-ion flight battery (24 NCR20700A cells) replacing the Turnigy 6S LiPo; capacity recorded as TBD pending a capacity test |

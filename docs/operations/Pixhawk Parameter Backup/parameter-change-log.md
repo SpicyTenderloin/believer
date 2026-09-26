@@ -23,7 +23,7 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | Parameter | Value | Notes |
 |---|---|---|
 | `SENS_EN_INA228` | 1 (Enabled) | Enables the INA228 driver for battery voltage and current telemetry via the Holybro PM03D. |
-| `BAT1_N_CELLS` | 6 | Fitted battery is a 6S LiPo. |
+| `BAT1_N_CELLS` | 6 | Fitted battery is a 6S pack: a custom 6S4P Li-ion pack (24 NCR20700A cells) from 2026-09-26, previously a Turnigy 6S LiPo. `BAT1_CAPACITY` (-1), `BAT1_V_CHARGED` (4.05V/cell), and `BAT1_V_EMPTY` (3.6V/cell) are still at LiPo-style defaults and have not been reviewed for the Li-ion pack. |
 | `BAT_CRIT_THR` | 0.100 (10%) | Critical battery failsafe threshold. PX4 default (7%) was raised to reduce risk of in-flight power loss. |
 | `BAT_LOW_THR` | 0.200 (20%) | Low battery warning threshold. PX4 default (15%) was raised to give more margin. Briefly lowered to 12% on 2026-08-19 to silence the warning during bench testing on a partially depleted pack; reset to 20% - the archived backup reflects the intended 20% value. |
 
@@ -51,7 +51,7 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N). |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
-GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference. GPS lock confirmation for this configuration is still outstanding (`docs/project/build-checklist.md` NAV-05).
+GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference. Both receivers were confirmed achieving a GPS lock under this configuration on 2026-09-02 (`docs/project/build-checklist.md` NAV-05).
 
 ## Serial Ports
 

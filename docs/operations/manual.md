@@ -88,7 +88,7 @@ Intended safe startup condition, to be verified before every flight:
 ### Power on and ground station
 
 10. Power on the GX12 transmitter and confirm the throttle is at the minimum position and the kill switch is engaged.
-11. Install the battery using the supplied straps and verify the centre of gravity is correct. Do not connect the battery to the power distribution board at this stage.
+11. Install the battery, secure it with the retention strap, and confirm the velcro on the underside of the battery is engaged. Verify the centre of gravity is correct. Do not connect the battery to the power distribution board at this stage.
 12. Connect the RFD900 ground station module to a laptop running QGroundControl.
 13. Connect the battery to the power distribution board and establish a connection with QGroundControl.
 14. Perform any flight computer calibration steps required.

@@ -37,7 +37,7 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 | Radiomaster DBR4 | ELRS Gemini dual-band RC receiver | Telem_1 (460800 8N1) |
 | RFD900x | Long-range telemetry radio | Telem_2 (57600 8N1) |
 | MS4525DO | I2C airspeed sensor | Pixhawk 6X I2C, JST-GH 4-pin (address 0x28) |
-| Turnigy 8000mAh 6S | Main battery | PM03D |
+| Custom 6S4P Li-ion pack (24x NCR20700A) | Main battery, capacity TBD pending capacity test (replaced the Turnigy 8000mAh 6S LiPo, 2026-09-26) | PM03D |
 | Radiomaster GX12 Crush (Iron Grey) | RC transmitter (ground-side) | ExpressLRS Gemini-X |
 | T-MOTOR MN3110 (KV700) | Main propulsion motors (x2, one per wing) | FC MAIN 4, MAIN 6 (via ESC) |
 | T-Motor AIR 40A | Motor ESCs (x2) | FC PWM signal; drives T-MOTOR MN3110 |
@@ -122,8 +122,10 @@ believer/
 
 ## Current open items (summary)
 
-See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md` (CG correction, battery retention, static thrust verification, throttle curve/mapping verification). Remaining information gaps:
+See `context/open-items.md` for the full list. The current Critical flight blockers are tracked as a dashboard in `docs/project/build-checklist.md`: PROP-08 (motor current ceiling, for review), CTL-04 (tri-rate switch-selectable deflection, in progress), and CTL-08 (Manual-mode stick-to-surface scaling, for review). The CG, battery retention, control-surface hinge, and motor-mount tasks (AF-01, AF-02, AF-06, AF-08) were closed 2026-09-26. Remaining information gaps:
 
-- ZED-F9P RTK antenna and external mount installed (2026-08-28) - RTK capability still unavailable pending protocol/GNSS configuration and GPS lock confirmation (`docs/project/build-checklist.md` NAV-05); the aircraft can fly on GPS 1/M8N alone, so this is not itself a flight blocker
+- Custom Li-ion battery: capacity test not yet done, pack mass and all-up weight not recorded, and the PX4 battery-estimation parameters are still at LiPo-style defaults
+- Propeller: an APC 12x6" was selected after thrust-stand testing (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`); purchase and installation status are TBD, and its ground clearance is unchecked
+- Motor PWM ceiling: approximately 1700us recommended for the 12x6" (last export: 1800us), pending a parameter export
+- ZED-F9P RTK correction source (both GPS receivers are confirmed locking; NAV-05 closed)
 - MS4525DO I2C pull-up resistor configuration not confirmed (port and address are documented in `docs/engineering/ICD.md` INT-07)
-- Static thrust from the newly-installed MN3110 KV700/AIR 40A propulsion system appears decent but is not yet conclusively verified; throttle curve/mapping may also need remapping (tracked as two separate tasks)

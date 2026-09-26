@@ -2,6 +2,19 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued)
+
+Julian reported closures, a new flight battery, and thrust-stand results. Verified the stand data against the raw CSV logs (not just the plots) before writing it up.
+
+- `docs/project/build-checklist.md`: closed **AF-01** (CG - fixed by the custom 6S4P Li-ion battery, no ballast; no numeric CG/mass recorded), **AF-02** (battery retention - strap plus underside velcro), **AF-06** (hinges - reinforced with cloth tape, *not* replaced as scoped) and **AF-08** (motor mounts - adjusted 3D-printed boards plus blue Loctite, no polyurethane glue needed), all per Julian; each moved to Completed Work with the actual method recorded. Removed them from the dashboard (Critical blockers now PROP-08, CTL-04, CTL-08). Added a battery-retention row to Recurring Airworthiness Verification (per AF-02's own criterion) and a Completed Work entry for the custom Li-ion battery (capacity test pending). Updated PROP-08 (revised ~1700us ceiling for the 12x6", pending export; `COM_DISARM_LAND` = -1 noted), moved PROP-10 to **For review** (thrust measured; thrust-to-weight ratio needs all-up weight and a target), and added notes to PROP-05 and CTL-09.
+- Added `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md` (MN3110 KV700 on an RCbenchmark 1520 stand, APC 11x7" and 12x6"), and moved the four comparison graphs from the repo root to `docs/assets/mn3110-thrust-vs-esc-signal.png`, `mn3110-current-vs-esc-signal.png`, `mn3110-thrust-vs-current.png`, and `mn3110-efficiency-vs-esc-signal.png`. Raw CSV logs remain in Julian's MATLAB folder, outside the repo.
+- `docs/engineering/ICD.md` (Rev 2.5 -> 2.6): battery row updated for the custom Li-ion pack, capacity TBD. **Corrected the document header**, which still read Revision 2.4 / 2026-09-02 (not bumped when Rev 2.5 was added).
+- `docs/engineering/flight-modes.md` (Rev 1.7 -> 1.8): Section 6 open items updated (removed the resolved CG item and the stale PROP-02/PROP-06 item, added PROP-08). **Corrected the document header**, which still read Revision 1.6.
+- `docs/operations/manual.md`: pre-flight step 11 now reflects the retention strap and underside velcro.
+- `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`: `BAT1_N_CELLS` note updated for the Li-ion pack, noting the battery-estimation parameters are still LiPo-style defaults; corrected a stale line calling NAV-05 GPS lock outstanding (closed 2026-09-02).
+- `context/project-overview.md`: battery row updated and the open-items summary rewritten (it still listed static thrust and throttle mapping as blockers).
+- `context/project-notes.md`, `context/open-items.md`: recorded the closures with the evidence each rests on, and added open items for the battery (capacity test, mass, all-up weight, cell datasheet, purchase record, Turnigy status), the LiPo-style PX4 battery parameters, the 12x6" propeller (purchase/installation, and **ground clearance - a 12" prop has a 152.4mm radius against the 150mm shaft-to-ground clearance recorded at the 2026-07-05 BNEMAC review**), the ~1700us PWM ceiling pending export, and unrecorded stand details.
+
 ## 2026-09-26
 
 - `context/open-items.md`: removed the unexplained 2026-09-02 flight-controller reboot item, closed per Julian as a non-recurring one-off. Cause remains undetermined from the logs - recorded as closed on Julian's judgment, not as "the reboot was the landing disarm", since the boot clock shows they were separate events. Updated the `COM_DISARM_LAND` item: Julian reports it set to -1 for bench testing (previously 2.0s), pending a parameter export to verify; the restore-before-flight-clearance requirement is unchanged.

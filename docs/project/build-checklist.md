@@ -30,61 +30,12 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Area | Critical blocker | Status |
 |---|---|---|
 | Propulsion | PROP-08: Limit current draw to within motor rated continuous current | For review |
-| Airframe | AF-01: Correct centre of gravity | Not started |
-| Airframe | AF-02: Fit positive battery retention | Not started |
-| Airframe | AF-06: Replace control surface hinges | Not started |
-| Airframe | AF-08: Secure motor mounting plates with polyurethane glue | Not started |
 | Control | CTL-04: Configure tri-rate switch-selectable deflection | In progress |
 | Control | CTL-08: Verify and correct full-Manual stick-to-surface scaling | For review |
 
 ---
 
 ## A. Airframe, CG and Mechanical Retention
-
-### AF-01 - Correct centre of gravity
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Add ballast (approximately 350g) to the nose to bring the CG into balance.
-
-**Acceptance criteria**
-- Aircraft assembled in flight configuration with flight battery installed and secured.
-- Measured CG lies within the approved range for the front wing spar reference.
-- Final ballast mass and location recorded in this document.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-CG confirmed out of balance during the 2026-07-10 TMAC review with Peter Spink - approximately 350g of ballast needed in the nose. See [`docs/engineering/test-reports/2026-07-10-tmac-review-peter-spink.md`](../engineering/test-reports/2026-07-10-tmac-review-peter-spink.md).
-
-Still out of balance as of the 2026-09-02 Ross Dennington (BNEMAC) review. Ross raised a concern worth flagging against the planned fix: the airframe's manufacturer-rated MTOW is 5.5kg, and thrust margin is already less than ideal (PROP-02/PROP-10) - adding ~350g of dead-weight nose ballast moves all-up weight in the wrong direction relative to that margin. Worth considering whether CG can instead be corrected by relocating existing mass (e.g. the battery, if its position is adjustable) rather than adding ballast, before committing to the ballast approach - not yet decided, Julian's call.
-
-</details>
-
-### AF-02 - Fit positive battery retention
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Fit velcro (or equivalent) to the underside of the battery and the battery bay floor to prevent the battery slipping in flight.
-
-**Acceptance criteria**
-- Battery cannot shift position when the airframe is inverted or subjected to hard manoeuvring loads.
-- Retention method recorded here and added to [Recurring Airworthiness Verification](#recurring-airworthiness-verification).
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Identified during the 2026-07-10 TMAC review with Peter Spink - the battery currently has no positive retention beyond friction fit.
-
-</details>
 
 ### AF-04 - Wiring tidy and routing
 
@@ -95,26 +46,6 @@ Identified during the 2026-07-10 TMAC review with Peter Spink - the battery curr
 **Scope**
 - Inspect and tidy all internal wiring; ensure cables are routed clear of moving parts, control linkages, and propeller arcs; secure with cable ties or sleeving as required.
 
-### AF-06 - Control surface hinges
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Replace the current thin foam-skin hinges with proper hinges.
-
-**Acceptance criteria**
-- All control surface hinges replaced with proper hinges, free of play and fatigue damage.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone to fatigue over time. Elevated from Non-critical to Critical/flight-blocking by Julian, 2026-09-02.
-
-</details>
-
 ### AF-07 - Paint and finishing
 
 - [ ] **Status:** Not started
@@ -123,30 +54,6 @@ Recommended by Peter Spink (TMAC, 2026-07-10) - the foam-skin hinges are prone t
 
 **Scope**
 - Apply paint job as required.
-
-### AF-08 - Secure motor mounting plates with polyurethane glue
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Secure both motor mounting plates with polyurethane glue to ensure the motors are mounted properly and do not induce vibrations that could damage the motors or destabilise the aircraft.
-- Use a tack-style polyurethane glue that can reasonably easily be removed later, and that does not impede removing the motor covers or disassembling the wing.
-
-**Acceptance criteria**
-- Both motor mounting plates secured with no play or looseness.
-- Motor covers and wing can still be removed/disassembled without excessive force or damage.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised by Julian, 2026-08-28 - considered critical to ensuring the motors are properly mounted and do not induce vibration, which could damage the motors themselves or destabilise the aircraft. Must be complete before the maiden flight.
-
-Ross Dennington (BNEMAC) inspected the mounting wobble during the 2026-09-02 review and wasn't overly concerned, on the basis that the mounts aren't at risk of pulling out - and noted that once the motors are loaded (thrust pulling the airframe forward in flight, rather than sitting static on the bench), the wobble should reduce significantly since the load direction takes up the play. This is a reassuring second opinion, not a reason to leave the task open - still to be secured with polyurethane glue as planned.
-
-</details>
 
 ---
 
@@ -162,11 +69,12 @@ Ross Dennington (BNEMAC) inspected the mounting wobble during the 2026-09-02 rev
 **Scope**
 - The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - and Julian's full-throttle current sense corroborates this at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change.
 - **Applied 2026-09-02 (Julian):** `PWM_MAIN_MAX4`/`MAX6` (motor PWM ceiling) lowered from 2000 to 1800, confirmed via a fresh parameter export - based on the PWM-vs-current data point below.
+- **Revised 2026-09-26 (Julian), pending a parameter export:** thrust-stand characterisation (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`) selected an APC 12x6" propeller and recommends limiting the ESC command to approximately **1700us** - about 19A and 1.7 kgf per motor, against the 21A rating. The 1800us ceiling was derived for the 11x7" propeller; with the 12x6" it would exceed 21A per motor. `PWM_MAIN_MAX4`/`MAX6` needs setting to approximately 1700 and verifying via export.
 
 **Acceptance criteria**
-- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating - **not yet confirmed**: the 1800us figure is from incidental brief-burst data, not a dedicated sustained-run test. Still blocked on the landing-detector auto-disarm workaround (`context/open-items.md` - raise/disable `COM_DISARM_LAND`) needed to run one cleanly.
-- Configuration change applied (e.g. throttle ceiling, current limit, or propeller change) and documented, including any resulting effect on static thrust (PROP-02) or throttle response (PROP-06) - **applied**, effect on PROP-02/PROP-06 not yet re-tested.
-- Result logged as a dated entry under `docs/engineering/test-reports/`.
+- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating - **not yet confirmed**: the stand sweeps are ramps, not a sustained hold at the ceiling, and the FC-log correlation is brief-burst data. Julian reports `COM_DISARM_LAND` set to -1 (pending export verification), which removes the earlier auto-disarm obstacle to running a sustained test.
+- Configuration change applied (e.g. throttle ceiling, current limit, or propeller change) and documented, including any resulting effect on static thrust or throttle response - **1800us applied**; the revised ~1700us ceiling for the 12x6" is not yet applied or verified. Static thrust at the ceiling is now measured (~1.7 kgf per motor, see PROP-10).
+- Result logged as a dated entry under `docs/engineering/test-reports/` - thrust-stand report logged 2026-09-26; a sustained-run result is still to come.
 
 <details>
 <summary>Background and engineering notes</summary>
@@ -179,22 +87,25 @@ Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 
 
 ### PROP-10 - Quantitative thrust measurement on a dedicated motor rig
 
-- [ ] **Status:** Not started
+- [ ] **Status:** For review
 - **Priority:** NON-CRITICAL
 - **Depends on:** None
 
 **Scope**
 - Measure static thrust from the installed MN3110 KV700/AIR 40A/propeller combination on a dedicated motor test rig (e.g. a load-cell thrust stand), rather than a qualitative in-person assessment.
+- **Measurement done, 2026-09-06 to 2026-09-15 (Julian):** RCbenchmark Series 1520 stand, MN3110 KV700 with APC 11x7" and APC 12x6" propellers - about 1.7 kgf per motor (roughly 3.4 kgf across both) at the recommended ~1700us ceiling with the 12x6". See `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`.
 
 **Acceptance criteria**
-- Measured thrust-to-weight ratio recorded.
-- Result reviewed against the target ratio needed for reliable hand-launch and climb performance.
-- Result logged as a dated entry under `docs/engineering/test-reports/`.
+- Measured thrust-to-weight ratio recorded - thrust is measured, but the ratio cannot be computed until the all-up weight is recorded (TBD, `context/open-items.md`).
+- Result reviewed against the target ratio needed for reliable hand-launch and climb performance - no target ratio has been defined yet.
+- Result logged as a dated entry under `docs/engineering/test-reports/` - done.
 
 <details>
 <summary>Background and engineering notes</summary>
 
 Split out from PROP-02, 2026-09-02, per Julian - PROP-02 was closed on Ross Dennington's qualitative "felt the thrust" assessment during the day's bench test, explicitly deferring the quantitative motor-rig measurement rather than leaving it blocking flight clearance. Non-critical since PROP-02's qualitative closure already stands as the flight-clearance evidence.
+
+Set to For review 2026-09-26 once the stand data existed: the measurement itself is complete, but the acceptance criteria that turn it into a pass/fail (a thrust-to-weight ratio against a defined target) are not yet met. For reference, 3.4 kgf against the 5.5 kg manufacturer MTOW is about 0.62; the real figure depends on the actual all-up weight.
 
 </details>
 
@@ -213,6 +124,8 @@ Split out from PROP-02, 2026-09-02, per Julian - PROP-02 was closed on Ross Denn
 <summary>Background and engineering notes</summary>
 
 MotoCalc introduced by Peter Spink during the 2026-07-10 TMAC review and used to select a 9x6" propeller pair. Airfoil modelling method used for that selection is uncertain - treat calculated figures with reservation until this task confirms them against the as-installed system. The as-installed propellers (11x7" Hobbyrama LP11X7E, PROP-01) differ from the modelled 9x6" pair, so this characterisation now needs to be run against the actual fitted combination rather than the original MotoCalc selection. Julian advised 2026-08-28 to use a generic Eppler 374 aerofoil in the model, in the absence of a precisely characterised airfoil for the current wing - see PROP-07 for measuring the real airfoil as a future refinement.
+
+Update 2026-09-26: Julian selected an APC 12x6" propeller after thrust-stand testing, so the final combination to model is now the MN3110 KV700 with the 12x6" rather than the 11x7". Measured static thrust, current, power, and efficiency curves for both the 11x7" and 12x6" (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`) are available to validate the motor/propeller portion of the MotoCalc model before it is used for airframe-level estimates.
 
 </details>
 
@@ -403,6 +316,8 @@ Elevated from Urgent to Critical/flight-clearance-blocking by Julian, 2026-09-02
 
 Raised by Julian, 2026-08-28. The parameter's exact role and correct target value for this PX4 version/airframe have not yet been confirmed against PX4 documentation - verify before setting.
 
+The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02), so the aircraft's weight has changed since this task was raised. An all-up weight measurement is needed both for this parameter and to convert the measured static thrust into a thrust-to-weight ratio (PROP-10).
+
 </details>
 
 ---
@@ -463,8 +378,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 | GPS (M8N) mounting bolt torque | After maintenance | TBD | TBD |
 | DBR4/GX12 antenna orientation and security | Before every flight | TBD | TBD |
 | RFD900x antenna security | Before every flight | TBD | TBD |
-
-Battery retention will be added to this table once AF-02 is complete (no positive retention exists yet to verify).
+| Battery retention (strap secured, underside velcro engaged) | Before every flight | TBD | TBD |
 
 ---
 
@@ -478,6 +392,10 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 - [x] Wing tape cleanup - excess and temporary tape removed from wings
 - [x] Parachute bay - servo removed, bay taped shut
 - [x] Motor/ESC inspection-bay cover bolts - rounded bolts replaced with appropriately sized fasteners (AF-03)
+- [x] Centre of gravity correction (AF-01) - closed 2026-09-26. CG corrected by fitting the custom 6S4P Li-ion battery (see Electrical power) rather than adding the ~350g of nose ballast originally planned, which avoids the extra all-up weight Ross Dennington (BNEMAC) flagged against the ballast approach. Julian tested the pack in the aircraft and confirmed it puts the CG in the right place; no numeric CG measurement, pack mass, or all-up weight has been recorded (TBD, tracked in `context/open-items.md`)
+- [x] Battery retention (AF-02) - closed 2026-09-26. The battery is retained by a single strap plus velcro on its underside, giving positive retention; added to Recurring Airworthiness Verification below
+- [x] Control surface hinges (AF-06) - closed 2026-09-26 by reinforcing all flight-surface hinges with cloth tape, **not** by replacing them with proper hinges as originally scoped. This mitigates, but does not remove, the foam-skin hinge fatigue concern raised by Peter Spink (TMAC, 2026-07-10); proper hinge replacement remains a possible future improvement
+- [x] Motor mounting (AF-08) - closed 2026-09-26. The 3D-printed motor mounting boards were adjusted so the motors have no play, and the motors are fixed to them with blue Loctite, so the polyurethane glue originally scoped was not needed. Removal of the motor covers and wing without excessive force was not separately confirmed
 
 ### Avionics
 - [x] Flight computer placement - FC located and aligned with aircraft centreline
@@ -494,6 +412,7 @@ Battery retention will be added to this table once AF-02 is complete (no positiv
 
 ### Electrical power
 - [x] Battery installation - battery installed
+- [x] Custom Li-ion flight battery - 6S4P pack (24 NCR20700A cells) built by Julian and fitted as the flight battery, reported 2026-09-26. It places the CG correctly (AF-01) and is retained per AF-02. **Capacity test not yet done**; pack mass, all-up weight, and PX4 battery-estimation parameters for the new chemistry are open - see `context/open-items.md`
 - [x] Battery and power monitor configuration - BAT1_N_CELLS = 6 set; voltage and current sensing verified via PM03D (INA228)
 - [x] Dedicated servo rail UBEC - ZTW UBEC 10A installed 2026-08-19, replacing the PM03D as the servo rail supply (PWR-01); functional load test under oscilloscope tracked separately as PWR-03
 

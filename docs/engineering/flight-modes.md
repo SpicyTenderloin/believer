@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.6 |
-| **Date** | 2026-09-02 |
+| **Revision** | 1.8 |
+| **Date** | 2026-09-26 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -21,7 +21,7 @@ This document describes the PX4 fixed-wing flight modes available on the Believe
 - `docs/engineering/ICD.md` - INT-03 (RC control link), INT-08 (RC transmitter link), RC channel map
 - `docs/operations/manual.md` - GR1 switch group, pre-flight safety state
 - `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` - narrative log of intentional parameter changes
-- `context/open-items.md`, `docs/project/build-checklist.md` - open items affecting flight-mode behaviour (CTL-01, AF-01)
+- `context/open-items.md`, `docs/project/build-checklist.md` - open items affecting flight-mode behaviour
 
 ## 3. Flight Mode Selection
 
@@ -180,9 +180,8 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 
 ## 6. Open Items
 
-- AF-01 (`docs/project/build-checklist.md`): CG out of balance - affects handling in every mode until corrected.
 - None of the Acro rate limits (Section 4.2), airspeed, roll/pitch limit, or TECS climb/sink parameters in Sections 4.4-4.5 have been deliberately tuned for the Believer yet (CTL-02, `docs/project/build-checklist.md`) - values shown are the as-exported PX4 generic fixed-wing airframe defaults.
-- PROP-02/PROP-06 (`docs/project/build-checklist.md`): static thrust and throttle curve/mapping not yet conclusively verified - affects throttle response in every mode.
+- PROP-08 (`docs/project/build-checklist.md`): the motor PWM ceiling (`PWM_MAIN_MAX4`/`MAX6`, currently 1800us at the last export, approximately 1700us recommended for the 12x6" propeller) limits full-stick throttle in every mode; sustained-current verification at the ceiling is still outstanding.
 
 ## 7. Revision History
 
@@ -196,3 +195,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.5 | 2026-09-02 | CTL-08 reopened per Julian - the 2026-09-01 closure was based on an informal bench comparison, not the formal logged Manual-mode test its acceptance criteria call for; Julian is running that test himself. Reverted Section 4.1's "closed" framing accordingly |
 | 1.6 | 2026-09-02 | CTL-04's tri-rate implementation added a dual-purpose local rate-curve selection to CH9/CH11's switches (SB/SE) - verified against the actual radio backup that the underlying channel routing is unchanged. Updated Section 3 and Section 4.9 to reflect Offboard remaining reachable via CH11 unchanged, with an unresolved overlap against the elevator rate switch flagged as an open item |
 | 1.7 | 2026-09-02 | Verified against a fresh parameter export: `RC_MAP_OFFB_SW` cleared to 0 (unassigned), resolving the CH11/elevator-rate overlap flagged in Rev 1.6. Offboard is now genuinely not reachable via any switch. Updated Section 3 and Section 4.9 accordingly |
+| 1.8 | 2026-09-26 | Updated Section 6 (Open Items): removed the resolved CG item (AF-01) and the stale static-thrust/throttle-mapping item (PROP-02/PROP-06, closed 2026-09-02), replaced with the motor PWM ceiling item (PROP-08). Corrected the document header, which had not been bumped for Rev 1.7 |
