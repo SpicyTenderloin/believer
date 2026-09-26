@@ -2,6 +2,15 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x11)
+
+Julian confirmed `06_16_46` was him checking the motors after the left one smoked, that the right-hand side seems fine, that the ESCs are enclosed in the wing with no airflow, and that the ESC timing is unknown.
+
+- `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`: recorded the above; **revised the earlier lean towards the motor** - the enclosed, uncooled ESC is now a live candidate, with the checks that would separate the two mechanisms; updated outstanding items (explicit ESC timing, check the right-hand side, ESC cooling or rating, bench fuse suggestion).
+- `docs/project/build-checklist.md` PROP-11: ESC choice and cooling added to the scope and acceptance criteria.
+- `docs/engineering/ICD.md` (Rev 2.7 -> 2.8, header updated): recorded the PETG motor mounts, motor airflow in flight, the ESCs' lack of cooling, the unrecorded ESC timing, and the left motor failure. **Corrected a stale paragraph** in the ESC section that still described static thrust and throttle mapping as unverified (PROP-02/PROP-06 were closed 2026-09-02).
+- `context/open-items.md`, `context/project-notes.md`: updated.
+
 ## 2026-09-26 (continued x10)
 
 - Julian reported that the motors get airflow in flight but the ESCs largely do not, that the motors are mounted on 3D-printed PETG, and that the failed left motor melted its PETG mount. Recorded in `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md` (summary, a new "melted mount points at the motor" evidence bullet noting the failed drive was powered again in `06_16_46`, and updated outstanding items, including replacing the PETG mounts with a heat-resistant material or thermal break), `docs/project/build-checklist.md` PROP-11 (scope and two new acceptance criteria: mount material rated for worst-case temperature, and ESC temperature within limits), `context/open-items.md`, and `context/project-notes.md`.

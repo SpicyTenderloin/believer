@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.7 |
+| **Revision** | 2.8 |
 | **Date** | 2026-09-26 |
 | **Status** | Draft |
 
@@ -156,6 +156,10 @@ Installed 2026-08-19, replacing the T-Motor U5 v2.0 KV400 motors.
 | ESC | T-Motor AIR 40A (one per motor) |
 | Propeller | 11x7" (Hobbyrama LP11X7E), carried over from the previous motor installation |
 | Propeller rotation | Both propellers rotate clockwise (viewed from the body reference plane) - same handedness, not contra-rotating. Confirmed not a problem for the maiden flight; contra-rotation is not required. |
+| Mount | 3D-printed PETG motor mounting boards |
+| Cooling | Airflow over the motors in flight (prop wash and freestream) |
+
+The left motor failed on 2026-09-26 (it smoked and melted its PETG mount) and is to be replaced - `docs/project/build-checklist.md` PROP-11.
 
 Datasheet: `Component datasheets/tmotor-mn3110-kv700-motor-datasheet.pdf` (covers the KV470/700/780 family). The previously-fitted T-Motor U5 v2.0 KV400 motors have been removed; their load-test report remains at `Component datasheets/tmotor-u5-kv400-motor-test-report.pdf` for historical reference.
 
@@ -172,10 +176,12 @@ Installed 2026-08-19 (one per motor), replacing the previously-fitted, unidentif
 | Dimensions | 68 x 25 x 8.7mm |
 | BEC | None |
 | Signal input | Analog PWM/OneShot-style, up to 621Hz refresh rate (per manufacturer); DShot support not confirmed |
+| Cooling | None - enclosed in the wing with no airflow; no heatsink |
+| Timing setting | TBD (not recorded; the manufacturer default is Intermediate, and the manual allows setting it but not reading it back) |
 
 Manual: `Component datasheets/tmotor-air-40a-esc-manual.pdf`.
 
-Static thrust has been bench-tested and appears adequate but is not yet conclusively verified; throttle curve/mapping may also need remapping. Both tracked separately under `docs/project/build-checklist.md` (PROP-02, PROP-06).
+The left ESC is under inspection following the left motor failure on 2026-09-26 - `docs/project/build-checklist.md` PROP-11.
 
 ### INT-03 - RC Control Link (TELEM1)
 
@@ -360,3 +366,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.5 | 2026-09-02 | Verified against a fresh parameter export: `RC_MAP_FLAPS` and `RC_MAP_OFFB_SW` both cleared to 0 (unassigned), resolving the SB/SE dual-purpose overlap - PX4 no longer acts on CH9/CH11 for Flaperon/Offboard, though the underlying `mixData` output on those channels is unchanged. Updated the RC channel map and the INT-02a-f actuator table's motor PWM max (2000 -> 1800, PROP-08 throttle ceiling) |
 | 2.6 | 2026-09-26 | Updated the power system characteristics table for the custom 6S4P Li-ion flight battery (24 NCR20700A cells) replacing the Turnigy 6S LiPo; capacity recorded as TBD pending a capacity test |
 | 2.7 | 2026-09-26 | Power system characteristics table: recorded that the custom Li-ion battery has no BMS, its 4.10 V per cell charge target, and its charger-measured internal resistance (21.0 mOhm total) |
+| 2.8 | 2026-09-26 | Motor and ESC characteristics: recorded the PETG motor mounts, motor airflow in flight, the ESCs' lack of cooling (enclosed in the wing, no airflow) and unrecorded timing setting, and the left motor failure and left ESC inspection (PROP-11). Replaced the stale ESC thrust-verification paragraph (PROP-02/PROP-06 were closed 2026-09-02) |
