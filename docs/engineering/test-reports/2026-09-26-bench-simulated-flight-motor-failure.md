@@ -108,7 +108,7 @@ The 102.9 A spike is more than double the 44 to 48 A that had been flowing 0.2 t
 - Measure phase-to-phase winding resistance and resistance to the case on both motors, and turn each by hand for roughness.
 - The ESC timing setting is unknown; the manual only allows setting it, not reading it back, so set Intermediate (the default) explicitly whenever the ESCs are recalibrated. Check the right-hand motor's winding resistances and insulation and its PETG mount for softening even though it appears fine - it saw the same run. Motor and ESC temperature have never been measured; add a temperature reading to the next bench run.
 - Decide ESC cooling or rating: the ESCs are enclosed in the wing with no airflow (per Julian). For bench runs, consider an inline fuse or breaker (around 80 to 100 A, bench only - a fuse tripping in flight would remove all power) or a current-limited supply, because the pack has no BMS and this failure produced a short-circuit-like current.
-- Replace the PETG motor mounts with a heat-resistant material or add a thermal break between motor and mount, whichever motor is fitted.
+- PETG mount: Julian regards the melting as a consequence of the failure, not a cause. Whether the mount temperature in normal operation approaches PETG's softening point (typically roughly 70 to 80 degrees C) has not been measured; record it in the next bench run and revisit the material only if it does.
 - Decide the replacement motor (same MN3110 KV700 or a different motor) - tracked as PROP-11.
 - Apply the ~1700 us motor ceiling before any further power-on testing (PROP-08). At 1700 us the total current in this run was about 31 to 33 A, or roughly 16 A per motor.
 - Repeat the capacity test once the drive is repaired.
