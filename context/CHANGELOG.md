@@ -2,6 +2,12 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26
+
+- `context/open-items.md`: removed the unexplained 2026-09-02 flight-controller reboot item, closed per Julian as a non-recurring one-off. Cause remains undetermined from the logs - recorded as closed on Julian's judgment, not as "the reboot was the landing disarm", since the boot clock shows they were separate events. Updated the `COM_DISARM_LAND` item: Julian reports it set to -1 for bench testing (previously 2.0s), pending a parameter export to verify; the restore-before-flight-clearance requirement is unchanged.
+- `docs/engineering/test-reports/2026-09-02-bench-thrust-test-review.md`: updated the Outstanding section to match.
+- `context/project-notes.md`: added a dated provenance entry for the closure and the `COM_DISARM_LAND` change.
+
 ## 2026-09-02 (continued x16)
 
 Consolidated `docs/engineering/test-reports/2026-09-02-thrust-test-motor-cutout-investigation.md` and `2026-09-02-ross-dennington-review.md` into a single `2026-09-02-bench-thrust-test-review.md`, per Julian - both covered the same session. Updated the live references in `context/project-notes.md` and `context/open-items.md`; earlier changelog entries above are left referencing the filenames that were current at the time, per this log's own history-is-not-rewritten convention.
