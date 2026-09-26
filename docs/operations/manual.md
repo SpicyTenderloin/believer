@@ -93,7 +93,7 @@ Intended safe startup condition, to be verified before every flight:
 13. Connect the battery to the power distribution board and establish a connection with QGroundControl.
 14. Perform any flight computer calibration steps required.
 15. Update `SENS_BARO_QNH` to the current ambient barometric pressure reading.
-16. Confirm QGroundControl reports no warnings.
+16. Confirm QGroundControl reports no warnings, and that the `COM_DISARM_LAND` parameter reads -1 (auto-disarm on landing is disabled for the maiden flight - see step 40).
 17. Confirm sufficient battery capacity remains for the planned flight.
 18. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
 19. Confirm the geofence is loaded and active in QGroundControl, and that the breach action is set to Return.
@@ -128,5 +128,13 @@ Two people are required: a **pilot** operating the GX12 and a **handler** who ho
 37. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
 38. Pilot: hold Stabilized mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
 39. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
+
+### Landing and shutdown
+
+`COM_DISARM_LAND` is -1 for the maiden flight, so the aircraft does not disarm itself after landing and remains armed until it is disarmed manually.
+
+40. Pilot: once the aircraft has landed and stopped, set throttle to minimum and disarm with the arm switch (CH5). Confirm QGroundControl shows Disarmed. If the motors start or a propeller turns unexpectedly, use the emergency kill switch (CH7).
+41. Handler: do not approach the aircraft until the pilot confirms it is disarmed. Keep clear of both propeller arcs.
+42. Disconnect the flight battery.
 
 See also [build-checklist.md](../project/build-checklist.md) for the build, retention, and configuration checklist.

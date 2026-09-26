@@ -2,6 +2,13 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x5)
+
+- `docs/operations/manual.md`: per Julian's decision to keep `COM_DISARM_LAND` at -1 for the maiden flight, extended pre-flight step 16 to check the value and added a "Landing and shutdown" section (steps 40-42: manual disarm with CH5 after landing, keep clear until disarm is confirmed, kill switch if a propeller turns, disconnect the battery). Appended without renumbering the existing steps, so cross-references are unaffected.
+- `context/open-items.md`: recorded the `COM_DISARM_LAND` decision. Withdrew the `BAT1_V_CHARGED` 4.05 -> 4.10 proposal (4.05 is the PX4 default and its recommended Li-ion value); recorded `BAT1_R_INTERNAL` to stay at -1 with the condition for revisiting it; noted PX4's generic Li-ion `BAT1_V_EMPTY` values against the provisional 3.3.
+- `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`: corrected the `BAT1_N_CELLS` note, which had listed `BAT1_V_CHARGED` among LiPo-style defaults although 4.05V is PX4's recommended Li-ion value.
+- `context/project-notes.md`: dated provenance entry for the decision and the two parameter questions.
+
 ## 2026-09-26 (continued x4)
 
 Julian reported the aircraft's all-up weight (3.8 kg) and that his charger tops out at 4.15 V per cell, and asked for parameter recommendations. Claude checked the live parameter export and PX4 documentation; **no parameters were changed** - the proposals are recorded only.

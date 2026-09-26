@@ -291,4 +291,14 @@ Asked to recommend parameter changes, Claude checked the live export and PX4 doc
 
 `docs/engineering/ICD.md` battery charge target updated to 4.10 to 4.15 V per cell. PROP-10's thrust-to-weight criterion is now met (0.89); only a defined target ratio remains open, so it stays For review.
 
+## COM_DISARM_LAND Decision, BAT1_V_CHARGED and BAT1_R_INTERNAL - 2026-09-26 (later)
+
+**`COM_DISARM_LAND`: Julian decided to keep -1 for the maiden flight.** `docs/operations/manual.md` was updated: pre-flight step 16 now checks the value reads -1, and a new "Landing and shutdown" section (steps 40-42) requires a manual disarm with CH5 after landing, keeps everyone clear until disarm is confirmed, and points to the kill switch (CH7) if a propeller turns unexpectedly. Recorded as a decision to revisit after the maiden flight; the live value is still to be confirmed by a parameter export.
+
+**`BAT1_V_CHARGED` proposal withdrawn.** Julian questioned Claude's proposal to raise it from 4.05 to 4.10, recalling that it had been set slightly low so the flight computer would not read voltage sag as real charge loss. Checked against the PX4 battery documentation: 4.05V is the PX4 default and is the docs' recommended value for Li-ion, nobody in this project changed it, and the docs' stated rationale is "slightly lower than the nominal maximum cell voltage, but not so low that the estimated capacity is still 100% after a few minutes of flight" - not sag. Sag is handled by load compensation using the battery's internal resistance, not by `BAT1_V_CHARGED`, though a lower value does leave some headroom before the estimate drops from 100%. The 4.10 proposal had no documented basis and was withdrawn; 4.05 stays.
+
+**`BAT1_R_INTERNAL`: leave at -1.** PX4 estimates internal resistance in real time by default and uses it for current-based load compensation; a fixed value cannot follow the resistance rising as the pack discharges or cools, and the charger's figure was taken at low current near the end of charging rather than under flight load. If it needs fixing later, the value is per cell: about 0.0035 ohm from the charger-measured 21.0 mOhm total across 6 series groups (PX4 lists about 5 mOhm per cell as typical for LiPo). Claude could not check how the flight computer's live estimate behaved on the old LiPo pack because the SD card was no longer available; the check to make is the `internal_resistance_estimate` and `remaining` traces in the first log from the new pack (does the remaining-charge estimate dip at throttle-up, and does the resistance estimate settle).
+
+`BAT1_V_EMPTY` remains a provisional proposal of about 3.3V; PX4's docs list 3.0V (conservative, no load) and 2.7V (under load) as generic Li-ion values, and 3.3 is deliberately higher given the pack has no BMS and cell group 2 is a resistance outlier.
+
 See [open-items.md](open-items.md) for what's still missing.

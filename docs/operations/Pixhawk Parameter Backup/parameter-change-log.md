@@ -23,7 +23,7 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | Parameter | Value | Notes |
 |---|---|---|
 | `SENS_EN_INA228` | 1 (Enabled) | Enables the INA228 driver for battery voltage and current telemetry via the Holybro PM03D. |
-| `BAT1_N_CELLS` | 6 | Fitted battery is a 6S pack: a custom 6S4P Li-ion pack (24 NCR20700A cells) from 2026-09-26, previously a Turnigy 6S LiPo. `BAT1_CAPACITY` (-1), `BAT1_V_CHARGED` (4.05V/cell), and `BAT1_V_EMPTY` (3.6V/cell) are still at LiPo-style defaults and have not been reviewed for the Li-ion pack. |
+| `BAT1_N_CELLS` | 6 | Fitted battery is a 6S pack: a custom 6S4P Li-ion pack (24 NCR20700A cells) from 2026-09-26, previously a Turnigy 6S LiPo. `BAT1_CAPACITY` (-1) and `BAT1_V_EMPTY` (3.6V/cell) are still at LiPo-style defaults and have not been reviewed for the Li-ion pack; `BAT1_V_CHARGED` (4.05V/cell) is the PX4 default and also its recommended Li-ion value. |
 | `BAT_CRIT_THR` | 0.100 (10%) | Critical battery threshold. PX4 default (7%) was raised to reduce risk of in-flight power loss. Only raises a warning while `COM_LOW_BAT_ACT` is 0. |
 | `BAT_LOW_THR` | 0.200 (20%) | Low battery warning threshold. PX4 default (15%) was raised to give more margin. Briefly lowered to 12% on 2026-08-19 to silence the warning during bench testing on a partially depleted pack; reset to 20% - the archived backup reflects the intended 20% value. |
 | `COM_LOW_BAT_ACT` | 0 (Warning) | Action taken at the low/critical/emergency battery thresholds. PX4 default: warnings only, no automatic mode change. |
