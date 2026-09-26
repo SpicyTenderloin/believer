@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x12)
+
+- `context/project-notes.md`, `docs/project/build-checklist.md` PROP-11: recorded the replacement-motor research Julian asked for (sticking with the 12x6" and 6S, with about 200 g of mass headroom): a specification comparison of the installed MN3110 KV700 against the T-Motor MN3510 KV700/KV630, MN3508 KV580, KDE3510XF-475, and the heavy 3520-class motors (ruled out on mass), with the reasoning that current is set by the propeller so a different motor buys margin, not lower current, and the caveats (MN3510 KV700 listed 3-4S, matched-pair replacement, failure possibly in the ESC or mount). Specifications are from listings, not verified. No choice adopted.
+
 ## 2026-09-26 (continued x11)
 
 Julian confirmed `06_16_46` was him checking the motors after the left one smoked, that the right-hand side seems fine, that the ESCs are enclosed in the wing with no airflow, and that the ESC timing is unknown.

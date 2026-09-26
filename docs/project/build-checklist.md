@@ -113,7 +113,7 @@ Raised by Julian, 2026-09-02, as a critical maiden-flight blocker following the 
 
 Raised 2026-09-26 after the failure. The flight controller logs do not show a sustained overcurrent: if the two motors shared equally, the worst rolling 180 s RMS current was about 14 A per motor and only about 6 s exceeded 21 A per motor. The failure looks like an electrical fault in the left drive (current rose at a fixed command, then a 102.9 A sample as the throttle was pulled back, and afterwards the drive draws 2 to 6 times the expected current when driven). Possible contributors are earlier overcurrent exposure (about 30 to 33 A per motor bursts on 2026-08-31 and 2026-09-02, and about 40 s above 42 A total across 2026-09-26's logs, all at the 1800us ceiling) and static-bench heating. Only total current is measured, so the left motor's share and temperature are unknown.
 
-Replacement options are still to be decided: this record deliberately does not pre-empt that choice.
+Replacement options researched 2026-09-26 (specifications from manufacturer and reseller listings, not verified; see `context/project-notes.md`): keep the MN3110 KV700 on a lower ceiling (about 1600us gives 14 A and 1.5 kgf per motor); the T-Motor MN3510 KV700 (97 g, 25 A / 555 W, 50 mOhm, but listed for 3-4S); or the KDE3510XF-475 (120 g, 30 A / 665 W, needs airflow across the windings). The 3520-class motors (about 220 g each) exceed the mass headroom. The choice is still to be made; changing motor type means replacing both motors as a matched pair.
 
 </details>
 
