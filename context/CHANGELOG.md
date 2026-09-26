@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x9)
+
+- `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`: while answering whether airflow in flight would cool the motors, read the AIR 40A ESC manual and added that its documented over-load protection (output cut when the load suddenly rises very high, resuming only at neutral throttle) fits the current collapse after the 102.9 A sample, and that ESC timing (default Intermediate; High raises motor temperature) is a setting whose value is not recorded. Added an outstanding item to record the motor/ESC housing (closed or vented), ESC timing and 3D-printed mount material, inspect the mounts for heat deformation, and measure motor and ESC temperature on the next bench run.
+
 ## 2026-09-26 (continued x8)
 
 - `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`: added a margin bullet to "What the Evidence Supports" after Julian asked whether he had pulled too much from the motor. Full stick at the 1800 us ceiling put each motor at its rated maximum (about 21.2 A, 457 W) and briefly above it (up to about 23.8 A, 113%) for about 6 s; the rating is for 180 s, so that alone does not explain the failure, but the 1800 us ceiling itself left no margin (it was set on 2026-09-02 for the 11x7" propellers to sit at about 21 A per motor, and the 12x6" would draw roughly 26 A per motor at 1800 us on a full pack). The earlier summary in this report had stressed the totals without stating that margin plainly.
