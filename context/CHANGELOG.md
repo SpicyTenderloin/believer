@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-26 (continued x8)
+
+- `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`: added a margin bullet to "What the Evidence Supports" after Julian asked whether he had pulled too much from the motor. Full stick at the 1800 us ceiling put each motor at its rated maximum (about 21.2 A, 457 W) and briefly above it (up to about 23.8 A, 113%) for about 6 s; the rating is for 180 s, so that alone does not explain the failure, but the 1800 us ceiling itself left no margin (it was set on 2026-09-02 for the 11x7" propellers to sit at about 21 A per motor, and the 12x6" would draw roughly 26 A per motor at 1800 us on a full pack). The earlier summary in this report had stressed the totals without stating that margin plainly.
+
 ## 2026-09-26 (continued x7)
 
 - `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`: after Julian asked for exactly what happened, checked further signals from the same log and added them: flight mode was Acro throughout (motor command is the throttle stick directly), the stick was held at 100% for about 5 s then pulled back by Julian at 516.6 s (the 102.9 A sample was logged after that chop began), vibration metrics showed no growth, the 5 V rail and processor were unaffected, and no failsafes fired. Added a "What the Evidence Supports" section separating what is supported, consistent, unsupported and unknown. **Corrected an assumption in the report's location line** (it had said the aircraft was restrained, which was not known; the propeller model is also not recorded).
