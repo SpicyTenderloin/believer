@@ -10,6 +10,7 @@ All notable changes to the Believer project repo are logged here, most recent fi
 - `context/open-items.md`: added the ESC install date, the 2026-08-31 test date discrepancy, and the stand motor identity.
 - Corrected the thrust-stand dates in the tally (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`, `context/project-notes.md`, `context/open-items.md`): the 11x7" runs were 2026-09-06 and 2026-09-10 (per `docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`); only the 12x6" runs were 2026-09-15. All 13 CSV files in the stand folder were included; the total (31.7 s) is unchanged.
 - Added `docs/assets/motor-current-histogram-since-install.png` (time in each 1 A bin of per-motor current since installation, aircraft and thrust stand stacked, with the 21 A rating marked) and linked it from the failure report's tally section, at Julian's request.
+- Regenerated the histogram at Julian's request with a linear Y axis and samples below 1 A (idle) excluded; the log-scale version had made the tail above 21 A look larger than it is. Time at or above 1 A is about 2,130 s (1,344 s aircraft, 787 s stand), so the 96.5 s above 21 A is about 4.5% of it. The tallies are unchanged.
 
 ## 2026-09-26 (continued x13)
 
