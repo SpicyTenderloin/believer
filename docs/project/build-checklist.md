@@ -138,7 +138,7 @@ Replacement options researched 2026-09-26 (specifications from manufacturer and 
 
 Split out from PROP-02, 2026-09-02, per Julian - PROP-02 was closed on Ross Dennington's qualitative "felt the thrust" assessment during the day's bench test, explicitly deferring the quantitative motor-rig measurement rather than leaving it blocking flight clearance. Non-critical since PROP-02's qualitative closure already stands as the flight-clearance evidence.
 
-Set to For review 2026-09-26 once the stand data existed: the measurement itself is complete, but the acceptance criteria that turn it into a pass/fail (a thrust-to-weight ratio against a defined target) are not yet met. For reference, 3.4 kgf against the 5.5 kg manufacturer MTOW would be about 0.62; at the measured 3.8 kg all-up weight it is about 0.89, and the aircraft is at about 69% of MTOW. Only the target ratio is still open - a defined pass/fail number was never set.
+Set to For review 2026-09-26 once the stand data existed: the measurement itself is complete, but the acceptance criteria that turn it into a pass/fail (a thrust-to-weight ratio against a defined target) are not yet met. For reference, 3.4 kgf against the 5.5 kg manufacturer MTOW would be about 0.62; at the measured 3.8 kg all-up weight it is about 0.89, and the aircraft is at about 69% of MTOW. Only the target ratio is still open - a defined pass/fail number was never set. Julian's working view (2026-09-27): a static thrust-to-weight of about 0.8 would be acceptable; not yet adopted as the pass/fail number.
 
 </details>
 
