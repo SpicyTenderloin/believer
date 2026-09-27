@@ -94,7 +94,7 @@ The 102.9 A spike is more than double the 44 to 48 A that had been flowing 0.2 t
 | 2026-09-26 | 39.7 s | 47.2 A before the fault | Ceiling 1800 us; about 0.6 s of this is the failure itself |
 | Aircraft total | **64.8 s** | | |
 
-**Thrust stand (2026-09-15).** Julian confirmed the RCbenchmark runs in `MN3110_12_6` and `MN3110_11_7` used the motors installed in the aircraft, one motor on the stand at a time. Time with the stand current above 21 A: 29.1 s on the 12x6" (peak 40.0 A, 4.4 s of it above 30 A) and 2.6 s on the 11x7" (peak 21.6 A), 31.7 s in total. The 11x7" `combined_continuous` file repeats the three 11x7" runs and is excluded. Which motor was on the stand is not recorded.
+**Thrust stand (2026-09-06 to 2026-09-15).** Julian confirmed the RCbenchmark runs in `MN3110_12_6` and `MN3110_11_7` used the motors installed in the aircraft, one motor on the stand at a time. Time with the stand current above 21 A: 29.1 s on the 12x6" (2026-09-15; peak 40.0 A, 4.4 s of it above 30 A) and 2.6 s on the 11x7" (2026-09-10; peak 21.6 A), 31.7 s in total. The folder holds 13 CSV files (9 for the 12x6", 4 for the 11x7"), all included. The 11x7" `combined_continuous` file repeats the three 11x7" runs and is excluded. Which motor was on the stand is not recorded.
 
 **Total since installation:** about 96.5 s above 21 A per motor (64.8 s in the aircraft plus 31.7 s on the stand, the stand time counting against the one motor tested). Above 25 A per motor: about 22 s (11.7 s aircraft, 10.1 s stand). Above 30 A per motor: about 14 s (9.1 s aircraft, 4.7 s stand).
 
