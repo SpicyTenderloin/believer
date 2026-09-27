@@ -76,9 +76,31 @@ The 102.9 A spike is more than double the 44 to 48 A that had been flowing 0.2 t
 
 **After the failure (`06_16_46`):** at commands of 1114 to 1381 us the measured current averaged 6.7 A against about 2.0 A expected for two healthy motors (a ratio of 3.3); for example 12.2 A at 1239 us and 14.3 A at 1381 us. Idle current at 1000 us is normal (0.35 A). The drive is still drawing abnormal current whenever it is driven.
 
-**Earlier overcurrent exposure.** Across today's logs the total current exceeded 42 A for about 40 s in total (individual excursions of 3 to 11 s, all at the 1800 us ceiling; the failing run's 6.4 s was not the longest). The motors also saw brief 60 to 66 A total (about 30 to 33 A per motor) bursts on 2026-08-31 and 2026-09-02 with the 11x7" propellers. That earlier stress may have weakened the winding insulation.
+**Earlier overcurrent exposure.** Across today's logs the total current exceeded 42 A for about 40 s in total (individual excursions of 3 to 11 s, all at the 1800 us ceiling; the failing run's 6.4 s was not the longest). The motors also saw brief 60 to 66 A total (about 30 to 33 A per motor) bursts with the 11x7" propellers, logged on 2026-08-18 (65.0 A) and 2026-09-02 (65.9 A). That earlier stress may have weakened the winding insulation. The whole-life tally is in the next section.
 
 **Capacity test.** Not completed: the flight controller counted 4,204 mAh discharged over the whole power-up, from a start of about 24.8 V, against the roughly 12.4 Ah expected. No capacity figure can be derived from this run.
+
+## Time Above Rated Current Since the Motors Were Installed
+
+**Installation date.** Julian gave it as roughly 2026-07-24. The flight logs bracket it. The last log made with the previous motors' configuration (motor range 1100 to 1900 us, peak 19.8 A total at 1900 us) is 2026-07-06, and the 2026-07-10 logs still show that range with the motors barely spun (1.7 A peak). The motor range was changed to 1000 to 2000 us at 06:33 to 06:35 UTC on 2026-07-26, and the first high-current run followed at 06:46 UTC (51.4 A total). There are no logs between 2026-07-10 and 2026-07-26, so the tally is the same for any start date in that gap. The 2026-08-19 date in earlier notes is when the change was reported with a parameter export, not the install date: the 2026-08-18 log already shows the MN3110 current draw (42.5 A total at 1800 us, matching the stand's 21.3 A at 1780 us for the 11x7").
+
+**Method.** Every log on the SD card (322 logs, 2023-07 to 2026-09) was scanned for `battery_status` current. The time each sample spent above 42 A total (21 A per motor if the two share equally) was summed, capping each sample's duration at 0.5 s. Folder dates are UTC; every relevant log falls on the same local date at UTC+10. The 2023 and 2024 logs are from when the flight controller was on a multicopter and are not relevant, and the fixed-wing logs start on 2026-05-14.
+
+| Date (UTC) | Time above 42 A total | Peak total current | Note |
+|---|---|---|---|
+| 2026-07-26 | 1.6 s | 51.4 A | Motor command at 2000 us |
+| 2026-08-18 | 9.4 s | 65.0 A | 5.2 s above 60 A (30 A per motor) |
+| 2026-09-02 | 14.1 s | 65.9 A | Bench thrust test; 3.9 s above 60 A |
+| 2026-09-26 | 39.7 s | 47.2 A before the fault | Ceiling 1800 us; about 0.6 s of this is the failure itself |
+| Aircraft total | **64.8 s** | | |
+
+**Thrust stand (2026-09-15).** Julian confirmed the RCbenchmark runs in `MN3110_12_6` and `MN3110_11_7` used the motors installed in the aircraft, one motor on the stand at a time. Time with the stand current above 21 A: 29.1 s on the 12x6" (peak 40.0 A, 4.4 s of it above 30 A) and 2.6 s on the 11x7" (peak 21.6 A), 31.7 s in total. The 11x7" `combined_continuous` file repeats the three 11x7" runs and is excluded. Which motor was on the stand is not recorded.
+
+**Total since installation:** about 96.5 s above 21 A per motor (64.8 s in the aircraft plus 31.7 s on the stand, the stand time counting against the one motor tested). Above 25 A per motor: about 22 s (11.7 s aircraft, 10.1 s stand). Above 30 A per motor: about 14 s (9.1 s aircraft, 4.7 s stand).
+
+**Lower thresholds.** Battery current understates the current in the motor windings at part throttle (the ESC steps the voltage down, so winding current is higher than battery current; estimate in `context/project-notes.md`, 2026-09-27). As a sensitivity, total pack current above 28 A (14 A per motor) totals about 317 s since installation and above 20 A (10 A per motor) about 760 s, of which about 402 s was the failing run itself. These are aircraft-only figures and exclude the stand.
+
+Limits of the tally: equal split between the motors is assumed (only total current is logged); sampling is about 5 Hz, so short peaks are undercounted; the current sensor calibration was not independently checked; the battery differs between runs (the custom Li-ion pack from 2026-09-26); and any run made without logging is not counted.
 
 ## What the Evidence Supports
 

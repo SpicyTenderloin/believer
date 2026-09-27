@@ -110,7 +110,7 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `PWM_MAIN_MIN3` / `MIN5` | 1100 | Left/right aileron minimum PWM. Remeasured 2026-09-02, see above - supersedes the previous asymmetric values (1200/1230). |
 | `PWM_MAIN_MAX3` / `MAX5` | 2000 | Left/right aileron maximum PWM. Remeasured 2026-09-02, see above - supersedes the previous asymmetric values (1760/1900). |
 | `PWM_MAIN_DIS1-3`, `DIS5` | 1500 | V-tail and aileron disarmed position, reset to plain neutral 2026-09-02 now that endpoints are no longer being used to approximate differential (previously 1520/1550 for the ailerons). |
-| `PWM_MAIN_MIN4` / `MIN6` | 1000 | Motor min PWM (both motors). Set 2026-08-19 to a common 1000-2000us range following the MN3110 KV700/AIR 40A install (PROP-04). |
+| `PWM_MAIN_MIN4` / `MIN6` | 1000 | Motor min PWM (both motors). Set to a common 1000-2000us range following the MN3110 KV700/AIR 40A install (PROP-04): first seen in the flight logs on 2026-07-26 (minimum at 06:33 UTC, maximum at 06:35 UTC) and recorded in the 2026-08-19 export. |
 | `PWM_MAIN_MAX4` / `MAX6` | 1800 | Motor max PWM (both motors). Lowered from 2000 on 2026-09-02 (PROP-08) as a throttle ceiling to keep sustained current draw within the MN3110 KV700's 21A/motor continuous rating - based on a 2026-09-02 thrust-test log correlation showing ~42A total (~21A/motor) at ~1800-1809us PWM. Not yet confirmed via a dedicated sustained-run test. |
 | `PWM_MAIN_REV` | 6 (0b00000110) | Output reversal bitmask: bits 1 and 2 set = MAIN 2 (V-tail right) and MAIN 3 (left aileron) reversed. Changed from 5 (0b00000101, MAIN 1 + MAIN 3) on 2026-07-06 as part of the ruddervator direction fix. |
 
