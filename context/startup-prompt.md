@@ -45,6 +45,7 @@ Read them in order - each one builds on the last.
 | [`docs/engineering/ICD.md`](../docs/engineering/ICD.md) | Interface control document - all avionics interfaces: serial ports, RC channel map, power, GPS, sensors |
 | [`docs/operations/manual.md`](../docs/operations/manual.md) | Operating manual - flight modes, GR1 switch map, failsafe config, pre-flight checklist |
 | [`docs/engineering/flight-modes.md`](../docs/engineering/flight-modes.md) | PX4 fixed-wing flight mode behaviour and configuring parameters |
+| [`docs/engineering/analysis/powertrain-performance-model.md`](../docs/engineering/analysis/powertrain-performance-model.md) | Powertrain performance model - thrust, current and power of the twin-motor drive against airframe drag, calibrated on the stand data; scripts and results alongside |
 | [`docs/project/build-checklist.md`](../docs/project/build-checklist.md) | Flight-readiness dashboard and work-package task tracking |
 | [`docs/project/purchase-history/purchase-history.md`](../docs/project/purchase-history/purchase-history.md) | All component purchases - unit cost, total with shipping, who paid (University/Julian personal), installed status |
 | [`docs/project/project-overview.md`](../docs/project/project-overview.md) | Public-facing project background, purpose, roadmap, and team |
