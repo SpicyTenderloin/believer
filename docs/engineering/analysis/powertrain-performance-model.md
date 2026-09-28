@@ -99,6 +99,8 @@ The model was checked against the RCbenchmark stand data for the installed MN311
 
 (KV factor `f` = 1.0 and `b` = 0.06 ohm.) The stand propellers behave like the sport or slow-flyer variants, not the thin-electric variants, which over-predict thrust for the measured electrical power. The base case uses the APC 12x6 (sport); the SF and E variants are in the sensitivity table.
 
+**Rotor speed.** The stand's `Motor Electrical Speed (RPM)` channel reads rotor speed in rpm above about 1520 us, and matches the speed implied by the measured thrust and APC's static thrust coefficient to within about 2% for the 11x7" and 6 to 9% for the 12x6". Below about 1500 us it reads spurious values (12,000 to 17,000) that must be ignored. Against this channel, with the model run at the measured bus voltage and current, the sport variants predict rotor speed 4% low for the 11x7" and 8% low for the 12x6", with thrust within 5% and 1% respectively. The thin-electric variants predict rotor speed closer (3% high for the 12x6" and 6% high for the 11x7") but over-predict thrust by 14% and 9% respectively, so the stand data alone do not settle the propeller variant. The optical RPM channel is zero in every file.
+
 The KV factor and the extra resistance cannot be separated from static stand data: a grid search over `f` from 0.85 to 1.05 and `b` from 0 to 0.12 ohm gives RMS errors of 5 to 6% across a wide range of pairs. The nominal values (`f` = 1.0, `b` = 0.06 ohm) are used, and the effect of a 10% lower effective KV is in the sensitivity table.
 
 ## 5. Limitations
@@ -120,6 +122,7 @@ Scripts are in `docs/engineering/analysis/powertrain-model/`:
 | `apcprop.py` | Parser and interpolator for APC PER3 files |
 | `powertrain_model.py` | The steady-state model and the stand-data calibration routines |
 | `calibrate.py` | Propeller-variant comparison and the `f` and `b` grid search against the stand data |
+| `calibrate_rpm.py` | The same comparison including the stand's rotor-speed channel |
 | `performance_run.py` | Static, cruise, best-speed and full-throttle-curve tables for all motors (arguments: propeller file, pack open-circuit voltage, KV factor) |
 | `make_figures.py` | The figure above |
 | `build_summary.py` | The sensitivity summary |
