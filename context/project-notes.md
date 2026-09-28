@@ -413,4 +413,6 @@ The model was recalibrated with the stand's rotor-speed channel (valid above abo
 
 The write-up, figure, scripts and CSV results in `docs/engineering/analysis/` were regenerated, and the stand report now records the propeller as the 12x6E. No motor choice adopted.
 
+Julian then filed the invoice for the 12x6 propellers (`docs/project/purchase-history/invoices/gemfan-apc-nylon-12x6-propellers-2026-09-06.pdf`): Alibaba notice B1020260906048362 of 2026-09-06 from Dong Mu High Quality Store, a 2-piece "Gemfan Apc Nylon Propeller" pack, 51.96 CNY including delivery and GST, $10.56 AUD as charged (Julian, personal funds). Gemfan sells APC-pattern propellers, so the stand propeller may be a copy of the APC 12x6E rather than a genuine APC part; the photo shows only the "12X6E" marking. That would fit the finding that it takes about 22% more power than APC's table and adds uncertainty to the in-flight predictions, which use APC's tables. The purchase history was updated (Julian's personal total is now $262.89 AUD).
+
 See [open-items.md](open-items.md) for what's still missing.

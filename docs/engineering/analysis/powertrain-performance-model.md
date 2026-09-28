@@ -85,7 +85,7 @@ The MN3110 values are from its datasheet. The others are from manufacturer and r
 
 ## 4. Calibration and validation
 
-The stand propeller is marked APC 12x6E. The model was calibrated on the RCbenchmark stand data for the installed MN3110 with that propeller, using the bins of ESC command from 1560 to 1640 us, where the stand's rotor-speed channel (`Motor Electrical Speed (RPM)`) reads correctly. That channel reads spurious values below about 1500 us and the optical channel is zero in every file.
+The stand propeller is marked 12x6E and was purchased as a Gemfan nylon propeller in the APC pattern; the tables used are APC's for its 12x6E. The model was calibrated on the RCbenchmark stand data for the installed MN3110 with that propeller, using the bins of ESC command from 1560 to 1640 us, where the stand's rotor-speed channel (`Motor Electrical Speed (RPM)`) reads correctly. That channel reads spurious values below about 1500 us and the optical channel is zero in every file.
 
 - **Thrust:** at the measured rotor speed, the measured thrust is 0.99 times (0.97 to 1.00) the table's static thrust, so `CT` = 0.99.
 - **Power:** with the measured rotor speed, thrust and bus voltage, the measured bus current is reproduced to 1.4% rms when the propeller's power coefficient is scaled by 1.22. The real propeller takes about 22% more power than the published table at the same speed and thrust.
@@ -98,6 +98,7 @@ The power factor is a static calibration. It is applied at all airspeeds, which 
 
 - **Static calibration only.** Thrust and current in flight rest on APC's published (theoretical) tables with the static power factor applied at all airspeeds. Expect an uncertainty of about 10 to 15% on in-flight thrust, and the range between the calibrated and unscaled results on power.
 - **Few calibration points.** Five stand bins have a valid rotor-speed reading.
+- **Propeller identity.** The stand propeller may be a copy of the APC pattern rather than a genuine APC part. The stand calibration absorbs its static difference from the table, but its variation with airspeed is assumed to follow APC's 12x6E.
 - **Calibrated range.** The model is calibrated to about 29 A winding current for the MN3110. Its full-throttle output for that motor (about 51 A winding) is beyond that range and beyond the AIR 40A ESC's rating, and is not used. The aircraft's logs at 2000 us show about 32 A per motor with the Hobbyrama 11x7" propeller, against about 51 A predicted for the 12x6E at full duty. The propellers differ, so this is not a like-for-like check, but full-throttle predictions should be treated as unreliable.
 - **Throttle mapping.** Model throttle is the ESC's effective duty, not the PWM command. The mapping is unknown.
 - **Thermal state is not modelled.** Only currents are compared with ratings; the ratings are 180 s bench figures, and motor and ESC temperatures have not been measured.

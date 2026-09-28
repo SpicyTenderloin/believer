@@ -4,7 +4,7 @@ Tracks components purchased for the Believer project. Invoiced items link to the
 
 **To date, $1,379.00 AUD of funding was allocated to this project, of which ~$1,222.98 AUD has been spent.**
 
-(University-funded items only.) Separately, Julian has personally spent **$252.33 AUD** on components not drawn against this allocation - see the Julian (personal) total row below.
+(University-funded items only.) Separately, Julian has personally spent **$262.89 AUD** on components not drawn against this allocation - see the Julian (personal) total row below.
 
 | Date | Item | Vendor | Qty | Unit Cost | Total (incl. shipping) | Paid By | Installed | Order / Tracking # | Invoice | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -23,9 +23,10 @@ Tracks components purchased for the Believer project. Invoiced items link to the
 | 2026-07-14 | 9x6" GEMFAN Propeller (standard/tractor rotation) | Shop1105187756 Store (Alibaba.com) | 1 | 35.30 CNY | 42.70 CNY ($9.23 AUD) | Julian (personal) | No | Notice B1020260714024962 | [link](invoices/gemfan-9x6-standard-propeller-2026-07-14.pdf) | For the T-MOTOR MN3110 KV700 motor upgrade, size selected via MotoCalc modelling with Peter Spink (TMAC), 2026-07-10. AUD figure prorated from the combined $19.07 AUD total for both propeller invoices |
 | 2026-07-14 | 9x6" Gemfan APC Nylon Propeller (pusher/reverse rotation) | Shop1105166501 Store (Alibaba.com) | 1 | 37.65 CNY | 45.56 CNY ($9.84 AUD) | Julian (personal) | No | Notice B1020260714025041 | [link](invoices/gemfan-9x6-pusher-propeller-2026-07-14.pdf) | Reverse-pitch pair originally sized for contra-rotation with the new motors; not installed - the MN3110 install (approximately 2026-07-24) carried over the existing 11x7" Hobbyrama props instead, both same handedness, confirmed acceptable for the maiden flight |
 | 2026-07-13 | ZTW UBEC 10A (adjustable 5.0/5.5/6.0V output, 10A peak / 6A continuous) | Amazon.com.au (Amazon Export Sales LLC) | 1 | $39.54 AUD (excl. GST) | $43.49 AUD (incl. 10% GST; no shipping charged) | Julian (personal) | Yes | Order no. 503-9096661-8019814 | [link](invoices/amazon-ztw-ubec-10a-2026-07-13.pdf) | Dedicated 5V servo rail UBEC, resolves PWR-01; installed 2026-08-19, replacing the PM03D as the servo rail supply (ICD INT-01) |
+| 2026-09-06 | Gemfan Apc Nylon Propeller, 12x6 (2-piece pack; the invoice gives the listing title, which covers sizes 5x5 to 17x10) | Dong Mu High Quality Store (Alibaba.com) | 1 (pack of 2) | 36.20 CNY | 51.96 CNY ($10.56 AUD) | Julian (personal) | No | Notice B1020260906048362 | [link](invoices/gemfan-apc-nylon-12x6-propellers-2026-09-06.pdf) | Propellers used on the thrust stand (2026-09-15) and intended for the aircraft; not installed. The size selection is not printed on the invoice. Marked 12X6E. Total is 36.20 CNY for the pack plus 15.76 CNY delivery, both including GST; the AUD figure is as charged. |
 | | **University total** | | | | **~$1,222.98 AUD** | University | | | | Approved budget $1,379.00 AUD - **~$156.02 AUD remaining**. Increased from a previous ~$981.08 AUD once the SparkFun, HobbyKing, Core Electronics, and Holybro PM06 invoices (2026-03-09/10) were located and their actual figures replaced earlier shopping-list estimates - see `context/CHANGELOG.md` 2026-08-26. |
-| | **Julian (personal) total** | | | | **$252.33 AUD** | Julian (personal) | | | | Hobbyrama propellers + T-MOTOR motors + Gemfan propellers + ZTW UBEC. Excludes the PM03D (477.53 CNY, not converted to AUD). |
-| | **All parties total** | | | | **~$1,475.31 AUD** | | | | | University + Julian (personal), AUD-denominated items only; excludes the PM03D CNY line above. |
+| | **Julian (personal) total** | | | | **$262.89 AUD** | Julian (personal) | | | | Hobbyrama propellers + T-MOTOR motors + Gemfan propellers (9x6" and 12x6) + ZTW UBEC. Excludes the PM03D (477.53 CNY, not converted to AUD). |
+| | **All parties total** | | | | **~$1,485.87 AUD** | | | | | University + Julian (personal), AUD-denominated items only; excludes the PM03D CNY line above. |
 
 ## Funding application budget (for reference)
 

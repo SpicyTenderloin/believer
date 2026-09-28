@@ -17,7 +17,7 @@ The T-Motor MN3110 KV700 was run on the thrust stand with an APC 11x7" and an AP
 |---|---|
 | Stand | RCbenchmark Series 1520 |
 | Motor | T-Motor MN3110 KV700 |
-| Propellers | APC 11x7" (variant not recorded) and APC 12x6E (as marked on the propeller) |
+| Propellers | APC 11x7" (variant not recorded) and 12x6E (as marked on the propeller; purchased as a Gemfan nylon propeller in the APC pattern) |
 | ESC on the stand | TBD (not recorded in the logs) |
 | Supply | TBD (battery or bench supply not recorded); voltage per run in the table below |
 | Method | ESC command swept upward from 1000 us; a slow full sweep plus several shorter runs per propeller |
