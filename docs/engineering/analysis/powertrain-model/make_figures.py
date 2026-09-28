@@ -4,10 +4,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy.optimize import brentq
-from powertrain_model import MOTORS, prop, solve_aircraft, drag, G
+from powertrain_model import MOTORS, prop, solve_aircraft, drag, G, set_prop_scale
 
 S = os.path.dirname(os.path.abspath(__file__))
-PNAME, VOC, F, B, R_PACK = "PER3_12x6", 24.0, 1.0, 0.06, 0.021
+PNAME, VOC, F, B, R_PACK = "PER3_12x6E", 24.0, 1.0, 0.06, 0.021
+set_prop_scale(0.99, 1.22)      # calibrated on the stand data (calibrate_12x6e.py)
 AVIONICS_W = 12.0
 pr = prop(PNAME)
 
@@ -78,7 +79,7 @@ for name, col in SERIES.items():
         b.plot(vs[i], p[i], "o", ms=5, color=col, mec=SURFACE, mew=1.5)
 b.axvline(13.5, color=MUTED, lw=0.9, ls=":")
 b.text(13.65, 100, "best range 13.5 m/s", color=MUTED, fontsize=8, va="bottom")
-b.set_xlim(10, 26.8); b.set_ylim(90, 430)
+b.set_xlim(10, 26.8); b.set_ylim(90, 480)
 b.set_xlabel("Airspeed (m/s)"); b.set_ylabel("Electrical power from the pack (W)")
 b.set_title("Level-flight power, whole aircraft\n(includes 12 W avionics; dots mark 15 and 20 m/s)", loc="left", fontsize=10, color=INK)
 b.legend(loc="upper left", frameon=False, fontsize=8.5)
@@ -112,8 +113,8 @@ c.set_xlabel("Winding current = ESC output current (A)"); c.set_ylabel("Static t
 c.set_title("Static thrust against winding current\n(dot = rated current or full throttle; dashed = beyond rating)", loc="left", fontsize=10, color=INK)
 c.legend(loc="lower right", frameon=False, fontsize=8.5)
 
-fig.text(0.5, 0.008, "Model: APC 12x6 (sport) propeller tables, 6S pack at 24.0 V with 21 mOhm, datasheet KV and resistance with a factor and extra ohms calibrated on the RCbenchmark stand data, "
-         "Weishaeupl et al. drag polar. Unverified beyond the calibrated range (about 33 A winding); no flight or in-aircraft measurement yet.",
+fig.text(0.5, 0.008, "Model: APC 12x6E tables with thrust x0.99 and power x1.22 calibrated on the RCbenchmark stand data, 6S pack at 24.0 V with 21 mOhm, datasheet KV and resistance plus extra ohms, "
+         "Weishaeupl et al. drag polar. Unverified beyond the calibrated range (about 29 A winding); no flight or in-aircraft measurement yet.",
          ha="center", fontsize=8, color=MUTED)
 fig.tight_layout(rect=(0, 0.03, 1, 1))
 out = os.path.join(S, "powertrain-model-figure.png")

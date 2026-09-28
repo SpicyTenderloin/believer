@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Date** | 2026-09-06 and 2026-09-10 (APC 11x7"), 2026-09-15 (APC 12x6"); combined plots produced 2026-09-26 |
+| **Date** | 2026-09-06 and 2026-09-10 (APC 11x7"), 2026-09-15 (APC 12x6E); combined plots produced 2026-09-26 |
 | **Location** | RCbenchmark Series 1520 thrust stand |
 | **Attendees** | Julian Williams |
 | **Purpose** | Characterise thrust, current, power, and efficiency of the T-Motor MN3110 KV700 against ESC command for two candidate propellers, and derive a throttle ceiling that keeps each motor within its rated continuous current |
@@ -17,7 +17,7 @@ The T-Motor MN3110 KV700 was run on the thrust stand with an APC 11x7" and an AP
 |---|---|
 | Stand | RCbenchmark Series 1520 |
 | Motor | T-Motor MN3110 KV700 |
-| Propellers | APC 11x7" and APC 12x6" (as labelled on the plots) |
+| Propellers | APC 11x7" (variant not recorded) and APC 12x6E (as marked on the propeller) |
 | ESC on the stand | TBD (not recorded in the logs) |
 | Supply | TBD (battery or bench supply not recorded); voltage per run in the table below |
 | Method | ESC command swept upward from 1000 us; a slow full sweep plus several shorter runs per propeller |

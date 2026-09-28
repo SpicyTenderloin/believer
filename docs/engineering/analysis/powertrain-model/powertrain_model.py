@@ -23,6 +23,15 @@ G = 9.81
 ETA_ESC = 0.98
 RFAC = 1.15           # copper resistance rise over the datasheet value at operating temperature
 
+# propeller calibration factors applied to the APC tables (thrust and power coefficients), set with set_prop_scale()
+CT_SCALE, CP_SCALE = 1.0, 1.0
+
+
+def set_prop_scale(ct=1.0, cp=1.0):
+    global CT_SCALE, CP_SCALE
+    CT_SCALE, CP_SCALE = ct, cp
+
+
 # airframe (Weishaeupl et al. 2024, Tables 1 and 2)
 S_WING, CD0, K_IND = 0.488, 0.0503, 0.0764
 
@@ -75,7 +84,7 @@ def motor_state(pr, pname, mot, v_air, duty, vbat, f, b):
         n = rpm / 60.0
         j = v_air / (n * d)
         ct, cp = pr.coeffs(rpm, j)
-        qp = cp * RHO * n ** 2 * d ** 5 / (2 * np.pi)
+        qp = CP_SCALE * cp * RHO * n ** 2 * d ** 5 / (2 * np.pi)
         return qm - qp
 
     hi = vm * kv - 1.0
@@ -88,8 +97,8 @@ def motor_state(pr, pname, mot, v_air, duty, vbat, f, b):
     n = rpm / 60.0
     j = v_air / (n * d)
     ct, cp = pr.coeffs(rpm, j)
-    thrust = ct * RHO * n ** 2 * d ** 4
-    p_shaft = cp * RHO * n ** 3 * d ** 5
+    thrust = CT_SCALE * ct * RHO * n ** 2 * d ** 4
+    p_shaft = CP_SCALE * cp * RHO * n ** 3 * d ** 5
     iw = (vm - rpm / kv) / reff
     i_bus = duty * iw / ETA_ESC
     return dict(rpm=rpm, thrust=thrust, p_shaft=p_shaft, iw=iw, i_bus=i_bus, p_bus=vbat * i_bus, vm=vm, j=j,

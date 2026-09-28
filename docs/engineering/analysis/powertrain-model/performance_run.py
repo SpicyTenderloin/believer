@@ -2,11 +2,14 @@ import sys
 import numpy as np
 import pandas as pd
 from scipy.optimize import brentq
-from powertrain_model import MOTORS, prop, solve_aircraft, drag, G
+from powertrain_model import MOTORS, prop, solve_aircraft, drag, G, set_prop_scale
 
 PNAME = sys.argv[1] if len(sys.argv) > 1 else "PER3_12x6"
 F = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
 B = 0.06
+CT = float(sys.argv[4]) if len(sys.argv) > 4 else 1.0     # propeller thrust-coefficient scale
+CPS = float(sys.argv[5]) if len(sys.argv) > 5 else 1.0    # propeller power-coefficient scale
+set_prop_scale(CT, CPS)
 VOC = float(sys.argv[2]) if len(sys.argv) > 2 else 24.0
 R_PACK = 0.021
 AVIONICS_W = 12.0
@@ -85,7 +88,7 @@ for name, mot in MOTORS.items():
                                    drag_design=(drag(BASE_MASS + PAYLOAD + d_mass, v) / G if v > 0 else np.nan)))
 
 pd.set_option("display.width", 250); pd.set_option("display.max_columns", 30)
-tag = f"{PNAME}_{VOC:.1f}V_f{F:.2f}"
+tag = f"{PNAME}_{VOC:.1f}V_f{F:.2f}_ct{CT:.2f}_cp{CPS:.2f}"
 pd.DataFrame(rows_static).to_csv(f"model_static_{tag}.csv", index=False)
 pd.DataFrame(rows_cruise).to_csv(f"model_cruise_{tag}.csv", index=False)
 pd.DataFrame(rows_curve).to_csv(f"model_fullthrottle_curve_{tag}.csv", index=False)

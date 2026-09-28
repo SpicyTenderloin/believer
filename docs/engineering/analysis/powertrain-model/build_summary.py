@@ -4,12 +4,12 @@ import pandas as pd
 
 S = os.path.dirname(os.path.abspath(__file__))
 CASES = [
-    ("Base: APC 12x6, 24.0 V pack, KV factor 1.0", "PER3_12x6_24.0V_f1.00"),
-    ("Pack at 22.2 V (mid-discharge)", "PER3_12x6_22.2V_f1.00"),
-    ("Effective KV 10% low (factor 0.9)", "PER3_12x6_24.0V_f0.90"),
-    ("Worst: 22.2 V and factor 0.9", "PER3_12x6_22.2V_f0.90"),
-    ("APC 12x6SF (slow flyer) propeller", "PER3_12x6SF_24.0V_f1.00"),
-    ("APC 12x6E (thin electric) propeller", "PER3_12x6E_24.0V_f1.00"),
+    ("Base: APC 12x6E calibrated on the stand, 24.0 V pack, KV factor 1.0", "PER3_12x6E_24.0V_f1.00_ct0.99_cp1.22"),
+    ("Pack at 22.2 V (mid-discharge)", "PER3_12x6E_22.2V_f1.00_ct0.99_cp1.22"),
+    ("Effective KV 10% low (factor 0.9)", "PER3_12x6E_24.0V_f0.90_ct0.99_cp1.27"),
+    ("Worst: 22.2 V and factor 0.9", "PER3_12x6E_22.2V_f0.90_ct0.99_cp1.27"),
+    ("APC 12x6E tables, no stand calibration", "PER3_12x6E_24.0V_f1.00_ct1.00_cp1.00"),
+    ("APC 12x6 (sport) tables, no stand calibration", "PER3_12x6_24.0V_f1.00_ct1.00_cp1.00"),
 ]
 rows = []
 for label, tag in CASES:
@@ -45,21 +45,22 @@ print(df[df.motor.isin(["MN3110 KV700", "U5 KV400", "KDE3510XF-475"])][["case", 
       "fullthrottle_thrust_20ms_total_kgf", "margin_20ms"]].to_string(index=False))
 # rating-limited thrust in flight for the MN3110 (the chart's definition), for the doc table
 from scipy.optimize import brentq
-from powertrain_model import MOTORS, prop, solve_aircraft, drag, G
-pr = prop("PER3_12x6")
+from powertrain_model import MOTORS, prop, solve_aircraft, drag, G, set_prop_scale
+set_prop_scale(0.99, 1.22)
+pr = prop("PER3_12x6E")
 for name in ("MN3110 KV700", "U5 KV400", "KDE3510XF-475"):
     mot = MOTORS[name]
     out = []
     for v in (0, 10, 15, 20, 25):
-        st = solve_aircraft(pr, "PER3_12x6", mot, v, 1.0, 24.0, 0.021, 1.0, 0.06)
-        d = 1.0 if st["iw"] <= mot.rating_a else brentq(lambda x: solve_aircraft(pr, "PER3_12x6", mot, v, x, 24.0, 0.021, 1.0, 0.06)["iw"] - mot.rating_a, 0.15, 1.0)
-        t = 2 * solve_aircraft(pr, "PER3_12x6", mot, v, d, 24.0, 0.021, 1.0, 0.06)["thrust"] / G
+        st = solve_aircraft(pr, "PER3_12x6E", mot, v, 1.0, 24.0, 0.021, 1.0, 0.06)
+        d = 1.0 if st["iw"] <= mot.rating_a else brentq(lambda x: solve_aircraft(pr, "PER3_12x6E", mot, v, x, 24.0, 0.021, 1.0, 0.06)["iw"] - mot.rating_a, 0.15, 1.0)
+        t = 2 * solve_aircraft(pr, "PER3_12x6E", mot, v, d, 24.0, 0.021, 1.0, 0.06)["thrust"] / G
         out.append(f"{v} m/s: {t:.2f} kgf")
     print(name, "rating-limited total thrust:", " | ".join(out))
 # model winding current for the MN3110 at the stand thrust levels (static)
 for thr in (1.5, 1.7):
     st = None
-    f = lambda dty: solve_aircraft(pr, "PER3_12x6", MOTORS["MN3110 KV700"], 0.0, dty, 24.4, 0.05, 1.0, 0.06, n_motors=1)["thrust"] / G - thr
+    f = lambda dty: solve_aircraft(pr, "PER3_12x6E", MOTORS["MN3110 KV700"], 0.0, dty, 24.4, 0.05, 1.0, 0.06, n_motors=1)["thrust"] / G - thr
     dty = brentq(f, 0.2, 1.0)
-    st = solve_aircraft(pr, "PER3_12x6", MOTORS["MN3110 KV700"], 0.0, dty, 24.4, 0.05, 1.0, 0.06, n_motors=1)
+    st = solve_aircraft(pr, "PER3_12x6E", MOTORS["MN3110 KV700"], 0.0, dty, 24.4, 0.05, 1.0, 0.06, n_motors=1)
     print(f"MN3110 static {thr} kgf: duty {dty:.2f}, winding {st['iw']:.1f} A ({st['iw']/21*100:.0f}%), bus {st['i_bus']:.1f} A, rpm {st['rpm']:.0f}")
