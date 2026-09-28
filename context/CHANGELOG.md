@@ -2,6 +2,11 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-09-28
+
+- `context/project-notes.md`, `context/open-items.md`: corrected the earlier statement that cruise is easy on the motors. It holds for the MN3110 but the U5 KV400, speed-limited to about 7,500 to 8,300 rpm, is comfortable at 15 m/s or below (about 2.3 to 6 times the drag) and only marginal at 20 m/s (about 0.8 to 2.5 times) by a rough interpolation of APC's data (the full table could not be retrieved). Unverified; no flight has been made with any motor.
+- `context/open-items.md`: recorded that Julian has no milliohm meter or insulation tester, and the near-term alternatives (phase-to-case check with the multimeter, no-load current comparison per motor and ESC with an inline fuse, or borrowing instruments from a QUT workshop).
+
 ## 2026-09-27
 
 - Julian confirmed the MN3110 KV700 motors were installed at roughly 2026-07-24 and that the flight computer used to be on a multicopter. Scanned all 322 SD card logs: the logs bracket the install between 2026-07-10 and 2026-07-26 (motor PWM range changed to 1000-2000 us at 06:33-06:35 UTC on 2026-07-26). Corrected the motor install date from 2026-08-19 (the date the change was reported) in `context/project-notes.md`, `docs/project/build-checklist.md` (Propulsion heading) and `docs/project/purchase-history/purchase-history.md`, and noted the first-seen date of the 1000-2000 us motor range in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`. The ESC install date is not separately confirmed and was left as reported.
