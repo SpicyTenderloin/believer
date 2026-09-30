@@ -425,4 +425,10 @@ A notable finding: the power factor fitted for the U5 (1.01) differs sharply fro
 
 This was an initial sweep, not the sustained-duration, temperature-logged run PROP-11 asks for, and the U5 units' condition has not been checked. Figures added: `docs/assets/u5-thrust-vs-esc-signal.png`, `u5-current-vs-esc-signal.png`, `u5-vs-mn3110-thrust-vs-current.png`. The main powertrain-model figure and PROP-11's background were updated to use this calibration for the U5 while keeping the MN3110-derived calibration for the other, unmeasured candidates.
 
+## U5 Sustained Run and Motor Decision - 2026-09-30 (later)
+
+Julian ran the U5 KV400 with the 12x6E at full throttle for 483 s on the ESC removed from the failed left drive (the "suspect ESC"), to check that ESC's own condition. Full throttle was held for 393 s cumulative (up to 105 s per stretch), across four throttle-down/restart cycles for hand-touch temperature checks; current stayed flat at 15.8 to 16.9 A (mean 16.2 A, about 54% of the 30 A rating) with no fault, dropout, or cutout at any point, including through the restarts. Julian reports the motor was only slightly warm by hand at each check. Figure: `docs/assets/u5-esc-sustained-full-throttle.png`.
+
+**Julian's decision:** satisfied the suspect ESC is not damaged, and will install the U5 KV400 motors together with the AIR 40A ESCs (including this one) in the aircraft, resolving PROP-11's motor and ESC choice. This is a decision on the evidence gathered so far, not a claim every PROP-11 acceptance criterion is met: temperature has only been checked by hand, not logged with an instrument (Julian still plans a thermal-camera run), the electrical condition checks (insulation, winding-resistance balance) have not been done, the right motor and its ESC have not been stand tested, and no in-aircraft or flight measurement exists yet. `docs/project/build-checklist.md` PROP-11 updated to In progress with the decision recorded and the satisfied/open parts of each acceptance criterion noted; `context/open-items.md` updated to reflect what remains.
+
 See [open-items.md](open-items.md) for what's still missing.
