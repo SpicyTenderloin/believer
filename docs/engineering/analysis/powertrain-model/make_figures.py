@@ -8,7 +8,8 @@ from powertrain_model import MOTORS, prop, solve_aircraft, drag, G, set_prop_sca
 
 S = os.path.dirname(os.path.abspath(__file__))
 PNAME, VOC, F, B, R_PACK = "PER3_12x6E", 24.0, 1.0, 0.06, 0.021
-set_prop_scale(0.99, 1.22)      # calibrated on the stand data (calibrate_12x6e.py)
+set_prop_scale(0.99, 1.22)      # default: MN3110 12x6E calibration (calibrate_12x6e.py)
+PROP_SCALE = {"U5 KV400": (0.98, 1.01)}   # motor-specific calibration where directly measured (calibrate_u5.py, 2026-09-30)
 AVIONICS_W = 12.0
 pr = prop(PNAME)
 
@@ -18,15 +19,16 @@ SERIES = {"MN3110 KV700": "#2a78d6", "U5 KV400": "#eb6834", "KDE3510XF-475": "#1
 MASS = {"MN3110 KV700": 3.80, "U5 KV400": 3.95, "KDE3510XF-475": 3.88}      # maiden mass with that motor pair fitted
 
 
-def run(mot, v, duty):
-    return solve_aircraft(pr, PNAME, mot, v, duty, VOC, R_PACK, F, B)
+def run(mot, v, duty, name=None):
+    ct, cp = PROP_SCALE.get(name, (None, None))
+    return solve_aircraft(pr, PNAME, mot, v, duty, VOC, R_PACK, F, B, ct=ct, cp=cp)
 
 
-def duty_at_rating(mot, v):
-    st = run(mot, v, 1.0)
+def duty_at_rating(mot, v, name=None):
+    st = run(mot, v, 1.0, name)
     if st["iw"] <= mot.rating_a:
         return 1.0
-    return brentq(lambda d: run(mot, v, d)["iw"] - mot.rating_a, 0.15, 1.0, xtol=1e-4)
+    return brentq(lambda d: run(mot, v, d, name)["iw"] - mot.rating_a, 0.15, 1.0, xtol=1e-4)
 
 
 plt.rcParams.update({
@@ -45,8 +47,8 @@ for name, col in SERIES.items():
     mot = MOTORS[name]
     thr = []
     for v in speeds:
-        d = duty_at_rating(mot, v)
-        thr.append(2 * run(mot, v, d)["thrust"] / G)
+        d = duty_at_rating(mot, v, name)
+        thr.append(2 * run(mot, v, d, name)["thrust"] / G)
     a.plot(speeds, thr, color=col, lw=2.0, label=name)
     a.text(speeds[-1] + 0.3, thr[-1], name.split()[0], color=INK2, va="center", fontsize=8.5)
 vd = np.arange(9.5, 28.1, 0.5)
@@ -68,10 +70,10 @@ for name, col in SERIES.items():
     p = []
     for v in vs:
         dr = drag(m, v)
-        if 2 * run(mot, v, 1.0)["thrust"] < dr:
+        if 2 * run(mot, v, 1.0, name)["thrust"] < dr:
             p.append(np.nan); continue
-        d = brentq(lambda x: 2 * run(mot, v, x)["thrust"] - dr, 0.15, 1.0, xtol=1e-4)
-        p.append(2 * run(mot, v, d)["p_bus"] + AVIONICS_W)
+        d = brentq(lambda x: 2 * run(mot, v, x, name)["thrust"] - dr, 0.15, 1.0, xtol=1e-4)
+        p.append(2 * run(mot, v, d, name)["p_bus"] + AVIONICS_W)
     b.plot(vs, p, color=col, lw=2.0, label=name)
     b.text(vs[-1] + 0.25, p[-1], name.split()[0], color=INK2, va="center", fontsize=8.5)
     for v0 in (15, 20):
@@ -91,7 +93,7 @@ for name, col in SERIES.items():
     duties = np.linspace(0.2, 1.0, 60)
     xs, ys = [], []
     for d in duties:
-        st = run(mot, 0.0, d)
+        st = run(mot, 0.0, d, name)
         if st is None:
             continue
         xs.append(st["iw"]); ys.append(st["thrust"] / G)
@@ -113,7 +115,7 @@ c.set_xlabel("Winding current = ESC output current (A)"); c.set_ylabel("Static t
 c.set_title("Static thrust against winding current\n(dot = rated current or full throttle; dashed = beyond rating)", loc="left", fontsize=10, color=INK)
 c.legend(loc="lower right", frameon=False, fontsize=8.5)
 
-fig.text(0.5, 0.008, "Model: APC 12x6E tables with thrust x0.99 and power x1.22 calibrated on the RCbenchmark stand data, 6S pack at 24.0 V with 21 mOhm, datasheet KV and resistance plus extra ohms, "
+fig.text(0.5, 0.008, "Model: APC 12x6E tables, thrust/power factors calibrated on the RCbenchmark stand data per motor where measured (U5: x0.98/x1.01, 2026-09-30; others: x0.99/x1.22, 2026-09-15), 6S pack at 24.0 V with 21 mOhm, datasheet KV and resistance plus extra ohms, "
          "Weishaeupl et al. drag polar. Unverified beyond the calibrated range (about 29 A winding); no flight or in-aircraft measurement yet.",
          ha="center", fontsize=8, color=MUTED)
 fig.tight_layout(rect=(0, 0.03, 1, 1))

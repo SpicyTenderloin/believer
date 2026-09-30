@@ -67,7 +67,7 @@ def diameter(name):
     return 12 * 0.0254 if "12x" in name else 11 * 0.0254
 
 
-def motor_state(pr, pname, mot, v_air, duty, vbat, f, b):
+def motor_state(pr, pname, mot, v_air, duty, vbat, f, b, ct=None, cp=None):
     """Steady state of one motor+ESC+prop at airspeed v_air (m/s), throttle duty and battery voltage vbat."""
     d = diameter(pname)
     reff = mot.r * RFAC + b
@@ -76,6 +76,8 @@ def motor_state(pr, pname, mot, v_air, duty, vbat, f, b):
     vm = duty * vbat
     if vm <= 0.05:
         return None
+    ct_s = CT_SCALE if ct is None else ct
+    cp_s = CP_SCALE if cp is None else cp
 
     def resid(rpm):
         e = rpm / kv
@@ -84,7 +86,7 @@ def motor_state(pr, pname, mot, v_air, duty, vbat, f, b):
         n = rpm / 60.0
         j = v_air / (n * d)
         ct, cp = pr.coeffs(rpm, j)
-        qp = CP_SCALE * cp * RHO * n ** 2 * d ** 5 / (2 * np.pi)
+        qp = cp_s * cp * RHO * n ** 2 * d ** 5 / (2 * np.pi)
         return qm - qp
 
     hi = vm * kv - 1.0
@@ -97,20 +99,20 @@ def motor_state(pr, pname, mot, v_air, duty, vbat, f, b):
     n = rpm / 60.0
     j = v_air / (n * d)
     ct, cp = pr.coeffs(rpm, j)
-    thrust = CT_SCALE * ct * RHO * n ** 2 * d ** 4
-    p_shaft = CP_SCALE * cp * RHO * n ** 3 * d ** 5
+    thrust = ct_s * ct * RHO * n ** 2 * d ** 4
+    p_shaft = cp_s * cp * RHO * n ** 3 * d ** 5
     iw = (vm - rpm / kv) / reff
     i_bus = duty * iw / ETA_ESC
     return dict(rpm=rpm, thrust=thrust, p_shaft=p_shaft, iw=iw, i_bus=i_bus, p_bus=vbat * i_bus, vm=vm, j=j,
                 eta_prop=(thrust * v_air / p_shaft if p_shaft > 1 else 0.0))
 
 
-def solve_aircraft(pr, pname, mot, v_air, duty, voc, r_pack, f, b, n_motors=2):
+def solve_aircraft(pr, pname, mot, v_air, duty, voc, r_pack, f, b, n_motors=2, ct=None, cp=None):
     """Battery sag closes the loop: vbat = voc - r_pack * total bus current."""
     vbat = voc
     st = None
     for _ in range(25):
-        st = motor_state(pr, pname, mot, v_air, duty, vbat, f, b)
+        st = motor_state(pr, pname, mot, v_air, duty, vbat, f, b, ct=ct, cp=cp)
         if st is None:
             return None
         new = voc - r_pack * n_motors * st["i_bus"]

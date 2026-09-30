@@ -4,7 +4,7 @@
 |---|---|
 | **Date** | 2026-09-28 |
 | **Scope** | Steady-state thrust, current and power of the twin-motor drive with the APC 12x6E propeller on 6S, against the airframe's drag |
-| **Status** | Model calibrated on static thrust-stand data only. Not yet compared with in-aircraft or flight measurements |
+| **Status** | Model calibrated on static thrust-stand data only (MN3110: 2026-09-15/28; U5: 2026-09-30). Not yet compared with in-aircraft or flight measurements |
 | **Inputs** | APC PER3 propeller performance tables, RCbenchmark stand data (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`), motor datasheets and listings, the wind-tunnel drag polar of the reference airframe (`docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf`) |
 
 ![Powertrain model: sustainable thrust against drag, level-flight power, and static thrust against winding current](../../assets/powertrain-model-2026-09-28.png)
@@ -18,7 +18,7 @@ All values are for the APC 12x6E propeller on 6S with the pack at 24.0 V, at the
 | Motor | Rated current | Static thrust per motor | Winding current | Static thrust-to-weight, maiden mass | Static thrust-to-weight, design mass |
 |---|---|---|---|---|---|
 | MN3110 KV700 (installed) | 21 A (180 s) | 1.35 kgf | 21 A (at the rating) | 0.71 (3.80 kg) | 0.68 (3.99 kg) |
-| U5 KV400 | 30 A (180 s) | 1.80 kgf (full throttle) | 17.8 A (59% of rating) | 0.91 (3.95 kg) | 0.87 (4.14 kg) |
+| U5 KV400 (measured, 2026-09-30) | 30 A (180 s) | 1.87 kgf (full throttle) | 15.8 A (53% of rating) | 0.95 (3.95 kg) | 0.90 (4.14 kg) |
 | KDE3510XF-475 | 30 A (180 s) | 2.12 kgf (full throttle) | 26.7 A (89% of rating) | 1.09 (3.88 kg) | 1.04 (4.07 kg) |
 | MN3510 KV700 (6S unconfirmed) | 25 A (180 s) | 1.54 kgf | 25 A (at the rating) | 0.80 (3.83 kg) | 0.76 (4.02 kg) |
 | SunnySky X2814 KV900 (listed 3-4S) | 50 A (30 s) | 2.10 kgf | 50 A (at the rating) | 1.09 (3.86 kg) | 1.04 (4.05 kg) |
@@ -29,8 +29,8 @@ At the stand points for the installed motor the model gives a winding current of
 
 | Speed | Drag | MN3110 | U5 | KDE |
 |---|---|---|---|---|
-| 15 m/s | 0.51 kgf | 1.70 kgf (3.3 times) | 2.36 kgf (4.6 times) | 3.09 kgf (6.1 times) |
-| 20 m/s | 0.70 kgf | 1.52 kgf (2.2 times) | 1.75 kgf (2.5 times) | 2.46 kgf (3.6 times) |
+| 15 m/s | 0.51 kgf | 1.70 kgf (3.3 times) | 2.49 kgf (4.9 times) | 3.09 kgf (6.1 times) |
+| 20 m/s | 0.70 kgf | 1.52 kgf (2.2 times) | 1.87 kgf (2.7 times) | 2.46 kgf (3.6 times) |
 
 **Level-flight power and range** (maiden mass, 215 Wh usable, 12 W avionics; payload power not included). The first value applies the stand's static power factor at all airspeeds (conservative); the value in brackets uses the published tables unscaled (optimistic bound).
 
@@ -38,17 +38,25 @@ At the stand points for the installed motor the model gives a winding current of
 |---|---|---|---|---|---|
 | MN3110 | 15 m/s | 165 W (134 W) | 39% | 78 min (96) | 70 km (87) |
 | MN3110 | 20 m/s | 286 W (229 W) | 54% | 45 min (56) | 54 km (68) |
-| U5 | 15 m/s | 159 W (131 W) | 16% | 81 min (98) | 73 km (89) |
-| U5 | 20 m/s | 266 W (218 W) | 22% | 48 min (59) | 58 km (71) |
+| U5 (measured) | 15 m/s | 132 W | 14% | 98 min | 88 km |
+| U5 (measured) | 20 m/s | 222 W | 19% | 58 min | 70 km |
 | KDE | 15 m/s | 164 W (136 W) | 20% | 79 min (95) | 71 km (86) |
 | KDE | 20 m/s | 276 W (226 W) | 27% | 47 min (57) | 56 km (69) |
 
 - Best range is at 13.0 to 13.5 m/s for every motor. Best endurance is at 10.5 m/s, at or just above the estimated stall speed of about 9.4 m/s at 3.8 kg, so it is not a practical cruise speed.
 - Flying at 20 m/s instead of 15 m/s costs about 65 to 75% more power and about 20 to 23% of the range.
-- The motors differ by less than 8% in cruise power. Motor choice does not change cruise efficiency materially.
-- Level top speed at full throttle is about 25 m/s for the U5 and about 29 m/s for the KDE.
+- The MN3110 and KDE differ by less than 8% in cruise power (both on the same, MN3110-derived calibration). The U5's measured cruise power is about 20 to 25% lower than the MN3110's calibrated figure, but the two used different propeller calibrations (section 2), so this comparison is weaker than the within-calibration one and should not be read as the U5 being a more efficient motor.
+- Level top speed at full throttle (an unconstrained-current figure, well beyond any rating - see the limitations) is about 26 m/s for the U5 and about 29 m/s for the KDE.
 
-## 2. Sensitivity
+## 2. Motor-Specific Calibration (U5 KV400)
+
+The U5 was bench tested with the 12x6E on 2026-09-30 (`docs/engineering/test-reports/2026-09-30-u5-kv400-thrust-stand-characterisation.md`), giving a direct calibration in place of the generic one used for the other candidates. Fitted the same way as the MN3110 (section 5): thrust factor 0.98, power factor 1.01 (against 0.99 and 1.22 for the MN3110's own 12x6E run), bus current within 2.8% rms, rotor speed within about 1 to 4% of the value implied by thrust. The figures in this document and in section 1 use this calibration for the U5 and the MN3110's calibration for every other candidate, applied through `powertrain_model.py`'s per-motor scale override.
+
+The power factor's difference between the two motors' nominally identical 12x6E propellers (1.01 against 1.22) most likely reflects unit-to-unit variation in the propeller (probably a Gemfan copy of the APC pattern - section 5 and `context/open-items.md`), rather than a property of the propeller model, though it could also reflect error in the assumed motor parameters. It means the two motors' predictions do not share a common propeller error and should not be compared as if they used the same propeller unit.
+
+A consequence of the measured, lower current: at every speed checked, the U5's full-throttle winding current stays below its 30 A rating (53% static, falling further with airspeed), so its usable thrust in flight is capped by its speed limit rather than by current, unlike the MN3110, which is current-limited throughout. The 12x6E gives more thrust for the same current with the U5 than with the MN3110 at every point measured, consistent with the U5's lower KV giving more torque per amp.
+
+## 3. Sensitivity
 
 The U5 is the most sensitive to pack voltage and effective KV because it is speed-limited. Static thrust is per motor at full throttle; thrust-to-weight uses the 3.95 kg maiden mass and the 4.14 kg design mass. Thrust at 10 m/s (an approximate hand-launch speed, just above the stall speed), 15 m/s and 20 m/s is the total for two motors, with the thrust-to-weight at 10 m/s at 3.95 kg in brackets.
 
@@ -60,13 +68,13 @@ The U5 is the most sensitive to pack voltage and effective KV because it is spee
 | Worst: 22.2 V and factor 0.9 | 1.39 kgf | 0.70 / 0.67 | 2.07 kgf (0.53) | 1.54 kgf | 0.97 kgf (1.4 times) |
 | Published tables, no stand calibration (optimistic) | 1.91 kgf | 0.97 / 0.92 | 3.12 kgf (0.79) | 2.55 kgf | 1.92 kgf (2.8 times) |
 
-The full table for all five motors is in `results/sensitivity-summary.csv` (`docs/engineering/analysis/powertrain-model/results/`).
+The sensitivity table below predates the 2026-09-30 U5 calibration and uses the generic (MN3110-derived) factors for the U5 as a sensitivity bound around the measured result in section 2, not as the current best estimate. The full table for all five motors is in `results/sensitivity-summary.csv` (`docs/engineering/analysis/powertrain-model/results/`).
 
-## 3. Method
+## 4. Method
 
 Each motor, ESC, battery and propeller is solved in steady state at a given airspeed and throttle (ESC duty). Speed is found where the motor's shaft torque equals the propeller's torque.
 
-- **Propeller:** APC PER3 tables for the 12x6E, thrust `T = CT x Ct(J, rpm) x rho x n^2 x D^4` and shaft power `P = CP x Cp(J, rpm) x rho x n^3 x D^5`, with `J = V / (n x D)`; torque is `P / (2 x pi x n)`. `CT` = 0.99 and `CP` = 1.22 are calibrated on the stand data (section 4). Air density 1.19 kg/m3.
+- **Propeller:** APC PER3 tables for the 12x6E, thrust `T = CT x Ct(J, rpm) x rho x n^2 x D^4` and shaft power `P = CP x Cp(J, rpm) x rho x n^3 x D^5`, with `J = V / (n x D)`; torque is `P / (2 x pi x n)`. `CT` = 0.99 and `CP` = 1.22 are calibrated on the stand data (section 5). Air density 1.19 kg/m3.
 - **Motor:** back-EMF `E = rpm / (KV x f)`; winding current `I = (Vm - E) / Reff`; torque `(I - I0) x 9.549 / (KV x f)`. `Reff = 1.15 x R + b`, where the 1.15 covers copper heating and `b` = 0.06 ohm is the extra series resistance of the ESC, wiring and connectors.
 - **ESC:** buck converter, `Vm = duty x Vbat`, `I_bus = duty x I / 0.98`. Winding current equals the current through the ESC's power stage.
 - **Battery:** `Vbat = Voc - Rpack x total bus current`, with `Rpack` = 21 mOhm (measured for the custom 6S4P pack).
@@ -83,7 +91,7 @@ Each motor, ESC, battery and propeller is solved in steady state at a given airs
 
 The MN3110 values are from its datasheet. The others are from manufacturer and reseller listings and are unverified.
 
-## 4. Calibration and validation
+## 5. Calibration and validation
 
 The stand propeller is marked 12x6E and was purchased as a Gemfan nylon propeller in the APC pattern; the tables used are APC's for its 12x6E. The model was calibrated on the RCbenchmark stand data for the installed MN3110 with that propeller, using the bins of ESC command from 1560 to 1640 us, where the stand's rotor-speed channel (`Motor Electrical Speed (RPM)`) reads correctly. That channel reads spurious values below about 1500 us and the optical channel is zero in every file.
 
@@ -94,7 +102,7 @@ The stand propeller is marked 12x6E and was purchased as a Gemfan nylon propelle
 
 The power factor is a static calibration. It is applied at all airspeeds, which is conservative for flight if the published tables' shortfall is largest at static conditions; the unscaled tables give the optimistic bound and are shown in the summary and sensitivity tables.
 
-## 5. Limitations
+## 6. Limitations
 
 - **Static calibration only.** Thrust and current in flight rest on APC's published (theoretical) tables with the static power factor applied at all airspeeds. Expect an uncertainty of about 10 to 15% on in-flight thrust, and the range between the calibrated and unscaled results on power.
 - **Few calibration points.** Five stand bins have a valid rotor-speed reading.
@@ -102,11 +110,11 @@ The power factor is a static calibration. It is applied at all airspeeds, which 
 - **Calibrated range.** The model is calibrated to about 29 A winding current for the MN3110. Its full-throttle output for that motor (about 51 A winding) is beyond that range and beyond the AIR 40A ESC's rating, and is not used. The aircraft's logs at 2000 us show about 32 A per motor with the Hobbyrama 11x7" propeller, against about 51 A predicted for the 12x6E at full duty. The propellers differ, so this is not a like-for-like check, but full-throttle predictions should be treated as unreliable.
 - **Throttle mapping.** Model throttle is the ESC's effective duty, not the PWM command. The mapping is unknown.
 - **Thermal state is not modelled.** Only currents are compared with ratings; the ratings are 180 s bench figures, and motor and ESC temperatures have not been measured.
-- **Motor specifications** for the U5, KDE, MN3510 and X2814 are unverified listing values, and their no-load currents are assumed.
+- **Motor specifications** for the KDE, MN3510 and X2814 are unverified listing values, and their no-load currents are assumed. The U5's thrust and power are now measured (2026-09-30), but its listed resistance and idle current are still assumed in translating that measurement to other airspeeds and pack voltages.
 - **Battery capacity** is nominal; the capacity test has not been completed.
 - **Not included:** payload power and drag (a Pi 4 and an O3 Air Unit together would add roughly 15 to 20 W), gusts, turns, and airspeed-dependent battery sag beyond the series resistance.
 
-## 6. Reproducing the results
+## 7. Reproducing the results
 
 Scripts are in `docs/engineering/analysis/powertrain-model/`:
 
@@ -117,6 +125,7 @@ Scripts are in `docs/engineering/analysis/powertrain-model/`:
 | `calibrate_12x6e.py` | The 12x6E thrust and power factors from the stand data |
 | `calibrate.py` | Propeller-variant comparison on thrust and current against the stand data |
 | `calibrate_rpm.py` | The same comparison including the stand's rotor-speed channel |
+| `calibrate_u5.py` | The U5-specific thrust and power factors and rotor-speed cross-check, from the 2026-09-30 stand data |
 | `performance_run.py` | Static, cruise, best-speed and full-throttle-curve tables for all motors (arguments: propeller file, pack open-circuit voltage, KV factor, thrust factor, power factor) |
 | `make_figures.py` | The figure above |
 | `build_summary.py` | The sensitivity summary |
