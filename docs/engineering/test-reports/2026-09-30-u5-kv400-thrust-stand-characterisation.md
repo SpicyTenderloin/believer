@@ -19,7 +19,7 @@ The U5 KV400 was run on the thrust stand with the 12x6E propeller across two run
 | Stand | RCbenchmark Series 1520 |
 | Motor | T-Motor U5 KV400 |
 | Propeller | 12x6E (as marked; see `docs/engineering/analysis/powertrain-performance-model.md` on its likely Gemfan-copy origin) |
-| ESC on the stand | Not recorded |
+| ESC on the stand | The right-hand MN3110's AIR 40A ESC (not the ESC from the failed left drive) |
 | Supply | Not recorded (battery or bench supply); resting voltage 23.7 to 24.5 V, sagging to 23.0 to 23.7 V under load |
 | Method | ESC command swept from 1000 us to 2000 us and back down, with brief holds (about 10 to 25 s) at intermediate levels. Not a sustained hold at any one level |
 | Logged | Thrust, voltage, current, electrical power, motor electrical speed (rotor speed - see below), optical speed (zero throughout, as with the earlier MN3110 runs) |
@@ -29,6 +29,15 @@ The U5 KV400 was run on the thrust stand with the 12x6E propeller across two run
 |---|---|---|---|---|
 | `Log_2026-09-30_104335` | 287 s | 24.46 | 23.7 | 25 s |
 | `Log_2026-09-30_105239` | 209 s | 23.69 | 23.0 | 15 s |
+| `Log_2026-09-30_112128` | 275 s | (not separately logged) | (not separately logged) | (not separately isolated) |
+| `Log_2026-09-30_112918` | 6 s | - | - | Aborted/very short run, excluded from the analysis |
+| `Log_2026-09-30_112954` (extended) | 641 s | 24.57 | 23.64 (mean, full-throttle samples) | 2 s (16.6 s at or above 1960 us) |
+
+## Extended Run
+
+A fourth, longer run (`Log_2026-09-30_112954`, 641 s) swept the ESC command slowly from 1000 to 2000 us and back down (about 5.5 us/s each way), rather than the faster sweeps and holds of the first two runs. It gives about 490 samples at or near full throttle and confirms the earlier calibration with more data: 1.92 kgf at 14.6 A at full throttle, thrust factor 0.98 and power factor 1.01 essentially unchanged when the four runs are combined (rms current error 3.2% across 12 bins). No anomalies, drift, or asymmetry between the up and down sweep were observed. It does not constitute the sustained, fixed-throttle 180 s hold PROP-11 asks for (see Outstanding).
+
+**Condition and heat, informal:** Julian reports the U5 units appear in good condition, and were indistinguishable from room temperature to the touch after these tests, including the full-throttle exposure. This is a qualitative, hand-touch observation, not a logged measurement, and does not by itself satisfy PROP-11's temperature-logging criterion.
 
 ## Findings
 
@@ -78,8 +87,9 @@ Cruise power at 24.0 V: about 113 W at 13 m/s, 132 W at 15 m/s, 222 W at 20 m/s,
 
 ## Outstanding
 
-- Run a sustained test at a chosen throttle ceiling for at least 180 s with motor and ESC temperature logged (PROP-11 acceptance criterion).
-- Check the U5 units' condition (insulation to the case, winding-resistance balance, hand spin) before flight - not yet done.
+- Run a sustained test at a chosen throttle ceiling for at least 180 s with motor and ESC temperature logged (PROP-11 acceptance criterion). Julian plans this once a thermal camera is available.
+- Test the suspect (failed left drive's) ESC directly - Julian plans this next. All U5 data so far used the right-hand MN3110's ESC, which is not known to be faulty, so it says nothing about the left ESC's condition.
+- Check the U5 units' condition formally (insulation to the case, winding-resistance balance) - the hand-spin and visual check and the informal heat check are done and reported good, but not yet the electrical checks.
 - Confirm the propeller's brand (APC or a copy) if possible, to sharpen the calibration (`context/open-items.md`).
 - Weigh the U5 pair as fitted, with leads, against the installed MN3110 pair.
 - Carry this calibration into a restrained in-aircraft test once the motors are installed.
