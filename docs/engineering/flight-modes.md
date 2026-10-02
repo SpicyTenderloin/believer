@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.14 |
+| **Revision** | 1.16 |
 | **Date** | 2026-10-02 |
 | **Status** | Draft |
 
@@ -63,7 +63,7 @@ These three parameters scale stick-to-actuator commands **specifically in full M
 
 **Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault. An informal bench comparison narrowed it to Acro mode specifically - consistent with the hypothesis that its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate (integral windup), driving a surface to its endpoint well before the stick reaches full travel - but this has not yet been confirmed via CTL-08's formal, logged Manual-mode test. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
 
-Used during ground functional checks (`docs/operations/manual.md` step 31-32) and as the emergency direct-control fallback. Not used for launch.
+Used during ground functional checks (`docs/operations/manual.md` step 32-33) and as the emergency direct-control fallback. Not used for launch.
 
 ### 4.2 Acro
 
@@ -126,8 +126,8 @@ Automatic mode - RC stick input is ignored. The aircraft loiters in a circle aro
 
 | Parameter | Value | Purpose |
 |---|---|---|
-| `NAV_LOITER_RAD` | 80 m | Loiter circle radius. **To be changed to 50 m - NAV-08, not yet applied** |
-| `NAV_MIN_LTR_ALT` | -1 (disabled) | Minimum loiter altitude (above the home position, not AMSL/AGL - confirmed against PX4's parameter description); no minimum currently enforced. **To be changed to 40 m provisional - NAV-08, not yet applied; pending a site survey confirming no obstacle in the flight test area exceeds this height** |
+| `NAV_LOITER_RAD` | 50 m | Loiter circle radius. Tightened from 80 m, NAV-08, 2026-10-02 - checked against bank-angle/stall-margin limits (see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`) |
+| `NAV_MIN_LTR_ALT` | 40 m (provisional) | Minimum loiter altitude, above the home position, not AMSL/AGL (confirmed against PX4's parameter description). Changed from -1 (disabled), NAV-08, 2026-10-02 - requires a pre-flight site survey confirming no obstacle in the flight test area exceeds this height (`docs/operations/manual.md` step 5) |
 
 On the Believer, "Hold" and "Loiter" refer to the same mode - see `docs/operations/manual.md` Section 3 for the naming note. No longer in the GR1 group as of 2026-08-19 (freed for Acro, Section 4.2); reachable directly via CH8 (which overrides GR1). Used as an emergency safe-hold and as the RC-loss failsafe action for a lost data link (Section 6).
 
@@ -137,22 +137,22 @@ Automatic mode - executes a pre-uploaded flight plan waypoint-by-waypoint. Requi
 
 | Parameter | Value | Purpose |
 |---|---|---|
-| `MIS_TKO_LAND_REQ` | 2 | Requires the mission to define a takeoff/landing sequence before it can be flown - see [PX4: Mission Mode](https://docs.px4.io/main/en/flight_modes_fw/mission.html) for the exact requirement this enforces |
-| `NAV_LOITER_RAD` | 80 m | Loiter radius used at mission completion or a loiter waypoint (shared with Hold). **To be changed to 50 m - NAV-08, not yet applied** |
+| `MIS_TKO_LAND_REQ` | 2 | Requires the mission to contain a landing pattern (PX4's fixed-wing default) - see [PX4: Mission Mode](https://docs.px4.io/main/en/flight_modes_fw/mission.html). The maiden mission (below) has no landing pattern; `RTL_TYPE` was changed to 0 (Section 4.8) specifically so this requirement isn't enforced against it |
+| `NAV_LOITER_RAD` | 50 m | Loiter radius used at mission completion or a loiter waypoint (shared with Hold). Tightened from 80 m, NAV-08, 2026-10-02 |
 
-Reachable via GR1 SW6. Per `docs/operations/manual.md`, reserved for future autonomous missions only - not used for the current hand-launched test flights. Automatic takeoff and landing are tracked as future capability work in `docs/project/project-roadmap.md`, consistent with `RTL_LAND_DELAY` below currently disabling auto-land.
+Reachable via GR1 SW6. A maiden-flight test mission is uploaded (`docs/operations/Pixhawk Mission Backup/maiden-mission.plan`, added 2026-10-02): one takeoff item followed by 31 waypoints, all at 40 m relative altitude, forming a closed pattern entirely inside the uploaded polygon geofence (Section 6). If engaged while already airborne (the only way this mission will be flown - see `docs/operations/manual.md`), PX4 treats the takeoff item as a normal waypoint rather than attempting an autonomous takeoff. The mission has no landing item, RTL item, or loiter-unlimited item - on completing the last waypoint, the aircraft automatically enters Hold behaviour at that position and altitude (`NAV_LOITER_RAD`, above), and remains there until the pilot switches modes. Automatic takeoff and landing more generally are tracked as future capability work in `docs/project/project-roadmap.md`, consistent with `RTL_LAND_DELAY` below currently disabling auto-land.
 
 ### 4.8 Return
 
-Automatic mode - pilot input is ignored. The aircraft climbs to a safe altitude, transits to the nearest safe destination (home position, since no rally points or mission landing pattern are currently defined), and then either loiters or lands depending on configuration.
+Automatic mode - pilot input is ignored. The aircraft climbs to a safe altitude, transits directly to the home position (no rally points are defined, and `RTL_TYPE` no longer considers a mission landing pattern - see below), and then either loiters or lands depending on configuration.
 
 | Parameter | Value | Purpose |
 |---|---|---|
 | `RTL_RETURN_ALT` | 100 m | Altitude held during the return transit |
 | `RTL_DESCEND_ALT` | 100 m | Altitude at which the aircraft transitions from transit to loiter/landing behaviour |
-| `RTL_LOITER_RAD` | 80 m | Loiter radius at the return destination. **To be changed to 50 m - NAV-08, not yet applied** |
+| `RTL_LOITER_RAD` | 50 m | Loiter radius at the return destination. Tightened from 80 m, NAV-08, 2026-10-02 |
 | `RTL_LAND_DELAY` | -1 | Aircraft loiters indefinitely at the destination rather than landing automatically (auto-land is not yet configured - see `docs/project/project-roadmap.md`) |
-| `RTL_TYPE` | 1 | Destination/landing-pattern priority logic - see [PX4: Return Mode](https://docs.px4.io/main/en/flight_modes_fw/return.html) |
+| `RTL_TYPE` | 0 | Direct to home or the closest rally point, never a mission landing pattern - see [PX4: Return Mode](https://docs.px4.io/main/en/flight_modes_fw/return.html). Changed from 1 (Mission landing/rally point return), 2026-10-02, because the maiden mission has no landing pattern - `RTL_TYPE` = 1 would likely have caused PX4 to reject it ("landing pattern required"). Behaviourally equivalent to 1 for this mission/field (no rally points or landing pattern exist either way, so 1 would have fallen back to home anyway) |
 
 `RTL_RETURN_ALT` and `RTL_DESCEND_ALT` are both set to 100m, comfortably inside the 120m AGL geofence ceiling (`GF_MAX_VER_DIST`, see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). Reachable via CH10 (overrides GR1), and is also the aircraft's configured RC-loss failsafe action (Section 6).
 
@@ -169,13 +169,13 @@ Automatic mode - the aircraft obeys position, velocity, attitude, or actuator se
 
 ## 5. Failsafe Interactions
 
-Two failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches, and a third (low battery) is configured to warn only:
+Three failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches, all now configured to take automatic action (changed 2026-10-02, PWR-04/RF-06):
 
 | Failsafe | Parameter | Value | Action |
 |---|---|---|---|
 | RC (control) link loss | `NAV_RCL_ACT` | 2 | Return |
-| Data link (telemetry/GCS) loss | `NAV_DLL_ACT` | 0 | Disabled - no automatic mode change from a lost GCS link alone. **To be changed to 2 (Return), matching RC loss - RF-06, not yet applied** |
-| Low battery | `COM_LOW_BAT_ACT` | 0 | Warning only - no automatic mode change at the `BAT_LOW_THR`/`BAT_CRIT_THR`/`BAT_EMERGEN_THR` thresholds |
+| Data link (telemetry/GCS) loss | `NAV_DLL_ACT` | 2 | Return - changed from 0 (Disabled, PX4's default), RF-06, so losing the GCS link alone also returns the aircraft home and holds, matching RC loss |
+| Low battery | `COM_LOW_BAT_ACT` | 3 | Return at critical level (`BAT_CRIT_THR`), Land at emergency level (`BAT_EMERGEN_THR`) - changed from 0 (Warning only, PX4's default), PWR-04 |
 
 See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) for the full failsafe action enum. Battery failsafe thresholds (`BAT_LOW_THR`, `BAT_CRIT_THR`) and geofence breach action (`GF_ACTION`) are documented in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
 
@@ -203,3 +203,5 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.12 | 2026-10-02 | Updated the Section 4.1 cross-reference again (26-27 to 29-30), following a further pre-flight checklist expansion (pilot briefing, callout agreement, and radio/QGroundControl volume check steps) |
 | 1.13 | 2026-10-02 | Flagged `NAV_LOITER_RAD` (Sections 4.6, 4.7), `RTL_LOITER_RAD` (Section 4.8), and `NAV_MIN_LTR_ALT` (Section 4.6) as pending changes to 50 m, 50 m, and 40 m respectively - tracked as NAV-08, not yet applied. Clarified `NAV_MIN_LTR_ALT` is measured above the home position, confirmed against PX4's own parameter description |
 | 1.14 | 2026-10-02 | Updated the Section 4.1 cross-reference again (29-30 to 31-32), following a further pre-flight checklist expansion (site-survey and loiter-parameter confirmation steps, NAV-08) |
+| 1.15 | 2026-10-02 | Confirmed via a direct QGroundControl parameter export that RF-06, PWR-04, and NAV-08 are all applied - removed "pending" language from Sections 4.6-4.8 and 5, updated values (`NAV_DLL_ACT`=2, `COM_LOW_BAT_ACT`=3, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`=50m, `NAV_MIN_LTR_ALT`=40m). Documented `RTL_TYPE`'s change from 1 to 0 (Section 4.8) and the maiden mission upload (Section 4.7, `docs/operations/Pixhawk Mission Backup/maiden-mission.plan`) - a 32-item waypoint pattern with no landing item, which is why `RTL_TYPE`=1 was replaced |
+| 1.16 | 2026-10-02 | Updated the Section 4.1 cross-reference again (31-32 to 32-33), following a further pre-flight checklist expansion (battery-chemistry parameter check) |

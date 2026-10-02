@@ -100,51 +100,52 @@ Intended safe startup condition, to be verified before every flight:
 20. Confirm the GX12 transmitter's audio volume and QGroundControl's audio alert volume are both turned up and audible.
 21. Perform any flight computer calibration steps required.
 22. Update `SENS_BARO_QNH` to the current ambient barometric pressure reading.
-23. Confirm QGroundControl reports no warnings, and that the `COM_DISARM_LAND` parameter reads -1 (auto-disarm on landing is disabled for the maiden flight - see step 50).
+23. Confirm QGroundControl reports no warnings, and that the `COM_DISARM_LAND` parameter reads -1 (auto-disarm on landing is disabled for the maiden flight - see step 51).
 24. Confirm `COM_LOW_BAT_ACT` reads 3 (Return at critical battery, Land at emergency battery).
-25. Confirm sufficient battery capacity remains for the planned flight.
-26. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
-27. Confirm `NAV_RCL_ACT` reads 2 and `NAV_DLL_ACT` reads 2 (RC loss and data-link loss both trigger Return), and that `RTL_TYPE` reads 1 and `RTL_LAND_DELAY` reads -1 (Return goes to the home position confirmed in the previous step and holds there rather than landing automatically).
-28. Confirm `NAV_LOITER_RAD` and `RTL_LOITER_RAD` both read 50 m, and that `NAV_MIN_LTR_ALT` reads 40 m (see NAV-08 and step 5).
-29. Confirm the geofence is loaded and active in QGroundControl: `GF_ACTION` reads 3 (Return), `GF_MAX_VER_DIST` reads 120 m, and `GF_MAX_HOR_DIST` is set to a radius appropriate for the current flight site rather than 0 (disabled) - see NAV-07.
-30. Confirm RC link signal quality (RSSI) is good in QGroundControl before proceeding.
+25. Confirm the battery parameters match the battery chemistry actually installed (currently the custom 6S4P Li-ion pack: `BAT1_V_EMPTY` = 3.2 V/cell, `BAT1_V_CHARGED` = 4.05 V/cell, `BAT1_N_CELLS` = 6). If a different pack (e.g. a LiPo) is ever fitted instead, these must be updated to match its chemistry - otherwise PX4 estimates remaining charge against the wrong discharge curve and can silently report far more charge than actually remains.
+26. Confirm sufficient battery capacity remains for the planned flight.
+27. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
+28. Confirm `NAV_RCL_ACT` reads 2 and `NAV_DLL_ACT` reads 2 (RC loss and data-link loss both trigger Return), and that `RTL_TYPE` reads 0 and `RTL_LAND_DELAY` reads -1 (Return goes directly to the home position confirmed in the previous step and holds there rather than landing automatically).
+29. Confirm `NAV_LOITER_RAD` and `RTL_LOITER_RAD` both read 50 m, and that `NAV_MIN_LTR_ALT` reads 40 m (see NAV-08 and step 5).
+30. Confirm the geofence is loaded and active in QGroundControl: `GF_ACTION` reads 3 (Return), `GF_MAX_VER_DIST` reads 120 m, and the polygon fence matching the current flight site's actual boundary is shown active on the map (`GF_MAX_HOR_DIST` intentionally stays 0/disabled - horizontal containment is provided by the polygon instead, not a numeric radius).
+31. Confirm RC link signal quality (RSSI) is good in QGroundControl before proceeding.
 
 ### Ground functional checks (propellers removed)
 
-31. With propellers removed, arm the vehicle in Manual mode.
-32. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs in **Manual mode**: verify correct direction of movement, and that each surface reaches its intended safe travel limit at or near full stick, without binding.
-33. Switch to Stabilized mode and confirm all flight control surfaces move in the correct direction in response to changes in aircraft attitude. Full, independent surface travel is not expected here; V-tail surfaces may show safe saturation under large combined pitch+yaw attitude changes without indicating a fault.
-34. Confirm the motors rotate in the correct direction.
-35. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](../assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](../assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](../assets/flight-modes-config.png)).
-36. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
-37. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
-38. Disarm the vehicle before proceeding.
+32. With propellers removed, arm the vehicle in Manual mode.
+33. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs in **Manual mode**: verify correct direction of movement, and that each surface reaches its intended safe travel limit at or near full stick, without binding.
+34. Switch to Stabilized mode and confirm all flight control surfaces move in the correct direction in response to changes in aircraft attitude. Full, independent surface travel is not expected here; V-tail surfaces may show safe saturation under large combined pitch+yaw attitude changes without indicating a fault.
+35. Confirm the motors rotate in the correct direction.
+36. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](../assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](../assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](../assets/flight-modes-config.png)).
+37. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
+38. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
+39. Disarm the vehicle before proceeding.
 
 ### Pre-launch
 
-39. Install and torque the propellers.
-40. Confirm propeller retention nuts are correctly torqued on both motors.
-41. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
+40. Install and torque the propellers.
+41. Confirm propeller retention nuts are correctly torqued on both motors.
+42. Confirm GPS has acquired a 3D fix with an appropriate number of satellites and HDOP before arming for flight.
 
 ### Assisted hand launch
 
 Two people are required: a **pilot** operating the GX12 and a **handler** who holds and throws the aircraft. The handler must not approach the aircraft until the pilot signals ready.
 
-42. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
-43. Pilot: select the launch mode specified in the current flight test plan (normally Stabilized, GR1 SW3 - see Section 3), calling out the mode change, and confirm throttle is at minimum.
-44. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
-45. Pilot: arm the aircraft (CH5), calling out "armed" once confirmed in QGroundControl, and advance throttle to approximately 75-100%.
-46. Pilot: call "launch" (or pre-agreed signal).
-47. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
-48. Pilot: hold the launch mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
-49. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
+43. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
+44. Pilot: select the launch mode specified in the current flight test plan (normally Stabilized, GR1 SW3 - see Section 3), calling out the mode change, and confirm throttle is at minimum.
+45. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
+46. Pilot: arm the aircraft (CH5), calling out "armed" once confirmed in QGroundControl, and advance throttle to approximately 75-100%.
+47. Pilot: call "launch" (or pre-agreed signal).
+48. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
+49. Pilot: hold the launch mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
+50. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
 
 ### Landing and shutdown
 
 `COM_DISARM_LAND` is -1 for the maiden flight, so the aircraft does not disarm itself after landing and remains armed until it is disarmed manually.
 
-50. Pilot: once the aircraft has landed and stopped, set throttle to minimum and disarm with the arm switch (CH5). Confirm QGroundControl shows Disarmed and call out "disarmed". If the motors start or a propeller turns unexpectedly, use the emergency kill switch (CH7).
-51. Handler: do not approach the aircraft until the pilot confirms it is disarmed. Keep clear of both propeller arcs.
-52. Disconnect the flight battery.
+51. Pilot: once the aircraft has landed and stopped, set throttle to minimum and disarm with the arm switch (CH5). Confirm QGroundControl shows Disarmed and call out "disarmed". If the motors start or a propeller turns unexpectedly, use the emergency kill switch (CH7).
+52. Handler: do not approach the aircraft until the pilot confirms it is disarmed. Keep clear of both propeller arcs.
+53. Disconnect the flight battery.
 
 See also [build-checklist.md](../project/build-checklist.md) for the build, retention, and configuration checklist.

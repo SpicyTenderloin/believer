@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embedded parameter set in flight log `04_09_42.ulg`, `G:\log\2026-10-02` - not a direct QGroundControl file export, but the same underlying vehicle parameter dump), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
+Values reflect `believer-parameters.params` (refreshed 2026-10-02, this time from a direct QGroundControl parameter export Julian provided, superseding the same-day `04_09_42.ulg`-derived refresh above it in history), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
 
 ---
 
@@ -26,16 +26,28 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embed
 | `SENS_EN_INA228` | 1 (Enabled) | Enables the INA228 driver for battery voltage and current telemetry via the Holybro PM03D. |
 | `BAT1_N_CELLS` | 6 | Fitted battery is a 6S pack: a custom 6S4P Li-ion pack (24 NCR20700A cells) from 2026-09-26, previously a Turnigy 6S LiPo. `BAT1_CAPACITY` (-1) is still at the LiPo-style default and has not been reviewed for the Li-ion pack - set it from the measured capacity once a capacity test completes, not from the cell datasheet, as cell authenticity is unverified; `BAT1_V_CHARGED` (4.05V/cell) is the PX4 default and also its recommended Li-ion value, confirmed intentionally left unchanged 2026-09-26 after an earlier proposal to raise it was withdrawn. |
 | `BAT1_V_EMPTY` | 3.2 (V/cell) | Changed from the LiPo-style default (3.6V/cell) on 2026-09-26 for the Li-ion pack. PX4's docs give 3.0V (conservative, no load) and 2.7V (under load) as generic Li-ion values; about 3.3V was proposed, deliberately higher given the pack has no BMS and cell group 2 is a resistance outlier, but 3.2V is the value actually applied. |
-| `BAT_CRIT_THR` | 0.100 (10%) | Critical battery threshold. PX4 default (7%) was raised to reduce risk of in-flight power loss. Only raises a warning while `COM_LOW_BAT_ACT` is 0. |
+| `BAT_CRIT_THR` | 0.100 (10%) | Critical battery threshold. PX4 default (7%) was raised to reduce risk of in-flight power loss. Now triggers Return via `COM_LOW_BAT_ACT` (below), not just a warning. |
 | `BAT_LOW_THR` | 0.200 (20%) | Low battery warning threshold. PX4 default (15%) was raised to give more margin. Briefly lowered to 12% on 2026-08-19 to silence the warning during bench testing on a partially depleted pack; reset to 20% - the archived backup reflects the intended 20% value. |
-| `COM_LOW_BAT_ACT` | 0 (Warning) | Action taken at the low/critical/emergency battery thresholds. PX4 default: warnings only, no automatic mode change. |
+| `COM_LOW_BAT_ACT` | 3 (Return/Land) | Action taken at the low/critical/emergency battery thresholds. Changed 2026-10-02 (PWR-04) from 0 (Warning, PX4's default) to 3 (Return at critical, Land at emergency) - PX4's own documented recommended setting, and more important given the custom Li-ion pack has no BMS. Confirmed applied via a direct QGroundControl parameter export. `COM_ARM_BAT_MIN` remains -1 (no arm-time minimum charge check) - deliberately deferred until the capacity test completes and `BAT1_CAPACITY` can be set from measured data, since a percentage-based minimum is not meaningful against an unset capacity. |
 
 ## Safety / Arming
 
 | Parameter | Value | Notes |
 |---|---|---|
 | `COM_PREARM_MODE` | 2 (Always) | Set 2026-08-19 to allow actuating flight control surfaces while disarmed (e.g. from the Actuators page). |
-| `COM_DISARM_LAND` | -1 (Disabled) | Auto-disarm on landing detection, disabled. A false landing-detector trigger was seen during bench full-throttle testing (2026-09-02) with the aircraft held still at high throttle - a state that resembles the pre-throw phase of the assisted hand launch. Julian decided, 2026-09-26, to keep this at -1 through the maiden flight rather than restore the PX4 default, with a manual disarm (CH5) after landing - see `docs/operations/manual.md` steps 23 and 50-52. To be revisited after the maiden flight. |
+| `COM_DISARM_LAND` | -1 (Disabled) | Auto-disarm on landing detection, disabled. A false landing-detector trigger was seen during bench full-throttle testing (2026-09-02) with the aircraft held still at high throttle - a state that resembles the pre-throw phase of the assisted hand launch. Julian decided, 2026-09-26, to keep this at -1 through the maiden flight rather than restore the PX4 default, with a manual disarm (CH5) after landing - see `docs/operations/manual.md` steps 23 and 51-53. To be revisited after the maiden flight. |
+
+## RC/Data-Link Loss, Return, and Loiter
+
+| Parameter | Value | Notes |
+|---|---|---|
+| `NAV_RCL_ACT` | 2 (Return) | RC-loss failsafe action. Already PX4's documented recommended setting; unchanged this session. |
+| `NAV_DLL_ACT` | 2 (Return) | Data-link-loss (lost GCS telemetry) failsafe action. Changed 2026-10-02 (RF-06) from 0 (Disabled, PX4's default) to 2 (Return), matching `NAV_RCL_ACT` - Julian decided both RC loss and data-link loss should return the aircraft home and hold, not just RC loss. Confirmed applied via a direct QGroundControl parameter export. |
+| `RTL_TYPE` | 0 (Home/rally point return) | Changed 2026-10-02 from 1 (Mission landing/rally point return) to 0. With the maiden mission uploaded (`docs/operations/Pixhawk Mission Backup/maiden-mission.plan`) containing no landing pattern or rally points, `RTL_TYPE` = 1 would likely cause PX4 to reject the mission ("Mission rejected: landing pattern required" - the mission-feasibility check only requires a landing pattern to exist when Return mode might need to use one). `RTL_TYPE` = 0 never relies on a mission landing pattern, resolving that. Behaviourally unchanged for this mission/field either way - with no rally points or mission landing pattern defined, `RTL_TYPE` = 1 would have fallen back to home anyway (per PX4's own documented fallback logic); `RTL_TYPE` = 0 reaches the same destination more directly. Not yet confirmed via a test flight that the mission actually uploads/arms cleanly with this value. |
+| `RTL_LAND_DELAY` | -1 | Aircraft loiters indefinitely at the Return destination rather than landing automatically - auto-land is not yet configured for this airframe (hand-launch/hand-catch operations). Unchanged this session. |
+| `RTL_LOITER_RAD` | 50 (m) | Loiter radius at the Return destination (home). Changed 2026-10-02 (NAV-08) from 80 to 50 - checked against bank-angle/stall-margin limits first: at `FW_AIRSPD_TRIM` (20 m/s) this needs about 39 degrees of bank, within `FW_R_LIM` (50 degrees), with in-turn stall speed (~12.5 m/s) still well under `FW_AIRSPD_MIN` (15 m/s). Confirmed applied via a direct QGroundControl parameter export. |
+| `NAV_LOITER_RAD` | 50 (m) | Loiter radius for Hold/Position-Hold mode (and the default Mission loiter radius). Changed 2026-10-02 (NAV-08) alongside `RTL_LOITER_RAD`, same rationale. Confirmed applied. |
+| `NAV_MIN_LTR_ALT` | 40 (m, provisional) | Minimum altitude, above the home position (not AMSL or terrain-following AGL - confirmed against PX4's own source parameter description), before Hold mode is allowed to loiter when engaged without a specified altitude. Changed 2026-10-02 (NAV-08) from -1 (disabled, PX4's default) to 40 provisional. Confirmed applied via a direct QGroundControl parameter export; pending a site survey confirming no obstacle in the flight test area exceeds this height (`docs/operations/manual.md` step 5). |
 
 ## Sensors
 
@@ -138,12 +150,13 @@ Full roll/pitch/yaw torque and trim per surface documented in `docs/engineering/
 |---|---|---|
 | `GF_ACTION` | 3 (Return) | Geofence breach action. Return is preferred over Hold - Hold would leave the aircraft loitering outside the fence boundary indefinitely. |
 | `GF_MAX_VER_DIST` | 120 (m) | Maximum altitude above home. Set to the CASA standard operating limit of 120m AGL. |
+| `GF_MAX_HOR_DIST` | 0 (disabled) | Horizontal cylinder fence radius. Deliberately left at PX4's default (disabled) - Julian chose to rely on the polygon fence instead (uploaded with the maiden mission, `docs/operations/Pixhawk Mission Backup/maiden-mission.plan`), which can follow the BNEMAC Fitzgibbon field's actual boundary rather than an abstract circle. PX4 ANDs the cylinder check, the altitude check, and the polygon check together - leaving this at 0 does not weaken the polygon fence, it just means there is no separate circular constraint layered on top of it. Resolves NAV-07. |
 
 ---
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Julian recalibrated the compass and other sensors between the 2026-09-02 and 2026-10-02 exports (exact date and which sensors beyond the magnetometer not recorded). Values below are the current snapshot from the 2026-10-02 flight log.
+Set automatically by QGroundControl calibration procedures. Do not edit manually. Julian recalibrated the compass and other sensors between the 2026-09-02 and 2026-10-02 exports (exact date and which sensors beyond the magnetometer not recorded). Values below are from a direct QGroundControl export, 2026-10-02.
 
 Accelerometer, gyroscope and barometer offsets also drift slightly between sessions as PX4 refines its sensor bias estimate even without a deliberate recalibration, so not every change below is necessarily from Julian's recalibration specifically.
 
@@ -174,7 +187,7 @@ Accelerometer, gyroscope and barometer offsets also drift slightly between sessi
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 16.641 |
+| `CAL_BARO0_OFF` | 25.352 |
 
 ### Gyroscopes
 
@@ -186,9 +199,9 @@ Accelerometer, gyroscope and barometer offsets also drift slightly between sessi
 | `CAL_GYRO1_XOFF` | 0.001345 |
 | `CAL_GYRO1_YOFF` | -0.003667 |
 | `CAL_GYRO1_ZOFF` | -0.012162 |
-| `CAL_GYRO2_XOFF` | -0.000613 |
-| `CAL_GYRO2_YOFF` | -0.011437 |
-| `CAL_GYRO2_ZOFF` | -0.015591 |
+| `CAL_GYRO2_XOFF` | -0.003244 |
+| `CAL_GYRO2_YOFF` | -0.017986 |
+| `CAL_GYRO2_ZOFF` | -0.017745 |
 
 ### Magnetometers
 

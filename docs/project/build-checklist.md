@@ -195,28 +195,6 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 </details>
 
-### PWR-04 - Configure low-battery failsafe action
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Set `COM_LOW_BAT_ACT` from 0 (Warning only) to 3 (Return at critical level, Land at emergency level) - PX4's documented recommended setting - so the existing `BAT_LOW_THR`/`BAT_CRIT_THR`/`BAT_EMERGEN_THR` thresholds (20%/10%/5%) trigger an automatic response instead of a warning only.
-- Once a completed capacity test (see `context/open-items.md`, depends on PROP-11) allows `BAT1_CAPACITY` to be set from measured data, decide whether to also set `COM_ARM_BAT_MIN` (currently -1, no arm-time minimum charge check) - deferred until then, since a percentage-based minimum is not meaningful against an unset capacity.
-
-**Acceptance criteria**
-- `COM_LOW_BAT_ACT` = 3 applied and confirmed via a parameter export.
-- `COM_ARM_BAT_MIN` decision recorded (set, or explicitly deferred with reason) once capacity test data exists.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (all 1214 parameters from the then-current backup inspected by category). Already an open item (`context/open-items.md`) since the custom 6S4P Li-ion pack has no BMS, so nothing else protects it from over-discharge; this task formalises the fix as a tracked task rather than leaving it as an undecided note. `COM_ARM_BAT_MIN` was a new finding from this review, not previously tracked - it compounds the same gap (no automatic action on low charge, and no pre-arm minimum either) but fixing it usefully requires the capacity test's result first.
-
-</details>
-
 ---
 
 ## D. Flight Controls and PX4 Configuration
@@ -229,6 +207,7 @@ Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (al
 
 **Scope**
 - Tune roll, pitch, and yaw PID gains; verify stable and predictable flight characteristics during initial test flights.
+- Use PX4's fixed-wing auto-tune feature (`FW_AT_*` parameters, QGroundControl's PID Tuning page) as the primary tuning method, per Julian - see `docs/operations/maiden-flight-test-plan.md` for the planned procedure. Manual gain adjustment remains the fallback if auto-tune's result is unsatisfactory.
 - Gains must not be used to compensate for incorrect PWM limits, incorrect actuator types/directions, or premature Manual-mode saturation - those are CTL-06/CTL-08's responsibility, not a controller-tuning workaround.
 - Observe and record adverse-yaw behaviour on roll entry during these flights - this feeds CTL-07's evidence-based decision, though CTL-02 itself remains about closed-loop stability/response, not roll-to-yaw feedforward.
 
@@ -238,6 +217,8 @@ Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (al
 Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configuration review: tuning gains against an uncertain actuator baseline (unresolved effectiveness coefficients, unmeasured safe PWM endpoints, or unverified Manual-mode scaling) could produce misleading gains or conceal a configuration fault.
 
 The "initial test flights" referred to above are now sequenced in `docs/operations/maiden-flight-test-plan.md` (added 2026-10-02) - Flight 1 is airworthiness-only (no tuning-relevant data expected beyond basic controllability), with gain-tuning-relevant observations (including adverse yaw for CTL-07) gathered from Flight 2 onward.
+
+Auto-tune added to scope 2026-10-02, per Julian. PX4's fixed-wing auto-tune requires baseline stability first (a pre-tuning check: progressively larger roll then pitch doublets, settling within 2 oscillations at about 20 degrees) and runs in Hold mode at cruise airspeed, performing small automatic roll/pitch/yaw excursions over roughly 19-70 seconds; new gains apply immediately with a 4-second post-tune stability check and auto-revert if unstable. Can be started from QGroundControl's PID Tuning page or `FW_AT_START`; abort at any time by changing flight mode. No RC AUX switch is currently assigned for it (`FW_AT_MAN_AUX`) - not required, since a flight-mode change aborts it regardless.
 
 </details>
 
@@ -369,57 +350,6 @@ The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02),
 **Scope**
 - Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air; check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient.
 
-### NAV-07 - Configure horizontal geofence boundary
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Set `GF_MAX_HOR_DIST` (currently 0.0, PX4's default meaning no horizontal boundary is checked) to a radius chosen against the actual maiden flight field geometry, so a horizontal excursion also triggers `GF_ACTION` (currently 3, Return) - matching the 120 m vertical ceiling (`GF_MAX_VER_DIST`) that is already configured.
-- Optionally enable `GF_PREDICT` (predictive breach anticipation, currently 0/disabled) for additional margin.
-
-**Acceptance criteria**
-- A horizontal distance value applied, chosen against the maiden field's actual dimensions rather than an arbitrary number.
-- Geofence behaviour confirmed (QGC Fence display, or a bench/SITL check) to act as expected on a simulated breach.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (all 1214 parameters from the then-current backup inspected by category). `GF_MAX_HOR_DIST` = 0.0 is PX4's stock default, not a project misconfiguration, but it leaves the geofence vertical-only: a horizontal excursion currently has no automatic response. Several other suspicious-looking values checked during the same review (`CBRK_FLIGHTTERM` = 121212, `CBRK_IO_SAFETY` = 22027, `CBRK_USB_CHK` = 197848) were confirmed against PX4's documentation to be its documented "magic number" stock defaults, not errors - no action needed on those.
-
-The maiden flight test site is now known (BNEMAC field, Fitzgibbon, approximately 300 m radius - `docs/operations/maiden-flight-test-plan.md`), so a horizontal radius can now actually be chosen against real field geometry rather than left abstract.
-
-</details>
-
-### NAV-08 - Tighten loiter radii and set a minimum loiter altitude
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Set `NAV_LOITER_RAD` and `RTL_LOITER_RAD` from 80 m to 50 m, tightening the loiter circle used by Position Hold, Mission loiter, and the Return destination.
-- Set `NAV_MIN_LTR_ALT` from -1 (disabled) to 40 m provisional, so Position Hold climbs to at least 40 m above the home position before loitering if engaged lower - this parameter is measured above the home position, not AMSL or terrain-following AGL (confirmed against PX4's own parameter description).
-- Add a pre-flight site-survey step confirming no obstacle (tree, pole, structure) in the flight test area exceeds the `NAV_MIN_LTR_ALT` height - `docs/operations/manual.md`.
-
-**Acceptance criteria**
-- All three parameters applied and confirmed via a parameter export.
-- Site survey step added to `docs/operations/manual.md` and completed for the BNEMAC Fitzgibbon field before the first flight that uses Position Hold or Return.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised by Julian, 2026-10-02, during the maiden flight test plan drafting. The maiden flight test site is BNEMAC field, Fitzgibbon, approximately 300 m radius - both the current 80 m and the proposed 50 m loiter radius sit comfortably inside that, so the tightening is about flying a smaller, easier-to-observe circle rather than a containment concern (containment is `GF_MAX_HOR_DIST`, NAV-07, still separately open).
-
-Checked the bank-angle and stall-margin implications of 50 m before accepting it: PX4 fixed-wing Hold/Return loiter flies at `FW_AIRSPD_TRIM` (20 m/s). At 50 m radius this requires about 39 degrees of bank (R = V^2/(g*tan(bank))); the load factor at 39 degrees (1/cos(39 deg) = 1.29) raises the effective stall speed in the turn to about 12.5 m/s, still comfortably under `FW_AIRSPD_MIN` (15 m/s). The configured bank-angle ceiling `FW_R_LIM` is 50 degrees, so 39 degrees leaves margin. The current 80 m radius needs about 27 degrees of bank for comparison. 50 m is therefore a safe tightening, not just an arbitrary preference.
-
-`NAV_MIN_LTR_ALT`'s altitude reference was confirmed against PX4's own source parameter description (not just the user-guide prose, which doesn't state the datum): "Altitude above Home used when Hold mode is entered without an altitude" - i.e. relative to the home/launch point's recorded altitude, not raw AMSL and not strictly terrain-following AGL. For the BNEMAC field this distinction is not expected to matter in practice (a flat recreational field), but would matter on sloped terrain.
-
-</details>
-
 ---
 
 ## F. RC, Telemetry and RF
@@ -438,28 +368,6 @@ Checked the bank-angle and stall-margin implications of 50 m before accepting it
 <summary>Background and engineering notes</summary>
 
 Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separately. Does not block the maiden flight - the receiver has plenty of range without orthogonal mounting - but should be done soon for optimal reception. RTV securing added 2026-08-19 per Julian - standard practice for RF antenna leads/connectors on RC airframes.
-
-</details>
-
-### RF-06 - Set data-link-loss failsafe to Return
-
-- [ ] **Status:** Not started
-- **Priority:** CRITICAL
-- **Milestone:** Flight clearance
-- **Depends on:** None
-
-**Scope**
-- Set `NAV_DLL_ACT` from 0 (Disabled) to 2 (Return mode), matching `NAV_RCL_ACT` (already 2, Return) - so losing the GCS telemetry link also returns the aircraft to home and holds position there, not only losing RC.
-- No change needed on the RC-loss side: `NAV_RCL_ACT` = 2 combined with `RTL_LAND_DELAY` = -1 already makes RC loss return to home and loiter there indefinitely rather than auto-landing (confirmed against PX4's Return Mode documentation, and against `RTL_TYPE` = 1 resolving to the home position specifically, since no rally points or mission landing pattern are currently defined).
-
-**Acceptance criteria**
-- `NAV_DLL_ACT` = 2 applied and confirmed via a parameter export.
-- `docs/engineering/flight-modes.md` Section 5 (Failsafe Interactions) updated to match the confirmed live value.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised during the pre-maiden parameter review (2026-10-02), where `NAV_DLL_ACT` = 0 was flagged as needing explicit confirmation rather than a clear recommendation, given the aircraft's dual-link RC architecture (RC via the Radiomaster DBR4/ELRS on TELEM1, separate from GCS telemetry via the RFD900x on TELEM2). Julian confirmed the same day: both RC loss and data-link loss should return the aircraft to home and hold position, resolving the open question - only `NAV_DLL_ACT` needs to change, since `NAV_RCL_ACT` already achieves this for RC loss.
 
 </details>
 
@@ -520,14 +428,15 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 ### Flight controls and PX4 configuration
 - [x] Sensor calibration - accelerometer, gyroscope, and magnetometer calibration completed in QGroundControl
 - [x] RC and flight mode configuration - RC channel mapping, arm/kill switches (CH5/CH7), and GR1 flight mode selector (CH6) verified; all six GR1 positions confirmed against PX4 flight modes. GR1 remapped 2026-08-19 to add Acro and remove the redundant Hold position (CTL-01) - current mapping is Manual, Acro, Stabilized, Altitude, Position, Mission
-- [x] Failsafe configuration - RC loss, GCS loss, and battery low/critical thresholds configured and verified. **Note (2026-09-26):** `COM_LOW_BAT_ACT` is 0 (Warning), so the battery thresholds only raise warnings and take no automatic action - see `context/open-items.md`
-- [x] Geofence configuration - breach action set to Return (GF_ACTION = 3); altitude ceiling set to 120m AGL (GF_MAX_VER_DIST)
+- [x] Failsafe configuration - RC loss (`NAV_RCL_ACT` = 2, Return) and data-link loss (`NAV_DLL_ACT` = 2, Return - PWR-04/RF-06 closed 2026-10-02, previously 0/Disabled) both return the aircraft to home and hold there (`RTL_LAND_DELAY` = -1, no auto-land). `RTL_TYPE` changed 2026-10-02 from 1 to 0 (direct to home/rally point, never a mission landing pattern) - with the maiden mission uploaded and no landing pattern or rally points defined, `RTL_TYPE` = 1 would likely have caused PX4 to reject the mission ("landing pattern required"); `RTL_TYPE` = 0 reaches the same destination (home) just as directly, so Return behaviour is unaffected. Battery low/critical/emergency thresholds now trigger the same Return/Land response (`COM_LOW_BAT_ACT` = 3, PWR-04 closed 2026-10-02, previously 0/Warning-only) rather than a warning only - more important given the custom Li-ion pack has no BMS. `COM_ARM_BAT_MIN` remains -1 (no arm-time minimum), explicitly deferred until the capacity test completes and `BAT1_CAPACITY` can be set from measured data (`context/open-items.md`). All changes confirmed applied via a direct QGroundControl parameter export, 2026-10-02
+- [x] Geofence configuration - breach action set to Return (`GF_ACTION` = 3); altitude ceiling set to 120m AGL (`GF_MAX_VER_DIST`). Horizontal containment (NAV-07, closed 2026-10-02) is provided by a polygon fence matching the BNEMAC Fitzgibbon field's actual boundary (uploaded with the maiden mission, `docs/operations/Pixhawk Mission Backup/maiden-mission.plan`), deliberately in place of a numeric `GF_MAX_HOR_DIST` radius (left at 0/disabled, PX4's default) - Julian's choice, confirmed all 32 mission waypoints and the home position fall inside the polygon. PX4 ANDs the cylinder, altitude, and polygon checks together, so leaving `GF_MAX_HOR_DIST` at 0 does not weaken the polygon fence
 - [x] Actuate control surfaces while disarmed - COM_PREARM_MODE set to 2 (Always), 2026-08-19
 - [x] Clean-install procedure - maintained as an ongoing repository practice (parameter change log, CHANGELOG, dated parameter/radio backups) rather than a one-off task (CTL-05)
 - [x] Restore and verify control-surface actuator configuration - V-tail yaw effectiveness restored from ±0.85 to the PX4 type-default ±0.50; PWM min/max endpoints for MAIN 1/2/3/5 independently remeasured as actual safe mechanical limits, superseding the previous endpoint-based approximation of aileron differential; aileron trims rechecked and updated (0.05/-0.05); no software aileron differential in the baseline (CTL-06), 2026-09-02
 - [x] Update airspeed envelope parameters against measured data - `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` updated to 11/15/20/28 m/s, informed by Weishäupl et al. 2024's measured stall speed, cruise speed, and VNE for what is very likely the same commercial airframe (CTL-10), 2026-09-02
 
 ### Navigation and air-data sensors
+- [x] Loiter radii and minimum loiter altitude (NAV-08) - closed 2026-10-02. `NAV_LOITER_RAD`/`RTL_LOITER_RAD` tightened from 80 m to 50 m (checked against bank-angle/stall-margin limits: about 39 degrees of bank at `FW_AIRSPD_TRIM`, within `FW_R_LIM` = 50 degrees, in-turn stall speed about 12.5 m/s against `FW_AIRSPD_MIN` = 15 m/s); `NAV_MIN_LTR_ALT` set from -1 (disabled) to 40 m provisional, measured above the home position (confirmed against PX4's own source parameter description, not AMSL or terrain-following AGL). All three confirmed applied via a direct QGroundControl parameter export. The accompanying site-survey requirement (confirm no obstacle at the BNEMAC field exceeds 40 m) is now a permanent pre-flight checklist step (`docs/operations/manual.md` step 5), not a one-off deliverable
 - [x] Airspeed sensor calibration - MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port
 - [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port (now PX4 GPS driver instance 2, following the 2026-08-31/09-02 instance swap - see below). Produced no data at all as instance 2 from the swap through 2026-10-02 (NAV-06); root cause found and fixed 2026-10-02 - see NAV-06 in Completed Work below
 - [x] Pitot system installation - pitot tube installed and tubing routed (temporary mount - permanent mount tracked under NAV-01)
