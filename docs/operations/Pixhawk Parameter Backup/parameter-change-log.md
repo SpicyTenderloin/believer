@@ -143,9 +143,9 @@ Full roll/pitch/yaw torque and trim per surface documented in `docs/engineering/
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Last explicit calibration wizard run on record: 2026-09-02 (barometer and gyroscope refreshed; accelerometer and magnetometer unchanged from 2026-08-19 at that time). Values below are the current snapshot from the 2026-10-02 flight log.
+Set automatically by QGroundControl calibration procedures. Do not edit manually. Julian recalibrated the compass and other sensors between the 2026-09-02 and 2026-10-02 exports (exact date and which sensors beyond the magnetometer not recorded). Values below are the current snapshot from the 2026-10-02 flight log.
 
-Accelerometer and gyroscope offsets drift slightly between sessions as PX4 refines its sensor bias estimate and are not evidence of a new calibration wizard run. The magnetometer scale and off-diagonal (soft-iron) terms, by contrast, are only set by the compass calibration wizard - the values below differ enough from the 2026-09-02 figures that a recalibration most likely happened since then (not confirmed with Julian; possibly prompted by the motor swap changing the magnetic environment near the compass).
+Accelerometer, gyroscope and barometer offsets also drift slightly between sessions as PX4 refines its sensor bias estimate even without a deliberate recalibration, so not every change below is necessarily from Julian's recalibration specifically.
 
 ### Accelerometers
 
