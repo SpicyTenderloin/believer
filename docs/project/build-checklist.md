@@ -389,6 +389,35 @@ The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02),
 
 Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (all 1214 parameters from the then-current backup inspected by category). `GF_MAX_HOR_DIST` = 0.0 is PX4's stock default, not a project misconfiguration, but it leaves the geofence vertical-only: a horizontal excursion currently has no automatic response. Several other suspicious-looking values checked during the same review (`CBRK_FLIGHTTERM` = 121212, `CBRK_IO_SAFETY` = 22027, `CBRK_USB_CHK` = 197848) were confirmed against PX4's documentation to be its documented "magic number" stock defaults, not errors - no action needed on those.
 
+The maiden flight test site is now known (BNEMAC field, Fitzgibbon, approximately 300 m radius - `docs/operations/maiden-flight-test-plan.md`), so a horizontal radius can now actually be chosen against real field geometry rather than left abstract.
+
+</details>
+
+### NAV-08 - Tighten loiter radii and set a minimum loiter altitude
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
+- **Depends on:** None
+
+**Scope**
+- Set `NAV_LOITER_RAD` and `RTL_LOITER_RAD` from 80 m to 50 m, tightening the loiter circle used by Position Hold, Mission loiter, and the Return destination.
+- Set `NAV_MIN_LTR_ALT` from -1 (disabled) to 40 m provisional, so Position Hold climbs to at least 40 m above the home position before loitering if engaged lower - this parameter is measured above the home position, not AMSL or terrain-following AGL (confirmed against PX4's own parameter description).
+- Add a pre-flight site-survey step confirming no obstacle (tree, pole, structure) in the flight test area exceeds the `NAV_MIN_LTR_ALT` height - `docs/operations/manual.md`.
+
+**Acceptance criteria**
+- All three parameters applied and confirmed via a parameter export.
+- Site survey step added to `docs/operations/manual.md` and completed for the BNEMAC Fitzgibbon field before the first flight that uses Position Hold or Return.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised by Julian, 2026-10-02, during the maiden flight test plan drafting. The maiden flight test site is BNEMAC field, Fitzgibbon, approximately 300 m radius - both the current 80 m and the proposed 50 m loiter radius sit comfortably inside that, so the tightening is about flying a smaller, easier-to-observe circle rather than a containment concern (containment is `GF_MAX_HOR_DIST`, NAV-07, still separately open).
+
+Checked the bank-angle and stall-margin implications of 50 m before accepting it: PX4 fixed-wing Hold/Return loiter flies at `FW_AIRSPD_TRIM` (20 m/s). At 50 m radius this requires about 39 degrees of bank (R = V^2/(g*tan(bank))); the load factor at 39 degrees (1/cos(39 deg) = 1.29) raises the effective stall speed in the turn to about 12.5 m/s, still comfortably under `FW_AIRSPD_MIN` (15 m/s). The configured bank-angle ceiling `FW_R_LIM` is 50 degrees, so 39 degrees leaves margin. The current 80 m radius needs about 27 degrees of bank for comparison. 50 m is therefore a safe tightening, not just an arbitrary preference.
+
+`NAV_MIN_LTR_ALT`'s altitude reference was confirmed against PX4's own source parameter description (not just the user-guide prose, which doesn't state the datum): "Altitude above Home used when Hold mode is entered without an altitude" - i.e. relative to the home/launch point's recorded altitude, not raw AMSL and not strictly terrain-following AGL. For the BNEMAC field this distinction is not expected to matter in practice (a flat recreational field), but would matter on sloped terrain.
+
 </details>
 
 ---

@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.12 |
+| **Revision** | 1.14 |
 | **Date** | 2026-10-02 |
 | **Status** | Draft |
 
@@ -63,7 +63,7 @@ These three parameters scale stick-to-actuator commands **specifically in full M
 
 **Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault. An informal bench comparison narrowed it to Acro mode specifically - consistent with the hypothesis that its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate (integral windup), driving a surface to its endpoint well before the stick reaches full travel - but this has not yet been confirmed via CTL-08's formal, logged Manual-mode test. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
 
-Used during ground functional checks (`docs/operations/manual.md` step 29-30) and as the emergency direct-control fallback. Not used for launch.
+Used during ground functional checks (`docs/operations/manual.md` step 31-32) and as the emergency direct-control fallback. Not used for launch.
 
 ### 4.2 Acro
 
@@ -126,8 +126,8 @@ Automatic mode - RC stick input is ignored. The aircraft loiters in a circle aro
 
 | Parameter | Value | Purpose |
 |---|---|---|
-| `NAV_LOITER_RAD` | 80 m | Loiter circle radius |
-| `NAV_MIN_LTR_ALT` | -1 (disabled) | Minimum loiter altitude; no minimum currently enforced |
+| `NAV_LOITER_RAD` | 80 m | Loiter circle radius. **To be changed to 50 m - NAV-08, not yet applied** |
+| `NAV_MIN_LTR_ALT` | -1 (disabled) | Minimum loiter altitude (above the home position, not AMSL/AGL - confirmed against PX4's parameter description); no minimum currently enforced. **To be changed to 40 m provisional - NAV-08, not yet applied; pending a site survey confirming no obstacle in the flight test area exceeds this height** |
 
 On the Believer, "Hold" and "Loiter" refer to the same mode - see `docs/operations/manual.md` Section 3 for the naming note. No longer in the GR1 group as of 2026-08-19 (freed for Acro, Section 4.2); reachable directly via CH8 (which overrides GR1). Used as an emergency safe-hold and as the RC-loss failsafe action for a lost data link (Section 6).
 
@@ -138,7 +138,7 @@ Automatic mode - executes a pre-uploaded flight plan waypoint-by-waypoint. Requi
 | Parameter | Value | Purpose |
 |---|---|---|
 | `MIS_TKO_LAND_REQ` | 2 | Requires the mission to define a takeoff/landing sequence before it can be flown - see [PX4: Mission Mode](https://docs.px4.io/main/en/flight_modes_fw/mission.html) for the exact requirement this enforces |
-| `NAV_LOITER_RAD` | 80 m | Loiter radius used at mission completion or a loiter waypoint (shared with Hold) |
+| `NAV_LOITER_RAD` | 80 m | Loiter radius used at mission completion or a loiter waypoint (shared with Hold). **To be changed to 50 m - NAV-08, not yet applied** |
 
 Reachable via GR1 SW6. Per `docs/operations/manual.md`, reserved for future autonomous missions only - not used for the current hand-launched test flights. Automatic takeoff and landing are tracked as future capability work in `docs/project/project-roadmap.md`, consistent with `RTL_LAND_DELAY` below currently disabling auto-land.
 
@@ -150,7 +150,7 @@ Automatic mode - pilot input is ignored. The aircraft climbs to a safe altitude,
 |---|---|---|
 | `RTL_RETURN_ALT` | 100 m | Altitude held during the return transit |
 | `RTL_DESCEND_ALT` | 100 m | Altitude at which the aircraft transitions from transit to loiter/landing behaviour |
-| `RTL_LOITER_RAD` | 80 m | Loiter radius at the return destination |
+| `RTL_LOITER_RAD` | 80 m | Loiter radius at the return destination. **To be changed to 50 m - NAV-08, not yet applied** |
 | `RTL_LAND_DELAY` | -1 | Aircraft loiters indefinitely at the destination rather than landing automatically (auto-land is not yet configured - see `docs/project/project-roadmap.md`) |
 | `RTL_TYPE` | 1 | Destination/landing-pattern priority logic - see [PX4: Return Mode](https://docs.px4.io/main/en/flight_modes_fw/return.html) |
 
@@ -201,3 +201,5 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.10 | 2026-10-02 | Section 5 (Failsafe Interactions): flagged the data-link-loss row as pending a change from 0 (Disabled) to 2 (Return), per Julian's decision that both RC and data-link loss should return the aircraft home and hold - tracked as RF-06, not yet applied to the live parameter |
 | 1.11 | 2026-10-02 | Updated the Section 4.1 cross-reference to `docs/operations/manual.md`'s ground functional checks step numbers (21-22 to 26-27), following a pre-flight checklist expansion that added five new steps ahead of them |
 | 1.12 | 2026-10-02 | Updated the Section 4.1 cross-reference again (26-27 to 29-30), following a further pre-flight checklist expansion (pilot briefing, callout agreement, and radio/QGroundControl volume check steps) |
+| 1.13 | 2026-10-02 | Flagged `NAV_LOITER_RAD` (Sections 4.6, 4.7), `RTL_LOITER_RAD` (Section 4.8), and `NAV_MIN_LTR_ALT` (Section 4.6) as pending changes to 50 m, 50 m, and 40 m respectively - tracked as NAV-08, not yet applied. Clarified `NAV_MIN_LTR_ALT` is measured above the home position, confirmed against PX4's own parameter description |
+| 1.14 | 2026-10-02 | Updated the Section 4.1 cross-reference again (29-30 to 31-32), following a further pre-flight checklist expansion (site-survey and loiter-parameter confirmation steps, NAV-08) |

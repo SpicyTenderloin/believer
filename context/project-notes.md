@@ -518,4 +518,14 @@ Answered Julian's question on position-hold radius: `NAV_LOITER_RAD` = 80 m gove
 
 Several open items flagged in the new plan's Section 6 (wind limits, abort criteria, safe altitudes per test, flight grouping/order, test site layout) - none of these existed anywhere in the project before this draft. Cross-referenced the plan from CTL-02 (`docs/project/build-checklist.md`), whose "initial test flights" language now points to this document's flight sequencing.
 
+## Loiter Radius and Minimum Loiter Altitude - NAV-08, 2026-10-02
+
+Julian asked whether `NAV_LOITER_RAD`/`RTL_LOITER_RAD` (both 80 m) should be tightened (proposed 50 m) and whether `NAV_MIN_LTR_ALT` is measured above ground or AMSL, proposing 40 m provisionally with a pre-flight site-survey step to confirm nothing in the flight test area exceeds it. He also confirmed the maiden flight test site: BNEMAC field, Fitzgibbon, approximately 300 m radius.
+
+Checked `NAV_MIN_LTR_ALT`'s altitude reference against PX4's own source parameter description (`navigator_params.yaml`, both the current and a prior wording), not just the user-guide prose, which does not state the datum: "Altitude above Home used when Hold mode is entered without an altitude." So it is relative to the home/launch point's recorded altitude, not raw AMSL and not strictly terrain-following AGL - for a flat field like BNEMAC this is not expected to matter, but would on sloped terrain.
+
+Checked 50 m for bank-angle and stall-margin safety before agreeing it was a reasonable tightening: PX4 flies the Hold/Return loiter at `FW_AIRSPD_TRIM` (20 m/s); a 50 m radius at that speed needs about 39 degrees of bank (R = V^2/(g*tan(bank))), comfortably under the configured `FW_R_LIM` ceiling of 50 degrees, and the resulting in-turn stall speed (load factor 1/cos(39 deg) = 1.29, so about 12.5 m/s) stays well under `FW_AIRSPD_MIN` (15 m/s). The current 80 m radius needs about 27 degrees for comparison. Both radii sit comfortably inside the BNEMAC field's 300 m radius either way - the tightening is for a smaller, easier-to-observe circle, not containment (that remains `GF_MAX_HOR_DIST`, NAV-07).
+
+Added NAV-08 (`docs/project/build-checklist.md`) to track applying all three parameters plus the new site-survey checklist step. Updated `docs/engineering/flight-modes.md` (Rev 1.13-1.14) and `docs/operations/maiden-flight-test-plan.md` (Rev 0.2, also recording the confirmed test site) to flag the pending values. Not yet applied to the physical FC.
+
 See [open-items.md](open-items.md) for what's still missing.
