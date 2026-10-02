@@ -195,6 +195,28 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 </details>
 
+### PWR-04 - Configure low-battery failsafe action
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
+- **Depends on:** None
+
+**Scope**
+- Set `COM_LOW_BAT_ACT` from 0 (Warning only) to 3 (Return at critical level, Land at emergency level) - PX4's documented recommended setting - so the existing `BAT_LOW_THR`/`BAT_CRIT_THR`/`BAT_EMERGEN_THR` thresholds (20%/10%/5%) trigger an automatic response instead of a warning only.
+- Once a completed capacity test (see `context/open-items.md`, depends on PROP-11) allows `BAT1_CAPACITY` to be set from measured data, decide whether to also set `COM_ARM_BAT_MIN` (currently -1, no arm-time minimum charge check) - deferred until then, since a percentage-based minimum is not meaningful against an unset capacity.
+
+**Acceptance criteria**
+- `COM_LOW_BAT_ACT` = 3 applied and confirmed via a parameter export.
+- `COM_ARM_BAT_MIN` decision recorded (set, or explicitly deferred with reason) once capacity test data exists.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (all 1214 parameters from the then-current backup inspected by category). Already an open item (`context/open-items.md`) since the custom 6S4P Li-ion pack has no BMS, so nothing else protects it from over-discharge; this task formalises the fix as a tracked task rather than leaving it as an undecided note. `COM_ARM_BAT_MIN` was a new finding from this review, not previously tracked - it compounds the same gap (no automatic action on low charge, and no pre-arm minimum either) but fixing it usefully requires the capacity test's result first.
+
+</details>
+
 ---
 
 ## D. Flight Controls and PX4 Configuration
@@ -344,6 +366,28 @@ The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02),
 
 **Scope**
 - Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air; check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient.
+
+### NAV-07 - Configure horizontal geofence boundary
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
+- **Depends on:** None
+
+**Scope**
+- Set `GF_MAX_HOR_DIST` (currently 0.0, PX4's default meaning no horizontal boundary is checked) to a radius chosen against the actual maiden flight field geometry, so a horizontal excursion also triggers `GF_ACTION` (currently 3, Return) - matching the 120 m vertical ceiling (`GF_MAX_VER_DIST`) that is already configured.
+- Optionally enable `GF_PREDICT` (predictive breach anticipation, currently 0/disabled) for additional margin.
+
+**Acceptance criteria**
+- A horizontal distance value applied, chosen against the maiden field's actual dimensions rather than an arbitrary number.
+- Geofence behaviour confirmed (QGC Fence display, or a bench/SITL check) to act as expected on a simulated breach.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (all 1214 parameters from the then-current backup inspected by category). `GF_MAX_HOR_DIST` = 0.0 is PX4's stock default, not a project misconfiguration, but it leaves the geofence vertical-only: a horizontal excursion currently has no automatic response. Several other suspicious-looking values checked during the same review (`CBRK_FLIGHTTERM` = 121212, `CBRK_IO_SAFETY` = 22027, `CBRK_USB_CHK` = 197848) were confirmed against PX4's documentation to be its documented "magic number" stock defaults, not errors - no action needed on those.
+
+</details>
 
 ---
 

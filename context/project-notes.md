@@ -490,4 +490,14 @@ While closing it out, found and fixed a pre-existing formatting bug in `docs/pro
 
 Regenerated `believer-parameters.params` from the confirmed-fixed log (`04_09_42.ulg`) and updated `parameter-change-log.md`'s `GPS_2_GNSS` row and the calibration tables (routine accelerometer/gyroscope/barometer/magnetometer drift, `COM_FLIGHT_UUID` incremented - nothing else of note changed).
 
+## Pre-Maiden Parameter Review - 2026-10-02
+
+Julian asked for the latest logs to be checked (NAV-06 confirmation, above), the parameter backup refreshed, and then for all current parameters to be inspected and flagged for anything worth changing before the maiden flight. Reviewed all 1214 parameters from the refreshed backup (`04_09_42.ulg`) by safety-relevant category: battery/low-power failsafes, RC/data-link loss failsafes, geofence, EKF estimator requirements, arming checks, flight-termination circuit breakers, and airspeed envelope.
+
+Two findings worth changing before the maiden, both now tracked as checklist tasks: `COM_LOW_BAT_ACT` = 0 (Warning only, no automatic action on low charge - PWR-04) and `GF_MAX_HOR_DIST` = 0.0 (no horizontal geofence boundary, vertical-only protection - NAV-07). `COM_ARM_BAT_MIN` = -1 (no arm-time minimum charge check) is a related new finding, folded into PWR-04 pending the still-incomplete capacity test.
+
+One finding flagged for explicit confirmation rather than a clear recommendation: `NAV_DLL_ACT` = 0 (data-link-loss failsafe disabled). This aircraft's RC architecture is unusual - RC commands arrive via the Radiomaster DBR4 (ELRS) as MAVLink `RC_CHANNELS_OVERRIDE` on TELEM1, a separate link from GCS telemetry via the RFD900x on TELEM2 - so losing the GCS link would not necessarily mean losing RC control, unlike a conventional single-link setup. Plausibly fine, but not asserted as correct without Julian's confirmation it's intentional.
+
+Several parameters that looked suspicious on inspection were checked against PX4's documentation and confirmed to be its own stock defaults, not project misconfigurations: `CBRK_FLIGHTTERM` = 121212, `CBRK_IO_SAFETY` = 22027, and `CBRK_USB_CHK` = 197848 (all documented "magic number" circuit-breaker values). Already-tracked items were reaffirmed rather than re-flagged as new: `BAT1_CAPACITY` = -1 (pending the capacity test), `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` (conservative, pending in-flight stall verification), `COM_DISARM_LAND` = -1 (deliberate maiden-specific decision), and `BAT1_R_INTERNAL` = -1 (PX4's real-time estimate, fine as is).
+
 See [open-items.md](open-items.md) for what's still missing.
