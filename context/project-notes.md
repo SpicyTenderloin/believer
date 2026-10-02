@@ -500,4 +500,12 @@ One finding flagged for explicit confirmation rather than a clear recommendation
 
 Several parameters that looked suspicious on inspection were checked against PX4's documentation and confirmed to be its own stock defaults, not project misconfigurations: `CBRK_FLIGHTTERM` = 121212, `CBRK_IO_SAFETY` = 22027, and `CBRK_USB_CHK` = 197848 (all documented "magic number" circuit-breaker values). Already-tracked items were reaffirmed rather than re-flagged as new: `BAT1_CAPACITY` = -1 (pending the capacity test), `FW_AIRSPD_STALL`/`MIN`/`TRIM`/`MAX` (conservative, pending in-flight stall verification), `COM_DISARM_LAND` = -1 (deliberate maiden-specific decision), and `BAT1_R_INTERNAL` = -1 (PX4's real-time estimate, fine as is).
 
+## RC and Data-Link Loss Failsafe Decision - 2026-10-02
+
+Following the pre-maiden parameter review (above), Julian decided: a loss of RC or a loss of the data link should both cause the aircraft to return to the home position and hold there (not land automatically).
+
+Checked PX4's Return Mode documentation to confirm the existing configuration already does this for RC loss and would do the same for data-link loss once changed: `NAV_RCL_ACT` and `NAV_DLL_ACT` share the same action enum (0 Disabled, 1 Hold, 2 Return, 3 Land, ...; "Return" engages Return mode in both cases). `RTL_LAND_DELAY` = -1 makes Return mode loiter indefinitely at `RTL_DESCEND_ALT` rather than landing automatically after arrival - this is the "hold position" behaviour, and auto-land is deliberately not configured yet (`docs/project/project-roadmap.md`). `RTL_TYPE` = 1 prioritises a mission landing pattern or rally point over home, but falls back to home when neither is defined - confirmed against `docs/engineering/flight-modes.md` that neither is currently defined on this aircraft, so Return does resolve to the home position as intended.
+
+`NAV_RCL_ACT` is already 2 (Return) - no change needed for RC loss. `NAV_DLL_ACT` is 0 (Disabled) - needs to change to 2 (Return) to match. Added as RF-06 in `docs/project/build-checklist.md` (Critical, flight clearance). Flagged in `docs/engineering/flight-modes.md` Section 5 as pending, not yet applied to the live parameter - will be confirmed via a parameter export once Julian makes the change, per this project's standing rule to verify configuration claims against exports rather than accept them as applied on description alone.
+
 See [open-items.md](open-items.md) for what's still missing.

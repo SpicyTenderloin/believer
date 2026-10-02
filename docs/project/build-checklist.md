@@ -410,6 +410,28 @@ Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separat
 
 </details>
 
+### RF-06 - Set data-link-loss failsafe to Return
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Milestone:** Flight clearance
+- **Depends on:** None
+
+**Scope**
+- Set `NAV_DLL_ACT` from 0 (Disabled) to 2 (Return mode), matching `NAV_RCL_ACT` (already 2, Return) - so losing the GCS telemetry link also returns the aircraft to home and holds position there, not only losing RC.
+- No change needed on the RC-loss side: `NAV_RCL_ACT` = 2 combined with `RTL_LAND_DELAY` = -1 already makes RC loss return to home and loiter there indefinitely rather than auto-landing (confirmed against PX4's Return Mode documentation, and against `RTL_TYPE` = 1 resolving to the home position specifically, since no rally points or mission landing pattern are currently defined).
+
+**Acceptance criteria**
+- `NAV_DLL_ACT` = 2 applied and confirmed via a parameter export.
+- `docs/engineering/flight-modes.md` Section 5 (Failsafe Interactions) updated to match the confirmed live value.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised during the pre-maiden parameter review (2026-10-02), where `NAV_DLL_ACT` = 0 was flagged as needing explicit confirmation rather than a clear recommendation, given the aircraft's dual-link RC architecture (RC via the Radiomaster DBR4/ELRS on TELEM1, separate from GCS telemetry via the RFD900x on TELEM2). Julian confirmed the same day: both RC loss and data-link loss should return the aircraft to home and hold position, resolving the open question - only `NAV_DLL_ACT` needs to change, since `NAV_RCL_ACT` already achieves this for RC loss.
+
+</details>
+
 ---
 
 ## Recurring Airworthiness Verification
