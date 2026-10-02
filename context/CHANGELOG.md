@@ -2,6 +2,10 @@
 
 All notable changes to the Believer project repo are logged here, most recent first.
 
+## 2026-10-02
+
+- Julian confirmed the U5 KV400 physical swap is done and proposed raising `PWM_MAIN_MAX4`/`MAX6` back to 2000 to close PROP-08. Flagged that this only holds once the U5s are installed (not the MN3110s), and confirmed the parameter has not yet been set (pending an export) and that only a quick bench spin-up check is planned, not a full sustained in-aircraft run. Updated PROP-08 (`docs/project/build-checklist.md`, status to In progress, ceiling change recorded as planned, acceptance criteria revised to name the evidence it will rest on) and `context/open-items.md`/`context/project-notes.md` accordingly. Not yet closed.
+
 ## 2026-09-30
 
 - Julian closed PROP-11 on his own judgement ("I am happy to close this one"), rather than pursuing the instrumented temperature log or formal electrical condition checks originally scoped. Removed the PROP-11 dashboard row and section from `docs/project/build-checklist.md` and added a closed summary under Completed Work; updated `context/open-items.md` (remaining work is installing the U5 motors and AIR 40A ESCs in the aircraft, not further testing) and `context/project-overview.md`'s blocker list.

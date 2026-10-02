@@ -61,7 +61,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 
 ### PROP-08 - Limit current draw to within motor rated continuous current
 
-- [ ] **Status:** For review
+- [ ] **Status:** In progress
 - **Priority:** CRITICAL
 - **Milestone:** Ground-test readiness
 - **Depends on:** PROP-02 (complete - see Completed Work)
@@ -71,11 +71,12 @@ Future capability work (payload, autonomy) that is not required for current flig
 - **Applied 2026-09-02 (Julian):** `PWM_MAIN_MAX4`/`MAX6` (motor PWM ceiling) lowered from 2000 to 1800, confirmed via a fresh parameter export - based on the PWM-vs-current data point below.
 - **Revised 2026-09-26 (Julian), pending a parameter export:** thrust-stand characterisation (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`) selected an APC 12x6" propeller and recommends limiting the ESC command to approximately **1700us** - about 19A and 1.7 kgf per motor, against the 21A rating. The 1800us ceiling was derived for the 11x7" propeller; with the 12x6" it would exceed 21A per motor. `PWM_MAIN_MAX4`/`MAX6` needs setting to approximately 1700 and verifying via export.
 - **2026-09-26:** the ~1700us ceiling had still not been applied (the flight controller logs show `PWM_MAIN_MAX4`/`MAX6` = 1800) when the left motor failed during a bench simulated flight, about 6 s after the command reached 1800us, with the total current at 42 to 47 A (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). At 1700us that run drew about 16 A per motor. The ceiling should be applied before any further power-on testing.
+- **Superseded 2026-09-30/2026-10-02 (Julian):** the motors were replaced with the T-Motor U5 KV400 (PROP-11, closed 2026-09-30), which has a much higher margin on this propeller - the thrust-stand characterisation measured 15.8 to 16.9 A at full throttle (2000us), about 54 to 56% of its 30A rating (`docs/engineering/test-reports/2026-09-30-u5-kv400-thrust-stand-characterisation.md`). Julian plans to raise `PWM_MAIN_MAX4`/`MAX6` back to 2000 and run a quick bench spin-up with the U5s installed in the airframe - **not yet applied** (pending a parameter export) and **not a sustained run** (a quick check only, not a repeat of the stand's 393 s sustained hold).
 
 **Acceptance criteria**
-- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the MN3110 KV700's 21A continuous rating - **not yet confirmed**: the stand sweeps are ramps, not a sustained hold at the ceiling, and the FC-log correlation is brief-burst data. Julian reports `COM_DISARM_LAND` set to -1 (pending export verification), which removes the earlier auto-disarm obstacle to running a sustained test.
-- Configuration change applied (e.g. throttle ceiling, current limit, or propeller change) and documented, including any resulting effect on static thrust or throttle response - **1800us applied**; the revised ~1700us ceiling for the 12x6" is not yet applied or verified. Static thrust at the ceiling is now measured (~1.7 kgf per motor, see PROP-10).
-- Result logged as a dated entry under `docs/engineering/test-reports/` - thrust-stand report logged 2026-09-26; a sustained-run result is still to come.
+- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the motor's rated continuous current. For the U5 KV400, satisfied by the 2026-09-30 thrust-stand sustained run at 2000us (393 s cumulative, 15.8 to 16.9 A, well under the 30A rating) - but that run used the right-hand MN3110's ESC on the stand, not the aircraft's own ESCs and wiring. Julian's planned bench spin-up with the U5s installed is a quick check, not a repeat sustained hold, so this criterion rests on the stand data plus that quick check, not a fresh in-aircraft sustained test.
+- Configuration change applied and documented, including any resulting effect on static thrust or throttle response. With the motor change to the U5 (PROP-11), the ceiling is being raised back to **2000us** rather than lowered - **not yet applied or verified**; Julian to confirm via a fresh parameter export once set.
+- Result logged as a dated entry under `docs/engineering/test-reports/` - the U5 thrust-stand report is logged (2026-09-30); the planned bench spin-up with the U5s installed has not yet been run or logged.
 
 <details>
 <summary>Background and engineering notes</summary>
