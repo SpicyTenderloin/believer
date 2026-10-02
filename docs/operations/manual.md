@@ -129,12 +129,12 @@ Intended safe startup condition, to be verified before every flight:
 Two people are required: a **pilot** operating the GX12 and a **handler** who holds and throws the aircraft. The handler must not approach the aircraft until the pilot signals ready.
 
 40. Confirm the launch area and airspace overhead are clear of people, animals, obstructions, and other aircraft.
-41. Pilot: select Stabilized mode (GR1 SW3), calling out the mode change, and confirm throttle is at minimum.
+41. Pilot: select the launch mode specified in the current flight test plan (normally Stabilized, GR1 SW3 - see Section 3), calling out the mode change, and confirm throttle is at minimum.
 42. Handler: hold the aircraft at shoulder height with the nose pointing directly into wind. Grip the fuselage firmly at the centre of gravity. Keep all fingers and hands well clear of both propeller arcs.
 43. Pilot: arm the aircraft (CH5), calling out "armed" once confirmed in QGroundControl, and advance throttle to approximately 75-100%.
 44. Pilot: call "launch" (or pre-agreed signal).
 45. Handler: throw the aircraft firmly forward and level into the wind, releasing cleanly. Step clear immediately after release.
-46. Pilot: hold Stabilized mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
+46. Pilot: hold the launch mode and allow the aircraft to accelerate and establish a positive climb rate before commanding a steep climb. Do not pull hard back on the stick immediately after release.
 47. Climb to a safe altitude and confirm wings-level flight before switching modes or adjusting course.
 
 ### Landing and shutdown

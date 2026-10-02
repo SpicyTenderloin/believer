@@ -237,6 +237,8 @@ Found during the pre-maiden parameter review requested by Julian, 2026-10-02 (al
 
 Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configuration review: tuning gains against an uncertain actuator baseline (unresolved effectiveness coefficients, unmeasured safe PWM endpoints, or unverified Manual-mode scaling) could produce misleading gains or conceal a configuration fault.
 
+The "initial test flights" referred to above are now sequenced in `docs/operations/maiden-flight-test-plan.md` (added 2026-10-02) - Flight 1 is airworthiness-only (no tuning-relevant data expected beyond basic controllability), with gain-tuning-relevant observations (including adverse yaw for CTL-07) gathered from Flight 2 onward.
+
 </details>
 
 ### CTL-04 - Configure tri-rate switch-selectable deflection

@@ -508,4 +508,14 @@ Checked PX4's Return Mode documentation to confirm the existing configuration al
 
 `NAV_RCL_ACT` is already 2 (Return) - no change needed for RC loss. `NAV_DLL_ACT` is 0 (Disabled) - needs to change to 2 (Return) to match. Added as RF-06 in `docs/project/build-checklist.md` (Critical, flight clearance). Flagged in `docs/engineering/flight-modes.md` Section 5 as pending, not yet applied to the live parameter - will be confirmed via a parameter export once Julian makes the change, per this project's standing rule to verify configuration claims against exports rather than accept them as applied on description alone.
 
+## Maiden Flight Test Plan - Initial Draft, 2026-10-02
+
+Julian described the flight test campaign structure: every flight is an assisted hand launch; Flight 1 is airworthiness-only, launching and landing in Acro mode with a brief in-flight Manual-mode check at a safe altitude (no stall, Stabilized, Position Hold, or Return testing that flight); later flights cover stall speed/behaviour, climb performance and thrust sufficiency, glide performance, Acro, Stabilized, Position Hold, and Return to Home.
+
+Drafted `docs/operations/maiden-flight-test-plan.md` (FTP-BELIEVER-001, Rev 0.1) to capture this. Flight 1's launch mode (Acro) differs from `docs/engineering/flight-modes.md` Section 3's general guidance that Stabilized is "Hand-launch mode" - rather than hardcode one or the other, reworded `docs/operations/manual.md`'s launch-mode steps (41, 46) to defer to "the launch mode specified in the current flight test plan," since the campaign deliberately uses different modes across flights.
+
+Answered Julian's question on position-hold radius: `NAV_LOITER_RAD` = 80 m governs Hold/Position-Hold mode's loiter circle; `RTL_LOITER_RAD` = 80 m is the separate parameter for the loiter circle at the Return (home) destination - currently the same value but independently configurable. `NAV_MIN_LTR_ALT` = -1 is PX4's own default (disabled), confirmed via PX4's documentation, not a project misconfiguration.
+
+Several open items flagged in the new plan's Section 6 (wind limits, abort criteria, safe altitudes per test, flight grouping/order, test site layout) - none of these existed anywhere in the project before this draft. Cross-referenced the plan from CTL-02 (`docs/project/build-checklist.md`), whose "initial test flights" language now points to this document's flight sequencing.
+
 See [open-items.md](open-items.md) for what's still missing.
