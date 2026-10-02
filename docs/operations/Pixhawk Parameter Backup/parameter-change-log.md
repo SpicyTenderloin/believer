@@ -52,7 +52,7 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embed
 | `GPS_1_GNSS` | 31 | Constellation mask for instance 1 (ZED-F9P). |
 | `GPS_2_CONFIG` | 201 (physical GPS1 UART port) | Assigns GPS driver instance 2 to the physical GPS1 port, where the M8N is wired. Enabled by the same change as `GPS_1_CONFIG` above (previously 0/Disabled, 2026-07-04 to about 2026-08-31, pending the ZED-F9P's mount and antenna). The M8N has not logged any data since this change - see NAV-06. |
 | `GPS_2_PROTOCOL` | 1 (u-blox) | Matches the M8N (now instance 2). |
-| `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N). |
+| `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N). **Suspected cause of NAV-06, 2026-10-02:** this is the exact value the ZED-F9P's slot had before the 2026-08-31 instance swap (`GPS_2_GNSS` = 29 when that slot was the F9P) - it appears to have carried over positionally rather than being chosen for the M8N. The M8N's own value when last confirmed working (2026-07-03, as `GPS_1_GNSS`) was 0. Reverting this value to 0 is the test recommended in NAV-06 before any wiring or module-level diagnosis. |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
 GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference.

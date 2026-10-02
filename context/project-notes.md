@@ -474,4 +474,12 @@ Julian pushed back on the NAV-06 finding: "I swear it has worked in the past, I 
 
 So the fault is real, but it dates specifically to the instance-swap change (or physical work around the same session), not to the original install, and the M8N is confirmed to have worked correctly before that point - exactly matching what Julian remembered. `docs/project/build-checklist.md` NAV-06 and the two Completed Work GPS bullets rewritten with this corrected timeline; `context/open-items.md` updated to match. The parameter-level review from earlier today still stands (nothing found wrong in the current, post-swap configuration), so the leading hypotheses are a physical disturbance during that session, or a PX4 driver quirk specific to assigning this module to instance 2 rather than instance 1 - both still to be tested.
 
+## GPS_2_GNSS Likely Cause Found - 2026-10-02 (later)
+
+Julian reported the M8N's LED and buzzer are active - it has power and is running internally, which rules out a dead or unpowered module and points toward the data link to the Pixhawk (the UART wiring/connector) rather than the module itself.
+
+Julian then asked for the M8N's parameters from when it last worked as GPS1, meaning to try reverting them while keeping it on the GPS2 slot. Comparing its values from 2026-07-03 (as `GPS_1_*`, confirmed working) against now (as `GPS_2_*`): `GPS_1_CONFIG` 201 then / `GPS_2_CONFIG` 201 now (same); `GPS_1_PROTOCOL` 1 then / `GPS_2_PROTOCOL` 1 now (same); `GPS_1_GNSS` **0** then / `GPS_2_GNSS` **29** now - the one difference. 29 is not a value ever tested against the M8N - it is exactly the ZED-F9P's own old `GPS_2_GNSS` value from before the 2026-08-31 swap, which appears to have carried over by slot position rather than being chosen for whichever module ended up there. The M8N ran with GNSS requests effectively off (0) for its entire confirmed-working history and has never been tested with an active constellation request. If 29 asks for a combination this module's firmware cannot satisfy, that would fit a module that still runs its own receiver and LED but never completes the handshake PX4 needs to start publishing `sensor_gps`.
+
+Recorded as the leading, testable hypothesis in NAV-06 (`docs/project/build-checklist.md`) and the `GPS_2_GNSS` row in `parameter-change-log.md`: Julian is reverting `GPS_2_GNSS` to 0 while keeping the module on the GPS2 slot, as he prefers. Not yet confirmed either way.
+
 See [open-items.md](open-items.md) for what's still missing.
