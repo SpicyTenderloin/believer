@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FTP-BELIEVER-001 |
-| **Revision** | 0.3 |
+| **Revision** | 0.4 |
 | **Date** | 2026-10-02 |
 | **Status** | Draft |
 
@@ -19,13 +19,15 @@ Per Julian, 2026-10-02: the intent is to complete as many of the test phases bel
 - Launch method: assisted hand launch only (not a runway or catapult launch).
 - Crew: a pilot (GX12) and a handler, per `docs/operations/manual.md`.
 - The full pre-flight checklist in `docs/operations/manual.md` must be completed before every flight in this campaign, including the parameter-confirmation steps (`NAV_RCL_ACT`/`NAV_DLL_ACT`/`RTL_TYPE`/`RTL_LAND_DELAY`, `COM_LOW_BAT_ACT`, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`/`NAV_MIN_LTR_ALT`, geofence, battery chemistry).
-- RF-06, PWR-04, and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. A maiden-flight mission and polygon geofence are uploaded (Section 4).
-- Wind limits: TBD - see Section 6.
-- Abort criteria: TBD - see Section 6.
+- RF-06, PWR-04, and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. A maiden-flight mission and polygon geofence are uploaded (Section 5).
+- Wind limits: TBD - see Section 7.
+- Abort criteria: TBD - see Section 7.
 
 ## 3. Flight Profile (single flight, battery/conditions permitting)
 
 If a landing is needed partway through (battery, conditions, an issue, or simply running out of time), resume from the next incomplete phase on a subsequent flight rather than repeating completed ones.
+
+**Across every phase:** observe and record adverse-yaw behaviour (the nose yawing out of the commanded turn) on roll entry - feeds CTL-07's evidence-based decision on roll-to-yaw feedforward (`docs/project/build-checklist.md`). This has no dedicated phase of its own; watch for it throughout.
 
 ### Phase A - Airworthiness Assessment
 
@@ -33,8 +35,10 @@ If a landing is needed partway through (battery, conditions, an issue, or simply
 
 **Flight modes used:** Acro for launch and landing; Manual briefly at a safe altitude.
 
+**Note:** Acro has no attitude (bank/pitch) limit, only rate limits (`FW_ACRO_X/Y/Z_MAX` = 90/90/45 deg/s) - unlike Stabilized, nothing stops the aircraft rolling or looping if commanded to. Keep stick inputs measured during this phase.
+
 1. Hand-launch in Acro mode (GR1 SW2).
-2. Climb to a safe altitude [TBD - see Section 6] and confirm stable, controllable flight in Acro across all three axes.
+2. Climb to a safe altitude [TBD - see Section 7] and confirm stable, controllable flight in Acro across all three axes.
 3. Switch to Manual mode; confirm the aircraft responds correctly and predictably to stick input (direct control, no self-levelling). This is the aircraft's first in-flight Manual-mode check, building on the ground-only check already done under CTL-08.
 4. Return to Acro.
 
@@ -42,7 +46,7 @@ If a landing is needed partway through (battery, conditions, an issue, or simply
 
 ### Phase B - Stabilized Mode
 
-At a safe altitude, release the sticks and confirm the aircraft levels itself and holds attitude, per `docs/engineering/flight-modes.md` Section 4.3.
+At a safe altitude, release the sticks and confirm the aircraft levels itself and holds attitude, per `docs/engineering/flight-modes.md` Section 4.3. Record whether the 45°/30° roll/pitch ceiling (`FW_MAN_R_MAX`/`FW_MAN_P_MAX`) feels appropriate for this airframe - neither has been tuned specifically for the Believer yet (`docs/engineering/flight-modes.md` Section 6, generic PX4 fixed-wing defaults); informs CTL-02.
 
 ### Phase C - Climb Performance and Thrust Sufficiency
 
@@ -62,7 +66,9 @@ Already exercised during launch and landing (Phase A); a dedicated altitude chec
 
 ### Phase G - Position Hold (CH8)
 
-At a safe altitude, engage Position Hold and confirm the aircraft loiters in a circle around the engagement point, holding altitude. Loiter radius `NAV_LOITER_RAD` = 50 m (NAV-08, see Section 5). `NAV_MIN_LTR_ALT` = 40 m provisional means Position Hold climbs to at least 40 m above the home position before loitering if engaged lower - confirmed via the pre-flight site survey (`docs/operations/manual.md` step 5) that no obstacle at the BNEMAC field exceeds that height.
+At a safe altitude, engage Position Hold and confirm the aircraft loiters in a circle around the engagement point, holding altitude. Loiter radius `NAV_LOITER_RAD` = 50 m (NAV-08, see Section 6). `NAV_MIN_LTR_ALT` = 40 m provisional means Position Hold climbs to at least 40 m above the home position before loitering if engaged lower - confirmed via the pre-flight site survey (`docs/operations/manual.md` step 5) that no obstacle at the BNEMAC field exceeds that height.
+
+Note whether the loiter's bank angle looks appropriately bounded - `FW_R_LIM`/`FW_P_LIM_MAX`/`FW_P_LIM_MIN` (the roll/pitch ceiling the autopilot uses for this and the other automatic modes) are also still PX4's generic defaults, untuned for the Believer; informs CTL-02 alongside Phase B's observation.
 
 ### Phase H - PID Auto-Tune (CTL-02)
 
@@ -77,13 +83,20 @@ Once basic stability is confirmed (Phase A) and ideally with Position Hold alrea
 
 ### Phase I - Return to Home (CH10)
 
-At a safe altitude and distance from home, engage Return and confirm it climbs/descends to `RTL_RETURN_ALT`/`RTL_DESCEND_ALT` (both 100 m), flies directly to the home position (`RTL_TYPE` = 0), and loiters there at `RTL_LOITER_RAD` = 50 m rather than landing automatically (`RTL_LAND_DELAY` = -1). This is also the behaviour `NAV_RCL_ACT`/`NAV_DLL_ACT` trigger automatically on an actual RC or data-link loss (RF-06) - deliberately triggering a real RC or data-link failure in flight to test that path is not proposed; CH10 exercises the same Return mode logic without the risk of an actual link failure.
+At a safe altitude and distance from home, engage Return and confirm it climbs/descends to `RTL_RETURN_ALT`/`RTL_DESCEND_ALT` (both 100 m), flies directly to the home position (`RTL_TYPE` = 0), and loiters there at `RTL_LOITER_RAD` = 50 m rather than landing automatically (`RTL_LAND_DELAY` = -1). This is also the behaviour `NAV_RCL_ACT`/`NAV_DLL_ACT` trigger automatically on an actual RC or data-link loss (RF-06) - deliberately triggering a real RC or data-link failure in flight to test that path is not proposed; CH10 exercises the same Return mode logic without the risk of an actual link failure. The same bank-angle observation as Phase G applies to the Return turn.
 
 ### Phase J - Mission Mode (GR1 SW6)
 
-See Section 4 for the mission itself. At a safe point once already airborne and stable, select Mission mode (GR1 SW6) and confirm the aircraft tracks the uploaded waypoint pattern correctly (turns, altitude hold at 40 m) and stays inside the polygon geofence. On completing the last waypoint, the aircraft will automatically enter Hold behaviour at that position (there is no landing item in the mission) - confirm this happens as expected, then switch back to a manual mode. The mission is not used for an actual autonomous landing; the pilot resumes manual control and lands per the normal procedure.
+See Section 5 for the mission itself. At a safe point once already airborne and stable, select Mission mode (GR1 SW6) and confirm the aircraft tracks the uploaded waypoint pattern correctly (turns, altitude hold at 40 m) and stays inside the polygon geofence. On completing the last waypoint, the aircraft will automatically enter Hold behaviour at that position (there is no landing item in the mission) - confirm this happens as expected, then switch back to a manual mode. The mission is not used for an actual autonomous landing; the pilot resumes manual control and lands per the normal procedure.
 
-## 4. Mission Mode Detail
+## 4. Post-Flight
+
+- Confirm the aircraft is disarmed per `docs/operations/manual.md` (steps 51-53).
+- Check the battery voltage (and per-cell if the charger/balance lead makes this practical) before disconnecting. The custom Li-ion pack has no BMS, so nothing else confirms no cell dropped dangerously low during the flight - compare against the cell datasheet's discharge end voltage (2.5 V/cell) and the configured `BAT1_V_EMPTY` (3.2 V/cell).
+- Download and review the flight log (QGroundControl or the SD card): check for any failsafe triggers, EKF warnings, or sustained motor current near the rating, and record the performance data gathered in Phases C-J (climb rate, observed stall speed, loiter/turn bank angle, auto-tune result, mission tracking) against the open items in Section 7.
+- Record which phases were completed and which remain for a subsequent flight.
+
+## 5. Mission Mode Detail
 
 A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-mission.plan`.
 
@@ -94,9 +107,9 @@ A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-missi
 - Since this mission will only be engaged while already airborne (Phase J, not from a ground start), PX4 treats the takeoff item as a normal waypoint rather than attempting an autonomous takeoff - this is documented PX4 behaviour, not something this mission needs to account for separately.
 - On completing the last waypoint, with no landing/RTL/loiter item following, PX4 automatically enters Hold behaviour at that position and altitude - per `docs/engineering/flight-modes.md` Section 4.7's documented end-of-mission behaviour.
 
-**Mission validity (`MIS_TKO_LAND_REQ` = 2, PX4's fixed-wing default, requires a landing pattern):** this mission has no landing pattern, which would normally cause PX4 to reject it ("Mission rejected: landing pattern required"). `RTL_TYPE` was changed from 1 to 0 on 2026-10-02 specifically to avoid this - PX4's landing-pattern requirement only applies when Return mode might need to use one, and `RTL_TYPE` = 0 never does. This reasoning is based on PX4's documented behaviour and a matching community report (same symptom, same fix), not a confirmed test on this aircraft - **re-upload the mission in QGroundControl and confirm it is accepted with no rejection message before relying on it in flight** (open item, see Section 6).
+**Mission validity (`MIS_TKO_LAND_REQ` = 2, PX4's fixed-wing default, requires a landing pattern):** this mission has no landing pattern, which would normally cause PX4 to reject it ("Mission rejected: landing pattern required"). `RTL_TYPE` was changed from 1 to 0 on 2026-10-02 specifically to avoid this - PX4's landing-pattern requirement only applies when Return mode might need to use one, and `RTL_TYPE` = 0 never does. This reasoning is based on PX4's documented behaviour and a matching community report (same symptom, same fix), not a confirmed test on this aircraft - **re-upload the mission in QGroundControl and confirm it is accepted with no rejection message before relying on it in flight** (open item, see Section 7).
 
-## 5. Loiter / Position-Hold Radius Reference
+## 6. Loiter / Position-Hold Radius Reference
 
 Answering the "radius of position hold" question directly - all three values below are confirmed applied (NAV-08, via a direct QGroundControl parameter export, 2026-10-02):
 
@@ -106,22 +119,23 @@ Answering the "radius of position hold" question directly - all three values bel
 | `RTL_LOITER_RAD` | 50 m | Loiter circle radius at the Return destination (home), specifically during Return mode |
 | `NAV_MIN_LTR_ALT` | 40 m (provisional) | Minimum altitude before loitering in Hold mode, measured above the home position (not AMSL or terrain-following AGL - confirmed against PX4's own source parameter description) |
 
-Both loiter radii are independent parameters - Hold mode and Return mode could be set to different radii if ever needed - but are set to the same 50 m here. Both the previous 80 m and the current 50 m radii sit comfortably inside the BNEMAC field's approximately 300 m radius; the tightening is for a smaller, easier-to-observe circle, not containment (that's the polygon geofence, Section 4). 50 m was checked for bank-angle/stall-margin safety before adopting it: PX4 flies the loiter at `FW_AIRSPD_TRIM` (20 m/s), and a 50 m radius at that speed needs about 39 degrees of bank, comfortably under the configured `FW_R_LIM` ceiling of 50 degrees, with the resulting in-turn stall speed (about 12.5 m/s) still well under `FW_AIRSPD_MIN` (15 m/s).
+Both loiter radii are independent parameters - Hold mode and Return mode could be set to different radii if ever needed - but are set to the same 50 m here. Both the previous 80 m and the current 50 m radii sit comfortably inside the BNEMAC field's approximately 300 m radius; the tightening is for a smaller, easier-to-observe circle, not containment (that's the polygon geofence, Section 5). 50 m was checked for bank-angle/stall-margin safety before adopting it: PX4 flies the loiter at `FW_AIRSPD_TRIM` (20 m/s), and a 50 m radius at that speed needs about 39 degrees of bank, comfortably under the configured `FW_R_LIM` ceiling of 50 degrees, with the resulting in-turn stall speed (about 12.5 m/s) still well under `FW_AIRSPD_MIN` (15 m/s).
 
-## 6. Open Items
+## 7. Open Items
 
 - Wind/gust limits for this campaign are not yet defined anywhere in the project - needs a number (or a rule, e.g. relative to `FW_AIRSPD_MIN`) before Flight 1.
 - Abort criteria (when to abandon a flight, or a specific phase) are not yet defined.
 - Safe-altitude values are placeholders in Section 3 - need Julian's figures for each phase (general flying, stall testing specifically, Position Hold/RTL/auto-tune testing).
-- The mission's acceptance by PX4 (no "Mission rejected" message after the `RTL_TYPE` change) has not been confirmed - see Section 4.
+- The mission's acceptance by PX4 (no "Mission rejected" message after the `RTL_TYPE` change) has not been confirmed - see Section 5.
 - No RC AUX switch is configured to abort auto-tune directly (Phase H) - not required, since a flight-mode change aborts it regardless, but Julian may want one anyway.
 
 Tracked in `context/open-items.md`.
 
-## 7. Revision History
+## 8. Revision History
 
 | Rev | Date | Description |
 |---|---|---|
 | 0.1 | 2026-10-02 | Initial draft, based on Julian's description of the flight test campaign: hand-launch only, Flight 1 airworthiness-only (Acro launch/land, Manual check at altitude), later flights covering stall, climb/thrust, glide, Acro, Stabilized, Position Hold, and Return to Home. Answered the position-hold-radius question (`NAV_LOITER_RAD`). Several open items (wind limits, abort criteria, safe altitudes, test site, flight grouping) flagged pending Julian's input |
 | 0.2 | 2026-10-02 | Confirmed the test site (BNEMAC field, Fitzgibbon, approximately 300 m radius), resolving that open item. Added NAV-08: tighten `NAV_LOITER_RAD`/`RTL_LOITER_RAD` to 50 m (checked against bank-angle/stall-margin limits) and set `NAV_MIN_LTR_ALT` to 40 m provisional, pending a site survey confirming no obstacle at the field exceeds that height. Updated Section 5's reference table to show current vs proposed values |
 | 0.3 | 2026-10-02 | Confirmed RF-06/PWR-04/NAV-08 applied via a parameter export; Section 5 now shows confirmed values, not proposals. Restructured Sections 3-4 from discrete flights into a single-flight, ordered-phase profile per Julian (no requirement to land between tests). Added Phase H (PID auto-tune, CTL-02) and Phase J (Mission mode) with a new Section 4 detailing the uploaded mission: verified all waypoints and home fall inside the polygon geofence, documented PX4's end-of-mission Hold behaviour, and flagged that `RTL_TYPE`'s change to 0 (needed because the mission has no landing pattern) has not yet been confirmed via an actual re-upload/acceptance test |
+| 0.4 | 2026-10-02 | Added, per Julian: an attitude-limit observation note in Phases A/B/G/I (`FW_MAN_R_MAX`/`FW_MAN_P_MAX`/`FW_R_LIM`/`FW_P_LIM_MAX`/`FW_P_LIM_MIN` are all still PX4's untuned generic defaults - feeds CTL-02), an explicit adverse-yaw observation applying across every phase (feeds CTL-07, previously only stated in `docs/project/build-checklist.md`), and a new Section 4 (Post-Flight): disarm confirmation, battery voltage/cell check given the no-BMS Li-ion pack, flight log download/review, and recording completed vs remaining phases. Renumbered Sections 4-7 to 5-8 accordingly |
