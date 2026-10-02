@@ -47,17 +47,17 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embed
 
 | Parameter | Value | Notes |
 |---|---|---|
-| `GPS_1_CONFIG` | 202 (physical GPS2 UART port) | Assigns GPS driver instance 1 to the physical GPS2 port, where the ZED-F9P is wired - a deliberate instance/port swap made 2026-09-02 so the RTK-capable receiver is the primary-numbered instance. Physical wiring unchanged. |
+| `GPS_1_CONFIG` | 202 (physical GPS2 UART port) | Assigns GPS driver instance 1 to the physical GPS2 port, where the ZED-F9P is wired - a deliberate instance/port swap so the RTK-capable receiver is the primary-numbered instance. First recorded 2026-09-02; the earliest log with this configuration is actually timestamped 2026-08-31. Physical wiring unchanged. |
 | `GPS_1_PROTOCOL` | 1 (u-blox) | Matches the ZED-F9P (now instance 1). |
 | `GPS_1_GNSS` | 31 | Constellation mask for instance 1 (ZED-F9P). |
-| `GPS_2_CONFIG` | 201 (physical GPS1 UART port) | Assigns GPS driver instance 2 to the physical GPS1 port, where the M8N is wired. Enabled 2026-09-02 (previously 0/Disabled). |
+| `GPS_2_CONFIG` | 201 (physical GPS1 UART port) | Assigns GPS driver instance 2 to the physical GPS1 port, where the M8N is wired. Enabled by the same change as `GPS_1_CONFIG` above (previously 0/Disabled, 2026-07-04 to about 2026-08-31, pending the ZED-F9P's mount and antenna). The M8N has not logged any data since this change - see NAV-06. |
 | `GPS_2_PROTOCOL` | 1 (u-blox) | Matches the M8N (now instance 2). |
 | `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N). |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
 GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference.
 
-**Correction, 2026-10-02:** NAV-05 was closed 2026-09-02 on "both receivers confirmed achieving a GPS lock," but no log evidence supports this for instance 2 (the M8N). Every flight log checked, from the 2026-08-19 GPS install through 2026-10-02, including logs from 2026-09-02 itself, shows zero `sensor_gps` samples for instance 2 - only the ZED-F9P (instance 1) has ever produced data. See the reopened NAV-05 (`docs/project/build-checklist.md`) and `context/open-items.md`.
+**Correction, 2026-10-02:** NAV-05 was closed 2026-09-02 on "both receivers confirmed achieving a GPS lock," but no log evidence supports this for instance 2 (the M8N) after the instance swap. The M8N worked correctly as instance 1 from installation through 2026-08-19; the swap to this port/instance arrangement took effect by 2026-08-31 (not 2026-09-02 as first recorded here); from the first post-swap log onward, instance 2 has never logged a single `sensor_gps` sample, through 2026-10-02. See the reopened NAV-06 (`docs/project/build-checklist.md`) and `context/open-items.md`.
 
 ## Serial Ports
 
