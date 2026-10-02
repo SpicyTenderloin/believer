@@ -5,6 +5,7 @@ All notable changes to the Believer project repo are logged here, most recent fi
 ## 2026-10-02
 
 - Julian confirmed the U5 KV400 physical swap is done and proposed raising `PWM_MAIN_MAX4`/`MAX6` back to 2000 to close PROP-08. Flagged that this only holds once the U5s are installed (not the MN3110s), and confirmed the parameter has not yet been set (pending an export) and that only a quick bench spin-up check is planned, not a full sustained in-aircraft run. Updated PROP-08 (`docs/project/build-checklist.md`, status to In progress, ceiling change recorded as planned, acceptance criteria revised to name the evidence it will rest on) and `context/open-items.md`/`context/project-notes.md` accordingly. Not yet closed.
+- Calculated the mass change for the MN3110-to-U5 swap from both motors' official specifications (T-Motor datasheet/store page): +152g for the pair excluding cables, +192g including the supplied 600mm leads. Recorded a recommended +190g (0.19kg) estimate for `WEIGHT_BASE`/`WEIGHT_GROSS` in `context/open-items.md`, pending Julian weighing the actual installed pair for an exact figure.
 
 ## 2026-09-30
 
