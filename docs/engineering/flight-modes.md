@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.10 |
+| **Revision** | 1.11 |
 | **Date** | 2026-10-02 |
 | **Status** | Draft |
 
@@ -63,7 +63,7 @@ These three parameters scale stick-to-actuator commands **specifically in full M
 
 **Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault. An informal bench comparison narrowed it to Acro mode specifically - consistent with the hypothesis that its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate (integral windup), driving a surface to its endpoint well before the stick reaches full travel - but this has not yet been confirmed via CTL-08's formal, logged Manual-mode test. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
 
-Used during ground functional checks (`docs/operations/manual.md` step 21-22) and as the emergency direct-control fallback. Not used for launch.
+Used during ground functional checks (`docs/operations/manual.md` step 26-27) and as the emergency direct-control fallback. Not used for launch.
 
 ### 4.2 Acro
 
@@ -199,3 +199,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.8 | 2026-09-26 | Updated Section 6 (Open Items): removed the resolved CG item (AF-01) and the stale static-thrust/throttle-mapping item (PROP-02/PROP-06, closed 2026-09-02), replaced with the motor PWM ceiling item (PROP-08). Corrected the document header, which had not been bumped for Rev 1.7 |
 | 1.9 | 2026-09-26 | Section 5 (Failsafe Interactions): added the low-battery row - `COM_LOW_BAT_ACT` is 0 (Warning), so the battery thresholds take no automatic action, which the document previously did not show |
 | 1.10 | 2026-10-02 | Section 5 (Failsafe Interactions): flagged the data-link-loss row as pending a change from 0 (Disabled) to 2 (Return), per Julian's decision that both RC and data-link loss should return the aircraft home and hold - tracked as RF-06, not yet applied to the live parameter |
+| 1.11 | 2026-10-02 | Updated the Section 4.1 cross-reference to `docs/operations/manual.md`'s ground functional checks step numbers (21-22 to 26-27), following a pre-flight checklist expansion that added five new steps ahead of them |
