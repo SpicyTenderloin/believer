@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `believer-parameters.params` (exported 2026-09-02), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
+Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embedded parameter set in flight log `02_23_32.ulg`, `G:\log\2026-10-02` - not a direct QGroundControl file export, but the same underlying vehicle parameter dump; previous export was 2026-09-02), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
 
 ---
 
@@ -11,6 +11,7 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | Parameter | Value | Notes |
 |---|---|---|
 | `SYS_AUTOSTART` | 2100 | Generic Fixed Wing airframe. |
+| `WEIGHT_BASE` / `WEIGHT_GROSS` | 4.0 (kg) | Aircraft mass, used to scale `FW_AIRSPD_MIN`/`STALL`/`TRIM` when both are above zero (CTL-09). First set to 3.8 on 2026-09-26 against the measured all-up weight with the MN3110 KV700 motors (no export was taken at that value, so it does not appear in the parameter history below). Updated to 4.0 on 2026-10-02 following the T-Motor U5 KV400 motor swap (PROP-11): +0.19 kg calculated from both motors' official datasheet/store-page masses including the supplied leads (+192g for the pair, rounded), not an independent weighing of the installed pair. |
 
 ## Board
 
@@ -23,7 +24,8 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | Parameter | Value | Notes |
 |---|---|---|
 | `SENS_EN_INA228` | 1 (Enabled) | Enables the INA228 driver for battery voltage and current telemetry via the Holybro PM03D. |
-| `BAT1_N_CELLS` | 6 | Fitted battery is a 6S pack: a custom 6S4P Li-ion pack (24 NCR20700A cells) from 2026-09-26, previously a Turnigy 6S LiPo. `BAT1_CAPACITY` (-1) and `BAT1_V_EMPTY` (3.6V/cell) are still at LiPo-style defaults and have not been reviewed for the Li-ion pack; `BAT1_V_CHARGED` (4.05V/cell) is the PX4 default and also its recommended Li-ion value. |
+| `BAT1_N_CELLS` | 6 | Fitted battery is a 6S pack: a custom 6S4P Li-ion pack (24 NCR20700A cells) from 2026-09-26, previously a Turnigy 6S LiPo. `BAT1_CAPACITY` (-1) is still at the LiPo-style default and has not been reviewed for the Li-ion pack - set it from the measured capacity once a capacity test completes, not from the cell datasheet, as cell authenticity is unverified; `BAT1_V_CHARGED` (4.05V/cell) is the PX4 default and also its recommended Li-ion value, confirmed intentionally left unchanged 2026-09-26 after an earlier proposal to raise it was withdrawn. |
+| `BAT1_V_EMPTY` | 3.2 (V/cell) | Changed from the LiPo-style default (3.6V/cell) on 2026-09-26 for the Li-ion pack. PX4's docs give 3.0V (conservative, no load) and 2.7V (under load) as generic Li-ion values; about 3.3V was proposed, deliberately higher given the pack has no BMS and cell group 2 is a resistance outlier, but 3.2V is the value actually applied. |
 | `BAT_CRIT_THR` | 0.100 (10%) | Critical battery threshold. PX4 default (7%) was raised to reduce risk of in-flight power loss. Only raises a warning while `COM_LOW_BAT_ACT` is 0. |
 | `BAT_LOW_THR` | 0.200 (20%) | Low battery warning threshold. PX4 default (15%) was raised to give more margin. Briefly lowered to 12% on 2026-08-19 to silence the warning during bench testing on a partially depleted pack; reset to 20% - the archived backup reflects the intended 20% value. |
 | `COM_LOW_BAT_ACT` | 0 (Warning) | Action taken at the low/critical/emergency battery thresholds. PX4 default: warnings only, no automatic mode change. |
@@ -33,6 +35,7 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | Parameter | Value | Notes |
 |---|---|---|
 | `COM_PREARM_MODE` | 2 (Always) | Set 2026-08-19 to allow actuating flight control surfaces while disarmed (e.g. from the Actuators page). |
+| `COM_DISARM_LAND` | -1 (Disabled) | Auto-disarm on landing detection, disabled. A false landing-detector trigger was seen during bench full-throttle testing (2026-09-02) with the aircraft held still at high throttle - a state that resembles the pre-throw phase of the assisted hand launch. Julian decided, 2026-09-26, to keep this at -1 through the maiden flight rather than restore the PX4 default, with a manual disarm (CH5) after landing - see `docs/operations/manual.md` steps 16 and 40-42. To be revisited after the maiden flight. |
 
 ## Sensors
 
@@ -52,7 +55,9 @@ Values reflect `believer-parameters.params` (exported 2026-09-02), in this same 
 | `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N). |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
-GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference. Both receivers were confirmed achieving a GPS lock under this configuration on 2026-09-02 (`docs/project/build-checklist.md` NAV-05).
+GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference.
+
+**Correction, 2026-10-02:** NAV-05 was closed 2026-09-02 on "both receivers confirmed achieving a GPS lock," but no log evidence supports this for instance 2 (the M8N). Every flight log checked, from the 2026-08-19 GPS install through 2026-10-02, including logs from 2026-09-02 itself, shows zero `sensor_gps` samples for instance 2 - only the ZED-F9P (instance 1) has ever produced data. See the reopened NAV-05 (`docs/project/build-checklist.md`) and `context/open-items.md`.
 
 ## Serial Ports
 
@@ -111,7 +116,7 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `PWM_MAIN_MAX3` / `MAX5` | 2000 | Left/right aileron maximum PWM. Remeasured 2026-09-02, see above - supersedes the previous asymmetric values (1760/1900). |
 | `PWM_MAIN_DIS1-3`, `DIS5` | 1500 | V-tail and aileron disarmed position, reset to plain neutral 2026-09-02 now that endpoints are no longer being used to approximate differential (previously 1520/1550 for the ailerons). |
 | `PWM_MAIN_MIN4` / `MIN6` | 1000 | Motor min PWM (both motors). Set to a common 1000-2000us range following the MN3110 KV700/AIR 40A install (PROP-04): first seen in the flight logs on 2026-07-26 (minimum at 06:33 UTC, maximum at 06:35 UTC) and recorded in the 2026-08-19 export. |
-| `PWM_MAIN_MAX4` / `MAX6` | 1800 | Motor max PWM (both motors). Lowered from 2000 on 2026-09-02 (PROP-08) as a throttle ceiling to keep sustained current draw within the MN3110 KV700's 21A/motor continuous rating - based on a 2026-09-02 thrust-test log correlation showing ~42A total (~21A/motor) at ~1800-1809us PWM. Not yet confirmed via a dedicated sustained-run test. |
+| `PWM_MAIN_MAX4` / `MAX6` | 2000 | Motor max PWM (both motors). Lowered from 2000 to 1800 on 2026-09-02 (PROP-08) as a throttle ceiling to keep sustained current draw within the MN3110 KV700's 21A/motor continuous rating - based on a 2026-09-02 thrust-test log correlation showing ~42A total (~21A/motor) at ~1800-1809us PWM. Never confirmed via a dedicated sustained-run test at 1800us before the left MN3110 failed during a bench simulated flight on 2026-09-26, about 6s after the command reached 1800us (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). Raised back to 2000 on 2026-10-02 following the T-Motor U5 KV400 motor swap (PROP-11), which has much greater current margin on this propeller; confirmed via a 2026-10-02 ground test showing 29.4 to 30.9A total (about 15.5A/motor) at full throttle, well under the U5's 30A rating (`docs/engineering/test-reports/2026-10-02-u5-first-ground-test.md`). |
 | `PWM_MAIN_REV` | 6 (0b00000110) | Output reversal bitmask: bits 1 and 2 set = MAIN 2 (V-tail right) and MAIN 3 (left aileron) reversed. Changed from 5 (0b00000101, MAIN 1 + MAIN 3) on 2026-07-06 as part of the ruddervator direction fix. |
 
 PWM limits and disarmed values per output are documented in `docs/engineering/ICD.md` (INT-02a through INT-02f).
@@ -138,36 +143,38 @@ Full roll/pitch/yaw torque and trim per surface documented in `docs/engineering/
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Values from 2026-09-02 calibration run (accelerometer and magnetometer unchanged from 2026-08-19; barometer and gyroscope refreshed).
+Set automatically by QGroundControl calibration procedures. Do not edit manually. Last explicit calibration wizard run on record: 2026-09-02 (barometer and gyroscope refreshed; accelerometer and magnetometer unchanged from 2026-08-19 at that time). Values below are the current snapshot from the 2026-10-02 flight log.
+
+Accelerometer and gyroscope offsets drift slightly between sessions as PX4 refines its sensor bias estimate and are not evidence of a new calibration wizard run. The magnetometer scale and off-diagonal (soft-iron) terms, by contrast, are only set by the compass calibration wizard - the values below differ enough from the 2026-09-02 figures that a recalibration most likely happened since then (not confirmed with Julian; possibly prompted by the motor swap changing the magnetic environment near the compass).
 
 ### Accelerometers
 
 | Parameter | Value |
 |---|---|
-| `CAL_ACC0_XOFF` | -0.038727 |
+| `CAL_ACC0_XOFF` | -0.056746 |
 | `CAL_ACC0_XSCALE` | 1.000000 |
-| `CAL_ACC0_YOFF` | -0.099023 |
+| `CAL_ACC0_YOFF` | 0.024873 |
 | `CAL_ACC0_YSCALE` | 1.000000 |
-| `CAL_ACC0_ZOFF` | 0.033304 |
+| `CAL_ACC0_ZOFF` | -0.007639 |
 | `CAL_ACC0_ZSCALE` | 1.000000 |
-| `CAL_ACC1_XOFF` | 0.013993 |
+| `CAL_ACC1_XOFF` | 0.001716 |
 | `CAL_ACC1_XSCALE` | 1.006686 |
-| `CAL_ACC1_YOFF` | -0.006627 |
+| `CAL_ACC1_YOFF` | 0.052749 |
 | `CAL_ACC1_YSCALE` | 1.008823 |
-| `CAL_ACC1_ZOFF` | -0.416441 |
+| `CAL_ACC1_ZOFF` | -0.445785 |
 | `CAL_ACC1_ZSCALE` | 1.006260 |
-| `CAL_ACC2_XOFF` | -0.030444 |
+| `CAL_ACC2_XOFF` | -0.049781 |
 | `CAL_ACC2_XSCALE` | 1.000000 |
-| `CAL_ACC2_YOFF` | -0.087356 |
+| `CAL_ACC2_YOFF` | -0.056505 |
 | `CAL_ACC2_YSCALE` | 1.000000 |
-| `CAL_ACC2_ZOFF` | 0.032989 |
+| `CAL_ACC2_ZOFF` | 0.015966 |
 | `CAL_ACC2_ZSCALE` | 1.000000 |
 
 ### Barometer
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 11.148 |
+| `CAL_BARO0_OFF` | 21.375 |
 
 ### Gyroscopes
 
@@ -179,9 +186,9 @@ Set automatically by QGroundControl calibration procedures. Do not edit manually
 | `CAL_GYRO1_XOFF` | 0.001345 |
 | `CAL_GYRO1_YOFF` | -0.003667 |
 | `CAL_GYRO1_ZOFF` | -0.012162 |
-| `CAL_GYRO2_XOFF` | -0.006622 |
-| `CAL_GYRO2_YOFF` | -0.024987 |
-| `CAL_GYRO2_ZOFF` | -0.021735 |
+| `CAL_GYRO2_XOFF` | -0.005363 |
+| `CAL_GYRO2_YOFF` | -0.020081 |
+| `CAL_GYRO2_ZOFF` | -0.018169 |
 
 ### Magnetometers
 
@@ -189,34 +196,34 @@ Full 6-point calibration with soft-iron correction (odiag values non-zero). CAL_
 
 | Parameter | Value |
 |---|---|
-| `CAL_MAG0_XOFF` | 0.054209 |
-| `CAL_MAG0_XSCALE` | 0.999952 |
-| `CAL_MAG0_XODIAG` | -0.006632 |
-| `CAL_MAG0_YOFF` | -0.012623 |
-| `CAL_MAG0_YSCALE` | 0.984097 |
-| `CAL_MAG0_YODIAG` | -0.001033 |
-| `CAL_MAG0_ZOFF` | -0.470882 |
-| `CAL_MAG0_ZSCALE` | 1.017748 |
-| `CAL_MAG0_ZODIAG` | 0.007716 |
-| `CAL_MAG1_XOFF` | 0.032173 |
-| `CAL_MAG1_XSCALE` | 1.019465 |
+| `CAL_MAG0_XOFF` | 0.051436 |
+| `CAL_MAG0_XSCALE` | 0.992538 |
+| `CAL_MAG0_XODIAG` | 0.002145 |
+| `CAL_MAG0_YOFF` | -0.009498 |
+| `CAL_MAG0_YSCALE` | 0.952398 |
+| `CAL_MAG0_YODIAG` | 0.001746 |
+| `CAL_MAG0_ZOFF` | -0.483485 |
+| `CAL_MAG0_ZSCALE` | 1.053555 |
+| `CAL_MAG0_ZODIAG` | 0.000519 |
+| `CAL_MAG1_XOFF` | 0.032647 |
+| `CAL_MAG1_XSCALE` | 0.991834 |
 | `CAL_MAG1_XODIAG` | 0.016254 |
-| `CAL_MAG1_YOFF` | -0.093901 |
-| `CAL_MAG1_YSCALE` | 0.998253 |
+| `CAL_MAG1_YOFF` | -0.094028 |
+| `CAL_MAG1_YSCALE` | 0.967848 |
 | `CAL_MAG1_YODIAG` | 0.001022 |
-| `CAL_MAG1_ZOFF` | -0.032018 |
-| `CAL_MAG1_ZSCALE` | 1.088623 |
+| `CAL_MAG1_ZOFF` | -0.037444 |
+| `CAL_MAG1_ZSCALE` | 1.100714 |
 | `CAL_MAG1_ZODIAG` | 0.168101 |
 
 ### Board level
 
 | Parameter | Value |
 |---|---|
-| `SENS_BOARD_X_OFF` | 1.571581 |
-| `SENS_BOARD_Y_OFF` | -2.146216 |
+| `SENS_BOARD_X_OFF` | 0.921337 |
+| `SENS_BOARD_Y_OFF` | -2.053439 |
 
 ### Airspeed
 
 | Parameter | Value |
 |---|---|
-| `SENS_DPRES_OFF` | 48.834885 |
+| `SENS_DPRES_OFF` | 50.373566 |

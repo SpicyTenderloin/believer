@@ -345,6 +345,28 @@ The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02),
 **Scope**
 - Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air; check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient.
 
+### NAV-06 - Secondary GPS (M8N) producing no data
+
+- [ ] **Status:** Not started
+- **Priority:** URGENT
+- **Depends on:** None
+
+**Scope**
+- Diagnose why GPS driver instance 2 (the M8N, physical GPS1 UART port) has never logged a single `sensor_gps` sample, in any flight log checked from the 2026-08-19 install through 2026-10-02 - including 2026-09-02, the date NAV-05 was closed on the understanding that both receivers had achieved a lock. The primary receiver (ZED-F9P, instance 1) works well throughout (3D fix, up to 29 satellites).
+- Check: the physical wiring/connector at the GPS1 port (nothing was intentionally touched there during the U5 motor swap, but worth checking for a disturbed connector); the module's own fix/power LED; `SER_GPS1_BAUD` against the M8N's actual baud rate; whether the module responds at all when connected directly (e.g. via u-blox u-center over USB-to-serial), independent of the Pixhawk.
+- Swap the M8N onto the GPS2 port temporarily (with the ZED-F9P moved to GPS1) to determine whether the fault follows the port or the module.
+
+**Acceptance criteria**
+- Either the M8N is confirmed producing `sensor_gps` data in a flight log, or a root cause is identified and a decision recorded (e.g. accept single-GPS operation for now, repair, or replace the module).
+- Result logged as a dated entry under `docs/engineering/test-reports/` or in `context/project-notes.md`.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Raised 2026-10-02 after Julian reported not getting GPS data from "the M10" - the project's records show a NEO-M8N, not an M10, so this may be a naming slip or an unrecorded module change; not yet confirmed. Checking the SD card logs found `sensor_gps` instance 1 (device ID 11141181, the ZED-F9P) present with a good fix in every log checked, and instance 2 (the M8N's instance, per `GPS_2_CONFIG` = 201/physical GPS1 port) entirely absent - zero samples - in every log from 2026-08-19 to 2026-10-02, including the day NAV-05 was closed. NAV-05's closure note ("both receivers confirmed achieving a lock, 2026-09-02") is therefore not supported by log evidence and has been corrected in Completed Work; whether that confirmation was a visual QGroundControl check that was itself mistaken, or the M8N worked briefly and then stopped, is unknown. GPS parameter values themselves (`GPS_1_CONFIG`/`GPS_2_CONFIG`/`GNSS` masks) are unchanged between the 2026-09-02 and 2026-10-02 parameter exports, so this does not look like a configuration regression - more likely a wiring, power, or hardware fault that may have been present from the start.
+
+</details>
+
 ---
 
 ## F. RC, Telemetry and RF
@@ -432,11 +454,11 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 
 ### Navigation and air-data sensors
 - [x] Airspeed sensor calibration - MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port
-- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port (now PX4 GPS driver instance 2, following the 2026-09-02 instance swap - see below)
+- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port (now PX4 GPS driver instance 2, following the 2026-09-02 instance swap - see below). **Note (2026-10-02):** configuration is set, but this receiver has not actually been confirmed producing data - see NAV-06 below
 - [x] Pitot system installation - pitot tube installed and tubing routed (temporary mount - permanent mount tracked under NAV-01)
 - [x] External mount for ZED-F9P - mounting bracket installed to allow antenna installation, 2026-08-28 (NAV-03)
 - [x] GPS 2 antenna installation - antenna fitted to the SparkFun ZED-F9P RTK breakout, 2026-08-28 (NAV-04)
-- [x] GPS 2 (ZED-F9P) configuration and validation - protocol/GNSS settings configured; GPS driver instance 1 deliberately swapped to the ZED-F9P (physical GPS2 UART port) so QGroundControl's primary GPS status display (which reads instance 1) reflects the RTK-capable receiver rather than the M8N; both receivers confirmed achieving a lock, 2026-09-02 (NAV-05)
+- [x] GPS 2 (ZED-F9P) configuration and validation - protocol/GNSS settings configured; GPS driver instance 1 deliberately swapped to the ZED-F9P (physical GPS2 UART port) so QGroundControl's primary GPS status display (which reads instance 1) reflects the RTK-capable receiver; the ZED-F9P itself is confirmed achieving a lock with a strong satellite count (2026-09-02; reconfirmed in every log since, including 2026-10-02) (NAV-05). **Correction (2026-10-02):** this was originally closed on "both receivers confirmed achieving a lock" - that claim is not supported by any log checked; see NAV-06
 
 ### RC, telemetry and RF
 - [x] RC link installation - RC receiver installed and configured with antennas
