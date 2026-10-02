@@ -101,7 +101,7 @@ Intended safe startup condition, to be verified before every flight:
 21. Confirm sufficient battery capacity remains for the planned flight.
 22. Confirm the home position is set correctly in QGroundControl. This is the point the aircraft will return to on an RTL or failsafe event.
 23. Confirm `NAV_RCL_ACT` reads 2 and `NAV_DLL_ACT` reads 2 (RC loss and data-link loss both trigger Return), and that `RTL_TYPE` reads 1 and `RTL_LAND_DELAY` reads -1 (Return goes to the home position confirmed in the previous step and holds there rather than landing automatically).
-24. Confirm the geofence is loaded and active in QGroundControl, and that the breach action is set to Return.
+24. Confirm the geofence is loaded and active in QGroundControl: `GF_ACTION` reads 3 (Return), `GF_MAX_VER_DIST` reads 120 m, and `GF_MAX_HOR_DIST` is set to a radius appropriate for the current flight site rather than 0 (disabled) - see NAV-07.
 25. Confirm RC link signal quality (RSSI) is good in QGroundControl before proceeding.
 
 ### Ground functional checks (propellers removed)
