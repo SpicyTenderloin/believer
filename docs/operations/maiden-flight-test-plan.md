@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | FTP-BELIEVER-001 |
-| **Revision** | 0.4 |
+| **Revision** | 0.5 |
 | **Date** | 2026-10-02 |
 | **Status** | Draft |
 
@@ -20,8 +20,7 @@ Per Julian, 2026-10-02: the intent is to complete as many of the test phases bel
 - Crew: a pilot (GX12) and a handler, per `docs/operations/manual.md`.
 - The full pre-flight checklist in `docs/operations/manual.md` must be completed before every flight in this campaign, including the parameter-confirmation steps (`NAV_RCL_ACT`/`NAV_DLL_ACT`/`RTL_TYPE`/`RTL_LAND_DELAY`, `COM_LOW_BAT_ACT`, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`/`NAV_MIN_LTR_ALT`, geofence, battery chemistry).
 - RF-06, PWR-04, and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. A maiden-flight mission and polygon geofence are uploaded (Section 5).
-- Wind limits: TBD - see Section 7.
-- Abort criteria: TBD - see Section 7.
+- **Wind limits, abort criteria, and the safe altitude for each phase are deliberately not fixed in this document.** Per Julian, 2026-10-02: set these on the day, taking BNEMAC's on-site advice rather than a pre-determined number.
 
 ## 3. Flight Profile (single flight, battery/conditions permitting)
 
@@ -38,7 +37,7 @@ If a landing is needed partway through (battery, conditions, an issue, or simply
 **Note:** Acro has no attitude (bank/pitch) limit, only rate limits (`FW_ACRO_X/Y/Z_MAX` = 90/90/45 deg/s) - unlike Stabilized, nothing stops the aircraft rolling or looping if commanded to. Keep stick inputs measured during this phase.
 
 1. Hand-launch in Acro mode (GR1 SW2).
-2. Climb to a safe altitude [TBD - see Section 7] and confirm stable, controllable flight in Acro across all three axes.
+2. Climb to a safe altitude (set on the day per BNEMAC's advice - see Section 2) and confirm stable, controllable flight in Acro across all three axes.
 3. Switch to Manual mode; confirm the aircraft responds correctly and predictably to stick input (direct control, no self-levelling). This is the aircraft's first in-flight Manual-mode check, building on the ground-only check already done under CTL-08.
 4. Return to Acro.
 
@@ -123,9 +122,6 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 
 ## 7. Open Items
 
-- Wind/gust limits for this campaign are not yet defined anywhere in the project - needs a number (or a rule, e.g. relative to `FW_AIRSPD_MIN`) before Flight 1.
-- Abort criteria (when to abandon a flight, or a specific phase) are not yet defined.
-- Safe-altitude values are placeholders in Section 3 - need Julian's figures for each phase (general flying, stall testing specifically, Position Hold/RTL/auto-tune testing).
 - The mission's acceptance by PX4 (no "Mission rejected" message after the `RTL_TYPE` change) has not been confirmed - see Section 5.
 - No RC AUX switch is configured to abort auto-tune directly (Phase H) - not required, since a flight-mode change aborts it regardless, but Julian may want one anyway.
 
@@ -139,3 +135,4 @@ Tracked in `context/open-items.md`.
 | 0.2 | 2026-10-02 | Confirmed the test site (BNEMAC field, Fitzgibbon, approximately 300 m radius), resolving that open item. Added NAV-08: tighten `NAV_LOITER_RAD`/`RTL_LOITER_RAD` to 50 m (checked against bank-angle/stall-margin limits) and set `NAV_MIN_LTR_ALT` to 40 m provisional, pending a site survey confirming no obstacle at the field exceeds that height. Updated Section 5's reference table to show current vs proposed values |
 | 0.3 | 2026-10-02 | Confirmed RF-06/PWR-04/NAV-08 applied via a parameter export; Section 5 now shows confirmed values, not proposals. Restructured Sections 3-4 from discrete flights into a single-flight, ordered-phase profile per Julian (no requirement to land between tests). Added Phase H (PID auto-tune, CTL-02) and Phase J (Mission mode) with a new Section 4 detailing the uploaded mission: verified all waypoints and home fall inside the polygon geofence, documented PX4's end-of-mission Hold behaviour, and flagged that `RTL_TYPE`'s change to 0 (needed because the mission has no landing pattern) has not yet been confirmed via an actual re-upload/acceptance test |
 | 0.4 | 2026-10-02 | Added, per Julian: an attitude-limit observation note in Phases A/B/G/I (`FW_MAN_R_MAX`/`FW_MAN_P_MAX`/`FW_R_LIM`/`FW_P_LIM_MAX`/`FW_P_LIM_MIN` are all still PX4's untuned generic defaults - feeds CTL-02), an explicit adverse-yaw observation applying across every phase (feeds CTL-07, previously only stated in `docs/project/build-checklist.md`), and a new Section 4 (Post-Flight): disarm confirmation, battery voltage/cell check given the no-BMS Li-ion pack, flight log download/review, and recording completed vs remaining phases. Renumbered Sections 4-7 to 5-8 accordingly |
+| 0.5 | 2026-10-02 | Per Julian: wind limits, abort criteria, and each phase's safe altitude are deliberately left unfixed in this document rather than given placeholder numbers - to be set on the day, taking BNEMAC's on-site advice. Removed the corresponding open items and the "[TBD]" placeholder in Phase A step 2 |
