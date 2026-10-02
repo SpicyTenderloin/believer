@@ -345,50 +345,6 @@ The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02),
 **Scope**
 - Verify the pitot tube protrudes sufficiently ahead of the airframe to sample undisturbed freestream air; check for interference from the fuselage, wing, or other structure; reposition if clearance is insufficient.
 
-### NAV-06 - Secondary GPS (M8N) producing no data
-
-- [ ] **Status:** Not started
-- **Priority:** URGENT
-- **Depends on:** None
-
-**Scope**
-- Diagnose why the M8N has produced no GPS data as PX4 GPS driver instance 2 since the 2026-08-19/08-31 instance swap (see Background for the corrected timeline - this is not a problem present since the original install, and the M8N is confirmed previously working).
-- Check for physical disturbance around the GPS1 port and its connector, since the module was last confirmed alive on 2026-08-19 and was found completely silent in the very first log after the instance swap, with no intermediate working period logged - whatever happened, happened in that window, most plausibly during the swap session itself or physical work around it.
-- **2026-10-02:** Julian reports the module's own LED and buzzer are active, so it has power and appears to be running internally - this rules out a completely dead or unpowered module and points toward the UART data path (the module's TX wire to the Pixhawk's RX pin, or the connector between them) rather than the module itself. Confirm the LED's exact behaviour (off/solid/blinking, and blink rate) against the module's documentation - a blink around 1 Hz typically means it already has its own 3D fix, which would mean the GNSS engine is fine and only the link to the Pixhawk is broken.
-- **Recommended first diagnostic step:** connect the M8N module directly to a computer via a USB-to-serial adapter and u-blox u-center, bypassing the Pixhawk entirely. This separates "the module itself has a problem" from "the wiring or the Pixhawk side is the problem" in one test, and is especially informative now that the module appears to be running.
-- If the module streams clean data to u-center, check continuity on the TX wire from the module to the Pixhawk's GPS1 RX pin specifically, and the connector at both ends, before suspecting the module again.
-- If the module responds fine stand-alone, swap it onto the GPS2 port temporarily (with the ZED-F9P moved to GPS1) to determine whether the fault follows the port or the module - this would also test whether PX4 has some issue specifically assigning this module to instance 2 rather than instance 1 (untested hypothesis).
-
-**Acceptance criteria**
-- Either the M8N is confirmed producing `sensor_gps` data in a flight log, or a root cause is identified and a decision recorded (e.g. accept single-GPS operation for now, repair, or replace the module).
-- Result logged as a dated entry under `docs/engineering/test-reports/` or in `context/project-notes.md`.
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised 2026-10-02 after Julian reported not getting GPS data from "the M10" - confirmed with Julian the same day that this is the project's NEO-M8N, not a different module; naming resolved.
-
-**Corrected timeline, 2026-10-02 (later).** Claude's first pass checked logs only from 2026-08-19 onward and concluded the M8N had never logged data in that window, extrapolating (wrongly) that it might never have worked. Julian pushed back, recalling dual-GPS MAVLink messages in the past. A full scan of all 326 logs on the SD card confirmed he was right and found the real picture:
-- **2026-06-02 to 2026-07-03:** both GPS instances present and logging in every file checked. Instance 1 (`GPS_1_CONFIG` = 201, physical GPS1 port, device ID 11010053) is the M8N, getting real fixes (up to 13 satellites). Instance 2 (`GPS_2_CONFIG` = 202, physical GPS2 port, device ID 11141181) is the ZED-F9P, present but with no fix (0 satellites) since its antenna was not yet installed.
-- **2026-07-04:** `GPS_2_CONFIG` deliberately set to 0 (Disabled) - documented at the time as "ZED-F9P port disabled until antenna and mount are installed." This explains the apparent loss of the second GPS stream from this date; it is not a fault. The M8N (still instance 1) continues alone.
-- **2026-08-19:** M8N (instance 1, device ID 11010053) still alive and logging, though with no fix in these particular logs (consistent with bench testing indoors, not evidence of a problem).
-- **Between 2026-08-19 and 2026-08-31:** the ZED-F9P's mount and antenna were fitted (NAV-03/04, 2026-08-28) and the GPS instance swap was made - `GPS_1_CONFIG` to 202 (ZED-F9P) and `GPS_2_CONFIG` to 201 (M8N), so QGroundControl's primary GPS display would reflect the RTK-capable receiver. The parameter backup and change log recorded this as a 2026-09-02 change; the earliest post-swap logs found are dated 2026-08-31 09:40 UTC, so it was actually made a day or two earlier than recorded.
-- **From the very first log after the swap (2026-08-31 09:40 UTC) through 2026-10-02:** the ZED-F9P (now instance 1) works perfectly. The M8N (now instance 2) has not logged a single sample - not a gradual degradation, and no log shows it working even briefly as instance 2. This is a ~75-day span including the date NAV-05 was closed on "both receivers confirmed achieving a lock" (2026-09-02), which has no log support and has been corrected in Completed Work.
-
-The fault therefore dates specifically to the instance-swap change (or physical work done around the same time, such as the ZED-F9P mount/antenna installation), not to the original 2026-08-19-or-earlier install, and not to anything done during the later U5 motor swap.
-
-**Likely cause found, 2026-10-02 (later): `GPS_2_GNSS` mask.** Comparing the M8N's own parameter values from when it last worked (2026-07-03, as `GPS_1_*`) against its current values (as `GPS_2_*`) shows `GPS_1_CONFIG` = 201 then and `GPS_2_CONFIG` = 201 now (same), `GPS_1_PROTOCOL` = 1 then and `GPS_2_PROTOCOL` = 1 now (same), but `GPS_1_GNSS` = **0** then against `GPS_2_GNSS` = **29** now. The value 29 was not newly chosen for the M8N - it is the exact value the ZED-F9P's slot had before the swap (`GPS_2_GNSS` = 29 on 2026-07-03, when that slot was the F9P). The swap moved the physical module each slot controls but carried the GNSS mask value positionally, so the M8N inherited a constellation-request value that was only ever tested against the more capable F9P, while the F9P's own slot was separately bumped to 31. The M8N had GNSS requests left at 0 for the entire period it is confirmed working, and has never been tested with an active GNSS request.
-
-**Confirmed against PX4's documentation, 2026-10-02:** the `GPS_x_GNSS` bitmask is bit 0 = GPS+QZSS (1), bit 1 = SBAS (2), bit 2 = Galileo (4), bit 3 = BeiDou (8), bit 4 = GLONASS (16); "when no bits are set, the receiver's default configuration should be used" - so 0 means PX4 sends no GNSS configuration command at all and leaves the module on its own factory default. 29 = 16+8+4+1 = GPS+Galileo+BeiDou+GLONASS concurrently (all but SBAS) - four constellations at once. PX4's own docs warn to check the receiver's concurrent-system limit, and a basic NEO-M8N (not a high-precision multi-band module) typically supports at most 3 concurrent GNSS systems, not 4. Requesting a combination the module cannot satisfy is a plausible reason its UBX-CFG-GNSS handshake with PX4 would fail outright, while the module's own receiver and fix engine (and so its LED and buzzer) keep running regardless, since those do not depend on that command succeeding.
-
-**Test to run:** set `GPS_2_GNSS` back to 0, leaving `GPS_2_CONFIG` and `GPS_2_PROTOCOL` as they are (both already match the M8N's last-known-working values). This is the one parameter that differs between "worked" and "doesn't work," so it is the first and cheapest thing to try before any wiring or module-level diagnosis.
-
-**Parameter review, 2026-10-02:** checked every M8N-relevant parameter in the current (post-swap) configuration against PX4's documentation and found nothing obviously wrong. `GPS_2_CONFIG` = 201 and `GPS_2_PROTOCOL` = 1 (u-blox) match the documented port/protocol assignment and are unchanged since the swap. `SER_GPS1_BAUD` = 0 (auto-detect), the normal default, not a fixed mismatched rate. `GPS_UBX_BAUD2` = 230400, PX4's own default - and this parameter only configures the ZED-F9P's second UART for RTCM relay, so it does not touch the M8N at all. `GPS_2_GNSS` = 29 against `GPS_1_GNSS` = 31 for the (more capable) ZED-F9P - one fewer constellation enabled for the M8N, which reads as a deliberate accommodation of a simpler module's lower concurrent-GNSS capability rather than a mistake, and this value is also unchanged since the swap. None of this rules out a subtler PX4-side fault specific to how instance 2 initialises, but combined with the fault's precise timing (coincident with the swap, not gradual) it is at least as plausible that something was physically disturbed during that session as that the module itself failed independently.
-
-</details>
-
-</details>
-
 ---
 
 ## F. RC, Telemetry and RF
@@ -476,11 +432,12 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 
 ### Navigation and air-data sensors
 - [x] Airspeed sensor calibration - MS4525DO calibrated; pitot connected to Pixhawk 6X I2C port
-- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port (now PX4 GPS driver instance 2, following the 2026-08-31/09-02 instance swap - see below). **Note (2026-10-02):** worked and logged real fixes as instance 1 from installation through 2026-08-19, but has produced no data at all as instance 2, from the very first log after the swap through 2026-10-02 - see NAV-06 below
+- [x] GPS 1 (M8N) configuration - M8N configured on the physical GPS1 UART port (now PX4 GPS driver instance 2, following the 2026-08-31/09-02 instance swap - see below). Produced no data at all as instance 2 from the swap through 2026-10-02 (NAV-06); root cause found and fixed 2026-10-02 - see NAV-06 in Completed Work below
 - [x] Pitot system installation - pitot tube installed and tubing routed (temporary mount - permanent mount tracked under NAV-01)
 - [x] External mount for ZED-F9P - mounting bracket installed to allow antenna installation, 2026-08-28 (NAV-03)
 - [x] GPS 2 antenna installation - antenna fitted to the SparkFun ZED-F9P RTK breakout, 2026-08-28 (NAV-04)
-- [x] GPS 2 (ZED-F9P) configuration and validation - protocol/GNSS settings configured; GPS driver instance 1 deliberately swapped to the ZED-F9P (physical GPS2 UART port) so QGroundControl's primary GPS status display (which reads instance 1) reflects the RTK-capable receiver; the ZED-F9P itself is confirmed achieving a lock with a strong satellite count from the first post-swap log (2026-08-31) onward, reconfirmed in every log since including 2026-10-02 (NAV-05). **Correction (2026-10-02):** this was originally closed on "both receivers confirmed achieving a lock" - no log shows the M8N (instance 2) ever producing data after this swap; see NAV-06
+- [x] Secondary GPS (M8N) producing no data (NAV-06) - closed 2026-10-02. The M8N produced no `sensor_gps` data as instance 2 from the 2026-08-31 GPS instance swap through 2026-10-02, despite working correctly as instance 1 beforehand (see the GPS 1 bullet above) - contradicting NAV-05's original closure note. Root cause: `GPS_2_GNSS` (the GNSS constellation mask) had been left at 29 - the ZED-F9P's old value from before the swap, requesting four concurrent constellations (GPS+Galileo+BeiDou+GLONASS), more than a basic NEO-M8N can typically satisfy - rather than reset to the M8N's own last-working value of 0 (no active request, module default). Julian's report that the module's LED and buzzer were active (powered, running) had already pointed away from a dead module and toward the GNSS handshake. Reverted `GPS_2_GNSS` to 0; confirmed fixed the same day - the M8N now logs a 3D fix with up to 15 satellites as instance 2. Full timeline and diagnosis in `context/project-notes.md` and the parameter history in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
+- [x] GPS 2 (ZED-F9P) configuration and validation - protocol/GNSS settings configured; GPS driver instance 1 deliberately swapped to the ZED-F9P (physical GPS2 UART port) so QGroundControl's primary GPS status display (which reads instance 1) reflects the RTK-capable receiver; the ZED-F9P itself is confirmed achieving a lock with a strong satellite count from the first post-swap log (2026-08-31) onward, reconfirmed in every log since including 2026-10-02 (NAV-05). **Correction (2026-10-02):** this was originally closed on "both receivers confirmed achieving a lock," which was wrong - the M8N (instance 2) produced no data after this swap until a separate fault was found and fixed the same day (NAV-06, above)
 
 ### RC, telemetry and RF
 - [x] RC link installation - RC receiver installed and configured with antennas

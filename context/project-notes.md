@@ -482,4 +482,12 @@ Julian then asked for the M8N's parameters from when it last worked as GPS1, mea
 
 Recorded as the leading, testable hypothesis in NAV-06 (`docs/project/build-checklist.md`) and the `GPS_2_GNSS` row in `parameter-change-log.md`: Julian is reverting `GPS_2_GNSS` to 0 while keeping the module on the GPS2 slot, as he prefers. Not yet confirmed either way.
 
+## NAV-06 Confirmed Fixed - 2026-10-02 (later)
+
+Julian set `GPS_2_GNSS` to 0 (deselecting every constellation checkbox in QGroundControl) and confirmed it fixed the M8N. Checked the next logs on the SD card (`G:\log\2026-10-02`, boot after 04:00 UTC): `04_02_14.ulg` still shows the old `GPS_2_GNSS` = 29 with only the ZED-F9P logging; from `04_09_00.ulg` onward `GPS_2_GNSS` = 0 and the M8N (instance 2, device ID 11010053) logs a solid 3D fix with up to 15 satellites - its best recorded fix count ever, better than the up-to-13 it achieved before the 2026-08-31 swap. NAV-06 closed in `docs/project/build-checklist.md` (moved to Completed Work with the full diagnosis); the matching open item removed from `context/open-items.md`.
+
+While closing it out, found and fixed a pre-existing formatting bug in `docs/project/build-checklist.md`: an orphaned extra `</details>` tag just after NAV-06's own background section, left over from an earlier edit this session, with no matching `<details>` - removed along with the rest of the now-closed NAV-06 block.
+
+Regenerated `believer-parameters.params` from the confirmed-fixed log (`04_09_42.ulg`) and updated `parameter-change-log.md`'s `GPS_2_GNSS` row and the calibration tables (routine accelerometer/gyroscope/barometer/magnetometer drift, `COM_FLIGHT_UUID` incremented - nothing else of note changed).
+
 See [open-items.md](open-items.md) for what's still missing.

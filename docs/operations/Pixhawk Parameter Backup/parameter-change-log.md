@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embedded parameter set in flight log `02_23_32.ulg`, `G:\log\2026-10-02` - not a direct QGroundControl file export, but the same underlying vehicle parameter dump; previous export was 2026-09-02), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
+Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embedded parameter set in flight log `04_09_42.ulg`, `G:\log\2026-10-02` - not a direct QGroundControl file export, but the same underlying vehicle parameter dump), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
 
 ---
 
@@ -52,7 +52,7 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embed
 | `GPS_1_GNSS` | 31 | Constellation mask for instance 1 (ZED-F9P). |
 | `GPS_2_CONFIG` | 201 (physical GPS1 UART port) | Assigns GPS driver instance 2 to the physical GPS1 port, where the M8N is wired. Enabled by the same change as `GPS_1_CONFIG` above (previously 0/Disabled, 2026-07-04 to about 2026-08-31, pending the ZED-F9P's mount and antenna). The M8N has not logged any data since this change - see NAV-06. |
 | `GPS_2_PROTOCOL` | 1 (u-blox) | Matches the M8N (now instance 2). |
-| `GPS_2_GNSS` | 29 | Constellation mask for instance 2 (M8N): bit 0 GPS+QZSS (1), bit 1 SBAS (2), bit 2 Galileo (4), bit 3 BeiDou (8), bit 4 GLONASS (16) - 29 = GPS+Galileo+BeiDou+GLONASS (all but SBAS), four systems concurrently. **Suspected cause of NAV-06, 2026-10-02:** this is the exact value the ZED-F9P's slot had before the 2026-08-31 instance swap - it appears to have carried over positionally rather than being chosen for the M8N, a basic receiver that typically supports at most 3 concurrent GNSS systems, not 4. The M8N's own value when last confirmed working (2026-07-03, as `GPS_1_GNSS`) was 0, meaning PX4 sends no GNSS configuration command and the module runs its own default. Reverting this value to 0 is the test recommended in NAV-06 before any wiring or module-level diagnosis. |
+| `GPS_2_GNSS` | 0 | Constellation mask for instance 2 (M8N): bit 0 GPS+QZSS (1), bit 1 SBAS (2), bit 2 Galileo (4), bit 3 BeiDou (8), bit 4 GLONASS (16); 0 means PX4 sends no GNSS configuration command and the module runs its own default. **Fixed NAV-06, 2026-10-02:** previously 29 (GPS+Galileo+BeiDou+GLONASS, four systems concurrently) - the ZED-F9P's old value, carried over positionally by the 2026-08-31 instance swap rather than chosen for the M8N, a basic receiver that likely could not satisfy a four-constellation request. Reverted to 0, matching the M8N's last confirmed-working value (2026-07-03); confirmed fixed the same day - the M8N now logs a 3D fix with up to 15 satellites as instance 2. |
 | `GPS_UBX_DYNMODEL` | 8 (Airborne <4g) | u-blox dynamic platform model. Prevents fixed-wing flight dynamics from being filtered as unrealistic. |
 
 GPS driver instance numbers (1/2) are independent of, and as of 2026-09-02 deliberately decoupled from, the physical UART port numbers (GPS1/GPS2) - see `docs/engineering/ICD.md` INT-05/INT-06 for the full instance-vs-port cross-reference.
@@ -174,7 +174,7 @@ Accelerometer, gyroscope and barometer offsets also drift slightly between sessi
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 21.375 |
+| `CAL_BARO0_OFF` | 16.641 |
 
 ### Gyroscopes
 
@@ -186,9 +186,9 @@ Accelerometer, gyroscope and barometer offsets also drift slightly between sessi
 | `CAL_GYRO1_XOFF` | 0.001345 |
 | `CAL_GYRO1_YOFF` | -0.003667 |
 | `CAL_GYRO1_ZOFF` | -0.012162 |
-| `CAL_GYRO2_XOFF` | -0.005363 |
-| `CAL_GYRO2_YOFF` | -0.020081 |
-| `CAL_GYRO2_ZOFF` | -0.018169 |
+| `CAL_GYRO2_XOFF` | -0.000613 |
+| `CAL_GYRO2_YOFF` | -0.011437 |
+| `CAL_GYRO2_ZOFF` | -0.015591 |
 
 ### Magnetometers
 
@@ -205,13 +205,13 @@ Full 6-point calibration with soft-iron correction (odiag values non-zero). CAL_
 | `CAL_MAG0_ZOFF` | -0.483485 |
 | `CAL_MAG0_ZSCALE` | 1.053555 |
 | `CAL_MAG0_ZODIAG` | 0.000519 |
-| `CAL_MAG1_XOFF` | 0.032647 |
+| `CAL_MAG1_XOFF` | 0.039665 |
 | `CAL_MAG1_XSCALE` | 0.991834 |
 | `CAL_MAG1_XODIAG` | 0.016254 |
-| `CAL_MAG1_YOFF` | -0.094028 |
+| `CAL_MAG1_YOFF` | -0.076878 |
 | `CAL_MAG1_YSCALE` | 0.967848 |
 | `CAL_MAG1_YODIAG` | 0.001022 |
-| `CAL_MAG1_ZOFF` | -0.037444 |
+| `CAL_MAG1_ZOFF` | -0.037748 |
 | `CAL_MAG1_ZSCALE` | 1.100714 |
 | `CAL_MAG1_ZODIAG` | 0.168101 |
 
