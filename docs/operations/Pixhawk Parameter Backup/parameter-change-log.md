@@ -35,7 +35,7 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-02 from the embed
 | Parameter | Value | Notes |
 |---|---|---|
 | `COM_PREARM_MODE` | 2 (Always) | Set 2026-08-19 to allow actuating flight control surfaces while disarmed (e.g. from the Actuators page). |
-| `COM_DISARM_LAND` | -1 (Disabled) | Auto-disarm on landing detection, disabled. A false landing-detector trigger was seen during bench full-throttle testing (2026-09-02) with the aircraft held still at high throttle - a state that resembles the pre-throw phase of the assisted hand launch. Julian decided, 2026-09-26, to keep this at -1 through the maiden flight rather than restore the PX4 default, with a manual disarm (CH5) after landing - see `docs/operations/manual.md` steps 16 and 40-42. To be revisited after the maiden flight. |
+| `COM_DISARM_LAND` | -1 (Disabled) | Auto-disarm on landing detection, disabled. A false landing-detector trigger was seen during bench full-throttle testing (2026-09-02) with the aircraft held still at high throttle - a state that resembles the pre-throw phase of the assisted hand launch. Julian decided, 2026-09-26, to keep this at -1 through the maiden flight rather than restore the PX4 default, with a manual disarm (CH5) after landing - see `docs/operations/manual.md` steps 22 and 48-50. To be revisited after the maiden flight. |
 
 ## Sensors
 
