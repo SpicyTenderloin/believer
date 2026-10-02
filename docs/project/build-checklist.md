@@ -440,7 +440,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 
 | Check | Interval | Last verified | Evidence |
 |---|---|---|---|
-| Propeller retention nuts torqued (LHS reverse-thread confirmed) | Before every flight | TBD | TBD |
+| Propeller retention nuts torqued | Before every flight | TBD | TBD |
 | Motor/ESC inspection-bay cover retention | Before every flight | TBD | TBD |
 | Nacelle fairing retention | Before every flight | TBD | TBD |
 | Avionics bay mounting bolt torque | After maintenance | TBD | TBD |
