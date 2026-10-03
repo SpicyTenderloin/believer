@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FTP-BELIEVER-001 |
-| **Revision** | 0.5 |
-| **Date** | 2026-10-02 |
+| **Revision** | 0.6 |
+| **Date** | 2026-10-03 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -15,6 +15,7 @@ Per Julian, 2026-10-02: the intent is to complete as many of the test phases bel
 
 ## 2. General Conditions
 
+- Planned flight date: Sunday 4 October 2026, 7:30am.
 - Test site: BNEMAC field, Fitzgibbon, approximately 300 m radius.
 - Launch method: assisted hand launch only (not a runway or catapult launch).
 - Crew: a pilot (GX12) and a handler, per `docs/operations/manual.md`.
@@ -51,27 +52,9 @@ At a safe altitude, release the sticks and confirm the aircraft levels itself an
 
 Full-throttle climb from a safe altitude; confirm a positive, adequate climb rate. Ground/bench data gives some confidence ahead of this test - the installed T-Motor U5 KV400 pair measures a static thrust-to-weight ratio of about 0.90-0.95 at the current aircraft mass (`docs/engineering/analysis/powertrain-performance-model.md`) - but static thrust-stand data does not confirm actual climb performance in flight; this test is what actually confirms it.
 
-### Phase D - Glide Performance
+### Phase D - PID Auto-Tune (CTL-02)
 
-At a safe altitude, reduce throttle to idle/zero and confirm the aircraft glides in a controlled, predictable manner (glide ratio, sink rate, and controllability), recovering with power at a pre-agreed minimum recovery altitude.
-
-### Phase E - Stall Speed and Behaviour
-
-In Manual mode (direct control, so the actual aerodynamic stall is observed rather than masked or fought by a closed-loop controller), at a safe altitude with a large recovery margin, progressively reduce airspeed and observe the stall onset (buffet, wing drop, or nose drop) and recovery characteristics. `FW_AIRSPD_STALL` = 11 m/s (from Weishäupl et al. 2024, CTL-10) and the powertrain model's own independent estimate is about 9.4 m/s at 3.8 kg (`docs/engineering/analysis/powertrain-performance-model.md`) - this test is what actually confirms which figure (if either) holds for this airframe at its current mass. Recover immediately at the first sign of a stall; do not hold the stall.
-
-### Phase F - Acro Mode
-
-Already exercised during launch and landing (Phase A); a dedicated altitude check of roll/pitch/yaw rate response can confirm it further if useful.
-
-### Phase G - Position Hold (CH8)
-
-At a safe altitude, engage Position Hold and confirm the aircraft loiters in a circle around the engagement point, holding altitude. Loiter radius `NAV_LOITER_RAD` = 50 m (NAV-08, see Section 6). `NAV_MIN_LTR_ALT` = 40 m provisional means Position Hold climbs to at least 40 m above the home position before loitering if engaged lower - confirmed via the pre-flight site survey (`docs/operations/manual.md` step 5) that no obstacle at the BNEMAC field exceeds that height.
-
-Note whether the loiter's bank angle looks appropriately bounded - `FW_R_LIM`/`FW_P_LIM_MAX`/`FW_P_LIM_MIN` (the roll/pitch ceiling the autopilot uses for this and the other automatic modes) are also still PX4's generic defaults, untuned for the Believer; informs CTL-02 alongside Phase B's observation.
-
-### Phase H - PID Auto-Tune (CTL-02)
-
-Once basic stability is confirmed (Phase A) and ideally with Position Hold already exercised (Phase G, since auto-tune runs in Hold mode):
+Moved here (immediately after Climb), per Julian - the whole point of tuning is to have better gains for the phases that follow, not just for the last few. Prerequisite is basic airworthiness and climb performance (Phases A/C), not Position Hold specifically - Hold mode is engaged for the first time as part of the procedure itself, and the pre-tuning check below is its own safety gate before anything automatic happens.
 
 1. Pre-tuning check: at cruise airspeed, perform roll doublets (left-right-centre) at progressively larger angles, then the same for pitch, confirming the aircraft settles within about 2 oscillations at ~20 degrees. Do not proceed to auto-tune if it doesn't.
 2. Engage Hold mode (CH8) at cruise speed.
@@ -80,11 +63,39 @@ Once basic stability is confirmed (Phase A) and ideally with Position Hold alrea
 5. Abort at any time by changing flight mode (no RC AUX switch is configured for this - not required, since a mode change aborts it regardless).
 6. After completion, confirm stable flight with the new gains before proceeding to other phases.
 
-### Phase I - Return to Home (CH10)
+### Phase E - Cruise Efficiency Sweep
 
-At a safe altitude and distance from home, engage Return and confirm it climbs/descends to `RTL_RETURN_ALT`/`RTL_DESCEND_ALT` (both 100 m), flies directly to the home position (`RTL_TYPE` = 0), and loiters there at `RTL_LOITER_RAD` = 50 m rather than landing automatically (`RTL_LAND_DELAY` = -1). This is also the behaviour `NAV_RCL_ACT`/`NAV_DLL_ACT` trigger automatically on an actual RC or data-link loss (RF-06) - deliberately triggering a real RC or data-link failure in flight to test that path is not proposed; CH10 exercises the same Return mode logic without the risk of an actual link failure. The same bank-angle observation as Phase G applies to the Return turn.
+At a safe, constant altitude, fly straight and level at a series of fixed airspeeds (or throttle settings), holding each steady for long enough to stabilize (speed, altitude, trim) before moving to the next. This measures actual power required versus airspeed for this airframe, rather than relying only on the powertrain model's calculated prediction - best range at 13.0-13.5 m/s, best endurance at 10.5 m/s but impractically close to stall (`docs/engineering/analysis/powertrain-performance-model.md`).
 
-### Phase J - Mission Mode (GR1 SW6)
+Suggested span: from a few m/s above `FW_AIRSPD_STALL` (11 m/s) up to around `FW_AIRSPD_TRIM` (20 m/s), including a point near the model's predicted 13.0-13.5 m/s optimum.
+
+**Mode note:** points at or above `FW_AIRSPD_MIN` (15 m/s) can be held hands-off in Altitude mode (TECS holds airspeed and altitude, now using the gains from Phase D). The model's predicted best-range speed (13.0-13.5 m/s) is below `FW_AIRSPD_MIN`, so Altitude/Stabilized modes won't command it there - points below 15 m/s must be flown in Manual mode, with the pilot holding level flight and airspeed by feel.
+
+Post-flight, extract airspeed/throttle/battery current and voltage from the log at each held point (Section 4) to compute power required at each speed and check whether the minimum falls where the model predicts.
+
+### Phase F - Glide Performance
+
+At a safe altitude, reduce throttle to idle/zero and confirm the aircraft glides in a controlled, predictable manner (glide ratio, sink rate, and controllability), recovering with power at a pre-agreed minimum recovery altitude.
+
+### Phase G - Stall Speed and Behaviour
+
+In Manual mode (direct control, so the actual aerodynamic stall is observed rather than masked or fought by a closed-loop controller), at a safe altitude with a large recovery margin, progressively reduce airspeed and observe the stall onset (buffet, wing drop, or nose drop) and recovery characteristics. `FW_AIRSPD_STALL` = 11 m/s (from Weishäupl et al. 2024, CTL-10) and the powertrain model's own independent estimate is about 9.4 m/s at 3.8 kg (`docs/engineering/analysis/powertrain-performance-model.md`) - this test is what actually confirms which figure (if either) holds for this airframe at its current mass. Recover immediately at the first sign of a stall; do not hold the stall.
+
+### Phase H - Acro Mode
+
+Already exercised during launch and landing (Phase A); a dedicated altitude check of roll/pitch/yaw rate response can confirm it further if useful.
+
+### Phase I - Position Hold (CH8)
+
+At a safe altitude, engage Position Hold and confirm the aircraft loiters in a circle around the engagement point, holding altitude. Loiter radius `NAV_LOITER_RAD` = 50 m (NAV-08, see Section 6). `NAV_MIN_LTR_ALT` = 40 m provisional means Position Hold climbs to at least 40 m above the home position before loitering if engaged lower - confirmed via the pre-flight site survey (`docs/operations/manual.md` step 5) that no obstacle at the BNEMAC field exceeds that height.
+
+Note whether the loiter's bank angle looks appropriately bounded - `FW_R_LIM`/`FW_P_LIM_MAX`/`FW_P_LIM_MIN` (the roll/pitch ceiling the autopilot uses for this and the other automatic modes) are also still PX4's generic defaults, untuned for the Believer; informs CTL-02 alongside Phase B's observation. By this point the auto-tune result (Phase D) is already applied, so this reflects the tuned behaviour, not the original defaults.
+
+### Phase J - Return to Home (CH10)
+
+At a safe altitude and distance from home, engage Return and confirm it climbs/descends to `RTL_RETURN_ALT`/`RTL_DESCEND_ALT` (both 100 m), flies directly to the home position (`RTL_TYPE` = 0), and loiters there at `RTL_LOITER_RAD` = 50 m rather than landing automatically (`RTL_LAND_DELAY` = -1). This is also the behaviour `NAV_RCL_ACT`/`NAV_DLL_ACT` trigger automatically on an actual RC or data-link loss (RF-06) - deliberately triggering a real RC or data-link failure in flight to test that path is not proposed; CH10 exercises the same Return mode logic without the risk of an actual link failure. The same bank-angle observation as Phase I applies to the Return turn.
+
+### Phase K - Mission Mode (GR1 SW6)
 
 See Section 5 for the mission itself. At a safe point once already airborne and stable, select Mission mode (GR1 SW6) and confirm the aircraft tracks the uploaded waypoint pattern correctly (turns, altitude hold at 40 m) and stays inside the polygon geofence. On completing the last waypoint, the aircraft will automatically enter Hold behaviour at that position (there is no landing item in the mission) - confirm this happens as expected, then switch back to a manual mode. The mission is not used for an actual autonomous landing; the pilot resumes manual control and lands per the normal procedure.
 
@@ -92,7 +103,7 @@ See Section 5 for the mission itself. At a safe point once already airborne and 
 
 - Confirm the aircraft is disarmed per `docs/operations/manual.md` (steps 51-53).
 - Check the battery voltage (and per-cell if the charger/balance lead makes this practical) before disconnecting. The custom Li-ion pack has no BMS, so nothing else confirms no cell dropped dangerously low during the flight - compare against the cell datasheet's discharge end voltage (2.5 V/cell) and the configured `BAT1_V_EMPTY` (3.2 V/cell).
-- Download and review the flight log (QGroundControl or the SD card): check for any failsafe triggers, EKF warnings, or sustained motor current near the rating, and record the performance data gathered in Phases C-J (climb rate, observed stall speed, loiter/turn bank angle, auto-tune result, mission tracking) against the open items in Section 7.
+- Download and review the flight log (QGroundControl or the SD card): check for any failsafe triggers, EKF warnings, or sustained motor current near the rating, and record the performance data gathered in Phases C-K (climb rate, cruise-sweep power-vs-airspeed data, observed stall speed, loiter/turn bank angle, auto-tune result, mission tracking) against the open items in Section 7.
 - Record which phases were completed and which remain for a subsequent flight.
 
 ## 5. Mission Mode Detail
@@ -101,9 +112,11 @@ A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-missi
 
 **Structure:** one `NAV_TAKEOFF` item followed by 31 `NAV_WAYPOINT` items, all at 40 m relative altitude (`MAV_FRAME_GLOBAL_RELATIVE_ALT`), tracing a closed pattern. No landing item, no RTL item, no loiter-unlimited item at the end. A single inclusion polygon geofence (10 vertices) is uploaded with it; no circles, no rally points.
 
+![QGroundControl Plan view of the maiden mission, waypoint pattern and polygon geofence](../assets/maiden-mission-plan.png)
+
 **Verified:**
 - All 32 mission items and the home position fall inside the polygon (checked programmatically against the actual coordinates).
-- Since this mission will only be engaged while already airborne (Phase J, not from a ground start), PX4 treats the takeoff item as a normal waypoint rather than attempting an autonomous takeoff - this is documented PX4 behaviour, not something this mission needs to account for separately.
+- Since this mission will only be engaged while already airborne (Phase K, not from a ground start), PX4 treats the takeoff item as a normal waypoint rather than attempting an autonomous takeoff - this is documented PX4 behaviour, not something this mission needs to account for separately.
 - On completing the last waypoint, with no landing/RTL/loiter item following, PX4 automatically enters Hold behaviour at that position and altitude - per `docs/engineering/flight-modes.md` Section 4.7's documented end-of-mission behaviour.
 
 **Mission validity (`MIS_TKO_LAND_REQ` = 2, PX4's fixed-wing default, requires a landing pattern):** this mission has no landing pattern, which would normally cause PX4 to reject it ("Mission rejected: landing pattern required"). `RTL_TYPE` was changed from 1 to 0 on 2026-10-02 specifically to avoid this - PX4's landing-pattern requirement only applies when Return mode might need to use one, and `RTL_TYPE` = 0 never does. This reasoning is based on PX4's documented behaviour and a matching community report (same symptom, same fix), not a confirmed test on this aircraft - **re-upload the mission in QGroundControl and confirm it is accepted with no rejection message before relying on it in flight** (open item, see Section 7).
@@ -123,6 +136,7 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 ## 7. Open Items
 
 - The mission's acceptance by PX4 (no "Mission rejected" message after the `RTL_TYPE` change) has not been confirmed - see Section 5.
-- No RC AUX switch is configured to abort auto-tune directly (Phase H) - not required, since a flight-mode change aborts it regardless, but Julian may want one anyway.
+- No RC AUX switch is configured to abort auto-tune directly (Phase D) - not required, since a flight-mode change aborts it regardless, but Julian may want one anyway.
+- Section 5 references `docs/assets/maiden-mission-plan.png` (a QGroundControl Plan-view screenshot of the mission) - the image does not exist yet. Claude has no screenshot/image-editing capability, so this needs to be added manually.
 
 Tracked in `context/open-items.md`.
