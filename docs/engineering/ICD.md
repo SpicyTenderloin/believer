@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.8 |
-| **Date** | 2026-09-26 |
+| **Revision** | 2.9 |
+| **Date** | 2026-10-03 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -220,6 +220,19 @@ A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled ov
 | CH11 (SE) | Elevator rate switch (`RC_MAP_OFFB_SW` cleared 2026-09-02) | Inverted in EdgeTX; still carries the (now PX4-unmapped) Offboard `mixData` output unchanged. Locally selects the elevator tri-rate curve (100/70/50%, CTL-04) in EdgeTX - clearing `RC_MAP_OFFB_SW` resolves the dual-purpose overlap risk flagged 2026-09-02 |
 | CH12 | Spare / future buzzer or payload | Mixed from SH switch in EdgeTX; no PX4 function currently assigned |
 
+#### Switch Physical Direction and PWM Behaviour
+
+PX4's RC switch functions (Arm/CH5, Kill/CH7, Loiter/CH8, Return/CH10) all use the default `RC_*_TH` = 0.75 threshold (`RC_ARMSWITCH_TH`, `RC_KILLSWITCH_TH`, `RC_LOITER_TH`, `RC_RETURN_TH`, confirmed unchanged in the 2026-10-02 export). Per PX4's source (`getRCSwitchOnOffPosition`, `rc_update.cpp`), the channel's normalized value is rescaled from [-1, 1] to [0, 1] and compared against the threshold, which works out to the function engaging when the raw channel exceeds the channel's own trim by about half its upper half-range - on this aircraft's calibration, approximately 1750us. In practice, since these are simple toggle switches rather than proportional controls, that means **engaged reads close to 2000us and disengaged close to 1000us** for all four.
+
+Physical switch direction (SD = CH5 Arm, SF = CH7 Kill) is confirmed directly from the EdgeTX radio backup's own pre-flight `switchWarning` check and its sound/timer triggers (`docs/operations/GX12 Radio Backup/MODELS/model00.yml`):
+
+| Switch | Up | Down |
+|---|---|---|
+| SD (Arm) | **Disarmed** (EdgeTX's configured safe/startup-expected position) | **Armed** (triggers the "armed" sound and starts the GX12's flight timer) |
+| SF (Kill) | **Kill engaged** | **Kill inactive / normal** (EdgeTX's configured safe/startup-expected position) |
+
+SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/CH11) are not covered by a `switchWarning` entry, so their physical direction is extrapolated from the same up/down pattern as SD/SF rather than independently confirmed: SA down likely engages Loiter (triggers the "loiter" sound at its down position), SC up likely engages Return, and for the tri-rate switches, down is likely 100% (highest rate), middle 70%, up 50% (lowest rate) for both SB and SE. Treat these four as probable, not certain, until checked directly on the physical radio.
+
 ![PX4 Flight Modes / Switch Settings Configuration](../assets/flight-modes-config.png)
 
 #### GX12 Physical Switch Locations
@@ -367,3 +380,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.6 | 2026-09-26 | Updated the power system characteristics table for the custom 6S4P Li-ion flight battery (24 NCR20700A cells) replacing the Turnigy 6S LiPo; capacity recorded as TBD pending a capacity test |
 | 2.7 | 2026-09-26 | Power system characteristics table: recorded that the custom Li-ion battery has no BMS, its 4.10 V per cell charge target, and its charger-measured internal resistance (21.0 mOhm total) |
 | 2.8 | 2026-09-26 | Motor and ESC characteristics: recorded the PETG motor mounts, motor airflow in flight, the ESCs' lack of cooling (enclosed in the wing, no airflow) and unrecorded timing setting, and the left motor failure and left ESC inspection (PROP-11). Replaced the stale ESC thrust-verification paragraph (PROP-02/PROP-06 were closed 2026-09-02) |
+| 2.9 | 2026-10-03 | Added a Switch Physical Direction and PWM Behaviour subsection to the RC Channel Map: documented PX4's `RC_*_TH` = 0.75 switch-engagement threshold from source (`getRCSwitchOnOffPosition`), and confirmed SD (Arm) and SF (Kill) physical up/down direction from the EdgeTX radio backup's own `switchWarning` safe-position check and sound/timer triggers. SA/SC/SB/SE directions are extrapolated from the same pattern, not independently confirmed - flagged as such |
