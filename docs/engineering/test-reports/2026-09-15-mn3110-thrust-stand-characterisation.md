@@ -38,7 +38,7 @@ Supply voltage per run (resting voltage is the voltage before the throttle was r
 
 The voltage sagged by roughly 0.05 V per amp of current in each run. The 11x7" data combines runs that started from different states of charge (23.5V to 25.1V), while the 12x6" runs started between 24.5V and 25.2V. Pooled across runs at matched throttle, the mean loaded voltage was about 0.3 to 0.7V higher for the 12x6" (for example 24.3V against 23.6V at 1600 to 1700 us).
 
-Raw RCbenchmark CSV logs and the MATLAB plotting scripts are held outside the repository, in Julian's MATLAB/QUTAS/Believer/Motor Testing folder (`MN3110_11_7` and `MN3110_12_6` subfolders).
+Raw RCbenchmark CSV logs and the MATLAB plotting scripts are in `docs/engineering/analysis/Motor Testing/` (`MN3110_11_7` and `MN3110_12_6` subfolders), copied in from Julian's MATLAB/QUTAS/Believer/Motor Testing folder, 2026-10-03.
 
 ## Findings
 
