@@ -136,6 +136,5 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 ## 7. Open Items
 
 - The mission's acceptance by PX4 (no "Mission rejected" message after the `RTL_TYPE` change) has not been confirmed - see Section 5.
-- No RC AUX switch is configured to abort auto-tune directly (Phase D) - not required, since a flight-mode change aborts it regardless, but Julian may want one anyway.
 
 Tracked in `context/open-items.md`.

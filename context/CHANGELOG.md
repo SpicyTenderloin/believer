@@ -3,6 +3,7 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-10-10
+- Removed the auto-tune-abort open item from docs/operations/maiden-flight-test-plan.md Section 7, per Julian - flight-mode change aborting auto-tune is already documented in Phase D itself (per PX4's procedure), so no RC AUX switch gap actually exists here.
 - Julian confirmed the SA/SD channel-value logic directly: Loiter active at SA = 100%, Armed at SD = 100%, Disarmed at SD = -100% - consistent with the existing confirmed table. SC (Return) is now the only remaining unconfirmed switch. Updated docs/engineering/ICD.md (Rev 2.11).
 - Fixed both annotated GX12 radio diagrams directly, using Python/Pillow via the Bash tool (available in this environment, contrary to every earlier note here saying this needed to be done manually): `docs/assets/gx12-front-switches.png`'s GR1 mode labels (SW2-SW6, corrected to Acro/Stabilized/Altitude/Position/Mission) and `docs/assets/gx12-top-switches.png`'s SB/SE labels (Flaperon/Offboard to Aileron rate/Elevator rate). Closed the matching `docs/project/build-checklist.md` CTL-04 acceptance criterion and removed the open item tracking this.
 - Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate - matching the 2026-10-03 extrapolation exactly. Updated `docs/engineering/ICD.md` (Rev 2.10) to show these as confirmed; SA (Loiter) and SC (Return) remain unconfirmed extrapolations.
