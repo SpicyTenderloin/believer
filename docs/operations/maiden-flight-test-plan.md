@@ -137,6 +137,5 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 
 - The mission's acceptance by PX4 (no "Mission rejected" message after the `RTL_TYPE` change) has not been confirmed - see Section 5.
 - No RC AUX switch is configured to abort auto-tune directly (Phase D) - not required, since a flight-mode change aborts it regardless, but Julian may want one anyway.
-- Section 5 references `docs/assets/maiden-mission-plan.png` (a QGroundControl Plan-view screenshot of the mission) - the image does not exist yet. Claude has no screenshot/image-editing capability, so this needs to be added manually.
 
 Tracked in `context/open-items.md`.
