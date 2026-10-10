@@ -556,4 +556,8 @@ Method: measured exact pixel bounds of each label box programmatically (box bord
 
 Fixed both images: `docs/assets/gx12-front-switches.png` (GR1 labels SW2-SW6 corrected to Acro/Stabilized/Altitude/Position/Mission, matching `docs/engineering/ICD.md`'s table - this was the staleness found 2026-10-03) and `docs/assets/gx12-top-switches.png` (SB/SE relabelled from Flaperon/Offboard to Aileron rate/Elevator rate, matching their actual PX4-relevant function since `RC_MAP_FLAPS`/`RC_MAP_OFFB_SW` were cleared 2026-09-02). Closed the matching CTL-04 acceptance criterion and removed the open item. Historical CHANGELOG/project-notes entries describing this as manual-only are left as-is (accurate at the time they were written); this entry records that the constraint no longer holds in this session's environment.
 
+## Maiden Mission Confirmed Accepted by PX4 - 2026-10-10
+
+Julian re-uploaded the maiden mission in QGroundControl and confirmed it was accepted with no "Mission rejected" message. This validates the 2026-10-02 `RTL_TYPE` fix (1 to 0) - the mission has no landing pattern, and the theory (based on PX4's documented behaviour and a matching community report, not yet tested on this aircraft at the time) was that `RTL_TYPE` = 0 avoids the mission-feasibility check that would otherwise require one. Confirmed correct. Updated `docs/operations/maiden-flight-test-plan.md` (Section 5 and the now-empty Section 7), `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`, and `context/open-items.md` accordingly.
+
 See [open-items.md](open-items.md) for what's still missing.
