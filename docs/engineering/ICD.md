@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.9 |
-| **Date** | 2026-10-03 |
+| **Revision** | 2.10 |
+| **Date** | 2026-10-10 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -231,7 +231,14 @@ Physical switch direction (SD = CH5 Arm, SF = CH7 Kill) is confirmed directly fr
 | SD (Arm) | **Disarmed** (EdgeTX's configured safe/startup-expected position) | **Armed** (triggers the "armed" sound and starts the GX12's flight timer) |
 | SF (Kill) | **Kill engaged** | **Kill inactive / normal** (EdgeTX's configured safe/startup-expected position) |
 
-SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/CH11) are not covered by a `switchWarning` entry, so their physical direction is extrapolated from the same up/down pattern as SD/SF rather than independently confirmed: SA down likely engages Loiter (triggers the "loiter" sound at its down position), SC up likely engages Return, and for the tri-rate switches, down is likely 100% (highest rate), middle 70%, up 50% (lowest rate) for both SB and SE. Treat these four as probable, not certain, until checked directly on the physical radio.
+SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/CH11) are not covered by a `switchWarning` entry, so their physical direction had to be extrapolated from the same up/down pattern as SD/SF rather than read directly from the file. Julian confirmed the tri-rate switches directly on the physical radio, 2026-10-10, matching that extrapolation exactly:
+
+| Switch | Down | Middle | Up |
+|---|---|---|---|
+| SB (aileron rate) | **100%** (confirmed) | 70% (confirmed) | **50%** (confirmed) |
+| SE (elevator rate) | **100%** (confirmed) | 70% (confirmed) | **50%** (confirmed) |
+
+SA (Loiter) and SC (Return) remain unconfirmed - extrapolation still suggests SA down likely engages Loiter (triggers the "loiter" sound at its down position) and SC up likely engages Return, but these two haven't been checked on the physical radio yet.
 
 ![PX4 Flight Modes / Switch Settings Configuration](../assets/flight-modes-config.png)
 
@@ -381,3 +388,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.7 | 2026-09-26 | Power system characteristics table: recorded that the custom Li-ion battery has no BMS, its 4.10 V per cell charge target, and its charger-measured internal resistance (21.0 mOhm total) |
 | 2.8 | 2026-09-26 | Motor and ESC characteristics: recorded the PETG motor mounts, motor airflow in flight, the ESCs' lack of cooling (enclosed in the wing, no airflow) and unrecorded timing setting, and the left motor failure and left ESC inspection (PROP-11). Replaced the stale ESC thrust-verification paragraph (PROP-02/PROP-06 were closed 2026-09-02) |
 | 2.9 | 2026-10-03 | Added a Switch Physical Direction and PWM Behaviour subsection to the RC Channel Map: documented PX4's `RC_*_TH` = 0.75 switch-engagement threshold from source (`getRCSwitchOnOffPosition`), and confirmed SD (Arm) and SF (Kill) physical up/down direction from the EdgeTX radio backup's own `switchWarning` safe-position check and sound/timer triggers. SA/SC/SB/SE directions are extrapolated from the same pattern, not independently confirmed - flagged as such |
+| 2.10 | 2026-10-10 | Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio, matching the 2.9 extrapolation exactly: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate. Updated the table to show these as confirmed. SA (Loiter) and SC (Return) remain unconfirmed extrapolations |

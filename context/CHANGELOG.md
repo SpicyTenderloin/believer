@@ -3,6 +3,7 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-10-10
+- Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate - matching the 2026-10-03 extrapolation exactly. Updated `docs/engineering/ICD.md` (Rev 2.10) to show these as confirmed; SA (Loiter) and SC (Return) remain unconfirmed extrapolations.
 - Added the actual QGroundControl Plan-view screenshot of the maiden mission to `docs/assets/maiden-mission-plan.png` (Julian pasted it directly into chat after the placeholder link in `docs/operations/maiden-flight-test-plan.md` turned out broken - the file had never actually been added). Removed the two matching open items (test plan Section 7 and `context/open-items.md`) now that the image exists and the link resolves.
 
 ## 2026-10-03
