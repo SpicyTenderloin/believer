@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.10 |
+| **Revision** | 2.11 |
 | **Date** | 2026-10-10 |
 | **Status** | Draft |
 
@@ -238,7 +238,7 @@ SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/
 | SB (aileron rate) | **100%** (confirmed) | 70% (confirmed) | **50%** (confirmed) |
 | SE (elevator rate) | **100%** (confirmed) | 70% (confirmed) | **50%** (confirmed) |
 
-SA (Loiter) and SC (Return) remain unconfirmed - extrapolation still suggests SA down likely engages Loiter (triggers the "loiter" sound at its down position) and SC up likely engages Return, but these two haven't been checked on the physical radio yet.
+Julian also confirmed the channel-value logic for SA and SD directly, 2026-10-10: Loiter is active when the SA channel reads 100%, and SD reads 100% when armed and -100% when disarmed - consistent with the Up/Down table above and with the extrapolated pattern (100% = the "down" position, per SD/SF). SC (Return) remains unconfirmed - extrapolation still suggests SC up likely engages Return, but this hasn't been checked on the physical radio yet.
 
 ![PX4 Flight Modes / Switch Settings Configuration](../assets/flight-modes-config.png)
 
@@ -389,3 +389,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.8 | 2026-09-26 | Motor and ESC characteristics: recorded the PETG motor mounts, motor airflow in flight, the ESCs' lack of cooling (enclosed in the wing, no airflow) and unrecorded timing setting, and the left motor failure and left ESC inspection (PROP-11). Replaced the stale ESC thrust-verification paragraph (PROP-02/PROP-06 were closed 2026-09-02) |
 | 2.9 | 2026-10-03 | Added a Switch Physical Direction and PWM Behaviour subsection to the RC Channel Map: documented PX4's `RC_*_TH` = 0.75 switch-engagement threshold from source (`getRCSwitchOnOffPosition`), and confirmed SD (Arm) and SF (Kill) physical up/down direction from the EdgeTX radio backup's own `switchWarning` safe-position check and sound/timer triggers. SA/SC/SB/SE directions are extrapolated from the same pattern, not independently confirmed - flagged as such |
 | 2.10 | 2026-10-10 | Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio, matching the 2.9 extrapolation exactly: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate. Updated the table to show these as confirmed. SA (Loiter) and SC (Return) remain unconfirmed extrapolations |
+| 2.11 | 2026-10-10 | Julian confirmed the channel-value logic for SA and SD directly: Loiter active at SA = 100%, Armed at SD = 100%, Disarmed at SD = -100% - consistent with the existing Up/Down table. SC (Return) remains the only unconfirmed switch. Also fixed `gx12-front-switches.png` and `gx12-top-switches.png` directly (Python/Pillow, available in this environment) rather than leaving them as a manual-only open item - see the RC Channel Map and CTL-04 in `docs/project/build-checklist.md` |

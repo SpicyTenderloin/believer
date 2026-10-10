@@ -548,4 +548,12 @@ This resolves the "raw CSV logs and MATLAB scripts are outside the repo" caveat 
 
 Noted but not resolved: four of the newly-copied top-level PNGs (`Current vs ESC Signal.png`, `Efficiency vs ESC Signal.png`, `Thrust vs Current.png`, `Thrust vs ESC Signal.png`) are byte-identical duplicates of images already in `docs/assets/` under `mn3110-*.png` names, copied in during an earlier session. Left both copies in place - `docs/assets/` is what the test report's prose actually references, while `docs/engineering/analysis/Motor Testing/` is now a complete, faithful mirror of Julian's working folder - but flagging the duplication so it isn't mistaken for drift later.
 
+## Switch Diagrams Actually Fixed - 2026-10-10
+
+Julian asked for the annotated GX12 radio diagrams to be updated. Every earlier note on this (CHANGELOG, project-notes, open-items, build-checklist CTL-04) said this needed to be done manually, since Claude was assumed to have no image-editing capability. That assumption turned out to be wrong in this environment - Python with Pillow (PIL) is available via the Bash tool here, so the diagrams were fixed directly rather than just flagged again.
+
+Method: measured exact pixel bounds of each label box programmatically (box borders are clean black rectangles, detected via row/column darkness scans), matched the existing font (Arial/Arial Bold) and sizing by test-rendering a box's own unchanged text over itself and comparing, then redrew only the stale label boxes - white-filled interior, new centred text, border and photo untouched. Verified against a full-image render before overwriting the real files.
+
+Fixed both images: `docs/assets/gx12-front-switches.png` (GR1 labels SW2-SW6 corrected to Acro/Stabilized/Altitude/Position/Mission, matching `docs/engineering/ICD.md`'s table - this was the staleness found 2026-10-03) and `docs/assets/gx12-top-switches.png` (SB/SE relabelled from Flaperon/Offboard to Aileron rate/Elevator rate, matching their actual PX4-relevant function since `RC_MAP_FLAPS`/`RC_MAP_OFFB_SW` were cleared 2026-09-02). Closed the matching CTL-04 acceptance criterion and removed the open item. Historical CHANGELOG/project-notes entries describing this as manual-only are left as-is (accurate at the time they were written); this entry records that the constraint no longer holds in this session's environment.
+
 See [open-items.md](open-items.md) for what's still missing.
