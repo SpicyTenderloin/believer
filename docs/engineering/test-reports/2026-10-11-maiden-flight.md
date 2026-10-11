@@ -10,7 +10,7 @@
 
 ## Summary
 
-Two `.ulg` logs were recorded on the day (`G:\log\2026-10-10\`, folder dated by UTC). `22_32_00.ulg` (394.8s) is a ground/RC-range check that never left the ground (altitude varied by 1.1m) and ended with an RC-link-loss failsafe (Hold then RTL) while sitting on the ground - not the maiden flight itself. `23_02_07.ulg` (1487.0s, 24m47s) is the maiden flight: armed, airborne (`Takeoff detected` at t=32.6s), flown through most of the test plan's phases, through a go-around on the first landing attempt (confirmed in the altitude log, see Go-around and Landing below), before landing and disarming at t=1486.0s.
+The maiden flight ran 24m47s (armed to disarmed): airborne (`Takeoff detected`) at t=32.6s, flown through most of the test plan's phases, through a go-around on the first landing attempt (see Go-around and Landing below), before landing and disarming at t=1486.0s. An earlier ground session that day (RC-range check, never left the ground) is not part of this flight and is not covered further in this report.
 
 Per Julian's debrief: the launch itself was marginal (hand-launched from a hill, using all the available elevation to gain flying speed - see Launch below) and the pilot found the aircraft difficult to roll right throughout the flight, worse at higher throttle, suspected to be induced motor torque fighting the roll command since both propellers turn the same direction. Both are addressed below with log evidence. Post-flight inspection also found a loose PDB mount/connector and a bad bearing in the right motor - see Post-Flight Inspection Findings.
 
@@ -47,15 +47,17 @@ The in-flight PID auto-tune (Phase D) was attempted twice and succeeded on the s
 
 ### Launch
 
-Per Julian's debrief: the launch was hand-launched from a hill at the BNEMAC field, and needed all of the elevation the hill afforded to gain enough airspeed to begin climbing - "very touch and go," and it could easily have crashed. Two videos of the launch:
+Per Julian's debrief: the launch was hand-launched from a hill at the BNEMAC field, and needed all of the elevation the hill afforded to gain enough airspeed to begin climbing - "very touch and go," and it could easily have crashed.
 
-<video src="../../assets/flight-footage/maiden-flight-launch-2026-10-11.m4v" controls width="600"></video>
+![Launch](../../assets/flight-footage/maiden-flight-launch-2026-10-11.mp4)
 
-[maiden-flight-launch-2026-10-11.m4v](../../assets/flight-footage/maiden-flight-launch-2026-10-11.m4v)
+![Launch, ground view](../../assets/flight-footage/maiden-flight-launch-ground-view-2026-10-11.mp4)
 
-<video src="../../assets/flight-footage/maiden-flight-launch-ground-view-2026-10-11.mp4" controls width="600"></video>
+The log backs this up directly. Using the moment altitude first leaves the ground as t=0, the aircraft sagged to **3.3m below release height at t=1.6s**, recovered most of the way, sagged a second, shallower time (~1.8m) around t=3.5s, and only settled into a sustained climb from about t=4s:
 
-[maiden-flight-launch-ground-view-2026-10-11.mp4](../../assets/flight-footage/maiden-flight-launch-ground-view-2026-10-11.mp4) (ground view)
+![Launch profile: altitude vs. time, coloured by ground speed, first 10 seconds](../../assets/test-plots/launch-profile-first-10s-2026-10-11.png)
+
+The dip coincides with the lowest ground speed of the window (15.3 m/s at the lowest point) - a real, measurable margin above stall during the few seconds right after release, not just a visual impression.
 
 The climb-rate figure below (about 1.0 m/s average from takeoff) is consistent with this account - a marginal, not comfortable, margin above stall during the initial climb-out. **Decision (Julian): future flights will use a launch dolly instead of a hand launch** - tracked in `context/open-items.md` and cross-referenced against the existing launch-dolly requirements document (`docs/engineering/requirements/launch-dolly-requirements.md`).
 
@@ -113,31 +115,25 @@ No control surface (`MAIN1`/`MAIN2` V-tail, `MAIN3`/`MAIN5` ailerons) was pegged
 
 `navigator` logged "Executing Mission" at t=1112.0s; `nav_state` shows `AUTO_MISSION` from 1112.0s to 1211.1s (99.1s), after which the pilot switched back to Stabilized. No failsafe, geofence breach, or mission-item rejection is recorded during this segment - the mission flew without incident.
 
-**The uploaded mission was replanned on the day and no longer matches the repo's backup.** Julian confirmed the mission was replanned at the field; this flight's own data makes clear the backed-up file (`docs/operations/Pixhawk Mission Backup/maiden-mission.plan`, Section 5 of the test plan) describes the *old* mission, not what actually flew. Rather than guess, the real mission was pulled directly from the Pixhawk's own mission database on the SD card (`G:\dataman`, PX4's persistent binary store for the uploaded mission - not the `log/` folder). PX4's own source (`src/modules/dataman/dataman.{h,cpp}`, `src/modules/navigator/navigation.h`) was fetched to work out the exact on-disk layout, and the resulting parse was cross-checked two ways before being trusted: the computed total file size matched the real file exactly (128,528 bytes), and every parsed waypoint matched the flight's own live telemetry (`navigator_mission_item`) to sub-metre precision.
-
-**The real mission (28 items, not 32):** item 0 is a camera-mode setup command (no coordinates); item 1 is Takeoff; items 2-20 are 19 waypoints, all at **50m relative altitude** (not 40m as the stale backup has it); items 21-25 are a landing-sequence marker plus speed/camera commands (no coordinates); item 26 is a Loiter-to-Alt descent point 405m from the pattern; item 27 is an actual **Land** item. The old backup's "no landing item" description no longer applies to what's on the aircraft.
+**The uploaded mission was replanned at the field and no longer matches the repo's backup.** The real mission (recovered from the Pixhawk's onboard mission storage and cross-checked against the flight's own telemetry to sub-metre precision) has 28 items, not the 32 in `docs/operations/Pixhawk Mission Backup/maiden-mission.plan` (Section 5 of the test plan): item 0 is a camera-mode setup command (no coordinates); item 1 is Takeoff; items 2-20 are 19 waypoints, all at **50m relative altitude** (not 40m as the stale backup has it); items 21-25 are a landing-sequence marker plus speed/camera commands (no coordinates); item 26 is a Loiter-to-Alt descent point 405m from the pattern; item 27 is an actual **Land** item. The old backup's "no landing item" description no longer applies to what's on the aircraft.
 
 ![Planned mission (waypoints 1-20) vs actual flown track, overlaid on Nearmap aerial imagery of the BNEMAC field (captured 2026-06-22)](../../assets/test-plots/mission-mode-planned-vs-actual-2026-10-11.png)
 
 The flown track (green) tracks the real mission (blue) closely - mean deviation 17.7m, well within normal fixed-wing turn/overshoot tolerance. The long diagonal leg from the "Mission-mode engaged" marker (bottom) up to the pattern is expected PX4 behaviour, not an anomaly: the aircraft was already airborne and physically near waypoints 15-17 when Mission mode was engaged, and PX4 resumed at waypoint 2 (the first real waypoint after Takeoff) rather than restarting from the ground - so it had to transit across the pattern to reach it first.
 
-This is a more significant correction than just altitude, and the repo's mission backup, the test plan's Section 5, and anything else describing the old 32-item/40m mission are now known to be stale. Not yet corrected in this pass - flagged in `context/open-items.md` pending a decision on how to regenerate `maiden-mission.plan` from this validated data.
+This is a more significant correction than just altitude, and the repo's mission backup, the test plan's Section 5, and anything else describing the old 32-item/40m mission are now known to be stale. Not yet corrected - flagged in `context/open-items.md` pending a decision on how to regenerate `maiden-mission.plan` from this validated data.
 
 ### Go-around and landing
 
-Julian also provided video of a go-around and of the landing. The altitude log confirms a real go-around near the end of the flight: the aircraft descended to a low approach of about **5.6m AGL around t=1443-1445s**, then climbed back out to about 38m AGL by t=1454.1s, before a second, final approach down to landing (`Landing detected` at t=1482.5s, disarmed at t=1486.0s). The aircraft stayed in Stabilized mode (`nav_state`=15) throughout both the low approach and the climb-out - no mode change is recorded across this window, so the go-around was a pilot stick/throttle decision in Stabilized, not a PX4-triggered behaviour. This is a second, independent data point for the pilot's Stabilized-mode recommendation above - the recovery was flown in the mode the pilot found easiest to control.
+The altitude log confirms a real go-around near the end of the flight: the aircraft descended to a low approach of about **5.6m AGL around t=1443-1445s**, then climbed back out to about 38m AGL by t=1454.1s, before a second, final approach down to landing (`Landing detected` at t=1482.5s, disarmed at t=1486.0s). The aircraft stayed in Stabilized mode (`nav_state`=15) throughout both the low approach and the climb-out - no mode change is recorded across this window, so the go-around was a pilot stick/throttle decision in Stabilized, not a PX4-triggered behaviour. This is a second, independent data point for the pilot's Stabilized-mode recommendation above - the recovery was flown in the mode the pilot found easiest to control.
 
-<video src="../../assets/flight-footage/maiden-flight-go-around-2026-10-11.mp4" controls width="600"></video>
+![Go-around](../../assets/flight-footage/maiden-flight-go-around-2026-10-11.mp4)
 
-[maiden-flight-go-around-2026-10-11.mp4](../../assets/flight-footage/maiden-flight-go-around-2026-10-11.mp4)
-
-<video src="../../assets/flight-footage/maiden-flight-landing-2026-10-11.mp4" controls width="600"></video>
-
-[maiden-flight-landing-2026-10-11.mp4](../../assets/flight-footage/maiden-flight-landing-2026-10-11.mp4)
+![Landing](../../assets/flight-footage/maiden-flight-landing-2026-10-11.mp4)
 
 ### Roll authority asymmetry (same-direction propellers)
 
-Pilot report: the aircraft struggled to roll right, improving at lower throttle; suspected induced motor torque fighting the roll command, since both propellers turn the same direction (confirmed elsewhere in the project's records - this airframe is not contra-rotating). Checked directly against stick input vs. achieved roll rate rather than taking the handedness on faith, since the pilot flagged they might have the direction confused.
+Pilot report: the aircraft struggled to roll right, improving at lower throttle; suspected induced motor torque fighting the roll command, since both propellers turn the same direction (confirmed elsewhere in the project's records - this airframe is not contra-rotating). The pilot flagged they might have the direction confused, so this is checked directly against stick input vs. achieved roll rate below.
 
 **Stick-to-roll-rate sensitivity, Manual/Acro mode** (direct stick-to-surface mapping, not masked by closed-loop rate feedback): for comparable stick deflection magnitude (|stick| > 0.3), positive stick (commands roll right, PX4's standard body-frame sign convention) achieved **32 deg/s of roll rate per unit stick**, while negative stick (roll left) achieved **75 deg/s per unit stick** - more than double the authority in the left direction. This is a large, consistent asymmetry and it matches the pilot's account directly: rolling right takes more stick for less result than rolling left.
 
