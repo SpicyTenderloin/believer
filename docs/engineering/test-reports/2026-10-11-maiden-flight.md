@@ -10,7 +10,7 @@
 
 ## Summary
 
-Two `.ulg` logs were recorded on the day (`G:\log\2026-10-10\`, folder dated by UTC). `22_32_00.ulg` (394.8s) is a ground/RC-range check that never left the ground (altitude varied by 1.1m) and ended with an RC-link-loss failsafe (Hold then RTL) while sitting on the ground - not the maiden flight itself. `23_02_07.ulg` (1487.0s, 24m47s) is the maiden flight: armed, airborne (`Takeoff detected` at t=32.6s), and flown through most of the test plan's phases before landing and disarming at t=1486.0s.
+Two `.ulg` logs were recorded on the day (`G:\log\2026-10-10\`, folder dated by UTC). `22_32_00.ulg` (394.8s) is a ground/RC-range check that never left the ground (altitude varied by 1.1m) and ended with an RC-link-loss failsafe (Hold then RTL) while sitting on the ground - not the maiden flight itself. `23_02_07.ulg` (1487.0s, 24m47s) is the maiden flight: armed, airborne (`Takeoff detected` at t=32.6s), flown through most of the test plan's phases, through a go-around on the first landing attempt (confirmed in the altitude log, see Go-around and Landing below), before landing and disarming at t=1486.0s.
 
 Per Julian's debrief: the launch itself was marginal (hand-launched from a hill, using all the available elevation to gain flying speed - see Launch below) and the pilot found the aircraft difficult to roll right throughout the flight, worse at higher throttle, suspected to be induced motor torque fighting the roll command since both propellers turn the same direction. Both are addressed below with log evidence. Post-flight inspection also found a loose PDB mount/connector and a bad bearing in the right motor - see Post-Flight Inspection Findings.
 
@@ -47,11 +47,15 @@ The in-flight PID auto-tune (Phase D) was attempted twice and succeeded on the s
 
 ### Launch
 
-Per Julian's debrief: the launch was hand-launched from a hill at the BNEMAC field, and needed all of the elevation the hill afforded to gain enough airspeed to begin climbing - "very touch and go," and it could easily have crashed. Video of the launch is at `docs/assets/flight-footage/maiden-flight-launch-2026-10-11.m4v`:
+Per Julian's debrief: the launch was hand-launched from a hill at the BNEMAC field, and needed all of the elevation the hill afforded to gain enough airspeed to begin climbing - "very touch and go," and it could easily have crashed. Two videos of the launch:
 
-<video src="../assets/flight-footage/maiden-flight-launch-2026-10-11.m4v" controls width="600"></video>
+<video src="../../assets/flight-footage/maiden-flight-launch-2026-10-11.m4v" controls width="600"></video>
 
-[maiden-flight-launch-2026-10-11.m4v](../assets/flight-footage/maiden-flight-launch-2026-10-11.m4v)
+[maiden-flight-launch-2026-10-11.m4v](../../assets/flight-footage/maiden-flight-launch-2026-10-11.m4v)
+
+<video src="../../assets/flight-footage/maiden-flight-launch-ground-view-2026-10-11.mp4" controls width="600"></video>
+
+[maiden-flight-launch-ground-view-2026-10-11.mp4](../../assets/flight-footage/maiden-flight-launch-ground-view-2026-10-11.mp4) (ground view)
 
 The climb-rate figure below (about 1.0 m/s average from takeoff) is consistent with this account - a marginal, not comfortable, margin above stall during the initial climb-out. **Decision (Julian): future flights will use a launch dolly instead of a hand launch** - tracked in `context/open-items.md` and cross-referenced against the existing launch-dolly requirements document (`docs/engineering/requirements/launch-dolly-requirements.md`).
 
@@ -108,6 +112,18 @@ No control surface (`MAIN1`/`MAIN2` V-tail, `MAIN3`/`MAIN5` ailerons) was pegged
 ### Mission mode (Phase K)
 
 `navigator` logged "Executing Mission" at t=1112.0s; `nav_state` shows `AUTO_MISSION` from 1112.0s to 1211.1s (99.1s), after which the pilot switched back to Stabilized. No failsafe, geofence breach, or mission-item rejection is recorded during this segment - the mission flew without incident, corroborating the upload-acceptance finding already recorded in Section 5 of the test plan.
+
+### Go-around and landing
+
+Julian also provided video of a go-around and of the landing. The altitude log confirms a real go-around near the end of the flight: the aircraft descended to a low approach of about **5.6m AGL around t=1443-1445s**, then climbed back out to about 38m AGL by t=1454.1s, before a second, final approach down to landing (`Landing detected` at t=1482.5s, disarmed at t=1486.0s). The aircraft stayed in Stabilized mode (`nav_state`=15) throughout both the low approach and the climb-out - no mode change is recorded across this window, so the go-around was a pilot stick/throttle decision in Stabilized, not a PX4-triggered behaviour. This is a second, independent data point for the pilot's Stabilized-mode recommendation above - the recovery was flown in the mode the pilot found easiest to control.
+
+<video src="../../assets/flight-footage/maiden-flight-go-around-2026-10-11.mp4" controls width="600"></video>
+
+[maiden-flight-go-around-2026-10-11.mp4](../../assets/flight-footage/maiden-flight-go-around-2026-10-11.mp4)
+
+<video src="../../assets/flight-footage/maiden-flight-landing-2026-10-11.mp4" controls width="600"></video>
+
+[maiden-flight-landing-2026-10-11.mp4](../../assets/flight-footage/maiden-flight-landing-2026-10-11.mp4)
 
 ### Roll authority asymmetry (same-direction propellers)
 
