@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FTP-BELIEVER-001 |
-| **Revision** | 0.6 |
-| **Date** | 2026-10-03 |
+| **Revision** | 0.7 |
+| **Date** | 2026-10-11 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -15,12 +15,12 @@ Per Julian, 2026-10-02: the intent is to complete as many of the test phases bel
 
 ## 2. General Conditions
 
-- Planned flight date: Sunday 4 October 2026, 7:30am.
+- Planned flight date: Sunday 4 October 2026, 7:30am. **Actually flown Sunday 11 October 2026, approximately 9:00-9:30am Brisbane time** (one week later than planned; per the flight log's GPS UTC timestamp, not file-system time) - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md`.
 - Test site: BNEMAC field, Fitzgibbon, approximately 300 m radius.
 - Launch method: assisted hand launch only (not a runway or catapult launch).
 - Crew: a pilot (GX12) and a handler, per `docs/operations/manual.md`.
 - The full pre-flight checklist in `docs/operations/manual.md` must be completed before every flight in this campaign, including the parameter-confirmation steps (`NAV_RCL_ACT`/`NAV_DLL_ACT`/`RTL_TYPE`/`RTL_LAND_DELAY`, `COM_LOW_BAT_ACT`, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`/`NAV_MIN_LTR_ALT`, geofence, battery chemistry).
-- RF-06, PWR-04, and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. A maiden-flight mission and polygon geofence are uploaded (Section 5).
+- PWR-04 and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. RF-06 (`NAV_DLL_ACT` = 2, Return on data-link loss) was applied 2026-10-02 but reverted to 0 (Disabled) on 2026-10-11, before this flight - see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`. A maiden-flight mission and polygon geofence are uploaded (Section 5).
 - **Wind limits, abort criteria, and the safe altitude for each phase are deliberately not fixed in this document.** Per Julian, 2026-10-02: set these on the day, taking BNEMAC's on-site advice rather than a pre-determined number.
 
 ## 3. Flight Profile (single flight, battery/conditions permitting)
@@ -93,7 +93,7 @@ Note whether the loiter's bank angle looks appropriately bounded - `FW_R_LIM`/`F
 
 ### Phase J - Return to Home (CH10)
 
-At a safe altitude and distance from home, engage Return and confirm it climbs/descends to `RTL_RETURN_ALT`/`RTL_DESCEND_ALT` (both 100 m), flies directly to the home position (`RTL_TYPE` = 0), and loiters there at `RTL_LOITER_RAD` = 50 m rather than landing automatically (`RTL_LAND_DELAY` = -1). This is also the behaviour `NAV_RCL_ACT`/`NAV_DLL_ACT` trigger automatically on an actual RC or data-link loss (RF-06) - deliberately triggering a real RC or data-link failure in flight to test that path is not proposed; CH10 exercises the same Return mode logic without the risk of an actual link failure. The same bank-angle observation as Phase I applies to the Return turn.
+At a safe altitude and distance from home, engage Return and confirm it climbs/descends to `RTL_RETURN_ALT`/`RTL_DESCEND_ALT` (both 100 m), flies directly to the home position (`RTL_TYPE` = 0), and loiters there at `RTL_LOITER_RAD` = 50 m rather than landing automatically (`RTL_LAND_DELAY` = -1). This is also the behaviour `NAV_RCL_ACT` triggers automatically on an actual RC loss - deliberately triggering a real RC failure in flight to test that path is not proposed; CH10 exercises the same Return mode logic without the risk of an actual link failure. (`NAV_DLL_ACT` no longer triggers Return on data-link/GCS loss - deliberately disabled 2026-10-11, see Section 2.) The same bank-angle observation as Phase I applies to the Return turn.
 
 ### Phase K - Mission Mode (GR1 SW6)
 
@@ -135,4 +135,4 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 
 ## 7. Open Items
 
-None remaining as of 2026-10-10. See `context/open-items.md` for the project's other open items.
+None remaining in this plan itself as of 2026-10-10. The maiden flight (2026-10-11) is now complete - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md` for the phase-by-phase result and `context/open-items.md` for findings that came out of it (airspeed sensor fault, Phase J not deliberately exercised, and others).

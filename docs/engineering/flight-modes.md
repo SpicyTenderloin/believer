@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | FM-BELIEVER-001 |
-| **Revision** | 1.16 |
-| **Date** | 2026-10-02 |
+| **Revision** | 1.17 |
+| **Date** | 2026-10-11 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -169,12 +169,12 @@ Automatic mode - the aircraft obeys position, velocity, attitude, or actuator se
 
 ## 5. Failsafe Interactions
 
-Three failsafe conditions can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches, all now configured to take automatic action (changed 2026-10-02, PWR-04/RF-06):
+Two of the three failsafe conditions that can force the aircraft into a flight mode independently of the GR1/CH8/CH10 switches are configured to take automatic action; the third (data-link loss) is deliberately disabled:
 
 | Failsafe | Parameter | Value | Action |
 |---|---|---|---|
-| RC (control) link loss | `NAV_RCL_ACT` | 2 | Return |
-| Data link (telemetry/GCS) loss | `NAV_DLL_ACT` | 2 | Return - changed from 0 (Disabled, PX4's default), RF-06, so losing the GCS link alone also returns the aircraft home and holds, matching RC loss |
+| RC (control) link loss | `NAV_RCL_ACT` | 2 | Return - unchanged, PWR-04/RF-06 |
+| Data link (telemetry/GCS) loss | `NAV_DLL_ACT` | 0 | Disabled - briefly changed to 2 (Return) on 2026-10-02 (RF-06), then reverted to 0 on 2026-10-11 before the maiden flight. The maiden flight log shows why: the RFD900x GCS link dropped out at least 15 times over 24.8 minutes, three exceeding `COM_DL_LOSS_T`'s 10s timeout - with this at 2, each would have triggered an unwanted RTL despite the pilot having full manual RC control throughout. See `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` and `docs/engineering/test-reports/2026-10-11-maiden-flight.md` |
 | Low battery | `COM_LOW_BAT_ACT` | 3 | Return at critical level (`BAT_CRIT_THR`), Land at emergency level (`BAT_EMERGEN_THR`) - changed from 0 (Warning only, PX4's default), PWR-04 |
 
 See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) for the full failsafe action enum. Battery failsafe thresholds (`BAT_LOW_THR`, `BAT_CRIT_THR`) and geofence breach action (`GF_ACTION`) are documented in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
@@ -205,3 +205,4 @@ See [PX4: Safety Configuration](https://docs.px4.io/main/en/config/safety.html) 
 | 1.14 | 2026-10-02 | Updated the Section 4.1 cross-reference again (29-30 to 31-32), following a further pre-flight checklist expansion (site-survey and loiter-parameter confirmation steps, NAV-08) |
 | 1.15 | 2026-10-02 | Confirmed via a direct QGroundControl parameter export that RF-06, PWR-04, and NAV-08 are all applied - removed "pending" language from Sections 4.6-4.8 and 5, updated values (`NAV_DLL_ACT`=2, `COM_LOW_BAT_ACT`=3, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`=50m, `NAV_MIN_LTR_ALT`=40m). Documented `RTL_TYPE`'s change from 1 to 0 (Section 4.8) and the maiden mission upload (Section 4.7, `docs/operations/Pixhawk Mission Backup/maiden-mission.plan`) - a 32-item waypoint pattern with no landing item, which is why `RTL_TYPE`=1 was replaced |
 | 1.16 | 2026-10-02 | Updated the Section 4.1 cross-reference again (31-32 to 32-33), following a further pre-flight checklist expansion (battery-chemistry parameter check) |
+| 1.17 | 2026-10-11 | Section 5: `NAV_DLL_ACT` reverted from 2 (Return) back to 0 (Disabled) before the maiden flight - updated per the maiden flight log's own evidence of repeated GCS link dropouts that would have caused unwanted RTLs under the 2026-10-02 setting. See `docs/engineering/test-reports/2026-10-11-maiden-flight.md` |

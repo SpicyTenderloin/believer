@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `believer-parameters.params` (refreshed 2026-10-02, this time from a direct QGroundControl parameter export Julian provided, superseding the same-day `04_09_42.ulg`-derived refresh above it in history), in this same folder. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
+Values reflect `believer-parameters.params` (refreshed 2026-10-11, this time reconstructed from the maiden flight's own onboard log - `23_02_07.ulg` on the Pixhawk's SD card, covering the full flight 2026-10-10 23:02-23:27 UTC / 2026-10-11 09:02-09:27 Brisbane local - rather than a live QGroundControl export, since no laptop/GCS connection to the flight controller was available at the time; superseding the 2026-10-02 direct-export refresh above it in history), in this same folder. The log embeds the full parameter set at boot plus every mid-flight change, so the reconstructed file is a genuine post-flight snapshot, not an approximation - the method is: start from the log's initial parameter dump, then apply every entry in its parameter-change record in order. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
 
 ---
 
@@ -42,7 +42,7 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-02, this time fro
 | Parameter | Value | Notes |
 |---|---|---|
 | `NAV_RCL_ACT` | 2 (Return) | RC-loss failsafe action. Already PX4's documented recommended setting; unchanged this session. |
-| `NAV_DLL_ACT` | 2 (Return) | Data-link-loss (lost GCS telemetry) failsafe action. Changed 2026-10-02 (RF-06) from 0 (Disabled, PX4's default) to 2 (Return), matching `NAV_RCL_ACT` - Julian decided both RC loss and data-link loss should return the aircraft home and hold, not just RC loss. Confirmed applied via a direct QGroundControl parameter export. |
+| `NAV_DLL_ACT` | 0 (Disabled) | Data-link-loss (lost GCS telemetry) failsafe action. Changed 2026-10-02 (RF-06) from 0 (Disabled, PX4's default) to 2 (Return), matching `NAV_RCL_ACT`. **Reverted 2026-10-11, before the maiden flight, back to 0 (Disabled)** - the maiden flight's own log (`23_02_07.ulg`) confirms the aircraft launched with this already at 0, and shows why: the GCS link (RFD900x) dropped out at least 15 times over the 24.8-minute flight, three of them longer than `COM_DL_LOSS_T`'s 10-second timeout (39.8s, 27.9s, and 17.0s) - under the 2026-10-02 setting of 2 (Return), each of those three would have triggered an unwanted automatic RTL while the pilot still had full manual RC control throughout, exactly the failure mode Julian disabled this to prevent ("to stop it RTL if the laptop dies"). No RC-link loss occurred during the flight, so `NAV_RCL_ACT` (unchanged, still 2/Return) was never exercised either way. See `docs/engineering/test-reports/2026-10-11-maiden-flight.md`. |
 | `RTL_TYPE` | 0 (Home/rally point return) | Changed 2026-10-02 from 1 (Mission landing/rally point return) to 0. With the maiden mission uploaded (`docs/operations/Pixhawk Mission Backup/maiden-mission.plan`) containing no landing pattern or rally points, `RTL_TYPE` = 1 would likely cause PX4 to reject the mission ("Mission rejected: landing pattern required" - the mission-feasibility check only requires a landing pattern to exist when Return mode might need to use one). `RTL_TYPE` = 0 never relies on a mission landing pattern, resolving that. Behaviourally unchanged for this mission/field either way - with no rally points or mission landing pattern defined, `RTL_TYPE` = 1 would have fallen back to home anyway (per PX4's own documented fallback logic); `RTL_TYPE` = 0 reaches the same destination more directly. **Confirmed, 2026-10-10 (Julian): the mission uploaded successfully with no rejection message.** |
 | `RTL_LAND_DELAY` | -1 | Aircraft loiters indefinitely at the Return destination rather than landing automatically - auto-land is not yet configured for this airframe (hand-launch/hand-catch operations). Unchanged this session. |
 | `RTL_LOITER_RAD` | 50 (m) | Loiter radius at the Return destination (home). Changed 2026-10-02 (NAV-08) from 80 to 50 - checked against bank-angle/stall-margin limits first: at `FW_AIRSPD_TRIM` (20 m/s) this needs about 39 degrees of bank, within `FW_R_LIM` (50 degrees), with in-turn stall speed (~12.5 m/s) still well under `FW_AIRSPD_MIN` (15 m/s). Confirmed applied via a direct QGroundControl parameter export. |
@@ -113,6 +113,21 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 | `RC_MAP_RETURN_SW` | 10 (CH10) | Return to Launch - SC, inverted in EdgeTX. |
 | `RC_MAP_OFFB_SW` | 0 (unassigned) | Cleared 2026-09-02 (CTL-04) - PX4 no longer acts on any channel for Offboard mode; resolves the SB/SE dual-purpose overlap risk (flipping elevator rate in flight can no longer trigger Offboard). SE still drives CH11's `mixData` output unchanged in EdgeTX and also locally selects the elevator rate curve. |
 
+## Rate Controller Gains (PID Auto-Tune)
+
+| Parameter | Value | Notes |
+|---|---|---|
+| `FW_RR_P` | 0.1136 | Roll rate P. Was 0.05 (PX4 generic fixed-wing default, never tuned for the Believer per `docs/engineering/flight-modes.md` Section 6). |
+| `FW_RR_I` | 0.1212 | Roll rate I. Was 0.10 (default). |
+| `FW_RR_FF` | 0.6882 | Roll rate feedforward. Was 0.50 (default). |
+| `FW_R_TC` | 0.8397 | Roll response time constant. Was 0.40 (default). |
+| `FW_PR_P` | 0.1120 | Pitch rate P. Was 0.08 (default). |
+| `FW_PR_I` | 0.1209 | Pitch rate I. Was 0.10 (default). |
+| `FW_PR_FF` | 0.3225 | Pitch rate feedforward. Was 0.50 (default). |
+| `FW_P_TC` | 0.4550 | Pitch response time constant. Was 0.40 (default). |
+
+Set 2026-10-11 by PX4's in-flight auto-tune (Phase D of `docs/operations/maiden-flight-test-plan.md`), run during the maiden flight. Two attempts are recorded in the flight log: the first (`FW_AT_START` at t=669.6s) aborted less than a second after starting (consistent with Phase D's step 5 - any flight-mode change aborts it), returning to idle at t=671.6s with gains unchanged; the second (t=1309.3s) ran for 14.9s and finished successfully at t=1324.2s, committing the values above. These are live, in-use values as of this flight - not yet independently reviewed against expected ranges for this airframe. See `docs/engineering/test-reports/2026-10-11-maiden-flight.md`.
+
 ## Actuator Outputs (PWM MAIN)
 
 | Parameter | Value | Notes |
@@ -156,9 +171,7 @@ Full roll/pitch/yaw torque and trim per surface documented in `docs/engineering/
 
 ## Calibration values
 
-Set automatically by QGroundControl calibration procedures. Do not edit manually. Julian recalibrated the compass and other sensors between the 2026-09-02 and 2026-10-02 exports (exact date and which sensors beyond the magnetometer not recorded). Values below are from a direct QGroundControl export, 2026-10-02.
-
-Accelerometer, gyroscope and barometer offsets also drift slightly between sessions as PX4 refines its sensor bias estimate even without a deliberate recalibration, so not every change below is necessarily from Julian's recalibration specifically.
+Set automatically by QGroundControl calibration procedures or PX4's own in-flight bias estimation. Do not edit manually. Julian recalibrated the compass and other sensors between the 2026-09-02 and 2026-10-02 exports (exact date and which sensors beyond the magnetometer not recorded). Values below are from the maiden flight log, 2026-10-11 (see the note at the top of this document) - no deliberate recalibration is recorded for this refresh; the accelerometer, gyroscope, barometer, and magnetometer changes versus the 2026-10-02 export are ordinary in-flight bias drift, not a new calibration pass.
 
 ### Accelerometers
 
@@ -176,18 +189,18 @@ Accelerometer, gyroscope and barometer offsets also drift slightly between sessi
 | `CAL_ACC1_YSCALE` | 1.008823 |
 | `CAL_ACC1_ZOFF` | -0.445785 |
 | `CAL_ACC1_ZSCALE` | 1.006260 |
-| `CAL_ACC2_XOFF` | -0.049781 |
+| `CAL_ACC2_XOFF` | -0.043518 |
 | `CAL_ACC2_XSCALE` | 1.000000 |
-| `CAL_ACC2_YOFF` | -0.056505 |
+| `CAL_ACC2_YOFF` | -0.119938 |
 | `CAL_ACC2_YSCALE` | 1.000000 |
-| `CAL_ACC2_ZOFF` | 0.015966 |
+| `CAL_ACC2_ZOFF` | -0.000278 |
 | `CAL_ACC2_ZSCALE` | 1.000000 |
 
 ### Barometer
 
 | Parameter | Value |
 |---|---|
-| `CAL_BARO0_OFF` | 25.352 |
+| `CAL_BARO0_OFF` | 19.664 |
 
 ### Gyroscopes
 
@@ -199,9 +212,9 @@ Accelerometer, gyroscope and barometer offsets also drift slightly between sessi
 | `CAL_GYRO1_XOFF` | 0.001345 |
 | `CAL_GYRO1_YOFF` | -0.003667 |
 | `CAL_GYRO1_ZOFF` | -0.012162 |
-| `CAL_GYRO2_XOFF` | -0.003244 |
-| `CAL_GYRO2_YOFF` | -0.017986 |
-| `CAL_GYRO2_ZOFF` | -0.017745 |
+| `CAL_GYRO2_XOFF` | -0.001559 |
+| `CAL_GYRO2_YOFF` | -0.015059 |
+| `CAL_GYRO2_ZOFF` | -0.019061 |
 
 ### Magnetometers
 
@@ -218,13 +231,13 @@ Full 6-point calibration with soft-iron correction (odiag values non-zero). CAL_
 | `CAL_MAG0_ZOFF` | -0.483485 |
 | `CAL_MAG0_ZSCALE` | 1.053555 |
 | `CAL_MAG0_ZODIAG` | 0.000519 |
-| `CAL_MAG1_XOFF` | 0.039665 |
+| `CAL_MAG1_XOFF` | 0.038093 |
 | `CAL_MAG1_XSCALE` | 0.991834 |
 | `CAL_MAG1_XODIAG` | 0.016254 |
-| `CAL_MAG1_YOFF` | -0.076878 |
+| `CAL_MAG1_YOFF` | -0.101184 |
 | `CAL_MAG1_YSCALE` | 0.967848 |
 | `CAL_MAG1_YODIAG` | 0.001022 |
-| `CAL_MAG1_ZOFF` | -0.037748 |
+| `CAL_MAG1_ZOFF` | -0.041900 |
 | `CAL_MAG1_ZSCALE` | 1.100714 |
 | `CAL_MAG1_ZODIAG` | 0.168101 |
 
