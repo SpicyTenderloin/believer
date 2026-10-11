@@ -111,7 +111,17 @@ No control surface (`MAIN1`/`MAIN2` V-tail, `MAIN3`/`MAIN5` ailerons) was pegged
 
 ### Mission mode (Phase K)
 
-`navigator` logged "Executing Mission" at t=1112.0s; `nav_state` shows `AUTO_MISSION` from 1112.0s to 1211.1s (99.1s), after which the pilot switched back to Stabilized. No failsafe, geofence breach, or mission-item rejection is recorded during this segment - the mission flew without incident, corroborating the upload-acceptance finding already recorded in Section 5 of the test plan.
+`navigator` logged "Executing Mission" at t=1112.0s; `nav_state` shows `AUTO_MISSION` from 1112.0s to 1211.1s (99.1s), after which the pilot switched back to Stabilized. No failsafe, geofence breach, or mission-item rejection is recorded during this segment - the mission flew without incident.
+
+**The uploaded mission was replanned on the day and no longer matches the repo's backup.** Julian confirmed the mission was replanned at the field; this flight's own data makes clear the backed-up file (`docs/operations/Pixhawk Mission Backup/maiden-mission.plan`, Section 5 of the test plan) describes the *old* mission, not what actually flew. Rather than guess, the real mission was pulled directly from the Pixhawk's own mission database on the SD card (`G:\dataman`, PX4's persistent binary store for the uploaded mission - not the `log/` folder). PX4's own source (`src/modules/dataman/dataman.{h,cpp}`, `src/modules/navigator/navigation.h`) was fetched to work out the exact on-disk layout, and the resulting parse was cross-checked two ways before being trusted: the computed total file size matched the real file exactly (128,528 bytes), and every parsed waypoint matched the flight's own live telemetry (`navigator_mission_item`) to sub-metre precision.
+
+**The real mission (28 items, not 32):** item 0 is a camera-mode setup command (no coordinates); item 1 is Takeoff; items 2-20 are 19 waypoints, all at **50m relative altitude** (not 40m as the stale backup has it); items 21-25 are a landing-sequence marker plus speed/camera commands (no coordinates); item 26 is a Loiter-to-Alt descent point 405m from the pattern; item 27 is an actual **Land** item. The old backup's "no landing item" description no longer applies to what's on the aircraft.
+
+![Planned mission (waypoints 1-20) vs actual flown track, overlaid on Nearmap aerial imagery of the BNEMAC field (captured 2026-06-22)](../../assets/test-plots/mission-mode-planned-vs-actual-2026-10-11.png)
+
+The flown track (green) tracks the real mission (blue) closely - mean deviation 17.7m, well within normal fixed-wing turn/overshoot tolerance. The long diagonal leg from the "Mission-mode engaged" marker (bottom) up to the pattern is expected PX4 behaviour, not an anomaly: the aircraft was already airborne and physically near waypoints 15-17 when Mission mode was engaged, and PX4 resumed at waypoint 2 (the first real waypoint after Takeoff) rather than restarting from the ground - so it had to transit across the pattern to reach it first.
+
+This is a more significant correction than just altitude, and the repo's mission backup, the test plan's Section 5, and anything else describing the old 32-item/40m mission are now known to be stale. Not yet corrected in this pass - flagged in `context/open-items.md` pending a decision on how to regenerate `maiden-mission.plan` from this validated data.
 
 ### Go-around and landing
 
