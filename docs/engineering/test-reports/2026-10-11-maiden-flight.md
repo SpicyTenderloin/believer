@@ -83,6 +83,22 @@ What actually happened: `airspeed_sensor_measurement_valid` flips false exactly 
 
 This still affects the reliability of any TECS-mediated mode (Altitude mode, hands-off points in Phase E) and Phase E's post-flight power-vs-airspeed analysis for *this* flight - GPS ground speed was used instead where airspeed data was needed. Flagged in `context/open-items.md`.
 
+### Stall speed (Phase G)
+
+The only extended Manual-mode window in the flight (t=93.3-154.5s, 61.2s - see Flight mode timeline above) contains three separate, clean stall breaks, found by looking for an abrupt nose-down pitch event with the pitch stick essentially neutral (i.e. not pilot-commanded - a genuine aerodynamic break rather than a pushover):
+
+| Event | Peak pitch before break | Stick at break | Raw-sensor IAS at/near break |
+|---|---|---|---|
+| t≈106.5s | 26.0° nose-up | ≈0.00 (neutral) | 8.15 m/s |
+| t≈127.0s | 28.4° nose-up | ≈0.00 (neutral) | 9.95 m/s |
+| t≈145.3s | 25.7° nose-up | ≈0.00 (neutral) | 8.66 m/s |
+
+All three follow the same pattern: pitch climbs to 26-28° nose-up, the stick goes to neutral, then pitch breaks downward with no further stick input. This window falls after the airspeed validator had already latched invalid (see below), so these are computed directly from the raw differential-pressure sensor (offset-corrected via `SENS_DPRES_OFF`, standard sea-level density) rather than the validated topic - the raw sensor is confirmed reading correctly throughout the flight, including here.
+
+Three repeated, consistent trials landing in the **8-10 m/s indicated airspeed range**, somewhat below the configured `FW_AIRSPD_STALL` (11 m/s). One caveat: the raw sensor logs at only 1Hz here, so the true instantaneous minimum could be marginally lower than any single sample caught.
+
+Roll angle at the moment of each break (not just over the surrounding window, which also captures repositioning turns before/after) gives a clearer picture: the t≈106.5s and t≈145.3s breaks both happened close to wings-level (roll within about 0-19° at the break itself), consistent with a clean, non-violent stall. The t≈127.0s break happened in a bank that was already smoothly deepening before the pitch broke (-22° building to -46° through the break) - the gradual, continuous nature of that roll change looks more like a deliberately banked/turning stall entry than an uncommanded wing-drop, but a genuine wing-drop contribution at that one event can't be fully ruled out from attitude data alone.
+
 ### GCS data-link dropouts and the `NAV_DLL_ACT` reversal
 
 15 distinct "Connection to ground station lost" / "GCS connection regained" event pairs were logged. Three exceeded `COM_DL_LOSS_T` (10s):
@@ -137,6 +153,21 @@ The altitude log confirms a real go-around near the end of the flight: the aircr
 
 ![Landing](../../assets/flight-footage/maiden-flight-landing-2026-10-11.mp4)
 
+**Glide slope.** The final approach was a genuine power-off glide, not a powered descent - confirmed two ways: the pilot's throttle stick was pinned at idle (-1.0) and, more conclusively, the actual PWM to both motors (`actuator_outputs`) was 1000us (idle) from t=1463.1s straight through touchdown and after. (A first look at `actuator_motors.control[0]` suggested full throttle here - that was a `NaN` artifact in the analysis script, not real data; the raw PWM is unambiguous.)
+
+Over the glide segment itself (23.4m of altitude lost, 10.7s, 155m of ground track, from idle-throttle at t=1463.1s to touchdown at t≈1473.8s):
+
+| | Value |
+|---|---|
+| Glide ratio (ground track) | 6.6 : 1 |
+| Descent angle | 8.6° |
+| Mean sink rate | 2.2 m/s |
+| Mean ground speed | 14.6 m/s |
+
+The approach was flown almost directly into a ~3.5 m/s headwind (checked: the ground track heading and the wind-estimate direction are nearly identical), which steepens the ground-track numbers relative to the aircraft's still-air performance. Correcting for it gives an estimated **still-air glide ratio of roughly 8:1** - inferred from ground speed plus the wind estimate, not directly measured, since the airspeed validator was still latched invalid at this point in the flight. For reproducing this specific approach at this field, the as-flown 6.6:1/8.6° figures are more directly useful; for the aircraft's general glide performance, use the ~8:1 estimate.
+
+The descent was not constant-angle: sink rate was shallow initially (0.3-1.2 m/s), steepened through the middle of the approach (up to 4.4 m/s), then eased off in the final 1-2 seconds as the pilot flared before touchdown. A future autoland profile should plan for a distinct flare segment near the ground rather than a single constant glide slope all the way down.
+
 ### Roll authority asymmetry (same-direction propellers)
 
 Pilot report: the aircraft struggled to roll right, improving at lower throttle; suspected induced motor torque fighting the roll command, since both propellers turn the same direction (confirmed elsewhere in the project's records - this airframe is not contra-rotating). The pilot flagged they might have the direction confused, so this is checked directly against stick input vs. achieved roll rate below.
@@ -175,9 +206,9 @@ Not from the log - found by Julian during post-flight inspection of the airframe
 
 ## What This Does and Does Not Show
 
-**Shown:** the airframe flew, climbed, and was recovered without incident across a 24.8-minute flight, despite a marginal hill launch; Position Hold, Stabilized, Acro, and Mission modes were all exercised; PID auto-tune completed successfully on its second attempt and measurably improved rate tracking with no saturation; the `NAV_DLL_ACT` reversal is justified by this flight's own GCS link behaviour and by a GCS laptop failure on the day; the uploaded mission flew without rejection or fault; the reported roll-authority asymmetry is real and matches the pilot's account, and is not a control-allocation artifact (no differential thrust is configured on this airframe in any mode); Stabilized mode's throttle path is confirmed identical to Manual/Acro; the airspeed sensor hardware itself was working for the entire flight - the near-total "invalid" readings were a PX4 validator config issue, not a pitot/line fault.
+**Shown:** the airframe flew, climbed, and was recovered without incident across a 24.8-minute flight, despite a marginal hill launch; Position Hold, Stabilized, Acro, and Mission modes were all exercised; PID auto-tune completed successfully on its second attempt and measurably improved rate tracking with no saturation; the `NAV_DLL_ACT` reversal is justified by this flight's own GCS link behaviour and by a GCS laptop failure on the day; the uploaded mission flew without rejection or fault; the reported roll-authority asymmetry is real and matches the pilot's account, and is not a control-allocation artifact (no differential thrust is configured on this airframe in any mode); Stabilized mode's throttle path is confirmed identical to Manual/Acro; the airspeed sensor hardware itself was working for the entire flight - the near-total "invalid" readings were a PX4 validator config issue, not a pitot/line fault; a stall speed of roughly 8-10 m/s IAS from three repeated, clean stall breaks; a measured glide ratio (6.6:1 as flown, ~8:1 estimated still-air) and descent profile from the final power-off approach.
 
-**Not shown:** a reliable Phase E (Cruise Efficiency Sweep) power-vs-airspeed dataset (airspeed validator latched invalid for almost the whole flight); a deliberate Phase J (Return to Home via CH10) test; isolated climb-rate, glide, or stall-speed figures broken out by phase (not separable from `nav_state` alone - would benefit from the pilot's own phase timing notes); the cause of the t=574.1s critical-failure flag; root cause of the recurring GCS dropouts or the PDB mount/connector issue (not determinable from this log); confirmation of actual per-motor thrust balance (no per-motor current/RPM telemetry exists, and the right motor's bearing condition at the time of this flight is unknown).
+**Not shown:** a reliable Phase E (Cruise Efficiency Sweep) power-vs-airspeed dataset (airspeed validator latched invalid for almost the whole flight); a deliberate Phase J (Return to Home via CH10) test; isolated climb-rate figures broken out by phase (not separable from `nav_state` alone - would benefit from the pilot's own phase timing notes); full confirmation that the one banked stall break (t≈127.0s) was a deliberate turning entry rather than a wing drop - the gradual roll onset supports that reading but doesn't rule out a genuine wing-drop contribution; the cause of the t=574.1s critical-failure flag; root cause of the recurring GCS dropouts or the PDB mount/connector issue (not determinable from this log); confirmation of actual per-motor thrust balance (no per-motor current/RPM telemetry exists, and the right motor's bearing condition at the time of this flight is unknown).
 
 ## Outstanding
 
