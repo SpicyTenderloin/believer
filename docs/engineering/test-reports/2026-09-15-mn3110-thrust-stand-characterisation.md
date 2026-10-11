@@ -56,13 +56,13 @@ Mean values in 20 us ESC-command bins (the label is the start of each bin), from
 | 1740 | 19.7 | 1.65 | 465 | - | - | - |
 | 1780 | 21.3 | 1.68 | 500 | - | - | - |
 
-![Static thrust vs ESC command](../../assets/mn3110-thrust-vs-esc-signal.png)
+![Static thrust vs ESC command](../../assets/test-plots/mn3110-thrust-vs-esc-signal.png)
 
-![Motor current vs ESC command](../../assets/mn3110-current-vs-esc-signal.png)
+![Motor current vs ESC command](../../assets/test-plots/mn3110-current-vs-esc-signal.png)
 
-![Static thrust vs motor current](../../assets/mn3110-thrust-vs-current.png)
+![Static thrust vs motor current](../../assets/test-plots/mn3110-thrust-vs-current.png)
 
-![Thrust efficiency vs ESC command](../../assets/mn3110-efficiency-vs-esc-signal.png)
+![Thrust efficiency vs ESC command](../../assets/test-plots/mn3110-efficiency-vs-esc-signal.png)
 
 - **Propeller comparison.** The 12x6" draws more current than the 11x7" at the same ESC command and produces more thrust (19.3A and 1.70 kgf against 17.7A and 1.57 kgf at 1700 us). Part of that gap is the higher supply voltage in the 12x6" tests: to a first-order estimate, current at a given ESC command scales with the square of supply voltage, so the 0.3 to 0.7V difference alone accounts for roughly 3 to 6% of the roughly 9 to 12% current gap. At equal current the 12x6" gives about 5% more thrust near the ceiling (16 to 19A) and about 10% more at lower currents (6 to 12A), part of which again reflects the higher supply voltage. Efficiency is essentially identical above about 1400 us, with the 12x6" slightly better at low to mid throttle (about 1100 to 1350 us).
 - **Current ceiling.** The 11x7" reaches 21.3A (the MN3110 KV700's rated continuous current) at about 1780 us, at 500W. The 12x6" reaches about 19.3A at 1700 us; a quadratic fit through its upper range puts 21A at roughly 1715 to 1730 us. A 1700 us ceiling therefore leaves about 2A of margin on the 12x6". The fit uses sparse data at the top end, so the 21A crossing point is approximate.

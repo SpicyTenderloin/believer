@@ -27,9 +27,9 @@ RC link: Radiomaster GX12 transmitter → DBR4 receiver (ExpressLRS, dual-band 2
 
 For channels 7, 9, 10, 11: inversion is handled in EdgeTX already - do not add a duplicate reversal in PX4 unless QGroundControl shows the active/inactive direction is actually wrong.
 
-![GX12 front view with switch functions annotated](../assets/gx12-front-switches.png)
+![GX12 front view with switch functions annotated](../assets/diagrams/gx12-front-switches.png)
 
-![GX12 top view with switch functions annotated](../assets/gx12-top-switches.png)
+![GX12 top view with switch functions annotated](../assets/diagrams/gx12-top-switches.png)
 
 ## 3. Flight Modes (GR1 Switch Group)
 
@@ -52,7 +52,7 @@ CH8 (Loiter/Hold) is a separate switch that overrides whatever mode GR1 has sele
 
 For full detail on each mode's behaviour and the PX4 parameters that configure it, see [`flight-modes.md`](../engineering/flight-modes.md).
 
-![QGroundControl Flight Modes configuration](../assets/flight-modes-config.png)
+![QGroundControl Flight Modes configuration](../assets/config-screenshots/flight-modes-config.png)
 
 ## 4. Pre-Flight Safety State
 
@@ -116,7 +116,7 @@ Intended safe startup condition, to be verified before every flight:
 33. Confirm all flight control surfaces are correctly trimmed and respond appropriately to control inputs in **Manual mode**: verify correct direction of movement, and that each surface reaches its intended safe travel limit at or near full stick, without binding.
 34. Switch to Stabilized mode and confirm all flight control surfaces move in the correct direction in response to changes in aircraft attitude. Full, independent surface travel is not expected here; V-tail surfaces may show safe saturation under large combined pitch+yaw attitude changes without indicating a fault.
 35. Confirm the motors rotate in the correct direction.
-36. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](../assets/gx12-front-switches.png) and [assets/gx12-top-switches.png](../assets/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](../assets/flight-modes-config.png)).
+36. Confirm the aircraft can be switched into all flight modes via the GR1 selector (see [assets/gx12-front-switches.png](../assets/diagrams/gx12-front-switches.png) and [assets/gx12-top-switches.png](../assets/diagrams/gx12-top-switches.png)), and that each mode change is mirrored correctly in QGroundControl (see [assets/flight-modes-config.png](../assets/config-screenshots/flight-modes-config.png)).
 37. Confirm QGroundControl reacts appropriately to changes in aircraft attitude.
 38. Blow gently on the pitot tube inlet and confirm QGroundControl shows a non-zero airspeed reading. Release and confirm the reading returns to zero.
 39. Disarm the vehicle before proceeding.

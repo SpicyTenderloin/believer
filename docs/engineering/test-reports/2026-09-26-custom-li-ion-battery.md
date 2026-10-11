@@ -53,7 +53,7 @@ Charger-measured resistance per series group (each reading covers four cells in 
 
 Charger display at the time of the reading: charging, 1.6A, 39W, 24.62V, 5.47 Ah charged, 99%, 51 minutes 47 seconds elapsed.
 
-![HOTA F6 Ultra charger display showing per-group internal resistance](../../assets/custom-li-ion-charger-cell-resistance.png)
+![HOTA F6 Ultra charger display showing per-group internal resistance](../../assets/test-plots/custom-li-ion-charger-cell-resistance.png)
 
 ## Findings
 

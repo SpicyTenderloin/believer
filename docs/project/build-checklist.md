@@ -30,6 +30,9 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Area | Critical blocker | Status |
 |---|---|---|
 | Propulsion | PROP-08: Limit current draw to within motor rated continuous current | For review |
+| Propulsion | PROP-12: Fit contra-rotating propellers | Not started |
+| Propulsion | PROP-13: Rectify right motor bearing fault | Not started |
+| Electrical power | PWR-05: Reinforce PDB mount and redo its connector | Not started |
 | Control | CTL-04: Configure tri-rate switch-selectable deflection | In progress |
 | Control | CTL-08: Verify and correct full-Manual stick-to-surface scaling | For review |
 
@@ -111,6 +114,43 @@ Split out from PROP-02, 2026-09-02, per Julian - PROP-02 was closed on Ross Denn
 Set to For review 2026-09-26 once the stand data existed: the measurement itself is complete, but the acceptance criteria that turn it into a pass/fail (a thrust-to-weight ratio against a defined target) are not yet met. For reference, 3.4 kgf against the 5.5 kg manufacturer MTOW would be about 0.62; at the measured 3.8 kg all-up weight it is about 0.89, and the aircraft is at about 69% of MTOW. Only the target ratio is still open - a defined pass/fail number was never set. Julian's working view (2026-09-27): a static thrust-to-weight of about 0.8 would be acceptable; not yet adopted as the pass/fail number.
 
 </details>
+
+### PROP-12 - Fit contra-rotating propellers
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Depends on:** None
+
+**Scope**
+- Replace the current matched pair (both propellers turning the same direction) with a contra-rotating pair, one per motor turning the opposite way.
+- Confirmed from the 2026-10-11 maiden flight log: roll-right authority was less than half of roll-left authority for the same stick deflection in Manual/Acro mode, and the rate controller needed a persistent rightward correction just to hold wings level in Stabilized/Position Hold at mid-to-high throttle. PX4 is confirmed not using any differential thrust on this airframe (`CA_ROTOR0_PY`/`CA_ROTOR1_PY` = 0, both motors always commanded identically) - the asymmetry is a genuine airframe effect, consistent with the additive motor reaction torque from two same-direction propellers, not a software artifact. See `docs/engineering/test-reports/2026-10-11-maiden-flight.md`.
+- Pilot also reports this made takeoff the worst part of the flight - full throttle is needed to gain airspeed quickly enough to climb away, which is also where the induced torque is strongest.
+
+**Acceptance criteria**
+- Contra-rotating propeller pair sourced and fitted (one CW, one CCW, matched to each motor's rotation).
+- Spin directions re-verified after fitting (as in PROP-01's original check).
+- Roll-authority symmetry re-checked on the next flight's log (stick-to-roll-rate sensitivity, both directions, across the throttle range) against this flight's baseline.
+
+<details>
+<summary>Background and engineering notes</summary>
+
+Opened 2026-10-11 from the maiden flight debrief and log analysis. The project's own records already establish both motors/propellers currently spin the same direction (not contra-rotating) - this task is the fix, not a new discovery of the configuration itself. Related: PROP-13 (right motor bearing) and the still-open per-motor thrust-balance verification in `context/open-items.md` - a bearing fault on one side could compound with the torque asymmetry, so re-testing after both are addressed is more informative than testing either alone.
+
+</details>
+
+### PROP-13 - Rectify right motor bearing fault
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Depends on:** None
+
+**Scope**
+- A bad bearing was found in the right motor during post-flight inspection after the 2026-10-11 maiden flight. Replace or rectify before the next flight.
+- Unknown how long the bearing had been degraded, or whether it affected the maiden flight's thrust balance or behaviour - the flight log shows both motors received identical commands throughout, but cannot show actual per-motor thrust output (no current/RPM instrumentation per motor, see `context/open-items.md`).
+
+**Acceptance criteria**
+- Bearing replaced or repaired and the motor spins freely with no play/roughness.
+- Right motor re-checked (spin-up, current draw) before the next flight.
 
 ### PROP-05 - Characterise final propulsion system in MotoCalc
 
@@ -195,13 +235,27 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 
 </details>
 
+### PWR-05 - Reinforce PDB mount and redo its connector
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Depends on:** None
+
+**Scope**
+- Found during post-flight inspection after the 2026-10-11 maiden flight: the power distribution board (PDB) mount needs reinforcing and its connector needs redoing.
+- Root cause not yet investigated - vibration, a marginal original installation, or the loads from the marginal hill launch/landing (`docs/engineering/test-reports/2026-10-11-maiden-flight.md`) are all plausible.
+
+**Acceptance criteria**
+- Mount reinforced and connector redone.
+- No play/looseness in the mount, and the connector seats securely, under a post-repair check.
+
 ---
 
 ## D. Flight Controls and PX4 Configuration
 
 ### CTL-02 - Flight controller (roll/pitch/yaw) tuning
 
-- [ ] **Status:** Not started
+- [ ] **Status:** For review (roll/pitch only - see below)
 - **Priority:** URGENT
 - **Depends on:** CTL-01 (complete - see Completed Work), CTL-06 (complete - see Completed Work), CTL-08
 
@@ -219,6 +273,8 @@ Dependency on CTL-06/CTL-08 added 2026-08-31, per the flight-control configurati
 The "initial test flights" referred to above are now sequenced in `docs/operations/maiden-flight-test-plan.md` (added 2026-10-02) - Flight 1 is airworthiness-only (no tuning-relevant data expected beyond basic controllability), with gain-tuning-relevant observations (including adverse yaw for CTL-07) gathered from Flight 2 onward.
 
 Auto-tune added to scope 2026-10-02, per Julian. PX4's fixed-wing auto-tune requires baseline stability first (a pre-tuning check: progressively larger roll then pitch doublets, settling within 2 oscillations at about 20 degrees) and runs in Hold mode at cruise airspeed, performing small automatic roll/pitch/yaw excursions over roughly 19-70 seconds; new gains apply immediately with a 4-second post-tune stability check and auto-revert if unstable. Can be started from QGroundControl's PID Tuning page or `FW_AT_START`; abort at any time by changing flight mode. No RC AUX switch is currently assigned for it (`FW_AT_MAN_AUX`) - not required, since a flight-mode change aborts it regardless.
+
+**Run during the maiden flight, 2026-10-11.** Two attempts: the first aborted within a second (a flight-mode change, as expected); the second ran for 14.9s and completed successfully, writing new roll and pitch rate-controller gains (`FW_RR_P/I/FF`, `FW_R_TC`, `FW_PR_P/I/FF`, `FW_P_TC` - see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). Validated two ways in `docs/engineering/test-reports/2026-10-11-maiden-flight.md`: PX4's own system-identification fit converged cleanly for both axes, and rate-tracking error improved 36% (roll) / 55% (pitch) in the actual flight afterward with no control-surface saturation. **`FW_AT_AXES` = 3 (roll + pitch only) - yaw was never tuned**, so this task is not fully complete: formal sign-off against roll/pitch is reasonable, but a yaw-rate tuning pass (manual, or by adding yaw to `FW_AT_AXES` on a future flight) is still open. Adverse-yaw observation for CTL-07 was not separately logged from this flight - still outstanding.
 
 </details>
 
@@ -239,7 +295,7 @@ Auto-tune added to scope 2026-10-02, per Julian. PX4's fixed-wing auto-tune requ
 - ~~Resolve the SB/SE dual-purpose overlap against `RC_MAP_OFFB_SW`/`RC_MAP_FLAPS`~~ - **done, 2026-09-02**: both cleared to 0 (unassigned), confirmed via a fresh parameter export.
 - ~~Review maximum deflection, rates, and expo with Ross Dennington (BNEMAC) before the values are treated as final~~ - **done, 2026-09-02**: Ross reviewed the tri-rates and expo and was satisfied. This review surfaced a new finding - see below.
 - ~~Tri-rate not appearing to work correctly in Acro mode~~ - **explained, 2026-09-02**: Julian confirmed tri-rate works correctly in Manual mode, supporting the bench-testing-artefact hypothesis over a configuration fault - not a real EdgeTX/PX4 defect. The underlying rate curve is configured correctly; Acro's apparent "dual rate" behaviour on the stationary bench is consistent with CTL-08's closed-loop saturation finding (the rate controller drives to saturation regardless of the commanded rate level, since the aircraft can't achieve any commanded rate while stationary). Not confirmed in actual flight, since Acro genuinely produces angular rates in the air rather than saturating against a fixed bench - but no further bench investigation needed.
-- ~~Switch diagrams (`docs/assets/gx12-front-switches.png`/`gx12-top-switches.png`) updated to label SB/SE as the aileron/elevator rate switches rather than Flaperon/Offboard~~ - **done, 2026-10-10**: both relabelled (SB "CH9 - Aileron rate (inv.)", SE "CH11 - Elevator rate (inv.)"). `gx12-front-switches.png`'s separately-stale GR1 mode labels (found 2026-10-03) were corrected at the same time, now matching the Flight-Mode Mapping table in `docs/engineering/ICD.md`.
+- ~~Switch diagrams (`docs/assets/diagrams/gx12-front-switches.png`/`gx12-top-switches.png`) updated to label SB/SE as the aileron/elevator rate switches rather than Flaperon/Offboard~~ - **done, 2026-10-10**: both relabelled (SB "CH9 - Aileron rate (inv.)", SE "CH11 - Elevator rate (inv.)"). `gx12-front-switches.png`'s separately-stale GR1 mode labels (found 2026-10-03) were corrected at the same time, now matching the Flight-Mode Mapping table in `docs/engineering/ICD.md`.
 
 <details>
 <summary>Background and engineering notes</summary>

@@ -41,9 +41,9 @@ A fourth, longer run (`Log_2026-09-30_112954`, 641 s) swept the ESC command slow
 
 ## Findings
 
-![Static thrust vs ESC command](../../assets/u5-thrust-vs-esc-signal.png)
+![Static thrust vs ESC command](../../assets/test-plots/u5-thrust-vs-esc-signal.png)
 
-![Bus current vs ESC command](../../assets/u5-current-vs-esc-signal.png)
+![Bus current vs ESC command](../../assets/test-plots/u5-current-vs-esc-signal.png)
 
 **Full-throttle point (mean over the time at or above 1980 us):**
 
@@ -58,7 +58,7 @@ Both runs are well under the U5's 30 A continuous rating (47 to 49%) and comfort
 
 **Comparison with the installed MN3110 KV700, same propeller:**
 
-![Thrust vs current, U5 KV400 and the installed MN3110 KV700, both on the 12x6E](../../assets/u5-vs-mn3110-thrust-vs-current.png)
+![Thrust vs current, U5 KV400 and the installed MN3110 KV700, both on the 12x6E](../../assets/test-plots/u5-vs-mn3110-thrust-vs-current.png)
 
 At every current level measured, the U5 gives more thrust than the MN3110 on the same propeller: for example, about 1.3 kgf at 10 A for the U5 against about 0.95 kgf for the MN3110. This follows from the U5's lower KV (400 against 700), which gives more torque per amp, and is consistent with the powertrain model's structural expectation (`docs/engineering/analysis/powertrain-performance-model.md`), not a new finding from this data alone.
 
@@ -66,7 +66,7 @@ At every current level measured, the U5 gives more thrust than the MN3110 on the
 
 Julian ran the U5 KV400 with the 12x6E at full throttle on the ESC removed from the failed left drive after the 2026-09-26 motor failure (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`), to check that ESC's own condition before deciding on the drive rebuild.
 
-![ESC command and bus current through the sustained run](../../assets/u5-esc-sustained-full-throttle.png)
+![ESC command and bus current through the sustained run](../../assets/test-plots/u5-esc-sustained-full-throttle.png)
 
 **Method:** full throttle (2000 us) held for the whole 483 s run, with the throttle cut briefly to 0% four times (at roughly 83, 182, 281 and 397 s) so the motor could be checked by hand for temperature. Total time at or above 1990 us was 393 s (about 6.5 minutes), in stretches up to 105 s; the longest single continuous hold was 105 s, short of PROP-11's 180 s wording taken as one unbroken hold, but the cumulative time at the ceiling is well over twice that, across five full-throttle cycles with a cool-down and restart each time - a more demanding test of repeated startup and sustained running than one continuous hold.
 

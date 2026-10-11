@@ -112,7 +112,7 @@ A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-missi
 
 **Structure:** one `NAV_TAKEOFF` item followed by 31 `NAV_WAYPOINT` items, all at 40 m relative altitude (`MAV_FRAME_GLOBAL_RELATIVE_ALT`), tracing a closed pattern. No landing item, no RTL item, no loiter-unlimited item at the end. A single inclusion polygon geofence (10 vertices) is uploaded with it; no circles, no rally points.
 
-![QGroundControl Plan view of the maiden mission, waypoint pattern and polygon geofence](../assets/maiden-mission-plan.png)
+![QGroundControl Plan view of the maiden mission, waypoint pattern and polygon geofence](../assets/config-screenshots/maiden-mission-plan.png)
 
 **Verified:**
 - All 32 mission items and the home position fall inside the polygon (checked programmatically against the actual coordinates).

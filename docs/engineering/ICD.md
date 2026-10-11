@@ -27,7 +27,7 @@ The servo rail is electrically isolated from the main flight controller power su
 
 ## 4. System Block Diagram
 
-![Believer ICD Block Diagram](../assets/icd-block-diagram.svg)
+![Believer ICD Block Diagram](../assets/diagrams/icd-block-diagram.svg)
 
 ## 5. Interface Summary
 
@@ -91,7 +91,7 @@ Endpoints independently remeasured as actual safe mechanical limits per servo an
 
 Motor max lowered from 2000 to 1800 on 2026-09-02 (PROP-08) as a throttle ceiling, based on a thrust-test log correlation showing ~42A total current draw (~21A/motor, the MN3110 KV700's 21A continuous rating) at ~1800-1809us. Not yet confirmed via a dedicated sustained-run test - see `docs/project/build-checklist.md` PROP-08.
 
-![PX4 Actuator Output Configuration](../assets/actuator-output-config.png)
+![PX4 Actuator Output Configuration](../assets/config-screenshots/actuator-output-config.png)
 
 #### Control Surface Mixing
 
@@ -129,7 +129,7 @@ V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4
 | Speed @ 4.8V / 6.0V | 0.15 / 0.13 sec/60° |
 | Spline | 23T |
 
-![Emax ES3054 tail servo](../assets/emax-es3054-tail-servo.jpg)
+![Emax ES3054 tail servo](../assets/component-photos/emax-es3054-tail-servo.jpg)
 
 **Aileron Servos (MAIN 3, MAIN 5) - Hitec HS-5125MG**
 
@@ -143,7 +143,7 @@ V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4
 | Speed @ 4.8V / 6.0V | 0.17 / 0.13 sec/60° |
 | Spline | Micro 25T |
 
-![Hitec HS-5125MG wing servo](../assets/hitec-hs5125mg-wing-servo.jpg)
+![Hitec HS-5125MG wing servo](../assets/component-photos/hitec-hs5125mg-wing-servo.jpg)
 
 **Motors (MAIN 4, MAIN 6) - T-MOTOR MN3110 KV700**
 
@@ -240,13 +240,13 @@ SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/
 
 Julian also confirmed the channel-value logic for SA and SD directly, 2026-10-10: Loiter is active when the SA channel reads 100%, and SD reads 100% when armed and -100% when disarmed - consistent with the Up/Down table above and with the extrapolated pattern (100% = the "down" position, per SD/SF). SC (Return) remains unconfirmed - extrapolation still suggests SC up likely engages Return, but this hasn't been checked on the physical radio yet.
 
-![PX4 Flight Modes / Switch Settings Configuration](../assets/flight-modes-config.png)
+![PX4 Flight Modes / Switch Settings Configuration](../assets/config-screenshots/flight-modes-config.png)
 
 #### GX12 Physical Switch Locations
 
-![GX12 front view with switch functions annotated](../assets/gx12-front-switches.png)
+![GX12 front view with switch functions annotated](../assets/diagrams/gx12-front-switches.png)
 
-![GX12 top view with switch functions annotated](../assets/gx12-top-switches.png)
+![GX12 top view with switch functions annotated](../assets/diagrams/gx12-top-switches.png)
 
 #### Flight-Mode Mapping (GR1)
 
@@ -282,7 +282,7 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 
 Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the Normal mode default.
 
-![RFD900x Pinout Diagram](../assets/rfd900-pinout-diagram.png)
+![RFD900x Pinout Diagram](../assets/diagrams/rfd900-pinout-diagram.png)
 
 #### RFD900x Connector Pinout (full 16-pin)
 

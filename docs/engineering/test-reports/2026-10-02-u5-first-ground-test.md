@@ -12,7 +12,7 @@
 
 Three arm cycles were logged on one boot (`G:\log\2026-10-02`, boot starting about 02:21 UTC): two brief arms with no throttle applied (`02_21_21.ulg`, `02_22_20.ulg`), then a 41 s run with two throttle ramps to full stick (`02_23_32.ulg`). Peak total pack current was 30.9 A at full throttle (2000 us), about 15.5 A per motor if the two share equally - roughly half of the U5's 30 A rating. `MAIN4` and `MAIN6` commands matched exactly throughout. No fault, failsafe, or overcurrent flag was recorded; the PX4 failure detector read clear for the whole log.
 
-![Current, voltage and motor commands through the stitched test](../../assets/u5-first-ground-test-2026-10-02.png)
+![Current, voltage and motor commands through the stitched test](../../assets/test-plots/u5-first-ground-test-2026-10-02.png)
 
 ## Findings
 

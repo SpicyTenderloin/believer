@@ -23,9 +23,9 @@ The last power-up of the flight controller (about 05:48 UTC) was continuous thro
 
 Earlier logs from the same power-up (`05_53_04`, 286 s, peak 45.2 A, and three short idle logs) are a separate earlier run about 10 minutes before. The whole day's 25 logs are in `G:\log\2026-09-26` on the flight controller's SD card.
 
-![Stitched simulated flight: current, pack voltage, and motor command](../../assets/bench-simulated-flight-2026-09-26.png)
+![Stitched simulated flight: current, pack voltage, and motor command](../../assets/test-plots/bench-simulated-flight-2026-09-26.png)
 
-![Final seconds before and after the failure](../../assets/bench-simulated-flight-2026-09-26-fault-zoom.png)
+![Final seconds before and after the failure](../../assets/test-plots/bench-simulated-flight-2026-09-26-fault-zoom.png)
 
 ## Configuration In Effect (from the parameters recorded at the start of each log)
 
@@ -96,7 +96,7 @@ The 102.9 A spike is more than double the 44 to 48 A that had been flowing 0.2 t
 
 **Thrust stand (2026-09-06 to 2026-09-15).** Julian confirmed the RCbenchmark runs in `MN3110_12_6` and `MN3110_11_7` used the motors installed in the aircraft, one motor on the stand at a time. Time with the stand current above 21 A: 29.1 s on the 12x6" (2026-09-15; peak 40.0 A, 4.4 s of it above 30 A) and 2.6 s on the 11x7" (2026-09-10; peak 21.6 A), 31.7 s in total. The folder holds 13 CSV files (9 for the 12x6", 4 for the 11x7"), all included. The 11x7" `combined_continuous` file repeats the three 11x7" runs and is excluded. Which motor was on the stand is not recorded.
 
-![Time spent at each motor current since installation, aircraft and thrust stand](../../assets/motor-current-histogram-since-install.png)
+![Time spent at each motor current since installation, aircraft and thrust stand](../../assets/test-plots/motor-current-histogram-since-install.png)
 
 **Total since installation:** about 96.5 s above 21 A per motor (64.8 s in the aircraft plus 31.7 s on the stand, the stand time counting against the one motor tested). Above 25 A per motor: about 22 s (11.7 s aircraft, 10.1 s stand). Above 30 A per motor: about 14 s (9.1 s aircraft, 4.7 s stand).
 
