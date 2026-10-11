@@ -54,6 +54,7 @@ Values reflect `believer-parameters.params` (refreshed 2026-10-11, this time rec
 | Parameter | Value | Notes |
 |---|---|---|
 | `SENS_EN_MS4525DO` | 1 (Enabled) | Enables the MS4525DO differential pressure airspeed sensor driver. |
+| `ASPD_FS_T_START` | 2 (Decided, not yet applied) | Airspeed-sensor re-enable delay after its validator checks pass again. PX4's default, -1, disables in-flight re-enabling entirely once the sensor is marked invalid. The maiden flight (2026-10-11) tripped this: the raw differential-pressure sensor itself read physically sane airspeeds for the entire flight, but PX4's validator flagged it invalid once at t=49.0s (16.4s after takeoff, during the high-G pull-up recovering from the launch sag - `check_load_factor()` in `AirspeedValidator.cpp` is the likely trigger) and, with `ASPD_FS_T_START` at its -1 default, never re-validated it for the remaining ~1400s of the flight. Changed to 2 (seconds) so a future transient trip can clear itself in flight rather than latching for the whole flight. See `docs/engineering/test-reports/2026-10-11-maiden-flight.md`. |
 
 ## GPS
 

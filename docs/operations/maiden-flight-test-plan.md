@@ -135,4 +135,4 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 
 ## 7. Open Items
 
-None remaining in this plan itself as of 2026-10-10. The maiden flight (2026-10-11) is now complete - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md` for the phase-by-phase result and `context/open-items.md` for findings that came out of it (airspeed sensor fault, Phase J not deliberately exercised, and others).
+None remaining in this plan itself as of 2026-10-10. The maiden flight (2026-10-11) is now complete - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md` for the phase-by-phase result and `context/open-items.md` for findings that came out of it (airspeed validator config needing a fix, Phase J not deliberately exercised, and others).

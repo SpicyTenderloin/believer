@@ -33,6 +33,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 | Propulsion | PROP-12: Fit contra-rotating propellers | Not started |
 | Propulsion | PROP-13: Rectify right motor bearing fault | Not started |
 | Electrical power | PWR-05: Reinforce PDB mount and redo its connector | Not started |
+| Electrical power | PWR-06: Complete the battery capacity test and set `BAT1_CAPACITY` | Not started |
 | Control | CTL-04: Configure tri-rate switch-selectable deflection | In progress |
 | Control | CTL-08: Verify and correct full-Manual stick-to-surface scaling | For review |
 
@@ -234,6 +235,21 @@ Follow-up verification for the UBEC installed under PWR-01 (2026-08-19). Does no
 Recommended by Peter Spink (TMAC, 2026-07-10).
 
 </details>
+
+### PWR-06 - Complete the battery capacity test and set `BAT1_CAPACITY`
+
+- [ ] **Status:** Not started
+- **Priority:** CRITICAL
+- **Depends on:** None
+
+**Scope**
+- Complete a proper discharge capacity test on the custom 6S4P Li-ion pack (24 NCR20700A cells) - the 2026-09-26 attempt ended at 4.2 Ah discharged when the left motor failed (unrelated to the battery itself) and was never repeated.
+- Set `BAT1_CAPACITY` from the measured result. It is currently -1 (unset), which was confirmed during the maiden flight analysis to matter more than previously treated as a nice-to-have: with capacity unset, PX4's reported battery percentage is a pure linear interpolation between `BAT1_V_EMPTY`/`BAT1_V_CHARGED` per cell - no chemistry model, no coulomb counting - which is a poor fit for Li-ion's flat-then-steep discharge curve and likely reads over-optimistic through the middle of a flight before dropping fast near empty. Setting `BAT1_CAPACITY` switches PX4 onto coulomb counting (current integration), which doesn't depend on curve shape and is a real improvement, not just a nice-to-have.
+- The maiden flight itself discharged 3.92 Ah (PX4's own coulomb counter, `battery_status.discharged_mah`, which runs regardless of whether `BAT1_CAPACITY` is set - independently cross-checked by manually integrating the logged current, 3.90 Ah) - useful context for sizing the capacity test, not a substitute for it.
+
+**Acceptance criteria**
+- Capacity test completed under controlled conditions (known load, safe cutoff voltage), result logged as a dated test report.
+- `BAT1_CAPACITY` set from the measured result and confirmed applied via a parameter export.
 
 ### PWR-05 - Reinforce PDB mount and redo its connector
 

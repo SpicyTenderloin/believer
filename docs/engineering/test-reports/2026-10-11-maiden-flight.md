@@ -16,7 +16,7 @@ Per Julian's debrief: the launch itself was marginal (hand-launched from a hill,
 
 The flight's most important finding is operational, not aerodynamic: the GCS telemetry link (RFD900x) dropped out at least 15 times over the 24.8-minute flight, three of them longer than the 10-second data-link-loss failsafe timeout (`COM_DL_LOSS_T`). The aircraft launched with `NAV_DLL_ACT` already reverted to 0 (Disabled) rather than the 2 (Return) set on 2026-10-02 under RF-06 - confirmed directly from the log's embedded parameter set - which is why none of those dropouts triggered an unwanted RTL. Had RF-06's setting still been live, at least three automatic RTLs would very likely have fired mid-flight despite the pilot holding full manual RC control throughout. This is documented in full in `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
 
-A second significant finding: the airspeed sensor (differential pressure / pitot) reported invalid readings for almost the entire flight (`health_and_arming_checks` logged "Preflight Fail: Airspeed invalid" repeatedly, and only 2.9% of `airspeed_validated` samples fell in a physically plausible range). TECS-dependent modes that rely on airspeed (Altitude mode, the Cruise Efficiency Sweep's hands-off points) were likely operating on degraded or fallback airspeed estimates for this flight. Ground speed from GPS was used in this report instead, where airspeed data was needed.
+A second significant finding: `airspeed_validated` was invalid for almost the entire flight (only 2.9% of samples in a physically plausible range). This is not a sensor or pitot-line fault - the raw differential-pressure readings were physically sane for the whole flight - but a PX4 validator that latched the sensor as failed after one trip 16.4s after takeoff and, by default, never let it recover in flight (see Airspeed validator latched invalid below). TECS-dependent modes that rely on airspeed (Altitude mode, the Cruise Efficiency Sweep's hands-off points) were likely operating on degraded or fallback airspeed estimates for this flight regardless of the root cause. Ground speed from GPS was used in this report instead, where airspeed data was needed.
 
 The in-flight PID auto-tune (Phase D) was attempted twice and succeeded on the second attempt, committing new roll- and pitch-rate gains partway through the flight (see Findings).
 
@@ -55,9 +55,9 @@ Per Julian's debrief: the launch was hand-launched from a hill at the BNEMAC fie
 
 The log backs this up directly. Using the moment altitude first leaves the ground as t=0, the aircraft sagged to **3.3m below release height at t=1.6s**, recovered most of the way, sagged a second, shallower time (~1.8m) around t=3.5s, and only settled into a sustained climb from about t=4s:
 
-![Launch profile: altitude vs. time, coloured by ground speed, first 10 seconds](../../assets/test-plots/launch-profile-first-10s-2026-10-11.png)
+![Launch profile: altitude vs. time, coloured by EKF true airspeed, first 10 seconds](../../assets/test-plots/launch-profile-first-10s-2026-10-11.png)
 
-The dip coincides with the lowest ground speed of the window (15.3 m/s at the lowest point) - a real, measurable margin above stall during the few seconds right after release, not just a visual impression.
+The dip coincides with the lowest airspeed of the window - **12.4 m/s at the lowest point**, only 1.4 m/s above `FW_AIRSPD_STALL` (11 m/s). This window is entirely within the time the airspeed validator was still trusting the sensor (see Airspeed validator latched invalid below), so this is EKF-fused airspeed, not a ground-speed proxy - a real, measurably thin margin above stall during the few seconds right after release, not just a visual impression.
 
 The climb-rate figure below (about 1.0 m/s average from takeoff) is consistent with this account - a marginal, not comfortable, margin above stall during the initial climb-out. **Decision (Julian): future flights will use a launch dolly instead of a hand launch** - tracked in `context/open-items.md` and cross-referenced against the existing launch-dolly requirements document (`docs/engineering/requirements/launch-dolly-requirements.md`).
 
@@ -73,9 +73,15 @@ GPS ground speed (`vehicle_local_position` vx/vy) ranged from 0 (on the ground) 
 
 Pack voltage: 24.97V at arm, 22.99V at disarm (minimum 22.38V in flight), consistent with `BAT1_V_EMPTY` (3.2 V/cell x 6 = 19.2V) never being approached. Reported remaining charge fell from 100% to 74%. Peak current draw was 33.5A, mean 9.4A.
 
-### Airspeed sensor fault
+### Airspeed validator latched invalid - not a hardware fault
 
-`health_and_arming_checks` logged "Preflight Fail: Airspeed invalid" repeatedly throughout the flight (recurring alongside nearly every GCS-connection event, suggesting a persistent rather than momentary condition), and at t=48.9s the `airspeed_selector` explicitly warned: "Airspeed sensor failure detected. Return to launch (RTL) is advised." Only 215 of 7436 `airspeed_validated` samples (2.9%) fell in a physically plausible range (-1 to 40 m/s); the raw reported range included impossible negative values down to -6.7 m/s. This affects the reliability of any TECS-mediated mode (Altitude mode, hands-off points in Phase E) for this flight, and means Phase E's post-flight power-vs-airspeed analysis (test plan Section 3, Phase E) cannot be done reliably from this log's airspeed channel - GPS ground speed or a pitot-sensor check would be needed first. Flagged in `context/open-items.md`.
+`airspeed_validated` was invalid for almost the entire flight (only 215 of 7436 samples, 2.9%, in a physically plausible range), and at t=48.9s the `airspeed_selector` logged "Airspeed sensor failure detected. Return to launch (RTL) is advised." This looked at first like a sensor or pitot-line fault, but checking the raw differential-pressure sensor directly (not the processed/validated topic) rules that out: recomputing airspeed straight from the raw pressure readings gives physically sane values (13-24 m/s) for the entire flight, with no negative, zero, or stuck readings - the kind of signature a cut or blocked line would produce. The sensor hardware was working the whole time.
+
+What actually happened: `airspeed_sensor_measurement_valid` flips false exactly once, at **t=49.0s** (16.4s after takeoff), and never recovers for the remaining ~1400s. At that moment body-frame vertical acceleration was swinging up to about 2.4g while indicated airspeed was only 15-17 m/s - not far above the 11 m/s stall speed - during the hard pull-up recovering from the launch sag (see Launch above). That combination is exactly what PX4's `check_load_factor()` validator check is designed to catch (`AirspeedValidator.cpp`), making it the likely trigger. It never got a chance to clear afterward because `ASPD_FS_T_START` was at **-1**, PX4's own default - documented as disabling in-flight re-enabling of the sensor entirely once it's marked invalid.
+
+**Decision: `ASPD_FS_T_START` changed to 2s** so a future transient trip can clear itself in flight instead of latching for the rest of the flight - not yet applied to the physical FC, see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
+
+This still affects the reliability of any TECS-mediated mode (Altitude mode, hands-off points in Phase E) and Phase E's post-flight power-vs-airspeed analysis for *this* flight - GPS ground speed was used instead where airspeed data was needed. Flagged in `context/open-items.md`.
 
 ### GCS data-link dropouts and the `NAV_DLL_ACT` reversal
 
@@ -169,9 +175,9 @@ Not from the log - found by Julian during post-flight inspection of the airframe
 
 ## What This Does and Does Not Show
 
-**Shown:** the airframe flew, climbed, and was recovered without incident across a 24.8-minute flight, despite a marginal hill launch; Position Hold, Stabilized, Acro, and Mission modes were all exercised; PID auto-tune completed successfully on its second attempt and measurably improved rate tracking with no saturation; the `NAV_DLL_ACT` reversal is justified by this flight's own GCS link behaviour and by a GCS laptop failure on the day; the uploaded mission flew without rejection or fault; the reported roll-authority asymmetry is real and matches the pilot's account, and is not a control-allocation artifact (no differential thrust is configured on this airframe in any mode); Stabilized mode's throttle path is confirmed identical to Manual/Acro.
+**Shown:** the airframe flew, climbed, and was recovered without incident across a 24.8-minute flight, despite a marginal hill launch; Position Hold, Stabilized, Acro, and Mission modes were all exercised; PID auto-tune completed successfully on its second attempt and measurably improved rate tracking with no saturation; the `NAV_DLL_ACT` reversal is justified by this flight's own GCS link behaviour and by a GCS laptop failure on the day; the uploaded mission flew without rejection or fault; the reported roll-authority asymmetry is real and matches the pilot's account, and is not a control-allocation artifact (no differential thrust is configured on this airframe in any mode); Stabilized mode's throttle path is confirmed identical to Manual/Acro; the airspeed sensor hardware itself was working for the entire flight - the near-total "invalid" readings were a PX4 validator config issue, not a pitot/line fault.
 
-**Not shown:** a reliable Phase E (Cruise Efficiency Sweep) power-vs-airspeed dataset (airspeed sensor fault); a deliberate Phase J (Return to Home via CH10) test; isolated climb-rate, glide, or stall-speed figures broken out by phase (not separable from `nav_state` alone - would benefit from the pilot's own phase timing notes); the cause of the t=574.1s critical-failure flag; root cause of the airspeed sensor fault, the recurring GCS dropouts, or the PDB mount/connector issue (not determinable from this log); confirmation of actual per-motor thrust balance (no per-motor current/RPM telemetry exists, and the right motor's bearing condition at the time of this flight is unknown).
+**Not shown:** a reliable Phase E (Cruise Efficiency Sweep) power-vs-airspeed dataset (airspeed validator latched invalid for almost the whole flight); a deliberate Phase J (Return to Home via CH10) test; isolated climb-rate, glide, or stall-speed figures broken out by phase (not separable from `nav_state` alone - would benefit from the pilot's own phase timing notes); the cause of the t=574.1s critical-failure flag; root cause of the recurring GCS dropouts or the PDB mount/connector issue (not determinable from this log); confirmation of actual per-motor thrust balance (no per-motor current/RPM telemetry exists, and the right motor's bearing condition at the time of this flight is unknown).
 
 ## Outstanding
 
@@ -180,7 +186,7 @@ Not from the log - found by Julian during post-flight inspection of the airframe
 - Right motor bearing needs replacing/rectifying before the next flight.
 - PDB mount needs reinforcing and its connector redoing.
 - Per-motor thrust balance still cannot be verified in flight (no current/RPM instrumentation per motor) - worth prioritising now that a bearing fault has been found on one side.
-- Airspeed sensor (pitot/differential pressure) needs inspection before the next flight.
+- `ASPD_FS_T_START` (decided: -1 -> 2s) needs applying to the physical FC before the next flight - no airspeed sensor hardware inspection is needed, the raw sensor read correctly throughout.
 - Phase J (Return to Home, CH10) should be deliberately exercised on a future flight - not yet tested.
 - Root cause of the repeated GCS link dropouts (RFD900x) not investigated - antenna, range, and RF environment at BNEMAC are all plausible candidates.
 - The t=574.1s `fd_critical_failure` flag and the t=748.8s GPS spoofing warning are noted but not root-caused; revisit if either recurs.
