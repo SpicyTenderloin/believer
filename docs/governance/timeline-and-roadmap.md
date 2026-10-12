@@ -34,7 +34,6 @@
 The aircraft has flown once (maiden flight, 2026-10-11) and is now working through the Critical items the flight itself raised before the next flight is cleared. Full task detail, dependencies, and acceptance criteria are tracked in [`build-checklist.md`](../engineering/build-checklist.md); this section summarises it.
 
 **Critical (must be resolved and verified before the next flight):**
-- Limit current draw to within the motor's rated continuous current (PROP-08)
 - Fit contra-rotating propellers, addressing the maiden flight's roll-authority asymmetry (PROP-12)
 - Rectify the right motor bearing fault found during post-flight inspection (PROP-13)
 - Reinforce the PDB mount and redo its connector (PWR-05)

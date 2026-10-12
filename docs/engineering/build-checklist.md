@@ -29,7 +29,6 @@ Future capability work (payload, autonomy) that is not required for current flig
 
 | Area | Critical blocker | Status |
 |---|---|---|
-| Propulsion | PROP-08: Limit current draw to within motor rated continuous current | For review |
 | Propulsion | PROP-12: Fit contra-rotating propellers | Not started |
 | Propulsion | PROP-13: Rectify right motor bearing fault | Not started |
 | Electrical power | PWR-05: Reinforce PDB mount and redo its connector | Not started |
@@ -62,35 +61,6 @@ Future capability work (payload, autonomy) that is not required for current flig
 ---
 
 ## B. Propulsion System
-
-### PROP-08 - Limit current draw to within motor rated continuous current
-
-- [ ] **Status:** In progress
-- **Priority:** CRITICAL
-- **Milestone:** Ground-test readiness
-- **Depends on:** PROP-02 (complete - see Completed Work)
-
-**Scope**
-- The 2026-08-31 brief full-throttle test (PROP-02 background) had each motor drawing an estimated ~30-32.5A - roughly 45-55% above the MN3110 KV700's 21A continuous rating - corroborated by a separate full-throttle current-sense measurement at ~30A/motor. Determine and apply a configuration change so the motors cannot be run at a sustained current above their rated continuous draw, e.g. an ESC/PX4 current limit, a lower maximum throttle ceiling, or a propeller change.
-- **Applied 2026-09-02:** `PWM_MAIN_MAX4`/`MAX6` (motor PWM ceiling) lowered from 2000 to 1800, confirmed via a fresh parameter export - based on the PWM-vs-current data point below.
-- **Revised 2026-09-26, pending a parameter export:** thrust-stand characterisation (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`) selected an APC 12x6" propeller and recommends limiting the ESC command to approximately **1700us** - about 19A and 1.7 kgf per motor, against the 21A rating. The 1800us ceiling was derived for the 11x7" propeller; with the 12x6" it would exceed 21A per motor. `PWM_MAIN_MAX4`/`MAX6` needs setting to approximately 1700 and verifying via export.
-- **2026-09-26:** the ~1700us ceiling had still not been applied (the flight controller logs show `PWM_MAIN_MAX4`/`MAX6` = 1800) when the left motor failed during a bench simulated flight, about 6 s after the command reached 1800us, with the total current at 42 to 47 A (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). At 1700us that run drew about 16 A per motor. The ceiling should be applied before any further power-on testing.
-- **Superseded 2026-09-30/2026-10-02:** the motors were replaced with the T-Motor U5 KV400 (PROP-11, closed 2026-09-30), which has a much higher margin on this propeller - the thrust-stand characterisation measured 15.8 to 16.9 A at full throttle (2000us), about 54 to 56% of its 30A rating (`docs/engineering/test-reports/2026-09-30-u5-kv400-thrust-stand-characterisation.md`).
-- **Applied and confirmed 2026-10-02:** `PWM_MAIN_MAX4`/`MAX6` raised back to 2000 and `WEIGHT_BASE`/`WEIGHT_GROSS` updated to 4.0 for the heavier motors, both confirmed from the embedded parameters in the first in-aircraft ground-test log (`docs/engineering/test-reports/2026-10-02-u5-first-ground-test.md`). The planned quick bench spin-up with the U5s installed was run the same day: full-throttle current 29.4 to 30.9A total (about 15.5A/motor if shared equally), well under the U5's 30A rating, both motor commands identical throughout, no fault or failsafe flag.
-
-**Acceptance criteria**
-- Sustained (not brief-burst) current draw per motor at maximum permitted throttle confirmed at or below the motor's rated continuous current. Satisfied by the combination of the 2026-09-30 thrust-stand sustained run (393 s cumulative at 2000us, 15.8 to 16.9 A, on the right-hand MN3110's ESC on the stand, not the aircraft's own wiring) and the 2026-10-02 in-aircraft quick spin-up (full throttle, 29.4 to 30.9A total, about 10 to 15s above 20A, not a sustained hold) - not a fresh sustained in-aircraft test, as anticipated when this task was revised.
-- Configuration change applied and documented, including any resulting effect on static thrust or throttle response. **Done, 2026-10-02**: ceiling raised back to 2000us (from the U5 swap, this removes the need for a reduced ceiling), confirmed via the ground-test log.
-- Result logged as a dated entry under `docs/engineering/test-reports/` - **done**: the U5 thrust-stand report (2026-09-30) and the first in-aircraft ground-test report (2026-10-02).
-
-<details>
-<summary>Background and engineering notes</summary>
-
-Raised 2026-09-02 as a critical maiden-flight blocker following the 2026-08-31 overcurrent finding logged under PROP-02: a brief full-throttle test showed ~30-32.5A per motor against the MN3110 KV700's 21A continuous (180s) rating. PROP-02 measures and records this; PROP-08 is the corresponding action item to actually bring sustained draw within the rated limit before flight, rather than leaving it as a documented-but-unaddressed overcurrent condition.
-
-**PWM-vs-current data point (2026-09-02):** correlating `actuator_outputs` against `battery_status.current_a` in the day's thrust-test logs (`07_23_00.ulg`, `07_28_44.ulg`) shows ~42A total current (both motors via the PDB, i.e. ~21A/motor - the MN3110 KV700's rated continuous current) occurring at a PWM output of approximately **1800-1809us** on both motor channels. This is a candidate starting point for a throttle-ceiling limit, pending confirmation via a proper sustained-run test (not just this incidental brief-burst correlation) once the landing-detector auto-disarm workaround (`AI-context/open-items.md` - raise/disable `COM_DISARM_LAND`) allows one to be run cleanly.
-
-</details>
 
 ### PROP-10 - Quantitative thrust measurement on a dedicated motor rig
 
@@ -487,6 +457,7 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 - [x] Static thrust ground test (PROP-02) - closed 2026-09-02 on Ross Dennington's (BNEMAC) qualitative in-person assessment during a bench thrust-test session; no measured thrust-to-weight ratio taken. A dedicated motor-rig quantitative measurement was explicitly deferred, not lost - tracked separately as PROP-10
 - [x] Throttle curve/mapping verification (PROP-06) - reviewed by Ross Dennington during the same 2026-09-02 session; found appropriate, no remapping applied
 - [x] Replace failed left motor and verify the drive (PROP-11) - closed 2026-09-30. The left MN3110 KV700 failed during a bench simulated flight on 2026-09-26 (`docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`); whether the motor or the ESC failed first was never conclusively separated. Decision made to replace both motors with the T-Motor U5 KV400, retaining the AIR 40A ESCs, on the strength of: a thrust-stand characterisation (1.84 to 1.94 kgf per motor at 14.0 to 14.7 A static, well under the 30A rating, and more thrust per amp than the MN3110 on the same propeller) and a 483 s full-throttle run on the ESC removed from the failed drive (393 s cumulative at full throttle, current flat at 15.8 to 16.9 A, no fault, motor only slightly warm to the touch) - `docs/engineering/test-reports/2026-09-30-u5-kv400-thrust-stand-characterisation.md`. Closed on this basis rather than the task's originally-scoped instrumented temperature log and formal electrical condition checks (insulation, winding-resistance balance), which were decided against pursuing. The right motor and its ESC were not stand tested. The U5 motors are not yet physically installed in the aircraft - see `AI-context/open-items.md`.
+- [x] Limit current draw to within motor rated continuous current (PROP-08) - closed 2026-10-13. Raised after the MN3110 KV700 drew about 30-32.5A per motor against its 21A continuous rating; made moot by the return to the T-Motor U5 KV400 (PROP-11), which draws about 15.5A per motor at full throttle (29.4 to 30.9A total, first in-aircraft ground test, `docs/engineering/test-reports/2026-10-02-u5-first-ground-test.md`) against its 30A rating, with the motor PWM ceiling (`PWM_MAIN_MAX4`/`MAX6`) back at 2000us. No sustained in-aircraft hold at full throttle has been run; the thrust-stand sustained run (393 s cumulative at 2000us, 15.8 to 16.9A, `docs/engineering/test-reports/2026-09-30-u5-kv400-thrust-stand-characterisation.md`) covers that
 - [x] Control surface PWM mapping and direction - PWM channel assignments (MAIN 1-2 V-tail, MAIN 3/5 ailerons) confirmed; all surfaces verified moving in the correct direction
 - [x] Primary control expo - 30% exponential set on aileron, elevator, and rudder; throttle expo removed
 - [x] Control surface expo and aileron trim - 30% primary-control expo configured; aileron neutral trim values entered 2026-08-19 (CTL-03), later rechecked and updated 2026-09-02 following PWM endpoint recalibration (CTL-06). **Note:** the earlier claim that radio calibration had matched stick travel to final PWM deflection limits, and that aileron differential/V-tail rudder mix were finalised, was superseded 2026-08-31 - the endpoint-based differential/±0.85 V-tail yaw values were never the validated baseline; the actuator effectiveness and PWM endpoint reset is now complete (CTL-06, see below).

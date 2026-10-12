@@ -316,7 +316,6 @@ See also [build-checklist.md](../engineering/build-checklist.md) for the build, 
 ## 9. Open Items
 
 - None of the Acro rate limits (Section 5.2), airspeed, roll/pitch limit, or TECS climb/sink parameters in Sections 5.4-5.5 have been deliberately tuned for the Believer yet (CTL-02, `docs/engineering/build-checklist.md`) - values shown are the as-exported PX4 generic fixed-wing airframe defaults.
-- PROP-08 (`docs/engineering/build-checklist.md`): the motor PWM ceiling (`PWM_MAIN_MAX4`/`MAX6`) limits full-stick throttle in every mode; sustained-current verification at the ceiling is still outstanding.
 
 ## 10. Revision History
 
