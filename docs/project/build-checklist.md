@@ -258,8 +258,8 @@ Recommended by Peter Spink (TMAC, 2026-07-10).
 - **Depends on:** None
 
 **Scope**
-- Found during post-flight inspection after the 2026-10-11 maiden flight: the power distribution board (PDB) mount needs reinforcing and its connector needs redoing.
-- Root cause not yet investigated - vibration, a marginal original installation, or the loads from the marginal hill launch/landing (`docs/engineering/test-reports/2026-10-11-maiden-flight.md`) are all plausible.
+- The power distribution board (PDB) mount needs reinforcing and its connector needs redoing - a known issue from before the 2026-10-11 maiden flight, not something the flight itself revealed.
+- Root cause: the XT90 connector (on the PDB, the battery side, or both) was soldered without the opposite-gendered mating connector plugged in during soldering. Without the mating half acting as a heatsink/support, soldering heat softens and deforms the connector's plastic housing, leaving it loose and difficult to connect/disconnect cleanly. Fix: resolder with the mating connector plugged in throughout.
 
 **Acceptance criteria**
 - Mount reinforced and connector redone.
