@@ -14,6 +14,7 @@ Standing conventions for working in this repo. Update this file when the user gi
     - `docs/operations/manual.md` - operating manual (flight modes, procedures)
     - `docs/operations/GX12 Radio Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter (model config, radio config, firmware, stock assets)
     - `docs/operations/Pixhawk Parameter Backup/` - `parameter-change-log.md` (narrative PX4 parameter change history) and `believer-parameters.params` (full raw parameter dump)
+    - `docs/operations/Pixhawk Flight Log Backup/` - raw PX4 `.ulg` flight/bench-test logs, kept so test-report findings don't depend on the physical SD card
   - `docs/project/` - project status, history, and admin
     - `docs/project/build-checklist.md` - current flight-readiness dashboard and work-package task tracking
     - `docs/project/project-roadmap.md` - future capability work not required for current flight-readiness
