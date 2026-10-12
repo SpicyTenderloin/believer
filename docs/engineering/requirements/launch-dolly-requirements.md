@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-DOLLY-001 |
-| **Revision** | 0.3 |
-| **Date** | 2026-08-20 |
+| **Revision** | 0.4 |
+| **Date** | 2026-10-12 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -46,17 +46,20 @@ Recorded here as sizing reference data - none of it is itself a requirement.
 | Motor-shaft-to-ground clearance (current, no gear) | 150mm - constrains propeller diameter to 11" (`docs/engineering/ICD.md`) |
 | CG | 15mm aft of the front wing spar centreline, ~25% MAC |
 
-Per the manufacturer's published wingspan/wing-area figures, wing loading at MTOW is approximately 5.5kg / 0.51m² ≈ **10.8 kg/m²** - a useful rough cross-check for the dolly's target release speed once that's defined (Section 6), though the actual liftoff speed depends on the angle of attack the dolly holds the aircraft at, which isn't yet designed.
+Per the manufacturer's published wingspan/wing-area figures, wing loading at MTOW is approximately 5.5kg / 0.51m² ≈ **10.8 kg/m²**; at the aircraft's current actual flying weight with no payload fitted (4.0kg, the maiden flight's `WEIGHT_GROSS`), it is about **7.8 kg/m²** - the more relevant figure until a payload is added.
 
 ## 3b. Airspeed Reference Data (Reference Only)
 
-From `docs/engineering/flight-modes.md`, as-configured PX4 parameters (not yet tuned for this airframe - see that document's Open Items):
+As-configured PX4 parameters (`docs/operations/Pixhawk Parameter Backup/believer-parameters.params`), current as of the 2026-10-11 maiden flight:
 
 | Parameter | Value | Relevance |
 |---|---|---|
-| `FW_AIRSPD_MIN` | 10 m/s | Rough floor for a usable rotation/release speed |
-| `FW_AIRSPD_TRIM` | 15 m/s | Cruise target - well above what a ground roll needs to achieve |
-| `FW_AIRSPD_STALL` | 7 m/s | Absolute floor - releasing at or near this speed leaves no margin |
+| `FW_AIRSPD_STALL` | 11 m/s | PX4's configured stall estimate - absolute floor, no margin |
+| `FW_AIRSPD_MIN` | 15 m/s | Floor PX4 itself will command in autonomous modes |
+| `FW_AIRSPD_TRIM` | 20 m/s | Cruise target - well above what a ground roll needs to achieve |
+| `FW_AIRSPD_MAX` | 28 m/s | Upper airspeed limit |
+
+**Measured stall speed (2026-10-11 maiden flight, Phase G):** three repeated deliberate stall breaks (full-aft-stick, stick neutral, nose dropping on its own) landed at **8.15, 9.95, and 8.66 m/s indicated airspeed**, at the aircraft's actual flying weight that day (4.0kg) - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md`. This is a real measured floor, not a parameter estimate, and is somewhat lower than the configured `FW_AIRSPD_STALL` above. A release speed with a standard ~1.15-1.3x margin above this measured range works out to roughly **11-13 m/s** - see Section 6.
 
 ## 4. Requirements
 
@@ -109,7 +112,7 @@ The following are known to matter but aren't specified yet, pending the open ite
 ## 6. Open Items
 
 - Fuselage belly profile and dimensions at the intended cradle location(s) (REQ-DOL-10) - not yet measured.
-- Target release/rotation speed and aircraft attitude during the ground roll - not yet defined (Section 3b gives only rough reference bounds).
+- Target release/rotation speed and aircraft attitude during the ground roll - narrowed but not yet finally decided. Section 3b's measured stall speed (8-10 m/s) plus a standard margin suggests a target release speed of roughly 11-13 m/s, but the exact figure still depends on the angle of attack the dolly holds the aircraft at during the roll: a flatter attitude (closer to cruise) would need more speed than this to generate enough lift; an attitude closer to the stall AoA itself would need less, but leaves little to no margin - not recommended for an unmonitored, unpiloted-through-the-transition release.
 - Retention/release mechanism - not yet decided.
 - Quantified unevenness the dolly must tolerate (REQ-DOL-14) - "some level of unevenness" confirmed qualitatively, but no bump height/frequency spec yet.
 - Whether the dolly needs to handle crosswind/directional stability during the roll, or is intended for calm/near-headwind conditions only.
@@ -123,3 +126,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.1 | 2026-07-17 | Initial draft |
 | 0.2 | 2026-07-17 | Resolved the driving motivation (Section 2) per user confirmation - reduces the aircraft's exposure to hand-launch failure-mode damage, not necessarily a mandatory replacement; resolved target surface as standard grass runways with some unevenness (REQ-DOL-13, new REQ-DOL-14, REQ-DOL-20) |
 | 0.3 | 2026-08-20 | Noted (Section 1) that this dolly is an interim solution for the current Believer airframe, expected to be made obsolete by the landing gear on the new custom-designed replacement airframe once built (`docs/engineering/requirements/custom-airframe-requirements.md`) |
+| 0.4 | 2026-10-12 | Replaced Section 3b's stale, pre-flight PX4 airspeed parameters with the current configured values and the maiden flight's own measured stall speed (8-10 m/s at the aircraft's actual 4.0kg flying weight, `docs/engineering/test-reports/2026-10-11-maiden-flight.md`) - a real measured floor rather than a parameter estimate. Added the current-weight wing loading figure alongside the MTOW one. Narrowed Section 6's release-speed open item to a target range (roughly 11-13 m/s) pending the dolly's release AoA |
