@@ -35,7 +35,7 @@ Standing conventions for working in this repo. Update this file when the user gi
 
 ## Session behaviour
 
-- **Log every change to any repo document in `context/CHANGELOG.md` before committing - no exceptions, no change is too small.** Each entry must state which file was changed, what changed, and briefly why. Date entries as `## YYYY-MM-DD` with the most recent date at the top. The CHANGELOG update must be included in the same commit as the change it describes.
+- **Log changes to any repo document in `context/CHANGELOG.md` before committing.** Each entry must state which file was changed, what changed, and briefly why. Scale the entry to the change's substance: a real content, finding, or decision change gets its own entry; pure wording/phrasing polish (rewording a sentence, aligning wording between two files, a lead-in sentence) doesn't need one of its own - group a run of such edits into a single brief entry (e.g. "reviewed and reworded X's opening section with Julian") rather than logging each tweak separately. Date entries as `## YYYY-MM-DD` with the most recent date at the top. The CHANGELOG update must be included in the same commit as the change it describes.
 
 - **Commit and push changes as we go**, rather than batching many changes into one commit at the end of a session.
 
