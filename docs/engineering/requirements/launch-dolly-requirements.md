@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-DOLLY-001 |
-| **Revision** | 0.4 |
+| **Revision** | 0.5 |
 | **Date** | 2026-10-12 |
 | **Status** | Draft |
 
@@ -61,6 +61,20 @@ As-configured PX4 parameters (`docs/operations/Pixhawk Parameter Backup/believer
 
 **Measured stall speed (2026-10-11 maiden flight, Phase G):** three repeated deliberate stall breaks (full-aft-stick, stick neutral, nose dropping on its own) landed at **8.15, 9.95, and 8.66 m/s indicated airspeed**, at the aircraft's actual flying weight that day (4.0kg) - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md`. This is a real measured floor, not a parameter estimate, and is somewhat lower than the configured `FW_AIRSPD_STALL` above. A release speed with a standard ~1.15-1.3x margin above this measured range works out to roughly **11-13 m/s** - see Section 6.
 
+Using the Weishäupl et al. 2024 drag-polar reference data (`CL0` = 0.2570, `CLα` = 0.1122/deg - for what is very likely the same commercial airframe, `docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf`, extracted in `context/project-notes.md`) against the 4.0kg flying weight and 0.51m² wing area, the wing AoA needed to generate exactly enough lift at 11-13 m/s works out to roughly **5-6°** - this is the target separation AoA, not a ground-rigging angle (see Section 3c).
+
+## 3c. Launch Concept (Decided)
+
+**Decided:** a tail-rising dolly, similar to a sailplane/motorglider take-off trolley - a single forward cradle that the fuselage rests in (free to pitch about that point, not clamped), positioned **30mm forward of the CG** (i.e. about 15mm forward of the front wing spar centreline, given the CG is 15mm aft of it - Section 3a), plus a separate, lower tail support further aft.
+
+At rest, gravity (CG aft of the cradle pivot) holds the aircraft tail-down, nose-up against the tail support. As ground-roll speed builds, the V-tail ruddervators generate increasing nose-down moment about the cradle pivot (aerodynamic effectiveness scales with speed, same as wing lift), lifting the tail clear before the wing reaches flying speed - either through active pilot stick input during the roll, passive static stability seeking the aircraft's trimmed attitude, or (most likely) both together. The aircraft settles toward its actual flying AoA (~5-6°, above) before finally separating from the cradle once wing lift exceeds weight.
+
+This means two different angles matter, not one:
+- **Static resting angle** (tail down, dolly stationary) - set by the tail support's height. Doesn't need to be precise (within normal build tolerance), since the tail-rise does the work of reaching the real flying AoA.
+- **Separation AoA** (~5-6°, above) - reached dynamically as the tail rises, not built into a fixed angle. This is the number that actually governs liftoff speed.
+
+Not yet determined: the cradle's exact shape/dimensions, the tail support's height (which sets the static angle), and Believer's wing incidence relative to the fuselage reference line (needed to translate the 5-6° aerodynamic AoA target into an actual physical rigging reference, since it isn't measured - see Section 6). The 30mm cradle offset itself is a reasonable starting point rather than a calculated value - no mass-distribution data exists to size it precisely, so it's expected to be verified/adjusted on an early low-speed test (confirm the aircraft sits stably tail-down at rest before trusting it at speed).
+
 ## 4. Requirements
 
 ### 4.1 Functional
@@ -105,15 +119,15 @@ As-configured PX4 parameters (`docs/operations/Pixhawk Parameter Backup/believer
 
 The following are known to matter but aren't specified yet, pending the open items in Section 6:
 
-- Target release/rotation speed and the attitude (angle of incidence) the dolly holds the aircraft at.
-- Retention/release mechanism (friction fit, mechanical latch, pip-pin, aerodynamic self-release at a given AoA, etc.).
+- Exact cradle and tail-support dimensions (shape, tail-support height) for the launch concept decided in Section 3c.
 - Runway/steering behaviour - whether the dolly is free-rolling (aircraft controls direction via rudder/differential thrust, as is conventional) or constrained (e.g. a rail or track).
 
 ## 6. Open Items
 
-- Fuselage belly profile and dimensions at the intended cradle location(s) (REQ-DOL-10) - not yet measured.
-- Target release/rotation speed and aircraft attitude during the ground roll - narrowed but not yet finally decided. Section 3b's measured stall speed (8-10 m/s) plus a standard margin suggests a target release speed of roughly 11-13 m/s, but the exact figure still depends on the angle of attack the dolly holds the aircraft at during the roll: a flatter attitude (closer to cruise) would need more speed than this to generate enough lift; an attitude closer to the stall AoA itself would need less, but leaves little to no margin - not recommended for an unmonitored, unpiloted-through-the-transition release.
-- Retention/release mechanism - not yet decided.
+- Fuselage belly profile and dimensions at the intended cradle location (Section 3c, 30mm forward of CG) - not yet measured.
+- Believer's wing incidence relative to the fuselage reference line - not documented or measured anywhere in the repo. Needed to translate the ~5-6° separation AoA target (Section 3b) into an actual physical rigging/attitude reference on the airframe.
+- Tail-support height (sets the static resting angle, Section 3c) - not yet decided; doesn't need high precision, but needs to be steep enough that the V-tail has a meaningful moment to work against.
+- Cradle and tail-support exact dimensions/shape - not yet designed (Section 5).
 - Quantified unevenness the dolly must tolerate (REQ-DOL-14) - "some level of unevenness" confirmed qualitatively, but no bump height/frequency spec yet.
 - Whether the dolly needs to handle crosswind/directional stability during the roll, or is intended for calm/near-headwind conditions only.
 
@@ -127,3 +141,4 @@ Tracked in [context/open-items.md](../../../context/open-items.md).
 | 0.2 | 2026-07-17 | Resolved the driving motivation (Section 2) per user confirmation - reduces the aircraft's exposure to hand-launch failure-mode damage, not necessarily a mandatory replacement; resolved target surface as standard grass runways with some unevenness (REQ-DOL-13, new REQ-DOL-14, REQ-DOL-20) |
 | 0.3 | 2026-08-20 | Noted (Section 1) that this dolly is an interim solution for the current Believer airframe, expected to be made obsolete by the landing gear on the new custom-designed replacement airframe once built (`docs/engineering/requirements/custom-airframe-requirements.md`) |
 | 0.4 | 2026-10-12 | Replaced Section 3b's stale, pre-flight PX4 airspeed parameters with the current configured values and the maiden flight's own measured stall speed (8-10 m/s at the aircraft's actual 4.0kg flying weight, `docs/engineering/test-reports/2026-10-11-maiden-flight.md`) - a real measured floor rather than a parameter estimate. Added the current-weight wing loading figure alongside the MTOW one. Narrowed Section 6's release-speed open item to a target range (roughly 11-13 m/s) pending the dolly's release AoA |
+| 0.5 | 2026-10-12 | Decided the retention/release mechanism (new Section 3c): a tail-rising dolly (sailplane/motorglider trolley style) with a single cradle 30mm forward of the CG and a separate tail support, rather than a rigid fixed-angle cradle. Added the lift-curve-derived ~5-6° separation AoA target. Distinguished the static resting angle (doesn't need precision) from the separation AoA (does). Updated Sections 5/6 accordingly; added the undocumented wing-incidence-angle gap as a new open item |
