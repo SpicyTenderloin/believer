@@ -1,6 +1,13 @@
 # Believer Fixed Wing
 
-Engineering documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV, built by the QUT Aerospace Society (QUTAS) and developed as a BVLOS observation platform for remote sensing applications. A specific mission has not yet been selected. See [docs/project/project-overview.md](docs/project/project-overview.md) for the project background and roadmap.
+**Believer** is a long-range, fixed-wing UAV built by the QUT Aerospace Society (QUTAS) at Queensland University of Technology, developed as a BVLOS observation platform for remote sensing applications. A specific mission has not yet been selected. Onboard object detection is planned for a future companion computer phase.
+
+The airframe is a V-tail, twin-motor fixed-wing running PX4 on a Holybro Pixhawk 6X flight controller, with a long-range RFD900 telemetry link and an ExpressLRS RC link (Radiomaster GX12 transmitter / DBR4 receiver). This repository holds its engineering documentation, configuration, and parameter change log.
+
+**Project lead:** Julian Williams (UAS Systems Lead / Program Manager)  
+**Contact:** qutaerospacesociety@qut.edu.au
+
+See [docs/project/project-overview.md](docs/project/project-overview.md) for the full project background, team, and roadmap.
 
 Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork-and-pull-request workflow and this project's conventions.
 
