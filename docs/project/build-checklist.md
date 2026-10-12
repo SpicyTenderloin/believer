@@ -17,7 +17,7 @@ Milestone definitions:
 - **Ground-test readiness** - required before the aircraft is run under power for bench or ground testing (e.g. static thrust runs)
 - **Flight clearance** - required before the aircraft is released for a test flight
 
-Future capability work (payload, autonomy) that is not required for current flight-readiness is tracked separately in [`docs/project/project-roadmap.md`](project-roadmap.md).
+Future capability work (payload, autonomy) that is not required for current flight-readiness is tracked separately in [`timeline-and-roadmap.md`](timeline-and-roadmap.md).
 
 ---
 
@@ -374,7 +374,7 @@ A crucial distinction is the flight mode the observation was made in. `FW_MAN_R_
 
 **2026-09-01, informal bench observation:** the early-saturation behaviour was narrowed to Acro mode specifically - in Manual mode, stick position and surface deflection "seem to agree better," consistent with this task's own hypothesis (Acro's rate controller has nothing to null against on a stationary bench, so it saturates the output well before full stick; Manual's direct stick-to-actuator path has no such closed-loop artefact). This task was briefly closed on that basis (2026-09-01), but **reopened 2026-09-02** - the full formal test procedure above (propellers off, Manual mode, roll/pitch/yaw tested separately, stick%/PWM/deflection logged at several points per axis) is being run rather than accepting the lighter, qualitative bar. A quick bench comparison can't confirm the relationship is monotonic across the whole range, or that all three axes behave the same way (roll could be fine while pitch or yaw has a milder version of the same tendency) - that's what the full table is for.
 
-None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/engineering/flight-modes.md`. CTL-06 (actuator effectiveness and PWM endpoint baseline) is now complete, so this task's own dependency is satisfied and the formal test can proceed on a stable actuator configuration.
+None of `FW_MAN_R_SC`, `FW_MAN_P_SC`, or `FW_MAN_Y_SC` has been changed - all remain at 1.0 in the archived export and in `docs/operations/manual.md`. CTL-06 (actuator effectiveness and PWM endpoint baseline) is now complete, so this task's own dependency is satisfied and the formal test can proceed on a stable actuator configuration.
 
 Set to **For review**, 2026-09-02 - the task is at the point of just needing the formal confirmation step (running the logged table test above) rather than further investigative work; not marked Complete since that logged table hasn't been recorded against the acceptance criteria yet.
 
@@ -531,4 +531,4 @@ These are physical checks, not one-time tasks - they must be re-verified on the 
 
 ## Future Capability Roadmap
 
-Payload and autonomy work not required for current flight-readiness has moved to [`docs/project/project-roadmap.md`](project-roadmap.md).
+Payload and autonomy work not required for current flight-readiness has moved to [`timeline-and-roadmap.md`](timeline-and-roadmap.md).

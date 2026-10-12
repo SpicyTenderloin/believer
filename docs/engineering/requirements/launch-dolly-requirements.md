@@ -27,8 +27,8 @@ The dolly is intended to reduce the aircraft's exposure to hand-launch failure m
 
 - `docs/operations/manual.md` - current assisted hand-launch procedure, pre-flight checklist
 - `docs/engineering/ICD.md` - motor/propeller clearance data
-- `docs/project/project-roadmap.md` - launch dolly future-capability roadmap entry this document expands
-- `docs/engineering/flight-modes.md` - airspeed parameters referenced in Section 3b
+- `docs/governance/timeline-and-roadmap.md` - launch dolly future-capability roadmap entry this document expands
+- `docs/operations/manual.md` - airspeed parameters referenced in Section 3b
 - `context/open-items.md` - open dependencies against this subsystem
 
 ## 3a. Airframe Reference Data (Reference Only)

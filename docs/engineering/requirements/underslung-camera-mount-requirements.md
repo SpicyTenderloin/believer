@@ -19,7 +19,7 @@ The camera supports the mission's remote sensing observation objectives by provi
 
 - `docs/project/purchase-history/purchase-history.md` - IMX335 5MP USB Camera purchase record
 - `context/project-notes.md` - future/planned capability notes
-- `docs/project/project-roadmap.md` - Camera mount task (future capability work)
+- `docs/governance/timeline-and-roadmap.md` - Camera mount task (future capability work)
 - `context/open-items.md` - open dependencies against this subsystem
 
 ## 3a. Candidate Camera Module (Reference Only)

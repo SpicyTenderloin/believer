@@ -2,7 +2,7 @@
 
 Parameters intentionally set from the PX4 stock build. Auto-calibration values (set by QGroundControl) are listed separately at the end.
 
-Values reflect `believer-parameters.params` (refreshed 2026-10-11, this time reconstructed from the maiden flight's own onboard log - `23_02_07.ulg` on the Pixhawk's SD card, covering the full flight 2026-10-10 23:02-23:27 UTC / 2026-10-11 09:02-09:27 Brisbane local - rather than a live QGroundControl export, since no laptop/GCS connection to the flight controller was available at the time; superseding the 2026-10-02 direct-export refresh above it in history), in this same folder. The log embeds the full parameter set at boot plus every mid-flight change, so the reconstructed file is a genuine post-flight snapshot, not an approximation - the method is: start from the log's initial parameter dump, then apply every entry in its parameter-change record in order. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/engineering/flight-modes.md` and `docs/engineering/ICD.md` rather than here.
+Values reflect `believer-parameters.params` (refreshed 2026-10-11, this time reconstructed from the maiden flight's own onboard log - `23_02_07.ulg` on the Pixhawk's SD card, covering the full flight 2026-10-10 23:02-23:27 UTC / 2026-10-11 09:02-09:27 Brisbane local - rather than a live QGroundControl export, since no laptop/GCS connection to the flight controller was available at the time; superseding the 2026-10-02 direct-export refresh above it in history), in this same folder. The log embeds the full parameter set at boot plus every mid-flight change, so the reconstructed file is a genuine post-flight snapshot, not an approximation - the method is: start from the log's initial parameter dump, then apply every entry in its parameter-change record in order. Flight mode assignment (`COM_FLTMODEx`) is documented in `docs/operations/manual.md` and `docs/engineering/ICD.md` rather than here.
 
 ---
 
@@ -118,7 +118,7 @@ The DBR4 receiver operates in ELRS MAVLink mode - RC channel data is carried as 
 
 | Parameter | Value | Notes |
 |---|---|---|
-| `FW_RR_P` | 0.1136 | Roll rate P. Was 0.05 (PX4 generic fixed-wing default, never tuned for the Believer per `docs/engineering/flight-modes.md` Section 6). |
+| `FW_RR_P` | 0.1136 | Roll rate P. Was 0.05 (PX4 generic fixed-wing default, never tuned for the Believer per `docs/operations/manual.md` Section 9). |
 | `FW_RR_I` | 0.1212 | Roll rate I. Was 0.10 (default). |
 | `FW_RR_FF` | 0.6882 | Roll rate feedforward. Was 0.50 (default). |
 | `FW_R_TC` | 0.8397 | Roll response time constant. Was 0.40 (default). |

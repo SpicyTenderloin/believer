@@ -46,7 +46,7 @@ If a landing is needed partway through (battery, conditions, an issue, or simply
 
 ### Phase B - Stabilized Mode
 
-At a safe altitude, release the sticks and confirm the aircraft levels itself and holds attitude, per `docs/engineering/flight-modes.md` Section 4.3. Record whether the 45°/30° roll/pitch ceiling (`FW_MAN_R_MAX`/`FW_MAN_P_MAX`) feels appropriate for this airframe - neither has been tuned specifically for the Believer yet (`docs/engineering/flight-modes.md` Section 6, generic PX4 fixed-wing defaults); informs CTL-02.
+At a safe altitude, release the sticks and confirm the aircraft levels itself and holds attitude, per `docs/operations/manual.md` Section 5.3. Record whether the 45°/30° roll/pitch ceiling (`FW_MAN_R_MAX`/`FW_MAN_P_MAX`) feels appropriate for this airframe - neither has been tuned specifically for the Believer yet (`docs/operations/manual.md` Section 9, generic PX4 fixed-wing defaults); informs CTL-02.
 
 ### Phase C - Climb Performance and Thrust Sufficiency
 
@@ -117,7 +117,7 @@ A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-missi
 **Verified:**
 - All 32 mission items and the home position fall inside the polygon (checked programmatically against the actual coordinates).
 - Since this mission will only be engaged while already airborne (Phase K, not from a ground start), PX4 treats the takeoff item as a normal waypoint rather than attempting an autonomous takeoff - this is documented PX4 behaviour, not something this mission needs to account for separately.
-- On completing the last waypoint, with no landing/RTL/loiter item following, PX4 automatically enters Hold behaviour at that position and altitude - per `docs/engineering/flight-modes.md` Section 4.7's documented end-of-mission behaviour.
+- On completing the last waypoint, with no landing/RTL/loiter item following, PX4 automatically enters Hold behaviour at that position and altitude - per `docs/operations/manual.md` Section 5.7's documented end-of-mission behaviour.
 
 **Mission validity (`MIS_TKO_LAND_REQ` = 2, PX4's fixed-wing default, requires a landing pattern):** this mission has no landing pattern, which would normally cause PX4 to reject it ("Mission rejected: landing pattern required"). `RTL_TYPE` was changed from 1 to 0 on 2026-10-02 specifically to avoid this - PX4's landing-pattern requirement only applies when Return mode might need to use one, and `RTL_TYPE` = 0 never does. **Confirmed, 2026-10-10: the mission uploaded successfully with no rejection message**, validating the `RTL_TYPE` fix.
 

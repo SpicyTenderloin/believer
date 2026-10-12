@@ -4,10 +4,13 @@
 
 The airframe is a V-tail, twin-motor fixed-wing running PX4 on a Holybro Pixhawk 6X flight controller, with a long-range RFD900 telemetry link and an ExpressLRS RC link (Radiomaster GX12 transmitter / DBR4 receiver). This repo contains systems engineering documentation, configuration files, user manuals, and governance documentation for developing and maintaining a fixed-wing UAV system.
 
+Beyond the platform itself, the project is run through QUTAS to give students hands-on, real-world experience across the full UAS engineering lifecycle - systems integration, flight testing, regulatory compliance, and industry liaison - spanning aerospace, electrical, robotics, software, and mechanical disciplines.
+
 **Project lead:** Julian Williams (UAS Systems Lead / Program Manager)  
+**QUTAS President:** Charlotte Kelly  
 **Contact:** qutaerospacesociety@qut.edu.au
 
-See [docs/project/project-overview.md](docs/project/project-overview.md) for the full project background, team, and roadmap.
+See [docs/governance/timeline-and-roadmap.md](docs/governance/timeline-and-roadmap.md) for milestone history and the forward roadmap.
 
 Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork-and-pull-request workflow and this project's conventions.
 

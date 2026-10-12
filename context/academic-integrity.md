@@ -102,7 +102,7 @@ The project received $689.50 in EER School club activity funding (approved 2026-
 
 ### BVLOS Operations and Regulatory Compliance
 
-Operating a drone BVLOS requires compliance with CASA regulations and engagement with QUT's Chief Remote Pilot. The Code of Conduct requires students to "comply with health and safety requirements" and not breach Commonwealth or Queensland laws. This project's regulatory pathway is documented in `docs/project/project-overview.md` and `docs/operations/manual.md`.
+Operating a drone BVLOS requires compliance with CASA regulations and engagement with QUT's Chief Remote Pilot. The Code of Conduct requires students to "comply with health and safety requirements" and not breach Commonwealth or Queensland laws. This project's regulatory pathway is documented in `README.md` and `docs/operations/manual.md`.
 
 ---
 

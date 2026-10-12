@@ -11,19 +11,19 @@
 
 This document defines the requirements for a new, custom-designed airframe to replace the currently-fitted commercial MakeFlyEasy "Believer" airframe. It covers structural configuration, maintainability and modularity, avionics/EMI integration, propulsion configuration, power and battery mounting, landing gear, camera/payload provisions, and top-level mass/performance targets.
 
-It does not cover the flight controller software or parameter configuration (`docs/engineering/ICD.md`, `docs/engineering/flight-modes.md`), the custom power distribution board (separate document, `power-distribution-board-requirements.md`), or the launch dolly (separate document, `launch-dolly-requirements.md`) - those remain their own subsystem documents. Their relationship to this new airframe is noted where relevant (Section 5).
+It does not cover the flight controller software or parameter configuration (`docs/engineering/ICD.md`, `docs/operations/manual.md`), the custom power distribution board (separate document, `power-distribution-board-requirements.md`), or the launch dolly (separate document, `launch-dolly-requirements.md`) - those remain their own subsystem documents. Their relationship to this new airframe is noted where relevant (Section 5).
 
 ## 2. Purpose and Concept of Operations
 
 The current Believer airframe is a commercial hobby platform not designed around this project's specific avionics fit, mission payload, or maintainability needs. A custom airframe is intended to address several limitations that recur through the project's build history: difficult access to internals for inspection and repair, no standardised way to add future hardware, no quick way to remove the wings for transport or maintenance, avionics packed close enough together to raise RF/EMI risk, no landing gear (forcing hand-launch and belly-landing), and no dedicated, swappable payload camera provision.
 
-The new airframe is intended as an endurance-focused observation platform for remote sensing applications (`docs/project/project-overview.md`) - a specific mission has not yet been selected - prioritising range/loiter time, stability, and aerodynamic efficiency over manoeuvrability.
+The new airframe is intended as an endurance-focused observation platform for remote sensing applications (`README.md`) - a specific mission has not yet been selected - prioritising range/loiter time, stability, and aerodynamic efficiency over manoeuvrability.
 
 **Design philosophy**: requirements in this document shall be derived primarily from the mission need, not from the current Believer airframe's specifications. The current Believer is referenced throughout only as engineering context - lessons learned (Section 2 above), a structurally comparable reference point where no mission-derived alternative exists (e.g. CG target, REQ-AF-43), or an order-of-magnitude sanity check - and is called out explicitly wherever it is used that way, rather than treated as a design target in its own right.
 
 ## 3. Reference Documents
 
-- `docs/project/project-overview.md` - project purpose and mission
+- `README.md` - project purpose and mission
 - `context/project-notes.md` - current Believer airframe manufacturer specs (baseline reference only)
 - `docs/engineering/ICD.md` - current avionics interfaces; most currently-fitted avionics are candidates to carry over (Section 3a)
 - `docs/engineering/requirements/power-distribution-board-requirements.md` - custom PDB, expected to carry over onto the new airframe
