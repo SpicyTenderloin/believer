@@ -1,6 +1,6 @@
 # Believer Fixed Wing
 
-Engineering documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV - a long-range BVLOS observation drone built by the QUT Aerospace Society (QUTAS). See [docs/project/project-overview.md](docs/project/project-overview.md) for the project background and roadmap.
+Engineering documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV, built by the QUT Aerospace Society (QUTAS) and developed as a BVLOS observation platform for remote sensing applications. A specific mission has not yet been selected. See [docs/project/project-overview.md](docs/project/project-overview.md) for the project background and roadmap.
 
 Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork-and-pull-request workflow and this project's conventions.
 
