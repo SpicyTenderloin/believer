@@ -43,13 +43,13 @@ Replace `YOUR_USERNAME` and `YOUR_FORK_NAME` with the values shown in **your for
 
 ### 3. Link an AI agent (optional but encouraged)
 
-See "Before you start" above for why this is worth doing. If you're using an AI coding agent (Claude Code, Codex, or similar), open it in the cloned fork and point it at [`context/startup-prompt.md`](context/startup-prompt.md) before making any changes, for example:
+See "Before you start" above for why this is worth doing. If you're using an AI coding agent (Claude Code, Codex, or similar), open it in the cloned fork and point it at [`context/startup-prompt.md`](context/startup-prompt.md) before making any changes. **Tell it who you are too** - most of this repo's existing history (commit messages, `context/CHANGELOG.md` entries) attributes changes to Julian Williams, the project lead, and an agent that isn't told otherwise may copy that pattern and misattribute your own changes to him. For example:
 
 ```
-Read context/startup-prompt.md and follow it before we start.
+Read context/startup-prompt.md and follow it before we start. I'm <your name>, a contributor - attribute any changes you log or commit to me, not Julian.
 ```
 
-The agent will pick up the project's context and working conventions before touching any files. You can then make your changes through the agent, or continue the remaining steps yourself - the agent can carry out the git commands too if you prefer.
+The agent will pick up the project's context and working conventions before touching any files, and will attribute your changes correctly. You can then make your changes through the agent, or continue the remaining steps yourself - the agent can carry out the git commands too if you prefer.
 
 ### 4. Create a branch for your changes
 
