@@ -13,7 +13,7 @@ This document defines the requirements for the mechanical mount securing a downw
 
 ## 2. Purpose and Concept of Operations
 
-The camera supports the mission's observation objectives (shark spotting, threatened ecosystem monitoring, agricultural observation) by providing downward (nadir)-facing imagery to the onboard companion computer for object detection, planned for a future project phase. The camera is mounted on the underside (belly) of the fuselage.
+The camera supports the mission's remote sensing observation objectives by providing downward (nadir)-facing imagery to the onboard companion computer for object detection, planned for a future project phase. A specific mission has not yet been selected. The camera is mounted on the underside (belly) of the fuselage.
 
 ## 3. Reference Documents
 
@@ -85,7 +85,7 @@ The manufacturer page does not mention landing gear/pad details or an explicit c
 | ID | Requirement |
 |---|---|
 | REQ-CAM-20 | The mount shall withstand in-flight vibration from the twin T-Motor U5 v2.0 motors without loosening or inducing resonance in the camera assembly. |
-| REQ-CAM-21 | The camera and mount shall tolerate the outdoor operating environment for the mission profile (ambient temperature range, humidity, and incidental moisture/dust exposure typical of coastal and agricultural observation flights). Specific ranges TBD - not yet defined for this airframe. |
+| REQ-CAM-21 | The camera and mount shall tolerate the outdoor operating environment for the mission profile (ambient temperature range, humidity, and incidental moisture/dust exposure typical of outdoor remote sensing flights). Specific ranges TBD - not yet defined for this airframe. |
 
 ### 4.4 Interface
 

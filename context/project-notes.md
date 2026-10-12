@@ -4,7 +4,7 @@ Facts established so far, sourced from `Believer Checklist.docx`, `Believer Proj
 
 ## Project Background
 - **Believer Long Range Observation Fixed Wing Drone** - QUT Aerospace Society (QUTAS) project.
-- Purpose: BVLOS observation platform - shark spotting, threatened ecosystem monitoring, agricultural applications; onboard object detection planned.
+- Purpose: BVLOS observation platform for remote sensing applications; a specific mission has not yet been selected. Onboard object detection planned.
 - Team: Julian Williams (UAS Systems Lead / Program Manager), Charlotte Kelly (Vice-President / President). Contact: qutaerospacesociety@qut.edu.au.
 - External contacts established: QUT Chief Remote Pilot, Brisbane North Model Aero Club (BNEMAC), CSIRO.
 - Funding: EER School club activity funding, $689.50 requested (50% of $1,379 total), matched by QUTAS account funds. Signed 2026-05-20/21.

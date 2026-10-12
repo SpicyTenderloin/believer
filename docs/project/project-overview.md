@@ -6,7 +6,7 @@
 
 ## Purpose
 
-The project aims to develop a fixed-wing drone for beyond visual line of sight (BVLOS) observation missions: a long-range platform capable of advanced onboard decision-making, including object detection, for applications such as shark spotting, monitoring of threatened ecosystems, and agricultural observation.
+The project aims to develop a fixed-wing drone for beyond visual line of sight (BVLOS) observation missions: a long-range platform capable of advanced onboard decision-making, including object detection, for remote sensing applications. A specific mission has not yet been selected.
 
 Beyond the platform itself, the project is run through QUTAS to give students hands-on, real-world experience across the full UAS engineering lifecycle - systems integration, flight testing, regulatory compliance, and industry liaison - spanning aerospace, electrical, robotics, software, and mechanical disciplines.
 
@@ -25,7 +25,7 @@ The redundant RC link (near-term) is done - see the GX12/DBR4 ExpressLRS setup i
 ## Team & Contacts
 
 - Julian Williams - UAS Systems Lead / Program Manager
-- Charlotte Kelly - Vice-President / President
+- Charlotte Kelly - President of QUT Aerospace Society
 - Contact: qutaerospacesociety@qut.edu.au
 
 ## Related documents

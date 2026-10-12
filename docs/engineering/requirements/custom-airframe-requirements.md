@@ -17,7 +17,7 @@ It does not cover the flight controller software or parameter configuration (`do
 
 The current Believer airframe is a commercial hobby platform not designed around this project's specific avionics fit, mission payload, or maintainability needs. A custom airframe is intended to address several limitations that recur through the project's build history: difficult access to internals for inspection and repair, no standardised way to add future hardware, no quick way to remove the wings for transport or maintenance, avionics packed close enough together to raise RF/EMI risk, no landing gear (forcing hand-launch and belly-landing), and no dedicated, swappable payload camera provision.
 
-The new airframe is intended as an endurance-focused observation platform for the project's existing mission set (shark spotting, threatened ecosystem monitoring, agricultural observation - `docs/project/project-overview.md`), prioritising range/loiter time, stability, and aerodynamic efficiency over manoeuvrability.
+The new airframe is intended as an endurance-focused observation platform for remote sensing applications (`docs/project/project-overview.md`) - a specific mission has not yet been selected - prioritising range/loiter time, stability, and aerodynamic efficiency over manoeuvrability.
 
 **Design philosophy**: requirements in this document shall be derived primarily from the mission need, not from the current Believer airframe's specifications. The current Believer is referenced throughout only as engineering context - lessons learned (Section 2 above), a structurally comparable reference point where no mission-derived alternative exists (e.g. CG target, REQ-AF-43), or an order-of-magnitude sanity check - and is called out explicitly wherever it is used that way, rather than treated as a design target in its own right.
 
@@ -65,17 +65,17 @@ Sources:
 
 ## 3c. Operating Altitude - Research Findings (Reference Only)
 
-Researched 2026-08-26 per Julian's request. Recorded here as reference data - the requirements themselves are REQ-AF-72 and REQ-AF-74.
+Researched 2026-08-26 per Julian's request. Recorded here as reference data - the requirements themselves are REQ-AF-72 and REQ-AF-74. A specific mission has not yet been selected for this project; the three mission types below are candidate remote-sensing applications used to bound a sensible altitude range, not a confirmed mission set.
 
 **Regulatory maximum:**
 - Under CASR Part 101 standard operating conditions, RPA must not be flown higher than 120m (400ft) AGL; exceeding this requires a specific CASA approval, which is out of scope for this airframe's baseline design. This matches the project's current PX4 geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`).
 
-**Mission-informed typical altitude:**
+**Typical altitude for candidate remote-sensing mission types:**
 - **Shark spotting**: the Westpac Little Ripper/SharkSpotter program (developed with UTS, operated by Surf Life Saving NSW) flies its detection drones at approximately 60m above sea level, sufficient to visually detect sharks to around 2m water depth.
 - **Ecosystem/vegetation monitoring**: published UAV remote-sensing research found the clearest spectral separation between vegetation and bare soil at 60m AGL (M-statistic 2.74), degrading noticeably by 80m and 100m AGL (1.86 and 1.55 respectively); Leaf Area Index correlation with NDVI peaked in the 80-100m AGL range in a separate study.
 - **Agricultural observation**: typical precision-agriculture UAV surveys for row crops fly at 80-120m AGL (3-10cm ground sample distance); orchard/vineyard surveys fly higher, 120-150m AGL, to clear canopy height. A mid-altitude band of roughly 120-160m AGL is cited as a general accuracy/coverage balance point for broader-area agricultural surveys, though this exceeds the CASA ceiling above.
 
-**Synthesis**: the project's three mission types don't share one ideal altitude. Shark spotting and fine vegetation/soil discrimination favour the lower end (~60m AGL); broader agricultural or ecosystem-area coverage favours the upper end (~100m AGL, and would prefer more if the regulatory ceiling didn't cap it). All of this sits comfortably at or below the 120m regulatory limit, so REQ-AF-72 is not itself the binding constraint on sensor performance for any of the three missions - the mission itself, not the regulation, sets the more restrictive altitude in most cases.
+**Synthesis**: these three candidate mission types don't share one ideal altitude. Shark spotting and fine vegetation/soil discrimination favour the lower end (~60m AGL); broader agricultural or ecosystem-area coverage favours the upper end (~100m AGL, and would prefer more if the regulatory ceiling didn't cap it). All of this sits comfortably at or below the 120m regulatory limit, so REQ-AF-72 is not itself the binding constraint on sensor performance for any of these candidate missions - the mission itself, not the regulation, sets the more restrictive altitude in most cases.
 
 Sources:
 - [Flight approvals and permissions - Civil Aviation Safety Authority](https://www.casa.gov.au/drones/flight-authorisations/flight-approvals-and-permissions)

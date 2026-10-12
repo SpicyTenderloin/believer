@@ -6,9 +6,9 @@ You are being asked to assist with the **Believer** UAV project. This file is th
 
 ## What this project is
 
-**Believer** is a long-range, fixed-wing observation UAV built by the QUT Aerospace Society (QUTAS) at Queensland University of Technology. It is a V-tail, twin-motor airframe running PX4 on a Holybro Pixhawk 6X flight controller. The RC link is ExpressLRS via a Radiomaster GX12 Crush transmitter and DBR4 receiver. The long-range telemetry link is an RFD900x.
+**Believer** is a long-range, fixed-wing UAV built by the QUT Aerospace Society (QUTAS) at Queensland University of Technology, developed as a BVLOS observation platform for remote sensing applications. A specific mission has not yet been selected. Onboard object detection is planned for a future companion computer phase.
 
-The project goal is a BVLOS observation platform for applications including shark spotting, threatened ecosystem monitoring, and agricultural observation. Onboard object detection is planned for a future companion computer phase.
+The airframe is a V-tail, twin-motor fixed-wing running PX4 on a Holybro Pixhawk 6X flight controller. Full avionics, RC, and telemetry link details are in `docs/engineering/ICD.md`.
 
 **Project lead:** Julian Williams (UAS Systems Lead / Program Manager)  
 **Contact:** qutaerospacesociety@qut.edu.au  

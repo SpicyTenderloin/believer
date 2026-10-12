@@ -94,7 +94,7 @@ Key activities:
 
 ### Phase 5 - BVLOS Operations (Target: TBD)
 
-Obtain regulatory approval and conduct beyond visual line of sight operations in support of the project's observation mission objectives (shark spotting, ecosystem monitoring, agricultural applications).
+Obtain regulatory approval and conduct beyond visual line of sight operations in support of the project's remote sensing observation objectives. A specific mission has not yet been selected.
 
 Key activities:
 - Obtain CASA BVLOS approval

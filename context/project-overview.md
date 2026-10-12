@@ -8,7 +8,7 @@ A comprehensive reference for AI tools working on this repo. For the public-faci
 
 **Believer** is a long-range, fixed-wing observation UAV built and operated by the QUT Aerospace Society (QUTAS). It is a V-tail, twin-motor airframe running PX4 on a Holybro Pixhawk 6X, with a long-range telemetry link and an ExpressLRS RC system.
 
-**Purpose:** BVLOS observation platform for shark spotting, threatened ecosystem monitoring, and agricultural observation. Onboard object detection planned for a future companion computer phase.
+**Purpose:** BVLOS observation platform for remote sensing applications. A specific mission has not yet been selected. Onboard object detection planned for a future companion computer phase.
 
 **Team:**
 - Julian Williams - UAS Systems Lead / Program Manager

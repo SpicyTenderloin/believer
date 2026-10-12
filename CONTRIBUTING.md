@@ -1,6 +1,6 @@
 # Contributing to the Believer Project
 
-Thanks for your interest in contributing to the Believer project! Contributions such as bug fixes, documentation improvements, configuration changes, and new features are welcome.
+Thanks for your interest in contributing to the Believer project! Contributions such as bug fixes, documentation improvements, configuration changes, and new features are welcome and appreciated.
 
 **Original repository:** `https://github.com/SpicyTenderloin/believer`
 
@@ -10,7 +10,7 @@ You will need a GitHub account and Git installed on your computer. Contributions
 
 This repo contains systems engineering documentation, configuration files, user manuals, and governance documentation for developing and maintaining a fixed-wing UAV system. To contribute effectively, there are a few things worth knowing before you dive in.
 
-This repo is also explicitly designed around an AI-in-the-loop workflow, which shapes how it's organised. **`context/` is built primarily for AI agents, not people.** It holds the project's working memory - conventions, decision history, open items, a running changelog - so an AI coding agent (Claude Code, Codex, or similar) can pick up full context at the start of a session instead of re-deriving it. You can read and edit these files directly, but the repo's workflow is designed around having an agent in the loop: when something changes, the agent updates `docs/`, logs the change in `context/CHANGELOG.md`, and records any decision history or new open items in the right `context/` file, all in the same pass. Doing this entirely by hand means remembering to make all of those updates yourself - **the easiest way to contribute correctly is to point an AI agent at [`context/startup-prompt.md`](context/startup-prompt.md) and work through it**, even if you're the one deciding what should change.
+This repo is explicitly designed around an AI-in-the-loop workflow, which shapes how it's organised. **`context/` is built primarily for AI agents, not people.** It holds the project's working memory - conventions, decision history, open items, a running changelog - so an AI coding agent (Claude Code, Codex, or similar) can pick up full context at the start of a session instead of re-deriving it. You can read and edit these files directly, but the repo's workflow is designed around having an agent in the loop: when something changes, the agent updates `docs/`, logs the change in `context/CHANGELOG.md`, and records any decision history or new open items in the right `context/` file, all in the same pass. Doing this entirely by hand means remembering to make all of those updates yourself. **The easiest way to contribute correctly is to point an AI agent at [`context/startup-prompt.md`](context/startup-prompt.md)**, and make your changes through your prefered agent.
 
 - **Read [`context/startup-prompt.md`](context/startup-prompt.md) first**, whether you're working directly or through an agent. It is the single entry point for understanding the project: a summary, the read-order for the rest of `context/`, and a map of the key documents under `docs/`.
 - **Follow [`context/style-guide.md`](context/style-guide.md) for any change under `docs/`.** The short version: `docs/` states current, as-built facts cleanly, with no inline decision history or provenance narration - that content belongs in `context/project-notes.md` instead. See the style guide for the full formatting rules.
@@ -41,7 +41,17 @@ cd YOUR_FORK_NAME
 
 Replace `YOUR_USERNAME` and `YOUR_FORK_NAME` with the values shown in **your fork's** URL. You can also paste the HTTPS URL directly into the `git clone` command.
 
-### 3. Create a branch for your changes
+### 3. Link an AI agent (optional but encouraged)
+
+See "Before you start" above for why this is worth doing. If you're using an AI coding agent (Claude Code, Codex, or similar), open it in the cloned fork and point it at [`context/startup-prompt.md`](context/startup-prompt.md) before making any changes, for example:
+
+```
+Read context/startup-prompt.md and follow it before we start.
+```
+
+The agent will pick up the project's context and working conventions before touching any files. You can then make your changes through the agent, or continue the remaining steps yourself - the agent can carry out the git commands too if you prefer.
+
+### 4. Create a branch for your changes
 
 Create a separate branch so your work stays independent of the fork's default branch:
 
@@ -51,7 +61,7 @@ git switch -c describe-your-change
 
 For example, use `fix-airspeed-config` or `improve-documentation`. Use a new branch for each separate contribution.
 
-### 4. Make and test your changes
+### 5. Make and test your changes
 
 Edit the files on your computer, using your preferred editor or IDE.
 
@@ -61,7 +71,7 @@ Edit the files on your computer, using your preferred editor or IDE.
 - For changes to any file under `docs/` or `context/`, follow [`context/style-guide.md`](context/style-guide.md) and add an entry to [`context/CHANGELOG.md`](context/CHANGELOG.md).
 - Do not commit passwords, API keys, private information, or unnecessary large files.
 
-### 5. Commit your changes
+### 6. Commit your changes
 
 In your terminal, review what you changed:
 
@@ -79,15 +89,15 @@ git commit -m "Describe the change briefly"
 
 Before committing, use `git status` to make sure you are not including unrelated or sensitive files.
 
-### 6. Push your branch to your fork
+### 7. Push your branch to your fork
 
 ```bash
 git push -u origin describe-your-change
 ```
 
-Use the same branch name you created in Step 3. This uploads your changes to **your fork** on GitHub, not the original Believer repository.
+Use the same branch name you created in Step 4. This uploads your changes to **your fork** on GitHub, not the original Believer repository.
 
-### 7. Open a pull request
+### 8. Open a pull request
 
 1. Open **your fork** on GitHub.
 2. Click **Compare & pull request** if GitHub displays that option. Otherwise, visit the original repository's **Pull requests** tab and click **New pull request**, then **compare across forks** if needed.
@@ -101,7 +111,7 @@ Use the same branch name you created in Step 3. This uploads your changes to **y
 
 The project maintainer will review your changes and may ask questions or request adjustments. **Creating a pull request does not change the original repository.** Your changes are only incorporated if the pull request is merged.
 
-### 8. Respond to review feedback (if needed)
+### 9. Respond to review feedback (if needed)
 
 If changes are requested, make them on the **same local branch**, then commit and push again:
 
@@ -123,6 +133,6 @@ For substantial changes, especially those affecting flight behaviour or safety, 
 
 ---
 
-**Summary:** Fork → Clone → Branch → Edit → Commit → Push to your fork → Pull request → Review → Merge (if approved).
+**Summary:** Fork → Clone → (optional: link an AI agent) → Branch → Edit → Commit → Push to your fork → Pull request → Review → Merge (if approved).
 
 **GitHub references:** [Contributing to open source](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-open-source) · [Creating a pull request from a fork](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request-from-a-fork)
