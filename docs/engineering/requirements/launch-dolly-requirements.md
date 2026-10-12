@@ -29,7 +29,7 @@ The dolly is intended to reduce the aircraft's exposure to hand-launch failure m
 - `docs/engineering/ICD.md` - motor/propeller clearance data
 - `docs/governance/timeline-and-roadmap.md` - launch dolly future-capability roadmap entry this document expands
 - `docs/operations/manual.md` - airspeed parameters referenced in Section 3b
-- `context/open-items.md` - open dependencies against this subsystem
+- `AI-context/open-items.md` - open dependencies against this subsystem
 
 ## 3a. Airframe Reference Data (Reference Only)
 
@@ -50,7 +50,7 @@ Per the manufacturer's published wingspan/wing-area figures, wing loading at MTO
 
 ## 3b. Airspeed Reference Data (Reference Only)
 
-As-configured PX4 parameters (`docs/operations/Pixhawk Parameter Backup/believer-parameters.params`), current as of the 2026-10-11 maiden flight:
+As-configured PX4 parameters (`docs/operations/backups/Pixhawk Parameter Backup/believer-parameters.params`), current as of the 2026-10-11 maiden flight:
 
 | Parameter | Value | Relevance |
 |---|---|---|
@@ -61,7 +61,7 @@ As-configured PX4 parameters (`docs/operations/Pixhawk Parameter Backup/believer
 
 **Measured stall speed (2026-10-11 maiden flight, Phase G):** three repeated deliberate stall breaks (full-aft-stick, stick neutral, nose dropping on its own) landed at **8.15, 9.95, and 8.66 m/s indicated airspeed**, at the aircraft's actual flying weight that day (4.0kg) - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md`. This is a real measured floor, not a parameter estimate, and is somewhat lower than the configured `FW_AIRSPD_STALL` above. A release speed with a standard ~1.15-1.3x margin above this measured range works out to roughly **11-13 m/s** - see Section 6.
 
-Using the Weishäupl et al. 2024 drag-polar reference data (`CL0` = 0.2570, `CLα` = 0.1122/deg - for what is very likely the same commercial airframe, `docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf`, extracted in `context/project-notes.md`) against the 4.0kg flying weight and 0.51m² wing area, the wing AoA needed to generate exactly enough lift at 11-13 m/s works out to roughly **5-6°** - this is the target separation AoA, not a ground-rigging angle (see Section 3c).
+Using the Weishäupl et al. 2024 drag-polar reference data (`CL0` = 0.2570, `CLα` = 0.1122/deg - for what is very likely the same commercial airframe, `docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf`, extracted in `AI-context/project-notes.md`) against the 4.0kg flying weight and 0.51m² wing area, the wing AoA needed to generate exactly enough lift at 11-13 m/s works out to roughly **5-6°** - this is the target separation AoA, not a ground-rigging angle (see Section 3c).
 
 ## 3c. Launch Concept (Decided)
 
@@ -131,7 +131,7 @@ The following are known to matter but aren't specified yet, pending the open ite
 - Quantified unevenness the dolly must tolerate (REQ-DOL-14) - "some level of unevenness" confirmed qualitatively, but no bump height/frequency spec yet.
 - Whether the dolly needs to handle crosswind/directional stability during the roll, or is intended for calm/near-headwind conditions only.
 
-Tracked in [context/open-items.md](../../../context/open-items.md).
+Tracked in [AI-context/open-items.md](../../../AI-context/open-items.md).
 
 ## 7. Revision History
 

@@ -52,10 +52,10 @@ The PX4 fixed-wing landing detector (`LNDFW_VEL_XY_MAX`=5m/s, `LNDFW_VEL_Z_MAX`=
 
 ## Outstanding
 
-- For future bench tests: raise or disable `COM_DISARM_LAND` (2.0s at the time of the session) for the duration of testing, then confirm it's restored to its flight-intended value before flight clearance - tracked in `context/open-items.md`. Reported set to -1 on 2026-09-26, pending a parameter export to verify.
+- For future bench tests: raise or disable `COM_DISARM_LAND` (2.0s at the time of the session) for the duration of testing, then confirm it's restored to its flight-intended value before flight clearance - tracked in `AI-context/open-items.md`. Reported set to -1 on 2026-09-26, pending a parameter export to verify.
 - The standalone reboot in the 07:28:44 -> 07:37:15 gap has no cause identifiable from the logs. Closed 2026-09-26 per Julian as a non-recurring one-off, not a recurring fault.
 - **No quantitative thrust measurement has been taken** on a dedicated motor test rig (e.g. a load-cell thrust stand) - Ross's assessment was qualitative only. Tracked as a separate task, PROP-10.
 - **CG correction approach not decided** - ballast vs. mass relocation, given the weight/thrust-margin concern. See AF-01.
 - **Acro tri-rate behaviour not confirmed in real flight** - explained as a bench-testing artefact, not a configuration fault, but the actual in-flight rate distinction hasn't been flown yet. See CTL-04.
 
-Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md) AF-01, AF-08, CTL-04, PROP-02, PROP-06, PROP-10. Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).
+Full detail and task tracking: [`docs/engineering/build-checklist.md`](../build-checklist.md) AF-01, AF-08, CTL-04, PROP-02, PROP-06, PROP-10. Provenance and decision history: [`AI-context/project-notes.md`](../../../AI-context/project-notes.md).

@@ -9,7 +9,7 @@
 
 ## Summary
 
-Julian built a custom 6S4P Li-ion flight battery from 24 NCR20700A cells to replace the Turnigy 6S LiPo. It places the centre of gravity correctly without ballast (`docs/project/build-checklist.md` AF-01) and is retained by a strap and underside velcro (AF-02). It has no battery management system (BMS). A charger internal-resistance reading gave a total pack resistance of about 21 mOhm, with one series group (group 2) noticeably higher than the rest. The capacity test has not been run yet.
+Julian built a custom 6S4P Li-ion flight battery from 24 NCR20700A cells to replace the Turnigy 6S LiPo. It places the centre of gravity correctly without ballast (`docs/engineering/build-checklist.md` AF-01) and is retained by a strap and underside velcro (AF-02). It has no battery management system (BMS). A charger internal-resistance reading gave a total pack resistance of about 21 mOhm, with one series group (group 2) noticeably higher than the rest. The capacity test has not been run yet.
 
 ## Pack Configuration
 
@@ -24,7 +24,7 @@ Julian built a custom 6S4P Li-ion flight battery from 24 NCR20700A cells to repl
 | Aircraft all-up weight | 3.8 kg (weighed 2026-09-26, with this battery), about 69% of the 5.5 kg manufacturer MTOW |
 | Measured capacity | TBD (capacity test pending) |
 
-Cell reference values from the manufacturer datasheet (`Component datasheets/panasonic-ncr20700a-cell-datasheet.pdf`; the datasheet states its values are not guaranteed):
+Cell reference values from the manufacturer datasheet (`docs/engineering/component-datasheets/panasonic-ncr20700a-cell-datasheet.pdf`; the datasheet states its values are not guaranteed):
 
 | Characteristic | Value |
 |---|---|
@@ -71,16 +71,16 @@ Charger display at the time of the reading: charging, 1.6A, 39W, 24.62V, 5.47 Ah
 
 ## Actions Taken
 
-- None on the aircraft. The photo was moved to `docs/assets/` and the cell datasheet added to `Component datasheets/`.
+- None on the aircraft. The photo was moved to `docs/assets/` and the cell datasheet added to `docs/engineering/component-datasheets/`.
 
 ## Outstanding
 
 - Run the capacity test, logging per-group voltages (especially group 2) through to the end of discharge, and record the measured capacity here.
 - Weigh the pack and record it (the all-up weight is already recorded as 3.8 kg).
 - Check the group 2 connections (weld or strip) and re-measure its resistance at rest.
-- Review the PX4 battery parameters for the Li-ion pack - see `context/open-items.md`. `BAT1_R_INTERNAL` is a per-cell figure in PX4, so the measured mean (about 3.5 mOhm per series group) is the comparable value.
+- Review the PX4 battery parameters for the Li-ion pack - see `AI-context/open-items.md`. `BAT1_R_INTERNAL` is a per-cell figure in PX4, so the measured mean (about 3.5 mOhm per series group) is the comparable value.
 - Decide the in-flight voltage limit for a pack with no BMS and how it is checked before flight.
 
-Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md) AF-01, AF-02. Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).
+Full detail and task tracking: [`docs/engineering/build-checklist.md`](../build-checklist.md) AF-01, AF-02. Provenance and decision history: [`AI-context/project-notes.md`](../../../AI-context/project-notes.md).
 
 Sources: [Panasonic NCR20700A datasheet](https://www.dnkpower.com/wp-content/uploads/2019/02/Panasonic_NCR20700A-Specification-Datasheet.pdf), [PX4 battery estimation tuning](https://docs.px4.io/main/en/config/battery).

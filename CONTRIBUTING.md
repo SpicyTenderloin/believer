@@ -10,13 +10,13 @@ You will need a GitHub account and Git installed on your computer. Contributions
 
 This repo contains systems engineering documentation, configuration files, user manuals, and governance documentation for developing and maintaining a fixed-wing UAV system. To contribute effectively, there are a few things worth knowing before you dive in.
 
-This repo is explicitly designed around an AI-in-the-loop workflow, which shapes how it's organised. **`context/` is built primarily for AI agents, not people.** It holds the project's working memory - conventions, decision history, open items, a running changelog - so an AI coding agent (Claude Code, Codex, or similar) can pick up full context at the start of a session instead of re-deriving it. You can read and edit these files directly, but the repo's workflow is designed around having an agent in the loop: when something changes, the agent updates `docs/`, logs the change in `context/CHANGELOG.md`, and records any decision history or new open items in the right `context/` file, all in the same pass. Doing this entirely by hand means remembering to make all of those updates yourself. **The easiest way to contribute correctly is to point an AI agent at [`context/startup-prompt.md`](context/startup-prompt.md)**, and make your changes through your prefered agent.
+This repo is explicitly designed around an AI-in-the-loop workflow, which shapes how it's organised. **`AI-context/` is built primarily for AI agents, not people.** It holds the project's working memory - conventions, decision history, open items, a running changelog - so an AI coding agent (Claude Code, Codex, or similar) can pick up full context at the start of a session instead of re-deriving it. You can read and edit these files directly, but the repo's workflow is designed around having an agent in the loop: when something changes, the agent updates `docs/`, logs the change in `AI-context/CHANGELOG.md`, and records any decision history or new open items in the right `AI-context/` file, all in the same pass. Doing this entirely by hand means remembering to make all of those updates yourself. **The easiest way to contribute correctly is to point an AI agent at [`AI-context/startup-prompt.md`](AI-context/startup-prompt.md)**, and make your changes through your prefered agent.
 
-- **Read the [README](README.md) first.** It covers the project's purpose, background, and repository structure - the human-facing equivalent of what `context/startup-prompt.md` gives an AI agent.
-- **Follow [`context/style-guide.md`](context/style-guide.md) for any change under `docs/`.** The short version: `docs/` states current, as-built facts cleanly, with no inline decision history or provenance narration - that content belongs in `context/project-notes.md` instead. See the style guide for the full formatting rules.
-- **Log every change to a repo document in [`context/CHANGELOG.md`](context/CHANGELOG.md), in the same commit as the change itself.** See [`context/directives.md`](context/directives.md) for this and the other working conventions (file organisation, source-material handling).
-- **Changes affecting PX4 configuration, parameters, or flight controls are safety-critical.** Explain the safety implications and what testing was performed in your pull request, and clearly identify anything not tested - see `docs/project/build-checklist.md` for how this project tracks flight-readiness priority (Critical / Urgent / Non-critical).
-- **AI use on this project is open and acknowledged** - see [`context/academic-integrity.md`](context/academic-integrity.md) for the QUT policy context if you're a QUT student contributing as part of coursework.
+- **Read the [README](README.md) first.** It covers the project's purpose, background, and repository structure - the human-facing equivalent of what `AI-context/startup-prompt.md` gives an AI agent.
+- **Follow [`AI-context/style-guide.md`](AI-context/style-guide.md) for any change under `docs/`.** The short version: `docs/` states current, as-built facts cleanly, with no inline decision history or provenance narration - that content belongs in `AI-context/project-notes.md` instead. See the style guide for the full formatting rules.
+- **Log every change to a repo document in [`AI-context/CHANGELOG.md`](AI-context/CHANGELOG.md), in the same commit as the change itself.** See [`AI-context/directives.md`](AI-context/directives.md) for this and the other working conventions (file organisation, source-material handling).
+- **Changes affecting PX4 configuration, parameters, or flight controls are safety-critical.** Explain the safety implications and what testing was performed in your pull request, and clearly identify anything not tested - see `docs/engineering/build-checklist.md` for how this project tracks flight-readiness priority (Critical / Urgent / Non-critical).
+- **AI use on this project is open and acknowledged** - see [`AI-context/academic-integrity.md`](AI-context/academic-integrity.md) for the QUT policy context if you're a QUT student contributing as part of coursework.
 
 ## How to contribute
 
@@ -43,10 +43,10 @@ Replace `YOUR_USERNAME` and `YOUR_FORK_NAME` with the values shown in **your for
 
 ### 3. Link an AI agent (optional but encouraged)
 
-See "Before you start" above for why this is worth doing. If you're using an AI coding agent (Claude Code, Codex, or similar), open it in the cloned fork and point it at [`context/startup-prompt.md`](context/startup-prompt.md) before making any changes. **Tell it who you are too** - most of this repo's existing history (commit messages, `context/CHANGELOG.md` entries) attributes changes to Julian Williams, the project lead, and an agent that isn't told otherwise may copy that pattern and misattribute your own changes to him. For example:
+See "Before you start" above for why this is worth doing. If you're using an AI coding agent (Claude Code, Codex, or similar), open it in the cloned fork and point it at [`AI-context/startup-prompt.md`](AI-context/startup-prompt.md) before making any changes. **Tell it who you are too** - most of this repo's existing history (commit messages, `AI-context/CHANGELOG.md` entries) attributes changes to Julian Williams, the project lead, and an agent that isn't told otherwise may copy that pattern and misattribute your own changes to him. For example:
 
 ```
-Read context/startup-prompt.md and follow it before we start. I'm <your name>, a contributor - attribute any changes you log or commit to me, not Julian.
+Read AI-context/startup-prompt.md and follow it before we start. I'm <your name>, a contributor - attribute any changes you log or commit to me, not Julian.
 ```
 
 The agent will pick up the project's context and working conventions before touching any files, and will attribute your changes correctly. You can then make your changes through the agent, or continue the remaining steps yourself - the agent can carry out the git commands too if you prefer.
@@ -68,7 +68,7 @@ Edit the files on your computer, using your preferred editor or IDE.
 - Keep changes focused on one fix or feature per pull request.
 - Check your changes for errors and test them where practical.
 - For changes affecting PX4, flight controls, or aircraft configuration, explain any safety implications and what testing was performed. Clearly identify anything **not** tested.
-- For changes to any file under `docs/` or `context/`, follow [`context/style-guide.md`](context/style-guide.md) and add an entry to [`context/CHANGELOG.md`](context/CHANGELOG.md).
+- For changes to any file under `docs/` or `AI-context/`, follow [`AI-context/style-guide.md`](AI-context/style-guide.md) and add an entry to [`AI-context/CHANGELOG.md`](AI-context/CHANGELOG.md).
 - Do not commit passwords, API keys, private information, or unnecessary large files.
 
 ### 6. Commit your changes

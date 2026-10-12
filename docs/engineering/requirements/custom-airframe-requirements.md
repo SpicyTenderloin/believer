@@ -24,12 +24,12 @@ The new airframe is intended as an endurance-focused observation platform for re
 ## 3. Reference Documents
 
 - `README.md` - project purpose and mission
-- `context/project-notes.md` - current Believer airframe manufacturer specs (baseline reference only)
+- `AI-context/project-notes.md` - current Believer airframe manufacturer specs (baseline reference only)
 - `docs/engineering/ICD.md` - current avionics interfaces; most currently-fitted avionics are candidates to carry over (Section 3a)
 - `docs/engineering/requirements/power-distribution-board-requirements.md` - custom PDB, expected to carry over onto the new airframe
 - `docs/engineering/requirements/launch-dolly-requirements.md` - existing ground-roll launch cart concept for the current Believer airframe, which has no landing gear. This new airframe's own landing gear (REQ-AF-50) will make the launch dolly obsolete once built; the dolly remains in active use/development in the meantime, supporting the current Believer
 - `docs/engineering/requirements/underslung-camera-mount-requirements.md` - existing modular camera mount philosophy (fixed female base, swappable male carrier), extended here to a gimbal pod
-- `context/open-items.md`
+- `AI-context/open-items.md`
 
 ## 3a. Candidate Carried-Over Components (Reference Only)
 
@@ -68,7 +68,7 @@ Sources:
 Researched 2026-08-26 per Julian's request. Recorded here as reference data - the requirements themselves are REQ-AF-72 and REQ-AF-74. A specific mission has not yet been selected for this project; the three mission types below are candidate remote-sensing applications used to bound a sensible altitude range, not a confirmed mission set.
 
 **Regulatory maximum:**
-- Under CASR Part 101 standard operating conditions, RPA must not be flown higher than 120m (400ft) AGL; exceeding this requires a specific CASA approval, which is out of scope for this airframe's baseline design. This matches the project's current PX4 geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`).
+- Under CASR Part 101 standard operating conditions, RPA must not be flown higher than 120m (400ft) AGL; exceeding this requires a specific CASA approval, which is out of scope for this airframe's baseline design. This matches the project's current PX4 geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`).
 
 **Typical altitude for candidate remote-sensing mission types:**
 - **Shark spotting**: the Westpac Little Ripper/SharkSpotter program (developed with UTS, operated by Surf Life Saving NSW) flies its detection drones at approximately 60m above sea level, sufficient to visually detect sharks to around 2m water depth.
@@ -94,7 +94,7 @@ The current Believer's airspeed figures are recorded below purely for order-of-m
 |---|---|---|
 | Current Believer `FW_AIRSPD_TRIM` (as-flown) | 15 m/s | Context only |
 | Current Believer `FW_AIRSPD_MAX` | 20 m/s | Context only |
-| Original airframe manufacturer's recommended cruise speed | 20 m/s | Published spec (en.makeflyeasy.com, `context/project-notes.md`) - context only; notably disagrees with the as-flown trim above, underlining that neither figure is a reliable stand-in for a mission-derived target |
+| Original airframe manufacturer's recommended cruise speed | 20 m/s | Published spec (en.makeflyeasy.com, `AI-context/project-notes.md`) - context only; notably disagrees with the as-flown trim above, underlining that neither figure is a reliable stand-in for a mission-derived target |
 
 ## 3e. Design Cruise Speed - Trade Study
 
@@ -110,7 +110,7 @@ Conducted 2026-08-26 per Julian's request. This is the trade study REQ-AF-73/75 
 
 The Trinity F90+ is the strongest comparison - it sits almost exactly in this project's target mass/wingspan class (REQ-AF-02: ≤4kg vs. its 5.0kg; REQ-AF-03: ≤3m vs. its 2.394m) and is a purpose-built mapping UAS, not a repurposed hobby airframe. Its 17 m/s optimal cruise, corroborated by WingtraOne's 16 m/s operational cruise on a different design, gives a **design cruise speed target of approximately 16 m/s** with reasonable confidence for this aircraft class.
 
-**Motion-blur cross-check.** Using the IMX335 (the one candidate camera already on file, `context/project-notes.md` - illustrative only, since the actual gimbal payload camera is unselected, REQ-AF-60 open item) as a stand-in sensor: pixel pitch ≈2.0µm, focal length 3.65mm. Ground sample distance (GSD) at altitude *h* is approximately `GSD = (pixel_pitch / focal_length) x h`, giving ≈3.3cm/pixel at 60m AGL and ≈5.5cm/pixel at 100m AGL (REQ-AF-74's altitude band). Motion blur distance is `groundspeed x exposure_time`; at 16 m/s cruise and a 1/500s exposure (a normal daylight shutter speed for outdoor UAV imaging), blur is ≈3.2cm - under one pixel of GSD at 60m AGL, and a fraction of a pixel at 100m AGL. Even at a slower 1/250s exposure, blur stays around 2 pixels, generally acceptable for visual detection tasks (though tighter for precision mapping/orthomosaic stitching). **Conclusion: 16 m/s is not motion-blur-limited** for any reasonable daylight shutter speed at the target altitude band - the mission-class benchmark and the sensor physics agree.
+**Motion-blur cross-check.** Using the IMX335 (the one candidate camera already on file, `AI-context/project-notes.md` - illustrative only, since the actual gimbal payload camera is unselected, REQ-AF-60 open item) as a stand-in sensor: pixel pitch ≈2.0µm, focal length 3.65mm. Ground sample distance (GSD) at altitude *h* is approximately `GSD = (pixel_pitch / focal_length) x h`, giving ≈3.3cm/pixel at 60m AGL and ≈5.5cm/pixel at 100m AGL (REQ-AF-74's altitude band). Motion blur distance is `groundspeed x exposure_time`; at 16 m/s cruise and a 1/500s exposure (a normal daylight shutter speed for outdoor UAV imaging), blur is ≈3.2cm - under one pixel of GSD at 60m AGL, and a fraction of a pixel at 100m AGL. Even at a slower 1/250s exposure, blur stays around 2 pixels, generally acceptable for visual detection tasks (though tighter for precision mapping/orthomosaic stitching). **Conclusion: 16 m/s is not motion-blur-limited** for any reasonable daylight shutter speed at the target altitude band - the mission-class benchmark and the sensor physics agree.
 
 **Wind penetration.** The Trinity F90+ is independently rated for 12 m/s of wind tolerance in cruise flight at its 17 m/s cruise speed - i.e. it can make useful headway even when the wind is more than two-thirds of its cruise speed. Applying a similar margin to this project's ~16 m/s cruise target suggests a top speed on the order of 25 m/s (giving roughly 9 m/s of margin above cruise, comparable to Trinity's demonstrated performance with some added safety margin). This is a reasonable provisional target, but - unlike the cruise speed benchmark above - it has not been validated against actual wind conditions at this project's specific operating/flying sites, which remains a genuine gap (Section 5).
 
@@ -168,9 +168,9 @@ Sources:
 | ID | Requirement |
 |---|---|
 | REQ-AF-40 | The battery mount shall allow the battery's fore-aft position to be adjusted to trim the aircraft's centre of gravity, without modifying or re-fabricating the mount itself. |
-| REQ-AF-41 | The battery bay shall positively retain the battery under flight loads at any adjusted position - not rely on friction fit alone (see the current Believer's AF-02 lesson learned, `docs/project/build-checklist.md`). |
+| REQ-AF-41 | The battery bay shall positively retain the battery under flight loads at any adjusted position - not rely on friction fit alone (see the current Believer's AF-02 lesson learned, `docs/engineering/build-checklist.md`). |
 | REQ-AF-42 | The airframe shall accommodate the custom PDB under development (`power-distribution-board-requirements.md`) as its power distribution and servo-rail supply. |
-| REQ-AF-43 | The airframe's centre of gravity range and target shall be established by a stability analysis appropriate to the chosen tail configuration (Section 5) - a tail-volume analysis for a conventional/tailed layout, or a reflex/sweep-based stability analysis for a tailless flying wing - once that configuration is decided and the wing is designed. As a provisional reference point only, applicable if a conventional tailed configuration is chosen: target 25-30% MAC, based on the current Believer's confirmed, known-stable operating point (~25% MAC, `context/project-notes.md`). This reference figure does not apply to a flying wing - a tailless layout typically has a substantially narrower stable CG band, since it has no tail moment arm providing additional pitch stability margin. |
+| REQ-AF-43 | The airframe's centre of gravity range and target shall be established by a stability analysis appropriate to the chosen tail configuration (Section 5) - a tail-volume analysis for a conventional/tailed layout, or a reflex/sweep-based stability analysis for a tailless flying wing - once that configuration is decided and the wing is designed. As a provisional reference point only, applicable if a conventional tailed configuration is chosen: target 25-30% MAC, based on the current Believer's confirmed, known-stable operating point (~25% MAC, `AI-context/project-notes.md`). This reference figure does not apply to a flying wing - a tailless layout typically has a substantially narrower stable CG band, since it has no tail moment arm providing additional pitch stability margin. |
 | REQ-AF-44 | The battery slide mount (REQ-AF-40) shall provide fore-aft adjustment travel and resolution sufficient to trim CG across the full stable range established by REQ-AF-43 for the chosen configuration, accounting for build tolerance and equipment/payload mass variance, without requiring supplementary ballast. For a conventional tailed configuration, at least ±5% MAC of travel is a reasonable provisional target. A flying wing's narrower stable band (REQ-AF-43) will demand finer adjustment resolution to reliably land within it, even though the total range of travel needed may be smaller in absolute terms - the exact figure is deferred to the same analysis. |
 
 ### 4.6 Launch, Landing Gear and Ground Operations
@@ -195,7 +195,7 @@ Sources:
 |---|---|
 | REQ-AF-70 | The wing and airframe shall be designed for aerodynamic efficiency (e.g. higher aspect ratio, low parasitic drag) consistent with the endurance-focused mission in REQ-AF-01. |
 | REQ-AF-71 | The airframe shall target a minimum mission (flight) time of 30 minutes. A firm payload-mass budget to design the airframe and camera pod against is not yet defined - see Section 5. |
-| REQ-AF-72 | The airframe shall be designed for a maximum operating altitude of 120m AGL, matching CASA's standard RPA operating conditions under CASR Part 101 (Section 3c). Operation above this altitude would require a specific CASA approval and is out of scope for this design. This also matches the project's current geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`). |
+| REQ-AF-72 | The airframe shall be designed for a maximum operating altitude of 120m AGL, matching CASA's standard RPA operating conditions under CASR Part 101 (Section 3c). Operation above this altitude would require a specific CASA approval and is out of scope for this design. This also matches the project's current geofence configuration (`GF_MAX_VER_DIST`, `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`). |
 | REQ-AF-73 | The airframe's wing and propulsion system shall be optimised for maximum aerodynamic/propulsive efficiency at a design cruise speed of 16 m/s. This is set by a mission-class benchmarking trade study against comparable purpose-built survey/mapping UAS, cross-checked against motion-blur/GSD tolerance at the typical operating altitude (REQ-AF-74) - not from the current Believer airframe (Section 3e). Provisional pending the new wing's actual drag polar and final selection of the payload camera (REQ-AF-60). |
 | REQ-AF-74 | The airframe's typical mission operating altitude shall be in the range of 60-100m AGL, informed by mission-specific remote sensing practice (Section 3c): shark-spotting and fine vegetation/soil discrimination favour the lower end (~60m AGL), while broader agricultural or ecosystem-area coverage favours the upper end (~100m AGL). This range retains comfortable margin below the 120m regulatory ceiling (REQ-AF-72). |
 | REQ-AF-75 | The airframe shall be capable of a top speed of at least 25 m/s, giving approximately 9 m/s of margin above the design cruise speed (REQ-AF-73) for headwind/crosswind penetration - informed by a comparable mission-class aircraft's demonstrated 12 m/s in-cruise wind tolerance (Section 3e). This provisional target still needs validation against actual wind conditions at this project's specific operating/flying sites, which have not been gathered (Section 5). |
@@ -224,7 +224,7 @@ Sources:
 - **Airspeed envelope generally**: stall speed and the rest of the controlled-airspeed envelope are outputs of the new wing's actual drag polar, not available until that design exists.
 - **CG target precision (REQ-AF-43/44)**: 25-30% MAC and ±5% MAC adjustment travel are provisional figures carried over from the current Believer's conventional-tail, known-stable operating point - they explicitly do not apply if a flying wing is chosen (Section 3, tail configuration open item), which would need its own, likely much narrower, CG band and a finer-resolution adjustment mechanism. A proper stability analysis matched to whichever configuration is chosen is needed before either requirement can be finalised.
 
-Tracked in [context/open-items.md](../../../context/open-items.md).
+Tracked in [AI-context/open-items.md](../../../AI-context/open-items.md).
 
 ## 6. Revision History
 

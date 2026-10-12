@@ -87,6 +87,6 @@ Mean values in 20 us ESC-command bins (the label is the start of each bin), from
 - Set `PWM_MAIN_MAX4`/`PWM_MAIN_MAX6` to approximately 1700 and confirm via a parameter export - tracked under PROP-08.
 - Sustained-run verification at the ceiling (current and motor temperature) - PROP-08.
 - Define the target thrust-to-weight ratio - PROP-10 (the ratio itself is about 0.89 at the 3.8 kg all-up weight).
-- Confirm the purchase and installation status of the 12x6" propellers, and check ground clearance for a 12" propeller - see `context/open-items.md`.
+- Confirm the purchase and installation status of the 12x6" propellers, and check ground clearance for a 12" propeller - see `AI-context/open-items.md`.
 
-Full detail and task tracking: [`docs/project/build-checklist.md`](../../project/build-checklist.md) PROP-05, PROP-08, PROP-10. Provenance and decision history: [`context/project-notes.md`](../../../context/project-notes.md).
+Full detail and task tracking: [`docs/engineering/build-checklist.md`](../build-checklist.md) PROP-05, PROP-08, PROP-10. Provenance and decision history: [`AI-context/project-notes.md`](../../../AI-context/project-notes.md).

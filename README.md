@@ -18,37 +18,36 @@ Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork-and-pull
 
 This repository is designed for AI-assisted engineering work. Documentation is actively maintained with the help of AI tools (primarily Claude), and the repo structure is built around making that collaboration reliable and consistent across sessions.
 
-The `context/` folder is the mechanism that makes this work. It holds structured notes that any AI tool can read at the start of a session to immediately understand the project state, conventions, and history - without re-deriving facts from scratch or repeating decisions already made. The result is that AI contributions are consistent, traceable, and aligned with the engineering record in `docs/`.
+The `AI-context/` folder is the mechanism that makes this work. It holds structured notes that any AI tool can read at the start of a session to immediately understand the project state, conventions, and history - without re-deriving facts from scratch or repeating decisions already made. The result is that AI contributions are consistent, traceable, and aligned with the engineering record in `docs/`.
 
-**To start a new AI session on this project**, point the AI tool at [`context/startup-prompt.md`](context/startup-prompt.md). That file contains the project summary, the ordered read-list for all context files, and a map of the key engineering documents. Reading it fully before doing any work is the only setup required.
+**To start a new AI session on this project**, point the AI tool at [`AI-context/startup-prompt.md`](AI-context/startup-prompt.md). That file contains the project summary, the ordered read-list for all context files, and a map of the key engineering documents. Reading it fully before doing any work is the only setup required.
 
-AI use on this project is open and acknowledged. See [`context/academic-integrity.md`](context/academic-integrity.md) for the QUT policy context.
+AI use on this project is open and acknowledged. See [`AI-context/academic-integrity.md`](AI-context/academic-integrity.md) for the QUT policy context.
 
 ## Repository contents
 
 - `docs/` - engineering documentation, written as clean as-built records (not working notes), split by purpose
-  - `engineering/` - how the aircraft is built and works
+  - `engineering/` - how the aircraft is built, works, and is verified
     - `ICD.md` - interface control document: all physical, electrical, and data interfaces between avionics subsystems
-    - `flight-modes.md` - PX4 fixed-wing flight mode behaviour and configuring parameters
-    - `requirements/` - system requirements documents, one file per subsystem
-    - `test-reports/` - dated test/session reports, one file per session
-  - `operations/` - how the aircraft is flown, and the backups that support that
-    - `manual.md` - flight modes, switch mapping, pre-flight checklist, and operating procedures
-    - `GX12 Radio Backup/` - full EdgeTX SD card backup for the Radiomaster GX12 transmitter, kept in full for restore purposes
-    - `Pixhawk Parameter Backup/` - `parameter-change-log.md` (narrative log of every PX4 parameter change and the reason behind it) and `believer-parameters.params` (full PX4 parameter dump, raw backup)
-  - `project/` - project status, history, and admin
+    - `component-datasheets/` - manufacturer datasheets and manuals for components currently installed in the aircraft
     - `build-checklist.md` - build completion, retention checks, and flight controller configuration checklist
-    - `project-roadmap.md` - future capability work not required for current flight-readiness
-    - `project-overview.md` - project background, purpose, roadmap, and team
-    - `project-timeline.md` - milestone history and phase roadmap
+    - `requirements/` - system requirements documents, one file per subsystem
+    - `test-plans/` - dated test plans, one file per planned test session
+    - `test-reports/` - dated test/session reports, one file per session
+    - `analysis/` - performance modelling and analysis write-ups, with scripts and raw data alongside
+    - `references/` - external reference material (papers, standards) cited in the engineering record
+  - `operations/` - how the aircraft is flown, and the backups that support that
+    - `manual.md` - flight modes, switch mapping, pre-flight checklist, operating procedures, and PX4 flight-mode configuration detail
+    - `backups/` - functional restore images and raw data pulled from hardware: GX12 Radio Backup (EdgeTX SD card), Pixhawk Parameter Backup (`parameter-change-log.md` and the raw parameter dump), Pixhawk Mission Backup, Pixhawk Flight Log Backup (raw PX4 `.ulg` logs), GCS RFD900 Modem Backup
+  - `governance/` - project management, funding, and formal records
+    - `timeline-and-roadmap.md` - milestone history and forward roadmap
     - `purchase-history/` - component purchase log (`purchase-history.md`) with cost, funder, and installed status, plus its `invoices/` subfolder
-    - `governance/` - formal reference documents in their original format (signed proposal, funding application)
+    - formal reference documents in their original format (signed proposal, funding application)
   - `assets/` - diagrams and photos referenced by the docs above
-- `Component datasheets/` - manufacturer datasheets and manuals for components currently installed in the aircraft
 
-## `context/` - project memory for AI tools
+## `AI-context/` - project memory for AI tools
 
-Each file in `context/` has a specific, non-overlapping role. Together they give an AI tool a complete and current picture of the project.
+Each file in `AI-context/` has a specific, non-overlapping role. Together they give an AI tool a complete and current picture of the project.
 
 | File | Role |
 |---|---|
@@ -56,10 +55,10 @@ Each file in `context/` has a specific, non-overlapping role. Together they give
 | `project-overview.md` | Current build state: installed components, actuator mapping, key parameters, full repo file-structure map. |
 | `project-notes.md` | Confirmed technical facts about the aircraft and avionics, plus the provenance and decision history behind them - what was confirmed, when, against which source, and what alternatives were ruled out. |
 | `directives.md` | Working conventions: file organisation, source-material handling, commit/push cadence, CHANGELOG rule, authorities check. |
-| `style-guide.md` | Writing and formatting standards for all repo documents: what belongs in `docs/` vs. `context/`, format conventions, exceptions. |
+| `style-guide.md` | Writing and formatting standards for all repo documents: what belongs in `docs/` vs. `AI-context/`, format conventions, exceptions. |
 | `open-items.md` | Known information gaps (TBDs) still to confirm. Check before asserting facts that may be unresolved. |
 | `authorities.md` | Standing authorities granted to Claude. Checked against `.claude/settings.local.json` at each session start. |
 | `academic-integrity.md` | QUT academic conduct and AI use policy, with notes on how it applies to this project. |
 | `CHANGELOG.md` | Every change to every repo document, most recent first. |
 
-The formal docs in `docs/` state current, as-built facts cleanly - no inline decision history, no provenance narration, no changelog diffs. That content lives in `context/` instead, keeping the engineering record readable while remaining fully queryable.
+The formal docs in `docs/` state current, as-built facts cleanly - no inline decision history, no provenance narration, no changelog diffs. That content lives in `AI-context/` instead, keeping the engineering record readable while remaining fully queryable.

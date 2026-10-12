@@ -1,0 +1,47 @@
+﻿# Document Style Guide - Believer Project
+
+Standards for all documents under `docs/`.
+
+## Engineering document standard
+
+Documents under `docs/` are engineering records - they should read as if written for an external audience, not as working notes or session logs.
+
+**Do:**
+- State the current, as-built fact directly
+- Use tables for structured data (interfaces, parameters, purchase history)
+- Mark unknowns as `TBD` - track them in `AI-context/open-items.md`
+
+**Do not:**
+- Cite source documents inline ("per shopping list", "per the funding application")
+- Narrate how a fact was confirmed ("Confirmed by user on 2026-06-21")
+- Show rejected alternatives inline ("Was previously X, now Y")
+- Add changelog-style diffs inline ("Updated 2026-06-21, was Channel 10")
+- Include per-section status commentary ("Status: Confirmed / Partial")
+
+## Where other content belongs
+
+| Content type | Where it goes |
+|---|---|
+| Decision history, rejected alternatives | `AI-context/project-notes.md` |
+| Source provenance and confirmation notes | `AI-context/project-notes.md` |
+| Information gaps / unconfirmed details | Mark `TBD` inline; track in `AI-context/open-items.md` |
+| Notable changes to repo documents | `AI-context/CHANGELOG.md` |
+| Working conventions for AI tools | `AI-context/directives.md` |
+
+## Exceptions
+
+`docs/governance/purchase-history/purchase-history.md`, `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`, and `docs/engineering/test-reports/` are transactional logs by nature - dates, order numbers, and notes about what changed and why are expected content there, not violations of the above rules.
+
+Test reports are named `docs/engineering/test-reports/YYYY-MM-DD-<descriptive-slug>.md`, one file per session.
+
+`docs/engineering/build-checklist.md` is also an exception: each task may carry a collapsed `<details><summary>Background and engineering notes</summary>` block holding provenance (who found/recommended it, and when) that would otherwise be stripped per the rules above. This is deliberate - the checklist is a work-package tracker where that context is load-bearing for whoever picks up the task, and it stays collapsed so the primary document still reads cleanly. The main task body (status, priority, scope, acceptance criteria) still follows the as-built-fact standard.
+
+## Format conventions
+
+- All documents are Markdown (`.md`) - not Word, PDF, or other formats - so they version cleanly in git.
+- Diagrams and photos are saved under `docs/assets/` with descriptive filenames.
+- Top-level sections use `##`, subsections use `###`.
+- Tables are preferred over prose for structured data.
+- No trailing changelog blocks at the bottom of individual documents - all changes go in `AI-context/CHANGELOG.md`.
+- System requirements documents are named `docs/engineering/requirements/<subsystem>-requirements.md`, one file per subsystem, following the same Document/Revision/Date/Status header and Revision History table convention as `docs/engineering/ICD.md`.
+- **Do not use em-dashes (—) anywhere in project documents.** Use a regular hyphen with surrounding spaces ( - ) instead. This applies to all files under `docs/`, `AI-context/`, and the repo root.

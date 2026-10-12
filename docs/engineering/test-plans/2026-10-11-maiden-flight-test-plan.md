@@ -9,7 +9,7 @@
 
 ## 1. Scope
 
-This document sequences the flight test campaign following the Believer's pre-maiden parameter review and pre-flight checklist work (`docs/operations/manual.md`, `docs/project/build-checklist.md`). All flights in this campaign are assisted hand launches - see `docs/operations/manual.md` for the launch/landing procedure and the pre-flight checklist. This plan sets which flight modes are used and what is being tested; `docs/operations/manual.md` step 3 requires the pilot be briefed against the current version of this document before every flight.
+This document sequences the flight test campaign following the Believer's pre-maiden parameter review and pre-flight checklist work (`docs/operations/manual.md`, `docs/engineering/build-checklist.md`). All flights in this campaign are assisted hand launches - see `docs/operations/manual.md` for the launch/landing procedure and the pre-flight checklist. This plan sets which flight modes are used and what is being tested; `docs/operations/manual.md` step 3 requires the pilot be briefed against the current version of this document before every flight.
 
 Decided 2026-10-02: the intent is to complete as many of the test phases below as possible within a single flight, battery and conditions permitting - there is no requirement to land between phases. Section 3 lists them in a conservative-to-demanding order for this reason, not as separate flights.
 
@@ -20,14 +20,14 @@ Decided 2026-10-02: the intent is to complete as many of the test phases below a
 - Launch method: assisted hand launch only (not a runway or catapult launch).
 - Crew: a pilot (GX12) and a handler, per `docs/operations/manual.md`.
 - The full pre-flight checklist in `docs/operations/manual.md` must be completed before every flight in this campaign, including the parameter-confirmation steps (`NAV_RCL_ACT`/`NAV_DLL_ACT`/`RTL_TYPE`/`RTL_LAND_DELAY`, `COM_LOW_BAT_ACT`, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`/`NAV_MIN_LTR_ALT`, geofence, battery chemistry).
-- PWR-04 and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. RF-06 (`NAV_DLL_ACT` = 2, Return on data-link loss) was applied 2026-10-02 but reverted to 0 (Disabled) on 2026-10-11, before this flight - see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`. A maiden-flight mission and polygon geofence are uploaded (Section 5).
+- PWR-04 and NAV-08 (`docs/engineering/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. RF-06 (`NAV_DLL_ACT` = 2, Return on data-link loss) was applied 2026-10-02 but reverted to 0 (Disabled) on 2026-10-11, before this flight - see `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`. A maiden-flight mission and polygon geofence are uploaded (Section 5).
 - **Wind limits, abort criteria, and the safe altitude for each phase are deliberately not fixed in this document.** Decided 2026-10-02: set these on the day, taking BNEMAC's on-site advice rather than a pre-determined number.
 
 ## 3. Flight Profile (single flight, battery/conditions permitting)
 
 If a landing is needed partway through (battery, conditions, an issue, or simply running out of time), resume from the next incomplete phase on a subsequent flight rather than repeating completed ones.
 
-**Across every phase:** observe and record adverse-yaw behaviour (the nose yawing out of the commanded turn) on roll entry - feeds CTL-07's evidence-based decision on roll-to-yaw feedforward (`docs/project/build-checklist.md`). This has no dedicated phase of its own; watch for it throughout.
+**Across every phase:** observe and record adverse-yaw behaviour (the nose yawing out of the commanded turn) on roll entry - feeds CTL-07's evidence-based decision on roll-to-yaw feedforward (`docs/engineering/build-checklist.md`). This has no dedicated phase of its own; watch for it throughout.
 
 ### Phase A - Airworthiness Assessment
 
@@ -108,11 +108,11 @@ See Section 5 for the mission itself. At a safe point once already airborne and 
 
 ## 5. Mission Mode Detail
 
-A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-mission.plan`.
+A test mission is uploaded: `docs/operations/backups/Pixhawk Mission Backup/maiden-mission.plan`.
 
 **Structure:** one `NAV_TAKEOFF` item followed by 31 `NAV_WAYPOINT` items, all at 40 m relative altitude (`MAV_FRAME_GLOBAL_RELATIVE_ALT`), tracing a closed pattern. No landing item, no RTL item, no loiter-unlimited item at the end. A single inclusion polygon geofence (10 vertices) is uploaded with it; no circles, no rally points.
 
-![QGroundControl Plan view of the maiden mission, waypoint pattern and polygon geofence](../assets/config-screenshots/maiden-mission-plan.png)
+![QGroundControl Plan view of the maiden mission, waypoint pattern and polygon geofence](../../assets/config-screenshots/maiden-mission-plan.png)
 
 **Verified:**
 - All 32 mission items and the home position fall inside the polygon (checked programmatically against the actual coordinates).
@@ -135,4 +135,4 @@ Both loiter radii are independent parameters - Hold mode and Return mode could b
 
 ## 7. Open Items
 
-None remaining in this plan itself as of 2026-10-10. The maiden flight (2026-10-11) is now complete - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md` for the phase-by-phase result and `context/open-items.md` for findings that came out of it (airspeed validator config needing a fix, Phase J not deliberately exercised, and others).
+None remaining in this plan itself as of 2026-10-10. The maiden flight (2026-10-11) is now complete - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md` for the phase-by-phase result and `AI-context/open-items.md` for findings that came out of it (airspeed validator config needing a fix, Phase J not deliberately exercised, and others).

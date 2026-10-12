@@ -2,7 +2,7 @@
 
 Raw PX4 `.ulg` flight and bench-test logs, pulled from the Pixhawk's onboard SD card and kept here so the findings in `docs/engineering/test-reports/` remain reproducible without depending on the physical SD card.
 
-Keep the original PX4 filename (e.g. `23_02_07.ulg`) - it is the log's own boot-session identifier and is referenced by that name throughout the test reports, `context/project-notes.md`, and `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`.
+Keep the original PX4 filename (e.g. `23_02_07.ulg`) - it is the log's own boot-session identifier and is referenced by that name throughout the test reports, `AI-context/project-notes.md`, and `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`.
 
 ## Pending
 

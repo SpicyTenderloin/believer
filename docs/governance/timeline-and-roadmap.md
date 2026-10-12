@@ -31,7 +31,7 @@
 
 ## Current Status
 
-The aircraft has flown once (maiden flight, 2026-10-11) and is now working through the Critical items the flight itself raised before the next flight is cleared. Full task detail, dependencies, and acceptance criteria are tracked in [`build-checklist.md`](build-checklist.md); this section summarises it.
+The aircraft has flown once (maiden flight, 2026-10-11) and is now working through the Critical items the flight itself raised before the next flight is cleared. Full task detail, dependencies, and acceptance criteria are tracked in [`build-checklist.md`](../engineering/build-checklist.md); this section summarises it.
 
 **Critical (must be resolved and verified before the next flight):**
 - Limit current draw to within the motor's rated continuous current (PROP-08)
@@ -103,7 +103,7 @@ Key activities:
 
 ## Future Capability Roadmap
 
-Capabilities not required for current flight-readiness but planned for later phases of the project. Current build and flight-readiness work is tracked in [`build-checklist.md`](build-checklist.md).
+Capabilities not required for current flight-readiness but planned for later phases of the project. Current build and flight-readiness work is tracked in [`build-checklist.md`](../engineering/build-checklist.md).
 
 | Category | Task | Notes |
 |---|---|---|

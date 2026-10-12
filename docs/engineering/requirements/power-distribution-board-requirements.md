@@ -16,18 +16,18 @@ This document defines the requirements for a bespoke power distribution board (P
 The Holybro PM03D is designed primarily for multi-rotor airframes and has three shortcomings for the Believer's twin-motor V-tail configuration:
 
 1. Its XT-30 motor/accessory output connectors are undersized for this airframe's motor current draw (see Section 3a).
-2. Its 5V servo-rail BEC is limited to 3A, insufficient for the Believer's servo load - a separate UBEC is currently required alongside the PM03D to meet it (`docs/project/build-checklist.md` PWR-01).
+2. Its 5V servo-rail BEC is limited to 3A, insufficient for the Believer's servo load - a separate UBEC is currently required alongside the PM03D to meet it (`docs/engineering/build-checklist.md` PWR-01).
 3. It provides only one regulated auxiliary voltage (a selectable 8V/12V header) beyond the fixed 5V rails, with no dedicated headroom for future payload power needs.
 
 A custom PDB consolidates power distribution, both auxiliary regulated rails, and battery telemetry into a single board sized correctly for this airframe, removing the need for a separate UBEC.
 
 ## 3. Reference Documents
 
-- `Component datasheets/holybro-pm03d-manual.pdf` - PM03D manual (the module being replaced)
+- `docs/engineering/component-datasheets/holybro-pm03d-manual.pdf` - PM03D manual (the module being replaced)
 - `docs/engineering/ICD.md` INT-01 - current power distribution interface
-- `docs/project/build-checklist.md` PWR-01 - servo rail UBEC task this board supersedes
-- `context/project-notes.md` - Power section (confirmed PM03D facts and provenance)
-- `context/open-items.md` - open dependencies against this subsystem
+- `docs/engineering/build-checklist.md` PWR-01 - servo rail UBEC task this board supersedes
+- `AI-context/project-notes.md` - Power section (confirmed PM03D facts and provenance)
+- `AI-context/open-items.md` - open dependencies against this subsystem
 
 ## 3a. Existing PM03D Baseline and Load Data (Reference Only)
 
@@ -39,7 +39,7 @@ Recorded here as sizing reference data - none of it is itself a requirement.
 |---|---|
 | Battery input | XT-60, rated 60A continuous / 120A max (<60s) / 164A max current sensing |
 | Motor/accessory outputs | 2x XT-30 (battery voltage, unregulated), rating not stated per-port in the manual |
-| 5V rails | Two independent 5.2V/3A BECs: one dedicated to the FC (6-pin 2.00mm CLIK-Mate, I2C telemetry), one shared between a 4-pin JST-GH port and a triple-row header (this second one is the current servo rail supply, confirmed limited to 3A - see `context/project-notes.md`) |
+| 5V rails | Two independent 5.2V/3A BECs: one dedicated to the FC (6-pin 2.00mm CLIK-Mate, I2C telemetry), one shared between a 4-pin JST-GH port and a triple-row header (this second one is the current servo rail supply, confirmed limited to 3A - see `AI-context/project-notes.md`) |
 | Auxiliary rail | One selectable 8V/12V triple-row header, jumper-selected, 3A |
 | Battery telemetry | Onboard voltage/current sensor, I2C, to the FC via the 6-pin 2.00mm CLIK-Mate connector |
 | Dimensions | 84 x 78 x 12mm (excl. wires) |
@@ -72,7 +72,7 @@ For comparison, the outgoing T-Motor U5 v2.0 is rated 30A / 850W continuous (180
 
 **PM03D per-port XT-30 current rating - fact-check (user asked specifically what the PM03D's own battery-voltage output ports are rated for, not the generic XT30 connector):**
 
-**Holybro does not publish a per-port rating for the PM03D's XT-30 outputs anywhere** - checked the PDF manual (`Component datasheets/holybro-pm03d-manual.pdf`), the official product page (holybro.com), and Holybro's own power-module comparison table (docs.holybro.com). All three give only the aggregate board rating - Rated current 60A / Max current 120A (<60s) / Max current sensing 164A, entering via the single XT-60 battery input and shared across everything downstream: both XT-30 outputs, the corner solder pads, and all the regulated BEC rails combined. There is no engineering basis for treating either individual XT-30 port as good for anywhere near the full 60-120A board figure once both ports (and everything else) are loaded simultaneously.
+**Holybro does not publish a per-port rating for the PM03D's XT-30 outputs anywhere** - checked the PDF manual (`docs/engineering/component-datasheets/holybro-pm03d-manual.pdf`), the official product page (holybro.com), and Holybro's own power-module comparison table (docs.holybro.com). All three give only the aggregate board rating - Rated current 60A / Max current 120A (<60s) / Max current sensing 164A, entering via the single XT-60 battery input and shared across everything downstream: both XT-30 outputs, the corner solder pads, and all the regulated BEC rails combined. There is no engineering basis for treating either individual XT-30 port as good for anywhere near the full 60-120A board figure once both ports (and everything else) are loaded simultaneously.
 
 For a generic sense of what the XT-30 connector *itself* is physically capable of (independent of what Holybro chooses to rate this specific board at), sources disagree: hobbyist/marketing sources (HobbyKing and similar) commonly advertise 30A continuous/40A burst; TME (an electronic-component distributor) lists the Amass XT30U-M/F technical rating as 15A; RC/UAV community consensus commonly derates to ~15-20A continuous in sustained high-current use. So "20A" is a reasonable practical figure for the connector itself, but it isn't a number Holybro states for this board - the real finding is that **Holybro doesn't specify a per-port rating at all**, which is itself the practical case for a bespoke board with connectors explicitly rated per-port (REQ-PDB-11).
 
@@ -83,7 +83,7 @@ For a generic sense of what the XT-30 connector *itself* is physically capable o
 | ID | Requirement |
 |---|---|
 | REQ-PDB-01 | The board shall accept a single 6S LiPo battery input and distribute battery voltage to all downstream power outputs. |
-| REQ-PDB-02 | The board shall replace the Holybro PM03D and the separate 5V UBEC currently planned alongside it (`docs/project/build-checklist.md` PWR-01) as the aircraft's sole power distribution and regulation module. |
+| REQ-PDB-02 | The board shall replace the Holybro PM03D and the separate 5V UBEC currently planned alongside it (`docs/engineering/build-checklist.md` PWR-01) as the aircraft's sole power distribution and regulation module. |
 
 ### 4.2 Electrical - Battery Input and Power Distribution
 
@@ -145,7 +145,7 @@ For a generic sense of what the XT-30 connector *itself* is physically capable o
 - Environmental operating range (REQ-PDB-61) not yet defined.
 - Fabrication/assembly path for the board (in-house design and order via a PCB fab, vs. a design handed to a third party) not yet decided - out of scope for this requirements document but will need its own tracking once design starts.
 
-Tracked in [context/open-items.md](../../../context/open-items.md).
+Tracked in [AI-context/open-items.md](../../../AI-context/open-items.md).
 
 ## 6. Revision History
 

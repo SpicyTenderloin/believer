@@ -83,7 +83,7 @@ Two further modes are reachable outside the GR1 group, each on its own dedicated
 | CH8 | `RC_MAP_LOITER_SW` = 8 | Hold | Latching; overrides whichever mode GR1 has selected |
 | CH10 | `RC_MAP_RETURN_SW` = 10 | Return | Latching; overrides GR1 |
 
-**Offboard is no longer reachable via any switch, as of 2026-09-02.** `RC_MAP_OFFB_SW` was cleared to 0 (unassigned), confirmed via a fresh parameter export - this resolves the SB/SE dual-purpose overlap previously flagged here (flipping elevator rate in flight could no longer trigger Offboard, since PX4 no longer acts on channel 11 for it at all). SE still drives CH11's `mixData` output unchanged in EdgeTX, and separately still selects the elevator tri-rate curve locally (`docs/governance/build-checklist.md` CTL-04) - only PX4's interpretation of that channel changed, not the radio configuration itself. Not currently used operationally regardless - the companion computer that would drive Offboard is a future project phase. See Section 5.9.
+**Offboard is no longer reachable via any switch, as of 2026-09-02.** `RC_MAP_OFFB_SW` was cleared to 0 (unassigned), confirmed via a fresh parameter export - this resolves the SB/SE dual-purpose overlap previously flagged here (flipping elevator rate in flight could no longer trigger Offboard, since PX4 no longer acts on channel 11 for it at all). SE still drives CH11's `mixData` output unchanged in EdgeTX, and separately still selects the elevator tri-rate curve locally (`docs/engineering/build-checklist.md` CTL-04) - only PX4's interpretation of that channel changed, not the radio configuration itself. Not currently used operationally regardless - the companion computer that would drive Offboard is a future project phase. See Section 5.9.
 
 ## 5. Flight Mode Technical Detail
 
@@ -97,7 +97,7 @@ Stick input is sent directly to control allocation with no stabilisation or angl
 | `FW_MAN_R_SC` | 1.0 | Roll stick-to-surface scale factor |
 | `FW_MAN_Y_SC` | 1.0 | Yaw stick-to-surface scale factor |
 
-These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all remain at the PX4 default of 1.0 pending `docs/governance/build-checklist.md` CTL-08 (reopened 2026-09-02, formal Manual-mode test procedure still to be run).
+These three parameters scale stick-to-actuator commands **specifically in full Manual mode** - they have no effect in Acro or Stabilized, which command angular rate or attitude respectively rather than sending stick input directly to control allocation. None have been adjusted; all remain at the PX4 default of 1.0 pending `docs/engineering/build-checklist.md` CTL-08 (reopened 2026-09-02, formal Manual-mode test procedure still to be run).
 
 **Bench behaviour in Acro or Stabilized is not evidence about these parameters.** Apparent early control-surface saturation was observed on the bench and initially suspected to be a `FW_MAN_*_SC` scaling fault. An informal bench comparison narrowed it to Acro mode specifically - consistent with the hypothesis that its rate controller integrates against a persistent, unclosing error on a stationary airframe that can never achieve the commanded rate (integral windup), driving a surface to its endpoint well before the stick reaches full travel - but this has not yet been confirmed via CTL-08's formal, logged Manual-mode test. A direct, proportional stick-to-surface relationship should only be expected in full Manual mode.
 
@@ -114,7 +114,7 @@ Stick input commands angular rate (roll/pitch rate, and yaw rate if enabled) rat
 | `FW_ACRO_Z_MAX` | 45 deg/s | Maximum commanded yaw rate |
 | `FW_ACRO_YAW_EN` | 0 (Disabled) | Yaw axis is not rate-controlled in Acro - yaw stick maps directly to the yaw actuator output, as in Manual |
 
-Reachable via GR1 SW2. Values shown are PX4 generic fixed-wing defaults, not yet deliberately tuned for the Believer (CTL-02, `docs/governance/build-checklist.md`).
+Reachable via GR1 SW2. Values shown are PX4 generic fixed-wing defaults, not yet deliberately tuned for the Believer (CTL-02, `docs/engineering/build-checklist.md`).
 
 ### 5.3 Stabilized
 
@@ -129,9 +129,9 @@ Centring the roll/pitch sticks levels the aircraft's attitude and holds it there
 
 This is the mode used for hand-launch (Section 9, Assisted Hand Launch), reachable via GR1 SW3. On the V-tail airframe, pitch and yaw commands are both output through the V-tail servos (MAIN 1/2, `docs/engineering/ICD.md` INT-02a/INT-02b) via PX4's ruddervator mixing rather than separate elevator and rudder surfaces.
 
-No yaw authority was observed in Stabilized mode during the 2026-07-10 TMAC session (CTL-01, `docs/governance/build-checklist.md`). This has been resolved: the expected direct yaw-stick response is properly Acro mode's behaviour (Section 5.2), not Stabilized's, and Acro has been added to the GR1 group to provide it. The V-tail yaw mixing gain (`CA_SV_CS2_TRQ_Y`/`CA_SV_CS3_TRQ_Y`, `docs/engineering/ICD.md` Control Surface Mixing) was also raised from 0.50 to 0.85 as part of finalising the 2026-07-10 TMAC trim values. **Note (2026-08-31):** a subsequent control-allocation review found this ±0.85 pair was not a validated rudder-mix ratio, and the target is to restore it to the PX4 type-default ±0.50 - the live value remains ±0.85 as of this writing, pending `docs/governance/build-checklist.md` CTL-06.
+No yaw authority was observed in Stabilized mode during the 2026-07-10 TMAC session (CTL-01, `docs/engineering/build-checklist.md`). This has been resolved: the expected direct yaw-stick response is properly Acro mode's behaviour (Section 5.2), not Stabilized's, and Acro has been added to the GR1 group to provide it. The V-tail yaw mixing gain (`CA_SV_CS2_TRQ_Y`/`CA_SV_CS3_TRQ_Y`, `docs/engineering/ICD.md` Control Surface Mixing) was also raised from 0.50 to 0.85 as part of finalising the 2026-07-10 TMAC trim values. **Note (2026-08-31):** a subsequent control-allocation review found this ±0.85 pair was not a validated rudder-mix ratio, and the target is to restore it to the PX4 type-default ±0.50 - the live value remains ±0.85 as of this writing, pending `docs/engineering/build-checklist.md` CTL-06.
 
-Turn coordination in this and the automatic modes below is governed in part by `FW_RLL_TO_YAW_FF` (roll-to-yaw feedforward gain, currently 0.0 - the PX4 default), which counteracts adverse yaw on roll entry. It remains at 0.0 in the baseline configuration; any change is deferred until flight testing demonstrates meaningful adverse yaw (`docs/governance/build-checklist.md` CTL-07) - no non-zero value is currently planned or decided.
+Turn coordination in this and the automatic modes below is governed in part by `FW_RLL_TO_YAW_FF` (roll-to-yaw feedforward gain, currently 0.0 - the PX4 default), which counteracts adverse yaw on roll entry. It remains at 0.0 in the baseline configuration; any change is deferred until flight testing demonstrates meaningful adverse yaw (`docs/engineering/build-checklist.md` CTL-07) - no non-zero value is currently planned or decided.
 
 ### 5.4 Altitude
 
@@ -150,7 +150,7 @@ As Stabilized, plus the autopilot actively holds altitude and airspeed when the 
 
 Requires an altitude source (barometer, always available) but not GPS.
 
-Updated 2026-09-02 (`docs/governance/build-checklist.md` CTL-10), informed by Weishäupl et al. 2024's measured data for what is very likely the same commercial airframe: `FW_AIRSPD_STALL` set to the paper's measured 1g stall speed (11 m/s, up from the untuned PX4 generic default of 7 m/s); `FW_AIRSPD_MIN` raised to keep real margin above it; `FW_AIRSPD_TRIM` set to 20 m/s, matching both the manufacturer's recommended cruise speed and the paper's figure; `FW_AIRSPD_MAX` raised to 28 m/s, giving margin below the paper's measured VNE (37 m/s, flutter-limited) while comfortably exceeding the new trim speed. The maiden flight's own measured stall speed (8-10 m/s) came in lower than this configured value - see `context/open-items.md` for the decision not to retune it yet.
+Updated 2026-09-02 (`docs/engineering/build-checklist.md` CTL-10), informed by Weishäupl et al. 2024's measured data for what is very likely the same commercial airframe: `FW_AIRSPD_STALL` set to the paper's measured 1g stall speed (11 m/s, up from the untuned PX4 generic default of 7 m/s); `FW_AIRSPD_MIN` raised to keep real margin above it; `FW_AIRSPD_TRIM` set to 20 m/s, matching both the manufacturer's recommended cruise speed and the paper's figure; `FW_AIRSPD_MAX` raised to 28 m/s, giving margin below the paper's measured VNE (37 m/s, flutter-limited) while comfortably exceeding the new trim speed. The maiden flight's own measured stall speed (8-10 m/s) came in lower than this configured value - see `AI-context/open-items.md` for the decision not to retune it yet.
 
 ### 5.5 Position
 
@@ -311,15 +311,15 @@ Two people are required: a **pilot** operating the GX12 and a **handler** who ho
 52. Handler: do not approach the aircraft until the pilot confirms it is disarmed. Keep clear of both propeller arcs.
 53. Disconnect the flight battery.
 
-See also [build-checklist.md](../governance/build-checklist.md) for the build, retention, and configuration checklist.
+See also [build-checklist.md](../engineering/build-checklist.md) for the build, retention, and configuration checklist.
 
 ## 9. Open Items
 
-- None of the Acro rate limits (Section 5.2), airspeed, roll/pitch limit, or TECS climb/sink parameters in Sections 5.4-5.5 have been deliberately tuned for the Believer yet (CTL-02, `docs/governance/build-checklist.md`) - values shown are the as-exported PX4 generic fixed-wing airframe defaults.
-- PROP-08 (`docs/governance/build-checklist.md`): the motor PWM ceiling (`PWM_MAIN_MAX4`/`MAX6`) limits full-stick throttle in every mode; sustained-current verification at the ceiling is still outstanding.
+- None of the Acro rate limits (Section 5.2), airspeed, roll/pitch limit, or TECS climb/sink parameters in Sections 5.4-5.5 have been deliberately tuned for the Believer yet (CTL-02, `docs/engineering/build-checklist.md`) - values shown are the as-exported PX4 generic fixed-wing airframe defaults.
+- PROP-08 (`docs/engineering/build-checklist.md`): the motor PWM ceiling (`PWM_MAIN_MAX4`/`MAX6`) limits full-stick throttle in every mode; sustained-current verification at the ceiling is still outstanding.
 
 ## 10. Revision History
 
 | Rev | Date | Description |
 |---|---|---|
-| 1.0 | 2026-10-12 | Merged `docs/engineering/flight-modes.md` into this document as Sections 4-6 (Flight Mode Selection, per-mode technical detail, Failsafe Interactions) and Section 9 (Open Items), per Julian's repo restructure - the two documents covered overlapping ground (pilot quick-reference vs. PX4 configuration detail for the same flight modes) and are now one. `flight-modes.md`'s own prior revision history (1.0-1.17, 2026-07-17 to 2026-10-11) is preserved in `context/CHANGELOG.md` and git history, not duplicated here. Path references updated for the same restructure (`docs/project/` -> `docs/governance/`, backup folders moved under `docs/operations/backups/`) |
+| 1.0 | 2026-10-12 | Merged `docs/engineering/flight-modes.md` into this document as Sections 4-6 (Flight Mode Selection, per-mode technical detail, Failsafe Interactions) and Section 9 (Open Items), per Julian's repo restructure - the two documents covered overlapping ground (pilot quick-reference vs. PX4 configuration detail for the same flight modes) and are now one. `flight-modes.md`'s own prior revision history (1.0-1.17, 2026-07-17 to 2026-10-11) is preserved in `AI-context/CHANGELOG.md` and git history, not duplicated here. Path references updated for the same restructure (`docs/project/` -> `docs/governance/`, backup folders moved under `docs/operations/backups/`) |

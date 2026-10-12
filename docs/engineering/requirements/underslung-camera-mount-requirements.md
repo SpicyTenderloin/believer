@@ -17,10 +17,10 @@ The camera supports the mission's remote sensing observation objectives by provi
 
 ## 3. Reference Documents
 
-- `docs/project/purchase-history/purchase-history.md` - IMX335 5MP USB Camera purchase record
-- `context/project-notes.md` - future/planned capability notes
+- `docs/governance/purchase-history/purchase-history.md` - IMX335 5MP USB Camera purchase record
+- `AI-context/project-notes.md` - future/planned capability notes
 - `docs/governance/timeline-and-roadmap.md` - Camera mount task (future capability work)
-- `context/open-items.md` - open dependencies against this subsystem
+- `AI-context/open-items.md` - open dependencies against this subsystem
 
 ## 3a. Candidate Camera Module (Reference Only)
 
@@ -37,7 +37,7 @@ The camera currently on hand is a **Waveshare IMX335 5MP USB Camera (B)**. Its s
 | Operating temperature | -10°C to 60°C per two independent sources (Core Electronics product page, separate web search); the primary Waveshare wiki page as read directly by the user gave 10°C to 60°C (no minus sign). Not reconciled - see Open Items. |
 | Other | Onboard microphone; auto gain/exposure/white balance |
 
-No PDF datasheet has been captured under `Component datasheets/` - per `context/directives.md`, that folder only holds datasheets for installed components, and this camera is not yet installed.
+No PDF datasheet has been captured under `docs/engineering/component-datasheets/` - per `AI-context/directives.md`, that folder only holds datasheets for installed components, and this camera is not yet installed.
 
 ## 3b. Airframe Envelope (Reference)
 
@@ -108,7 +108,7 @@ The interface between the camera and the companion computer itself is out of sco
 - Operating temperature range for the candidate module is inconsistent between sources: two independent sources (Core Electronics product page, a separate web search) give -10°C to 60°C; the user's direct read of the primary Waveshare wiki page gave 10°C to 60°C (no minus sign). Worth a second look at the primary page for a possible dropped minus sign - not reconciled.
 - Internal clearance behind the belly skin: the candidate module's lens alone is 36.94mm long - needs confirming against available fuselage depth at whatever location is chosen (REQ-CAM-10).
 
-Tracked in [context/open-items.md](../../../context/open-items.md).
+Tracked in [AI-context/open-items.md](../../../AI-context/open-items.md).
 
 ## 6. Revision History
 

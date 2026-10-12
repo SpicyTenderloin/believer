@@ -103,6 +103,6 @@ Cruise power at 24.0 V: about 113 W at 13 m/s, 132 W at 15 m/s, 222 W at 20 m/s,
 - Check the U5 units' condition formally (insulation to the case, winding-resistance balance) - the hand-spin, visual and informal heat checks are done and reported good, but not yet the electrical checks.
 - The right motor and its ESC have not been tested on the stand; only the suspect (former left) ESC and one U5 motor have been run this way.
 - Carry this into a restrained in-aircraft test once both motors and ESCs are installed.
-- Confirm the propeller's brand (APC or a copy) if possible, to sharpen the calibration (`context/open-items.md`).
+- Confirm the propeller's brand (APC or a copy) if possible, to sharpen the calibration (`AI-context/open-items.md`).
 - Weigh the U5 pair as fitted, with leads, against the installed MN3110 pair.
 - Carry this calibration into a restrained in-aircraft test once the motors are installed.

@@ -13,11 +13,11 @@ This document defines the physical, electrical, and data interfaces between the 
 
 ## 2. Reference Documents
 
-- Believer Project Proposal (QUTAS, 2026-01-25) - `docs/project/reference/`
-- QUTAS EER Funding Application (2026-05-20) - `docs/project/reference/`
-- Purchase invoices - `docs/project/purchase-history/invoices/`
-- PX4 parameter change history - `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`
-- Component datasheets - `Component datasheets/`
+- Believer Project Proposal (QUTAS, 2026-01-25) - `docs/governance/`
+- QUTAS EER Funding Application (2026-05-20) - `docs/governance/`
+- Purchase invoices - `docs/governance/purchase-history/invoices/`
+- PX4 parameter change history - `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`
+- Component datasheets - `docs/engineering/component-datasheets/`
 
 ## 3. System Description
 
@@ -47,7 +47,7 @@ The servo rail is electrically isolated from the main flight controller power su
 | INT-07 | Airspeed sensor | I2C | FC | MS4525DO differential pressure sensor |
 | INT-08 | RC transmitter link | RF, ExpressLRS dual-band (2.4GHz/900MHz) | Radiomaster GX12 transmitter | Radiomaster DBR4 receiver |
 
-Open items against this interface set are tracked in [context/open-items.md](../../context/open-items.md).
+Open items against this interface set are tracked in [AI-context/open-items.md](../../AI-context/open-items.md).
 
 ## 6. Interface Definitions
 
@@ -57,7 +57,7 @@ Power module: Holybro PM03D. Servo rail: dedicated ZTW UBEC 10A, installed 2026-
 
 | Characteristic | Value |
 |---|---|
-| Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled; `Component datasheets/ina228-datasheet.pdf`) |
+| Battery telemetry | INA228 voltage/current monitor (`SENS_EN_INA228` enabled; `docs/engineering/component-datasheets/ina228-datasheet.pdf`) |
 | Battery | Custom 6S4P Li-ion pack (24 NCR20700A cells; `BAT1_N_CELLS` = 6S), no BMS |
 | Battery capacity | TBD (capacity test pending) |
 | Battery charge target | 4.10 to 4.15 V per cell (24.6 to 24.9V); the charger's Li-ion maximum is 4.15 V |
@@ -72,7 +72,7 @@ Power module: Holybro PM03D. Servo rail: dedicated ZTW UBEC 10A, installed 2026-
 | Continuous current | 6A |
 | Peak current | 10A |
 
-A servo-rail load test (control surfaces under stress, servo rail voltage monitored on an oscilloscope) is tracked as a non-blocking follow-up - see `docs/project/build-checklist.md` PWR-03.
+A servo-rail load test (control surfaces under stress, servo rail voltage monitored on an oscilloscope) is tracked as a non-blocking follow-up - see `docs/engineering/build-checklist.md` PWR-03.
 
 ### INT-02a through INT-02f - Actuator Outputs (PWM MAIN 1-6)
 
@@ -87,9 +87,9 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | Right Aileron | MAIN 5 | 1100 | 2000 | 1500 | 1500 | No |
 | Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
-Endpoints independently remeasured as actual safe mechanical limits per servo and reconfirmed 2026-09-02 (`docs/project/build-checklist.md` CTL-06) - superseding the previous asymmetric values, which had conflated PWM endpoint selection with an attempt at aerodynamic aileron differential (see Control Surface Mixing below and CTL-06's background notes). Disarmed/trim values reset to 1500 across all four control surfaces now that they are no longer being used to approximate differential.
+Endpoints independently remeasured as actual safe mechanical limits per servo and reconfirmed 2026-09-02 (`docs/engineering/build-checklist.md` CTL-06) - superseding the previous asymmetric values, which had conflated PWM endpoint selection with an attempt at aerodynamic aileron differential (see Control Surface Mixing below and CTL-06's background notes). Disarmed/trim values reset to 1500 across all four control surfaces now that they are no longer being used to approximate differential.
 
-Motor max lowered from 2000 to 1800 on 2026-09-02 (PROP-08), as a throttle ceiling for the then-fitted MN3110 KV700's 21A continuous rating, based on a thrust-test log correlation showing ~42A total current draw (~21A/motor) at ~1800-1809us. Raised back to 2000 on 2026-10-02, following the MN3110's failure and replacement by the T-Motor U5 KV400 (PROP-11, see below) - the U5's higher 30A continuous rating gives ample margin at full throttle, confirmed by the 2026-10-02 ground test (29.4-30.9A total, about 15.5A/motor) and the 2026-09-30 thrust-stand sustained run. PROP-08 remains For review pending a dedicated sustained in-aircraft run - see `docs/project/build-checklist.md` PROP-08.
+Motor max lowered from 2000 to 1800 on 2026-09-02 (PROP-08), as a throttle ceiling for the then-fitted MN3110 KV700's 21A continuous rating, based on a thrust-test log correlation showing ~42A total current draw (~21A/motor) at ~1800-1809us. Raised back to 2000 on 2026-10-02, following the MN3110's failure and replacement by the T-Motor U5 KV400 (PROP-11, see below) - the U5's higher 30A continuous rating gives ample margin at full throttle, confirmed by the 2026-10-02 ground test (29.4-30.9A total, about 15.5A/motor) and the 2026-09-30 thrust-stand sustained run. PROP-08 remains For review pending a dedicated sustained in-aircraft run - see `docs/engineering/build-checklist.md` PROP-08.
 
 ![PX4 Actuator Output Configuration](../assets/config-screenshots/actuator-output-config.png)
 
@@ -104,7 +104,7 @@ Roll/pitch/yaw torque contribution and mixer trim per control surface, as config
 | 3 | Left V-Tail | 0.00 | 0.50 | 0.50 | 0.00 |
 | 4 | Right V-Tail | 0.00 | 0.50 | -0.50 | 0.00 |
 
-V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4 type-default ±0.50 (`docs/project/build-checklist.md` CTL-06) - the ±0.85 pair had been mistakenly treated as an "85% rudder mix" (a conventional transmitter-mixer percentage), when these are actually actuator-effectiveness coefficients used by the control allocator; see CTL-06's background notes for the full explanation. Aileron mixer trims rechecked and updated following the CTL-06 PWM endpoint recalibration - no longer the 2026-07-10 TMAC session's original values. Pitch and yaw on the V-tail servos are both driven through PX4's ruddervator mixing (Section on the V-tail actuator outputs above).
+V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4 type-default ±0.50 (`docs/engineering/build-checklist.md` CTL-06) - the ±0.85 pair had been mistakenly treated as an "85% rudder mix" (a conventional transmitter-mixer percentage), when these are actually actuator-effectiveness coefficients used by the control allocator; see CTL-06's background notes for the full explanation. Aileron mixer trims rechecked and updated following the CTL-06 PWM endpoint recalibration - no longer the 2026-07-10 TMAC session's original values. Pitch and yaw on the V-tail servos are both driven through PX4's ruddervator mixing (Section on the V-tail actuator outputs above).
 
 #### Connected Devices
 
@@ -155,11 +155,11 @@ The originally-fitted T-Motor U5 v2.0 KV400 motors, reinstalled 2026-09-30 (PROP
 | Max continuous current | 30A |
 | ESC | T-Motor AIR 40A (one per motor), retained from the MN3110 installation |
 | Propeller | 12x6E (as marked; see `docs/engineering/analysis/powertrain-performance-model.md` on its likely Gemfan-copy origin) |
-| Propeller rotation | Both propellers rotate clockwise (viewed from the body reference plane) - same handedness, not contra-rotating. **Confirmed a problem in the 2026-10-11 maiden flight**: roll-right authority was less than half of roll-left for the same stick deflection, consistent with the additive motor reaction torque from two same-direction propellers (`docs/engineering/test-reports/2026-10-11-maiden-flight.md`). Contra-rotating propellers are a decided Critical fix, not yet fitted - `docs/project/build-checklist.md` PROP-12. |
+| Propeller rotation | Both propellers rotate clockwise (viewed from the body reference plane) - same handedness, not contra-rotating. **Confirmed a problem in the 2026-10-11 maiden flight**: roll-right authority was less than half of roll-left for the same stick deflection, consistent with the additive motor reaction torque from two same-direction propellers (`docs/engineering/test-reports/2026-10-11-maiden-flight.md`). Contra-rotating propellers are a decided Critical fix, not yet fitted - `docs/engineering/build-checklist.md` PROP-12. |
 | Mount | 3D-printed PETG motor mounting boards |
 | Cooling | Airflow over the motors in flight (prop wash and freestream) |
 
-Datasheet: `Component datasheets/tmotor-u5-kv400-motor-test-report.pdf`. The MN3110 KV700 motors have been removed following their 2026-09-26 failure; their datasheet remains at `Component datasheets/tmotor-mn3110-kv700-motor-datasheet.pdf` for historical reference.
+Datasheet: `docs/engineering/component-datasheets/tmotor-u5-kv400-motor-test-report.pdf`. The MN3110 KV700 motors have been removed following their 2026-09-26 failure; their datasheet remains at `docs/engineering/component-datasheets/tmotor-mn3110-kv700-motor-datasheet.pdf` for historical reference.
 
 **ESCs (MAIN 4, MAIN 6) - T-Motor AIR 40A**
 
@@ -177,15 +177,15 @@ Installed 2026-08-19 (one per motor), replacing the previously-fitted, unidentif
 | Cooling | None - enclosed in the wing with no airflow; no heatsink |
 | Timing setting | TBD (not recorded; the manufacturer default is Intermediate, and the manual allows setting it but not reading it back) |
 
-Manual: `Component datasheets/tmotor-air-40a-esc-manual.pdf`.
+Manual: `docs/engineering/component-datasheets/tmotor-air-40a-esc-manual.pdf`.
 
-The left ESC is under inspection following the left motor failure on 2026-09-26 - `docs/project/build-checklist.md` PROP-11.
+The left ESC is under inspection following the left motor failure on 2026-09-26 - `docs/engineering/build-checklist.md` PROP-11.
 
 ### INT-03 - RC Control Link (TELEM1)
 
 Radiomaster DBR4 dual-band (2.4GHz/900MHz) ExpressLRS receiver, connected to FC TELEM1. Operating mode: ELRS Hybrid switch mode with MAVLink enabled. Paired transmitter: Radiomaster GX12 (INT-08).
 
-Relocated 2026-08-19 to the rear of the aircraft, away from the main avionics bay. Antenna orientation (orthogonal mounting) is tracked separately - see `docs/project/build-checklist.md` RF-05.
+Relocated 2026-08-19 to the rear of the aircraft, away from the main avionics bay. Antenna orientation (orthogonal mounting) is tracked separately - see `docs/engineering/build-checklist.md` RF-05.
 
 | Parameter | Value |
 |---|---|
@@ -222,7 +222,7 @@ A MAVLink telemetry stream (instance MAV_1, device `/dev/ttyS6`) is tunnelled ov
 
 PX4's RC switch functions (Arm/CH5, Kill/CH7, Loiter/CH8, Return/CH10) all use the default `RC_*_TH` = 0.75 threshold (`RC_ARMSWITCH_TH`, `RC_KILLSWITCH_TH`, `RC_LOITER_TH`, `RC_RETURN_TH`, confirmed unchanged in the 2026-10-02 export). Per PX4's source (`getRCSwitchOnOffPosition`, `rc_update.cpp`), the channel's normalized value is rescaled from [-1, 1] to [0, 1] and compared against the threshold, which works out to the function engaging when the raw channel exceeds the channel's own trim by about half its upper half-range - on this aircraft's calibration, approximately 1750us. In practice, since these are simple toggle switches rather than proportional controls, that means **engaged reads close to 2000us and disengaged close to 1000us** for all four.
 
-Physical switch direction (SD = CH5 Arm, SF = CH7 Kill) is confirmed directly from the EdgeTX radio backup's own pre-flight `switchWarning` check and its sound/timer triggers (`docs/operations/GX12 Radio Backup/MODELS/model00.yml`):
+Physical switch direction (SD = CH5 Arm, SF = CH7 Kill) is confirmed directly from the EdgeTX radio backup's own pre-flight `switchWarning` check and its sound/timer triggers (`docs/operations/backups/GX12 Radio Backup/MODELS/model00.yml`):
 
 | Switch | Up | Down |
 |---|---|---|
@@ -280,7 +280,7 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 
 Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the Normal mode default.
 
-The table above is the FC-side (air unit) configuration. The ground-side RFD900x modem's own AT-command settings (air data rate, frequency range, net ID, encryption, serial speed) are backed up separately in `docs/operations/GCS RFD900 Modem Backup/GCS_RFD900_params.ini` - `SERIAL_SPEED` = 57 (57600 baud) there matches `SER_TEL2_BAUD` above; `ENCRYPTION_LEVEL` = 0 (disabled).
+The table above is the FC-side (air unit) configuration. The ground-side RFD900x modem's own AT-command settings (air data rate, frequency range, net ID, encryption, serial speed) are backed up separately in `docs/operations/backups/GCS RFD900 Modem Backup/GCS_RFD900_params.ini` - `SERIAL_SPEED` = 57 (57600 baud) there matches `SER_TEL2_BAUD` above; `ENCRYPTION_LEVEL` = 0 (disabled).
 
 ![RFD900x Pinout Diagram](../assets/diagrams/rfd900-pinout-diagram.png)
 
@@ -307,7 +307,7 @@ The table above is the FC-side (air unit) configuration. The ground-side RFD900x
 
 ### INT-05 - GPS Instance 1 (Primary) - ZED-F9P
 
-**Physical wiring is unchanged from earlier revisions of this document - only the PX4 driver instance numbering has changed, deliberately, as of 2026-09-02.** The SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P) remains physically connected to the FC's **GPS2 UART port**, but `GPS_1_CONFIG` now points PX4's GPS driver **instance 1** at that port, making the RTK-capable unit the primary-numbered GPS instance. External mount and antenna installed 2026-08-28 (`docs/project/build-checklist.md` NAV-03/NAV-04). GPS lock confirmed on both receivers, 2026-09-02 (NAV-05).
+**Physical wiring is unchanged from earlier revisions of this document - only the PX4 driver instance numbering has changed, deliberately, as of 2026-09-02.** The SparkFun GPS-RTK-SMA Breakout (u-blox ZED-F9P) remains physically connected to the FC's **GPS2 UART port**, but `GPS_1_CONFIG` now points PX4's GPS driver **instance 1** at that port, making the RTK-capable unit the primary-numbered GPS instance. External mount and antenna installed 2026-08-28 (`docs/engineering/build-checklist.md` NAV-03/NAV-04). GPS lock confirmed on both receivers, 2026-09-02 (NAV-05).
 
 **Rationale for the swap:** QGroundControl's primary GPS status indicator in the flight view reads the `GPS_RAW_INT` MAVLink message, which PX4 populates from GPS driver instance 1. With the ZED-F9P on instance 2 (the pre-2026-09-02 configuration), QGC's main display would have shown the M8N's lesser fix status rather than the actual best-available GPS quality - under-reporting to the pilot. Placing the RTK-capable receiver on instance 1 ensures the primary GUI indicator reflects it.
 
@@ -329,7 +329,7 @@ The u-blox M8N remains physically connected to the FC's **GPS1 UART port**. `GPS
 
 **Instance-vs-port cross-reference, to avoid confusion:** PX4's `GPS_x_CONFIG`/`GPS_x_GNSS`/`GPS_x_PROTOCOL` parameters are numbered by **logical driver instance** (1 or 2), which is independent of and now deliberately decoupled from the **physical UART port** number (GPS1 or GPS2) - instance 1 reads the physical GPS2 port (ZED-F9P), instance 2 reads the physical GPS1 port (M8N). Serial port parameters (e.g. `SER_GPS2_BAUD`) are named by **physical port**, not instance, and so apply to whichever device is physically wired there regardless of which instance number reads it. `GPS_UBX_DYNMODEL` (8, Airborne <4g) is a global u-blox driver setting, not scoped to a single instance, and applies to both receivers.
 
-GPS instance 1 (ZED-F9P) and instance 2 (M8N) are blended by PX4 rather than one being treated as an exclusive "primary" - `SENS_GPS_MASK` (currently 7 in the exported parameters) governs this; NAV-05 should confirm its bit semantics against the PX4 documentation for the installed firmware version and verify it produces the intended blended behaviour, weighting the more accurate receiver (expected to be the ZED-F9P, particularly once RTK corrections are available) while retaining the M8N as an automatic fallback. GPS lock confirmation for this configuration is still outstanding - see `docs/project/build-checklist.md` NAV-05.
+GPS instance 1 (ZED-F9P) and instance 2 (M8N) are blended by PX4 rather than one being treated as an exclusive "primary" - `SENS_GPS_MASK` (currently 7 in the exported parameters) governs this; NAV-05 should confirm its bit semantics against the PX4 documentation for the installed firmware version and verify it produces the intended blended behaviour, weighting the more accurate receiver (expected to be the ZED-F9P, particularly once RTK corrections are available) while retaining the M8N as an automatic fallback. GPS lock confirmation for this configuration is still outstanding - see `docs/engineering/build-checklist.md` NAV-05.
 
 ### INT-07 - Airspeed Sensor (I2C)
 
@@ -353,7 +353,7 @@ Packet rate: 100Hz Full.
 
 ## 7. Open Items
 
-Tracked in [context/open-items.md](../../context/open-items.md).
+Tracked in [AI-context/open-items.md](../../AI-context/open-items.md).
 
 ## 8. Revision History
 
@@ -372,23 +372,23 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 1.1 | 2026-07-03 | Added INT-07 I2C port and address detail |
 | 1.2 | 2026-07-05 | Added INT-08 ELRS packet rate; added MAV_1 (TELEM1/DBR4) and MAV_0 (TELEM2/RFD900x) MAVLink instance parameters, device paths, and BATTERY_STATUS rate overrides |
 | 1.3 | 2026-07-06 | Updated `MAV_1_MODE` (OSD -> Normal) per the current parameter export; flagged that the BATTERY_STATUS extras.txt override has not been re-verified against Normal mode's default rate |
-| 1.4 | 2026-07-16 | Removed a stray UTF-8 BOM causing garbled rendering; added the PM03D's 3A servo rail current limit, confirmed against the manufacturer datasheet (`Component datasheets/holybro-pm03d-manual.pdf`) |
+| 1.4 | 2026-07-16 | Removed a stray UTF-8 BOM causing garbled rendering; added the PM03D's 3A servo rail current limit, confirmed against the manufacturer datasheet (`docs/engineering/component-datasheets/holybro-pm03d-manual.pdf`) |
 | 1.5 | 2026-07-16 | Recreated the block diagram: fixed a routing bug where the GX12-DBR4 RF link visually terminated on the V-Tail Left servo box instead of the DBR4 box; regrouped ground equipment (GX12, Ground Station) together above their onboard RF counterparts; rerouted the Ground Station-RFD900x link around the DBR4 box instead of crossing through it; rerouted PM03D-FC power to enter via the FC's top edge, clear of the PWM bus and airspeed connection; re-centred the MS4525DO box under the FC; updated the propeller label (11x4.7" -> 11x7" Hobbyrama LP11X7E) and revision footer |
 | 1.6 | 2026-07-17 | Corrected the INT-02a-f actuator table against the actual exported parameters (`params/believer-parameters.params`), which it had never matched since the table was first written (Rev 1.0, before the 2026-07-05/07-06 radio calibration and ruddervator direction fix): MAIN 1 Min/Max corrected to 800/2000us and Reversed corrected to No; MAIN 2 Min/Max corrected to 800/2000us and Reversed corrected to Yes; MAIN 3 Min/Max corrected to 1000/2000us; MAIN 4 and MAIN 6 Min/Max corrected to 1100/1900us. Updated the stale "reverse-pitch prop TBD" note (resolved by the 2026-07-14 9x6" propeller purchase) to reference the pending MN3110 upgrade instead |
-| 1.7 | 2026-07-17 | Recorded two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 motor upgrade (not yet installed - `docs/project/build-checklist.md` PROP-01); added a spec table for the incoming ESC alongside the existing currently-fitted-ESC photos |
-| 1.8 | 2026-07-17 | Cross-referenced newly-sourced datasheets: INA228 (INT-01), T-Motor U5 KV400 load-test report, and T-Motor AIR 40A ESC manual - all added to `Component datasheets/` |
+| 1.7 | 2026-07-17 | Recorded two T-Motor AIR 40A ESCs acquired to pair with the MN3110 KV700 motor upgrade (not yet installed - `docs/engineering/build-checklist.md` PROP-01); added a spec table for the incoming ESC alongside the existing currently-fitted-ESC photos |
+| 1.8 | 2026-07-17 | Cross-referenced newly-sourced datasheets: INA228 (INT-01), T-Motor U5 KV400 load-test report, and T-Motor AIR 40A ESC manual - all added to `docs/engineering/component-datasheets/` |
 | 1.9 | 2026-08-19 | Recorded the MN3110 KV700/AIR 40A propulsion install (replacing the U5 KV400 motors and previously-fitted ESCs), the dedicated servo-rail UBEC (replacing PM03D as the servo rail source), DBR4 relocation to the rear of the aircraft, and the finalised aileron trim/V-tail yaw mixing values from the 2026-07-10 TMAC session. Updated the INT-02a-f actuator table and added a Control Surface Mixing subsection against the current exported parameters and QGroundControl Actuators Config screenshot. Updated the GR1 flight-mode mapping (Acro added, Hold removed from the group, still reachable via CH8) |
 | 2.0 | 2026-08-28 | Updated INT-06: recorded the ZED-F9P external mount and antenna installation (NAV-03/NAV-04), removed the stale "antenna not yet fitted, maiden flight blocker" note (superseded and was never actually a hard blocker), and documented the decision to blend GPS 1/GPS 2 via `SENS_GPS_MASK` rather than designate a single "primary" GPS, per Julian - pending NAV-05 confirming the parameter's bit semantics for the installed PX4 version |
 | 2.1 | 2026-08-28 | Corrected `GPS_1_GNSS` in INT-05 from 21 to 0 (Default) - the documented value never matched the live exported parameters, caught during a review of GPS parameter recommendations |
 | 2.2 | 2026-09-02 | Rewrote INT-05/INT-06: GPS driver instance numbering deliberately swapped relative to physical UART port (instance 1 = ZED-F9P via physical GPS2 port, instance 2 = M8N via physical GPS1 port) - physical wiring unchanged, added an explicit instance-vs-port cross-reference to prevent confusion. Updated the INT-02a-f actuator table with CTL-06's physically remeasured PWM endpoints (superseding the previous asymmetric, differential-approximating values) and the Control Surface Mixing table with the restored ±0.50 V-tail yaw effectiveness and rechecked aileron trims |
 | 2.3 | 2026-09-02 | NAV-05 closed - recorded GPS lock confirmation on both receivers and the QGroundControl-display rationale for the instance swap (QGC's primary GPS status indicator reads driver instance 1; the swap ensures it reflects the RTK-capable ZED-F9P rather than the M8N) |
-| 2.4 | 2026-09-02 | Updated the RC channel map for CTL-04's tri-rate implementation: verified against the actual EdgeTX radio backup (`model00.yml`) that CH9/CH11's `mixData` routing is unchanged - SB and SE remain dual-purpose, still driving Flaperon control (CH9) and Offboard (CH11) exactly as before, while also now locally selecting the aileron/elevator rate curves via a separate `expoData` feature. The overlap between elevator rate switching and `RC_MAP_OFFB_SW` is tracked as an open item and in `docs/project/build-checklist.md` CTL-04 |
+| 2.4 | 2026-09-02 | Updated the RC channel map for CTL-04's tri-rate implementation: verified against the actual EdgeTX radio backup (`model00.yml`) that CH9/CH11's `mixData` routing is unchanged - SB and SE remain dual-purpose, still driving Flaperon control (CH9) and Offboard (CH11) exactly as before, while also now locally selecting the aileron/elevator rate curves via a separate `expoData` feature. The overlap between elevator rate switching and `RC_MAP_OFFB_SW` is tracked as an open item and in `docs/engineering/build-checklist.md` CTL-04 |
 | 2.5 | 2026-09-02 | Verified against a fresh parameter export: `RC_MAP_FLAPS` and `RC_MAP_OFFB_SW` both cleared to 0 (unassigned), resolving the SB/SE dual-purpose overlap - PX4 no longer acts on CH9/CH11 for Flaperon/Offboard, though the underlying `mixData` output on those channels is unchanged. Updated the RC channel map and the INT-02a-f actuator table's motor PWM max (2000 -> 1800, PROP-08 throttle ceiling) |
 | 2.6 | 2026-09-26 | Updated the power system characteristics table for the custom 6S4P Li-ion flight battery (24 NCR20700A cells) replacing the Turnigy 6S LiPo; capacity recorded as TBD pending a capacity test |
 | 2.7 | 2026-09-26 | Power system characteristics table: recorded that the custom Li-ion battery has no BMS, its 4.10 V per cell charge target, and its charger-measured internal resistance (21.0 mOhm total) |
 | 2.8 | 2026-09-26 | Motor and ESC characteristics: recorded the PETG motor mounts, motor airflow in flight, the ESCs' lack of cooling (enclosed in the wing, no airflow) and unrecorded timing setting, and the left motor failure and left ESC inspection (PROP-11). Replaced the stale ESC thrust-verification paragraph (PROP-02/PROP-06 were closed 2026-09-02) |
 | 2.9 | 2026-10-03 | Added a Switch Physical Direction and PWM Behaviour subsection to the RC Channel Map: documented PX4's `RC_*_TH` = 0.75 switch-engagement threshold from source (`getRCSwitchOnOffPosition`), and confirmed SD (Arm) and SF (Kill) physical up/down direction from the EdgeTX radio backup's own `switchWarning` safe-position check and sound/timer triggers. SA/SC/SB/SE directions are extrapolated from the same pattern, not independently confirmed - flagged as such |
 | 2.10 | 2026-10-10 | Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio, matching the 2.9 extrapolation exactly: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate. Updated the table to show these as confirmed. SA (Loiter) and SC (Return) remain unconfirmed extrapolations |
-| 2.11 | 2026-10-10 | Julian confirmed the channel-value logic for SA and SD directly: Loiter active at SA = 100%, Armed at SD = 100%, Disarmed at SD = -100% - consistent with the existing Up/Down table. SC (Return) remains the only unconfirmed switch. Also fixed `gx12-front-switches.png` and `gx12-top-switches.png` directly (Python/Pillow, available in this environment) rather than leaving them as a manual-only open item - see the RC Channel Map and CTL-04 in `docs/project/build-checklist.md` |
-| 2.12 | 2026-10-12 | Cross-referenced the ground-side RFD900x modem's own parameter backup (INT-04) - moved from the repo root into the new `docs/operations/GCS RFD900 Modem Backup/` folder, alongside the project's other dated hardware backups |
+| 2.11 | 2026-10-10 | Julian confirmed the channel-value logic for SA and SD directly: Loiter active at SA = 100%, Armed at SD = 100%, Disarmed at SD = -100% - consistent with the existing Up/Down table. SC (Return) remains the only unconfirmed switch. Also fixed `gx12-front-switches.png` and `gx12-top-switches.png` directly (Python/Pillow, available in this environment) rather than leaving them as a manual-only open item - see the RC Channel Map and CTL-04 in `docs/engineering/build-checklist.md` |
+| 2.12 | 2026-10-12 | Cross-referenced the ground-side RFD900x modem's own parameter backup (INT-04) - moved from the repo root into the new `docs/operations/backups/GCS RFD900 Modem Backup/` folder, alongside the project's other dated hardware backups |
 | 2.13 | 2026-10-12 | Corrected INT-02d/f, the actuator connected-devices table, and the motor spec block, which had never been updated after the MN3110 KV700 failed (2026-09-26) and was replaced by the reinstalled T-Motor U5 KV400 (PROP-11, 2026-09-30) - all still described the removed MN3110. Updated to the U5 KV400: KV/current rating, the 12x6E propeller (was still showing the 11x7" Hobbyrama), and the PWM Max endpoints (1800 was the MN3110-era ceiling; the live value, confirmed from the maiden flight's own embedded parameters, is 2000). Corrected the propeller-rotation row, which incorrectly stated contra-rotation was "confirmed not required" - the maiden flight found the opposite (roll-authority asymmetry, contra-rotating propellers now a decided Critical fix, PROP-12) |
