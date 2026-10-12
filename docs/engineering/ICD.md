@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.11 |
-| **Date** | 2026-10-10 |
+| **Revision** | 2.12 |
+| **Date** | 2026-10-12 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -282,6 +282,8 @@ RFD900x long-range telemetry radio modem, connected to FC TELEM2 per the RFD900 
 
 Device `/dev/ttyS4`. `BATTERY_STATUS` is forced to 5Hz via a `mavlink stream` command in `/fs/microsd/etc/extras.txt`, overriding the Normal mode default.
 
+The table above is the FC-side (air unit) configuration. The ground-side RFD900x modem's own AT-command settings (air data rate, frequency range, net ID, encryption, serial speed) are backed up separately in `docs/operations/GCS RFD900 Modem Backup/GCS_RFD900_params.ini` - `SERIAL_SPEED` = 57 (57600 baud) there matches `SER_TEL2_BAUD` above; `ENCRYPTION_LEVEL` = 0 (disabled).
+
 ![RFD900x Pinout Diagram](../assets/diagrams/rfd900-pinout-diagram.png)
 
 #### RFD900x Connector Pinout (full 16-pin)
@@ -390,3 +392,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.9 | 2026-10-03 | Added a Switch Physical Direction and PWM Behaviour subsection to the RC Channel Map: documented PX4's `RC_*_TH` = 0.75 switch-engagement threshold from source (`getRCSwitchOnOffPosition`), and confirmed SD (Arm) and SF (Kill) physical up/down direction from the EdgeTX radio backup's own `switchWarning` safe-position check and sound/timer triggers. SA/SC/SB/SE directions are extrapolated from the same pattern, not independently confirmed - flagged as such |
 | 2.10 | 2026-10-10 | Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio, matching the 2.9 extrapolation exactly: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate. Updated the table to show these as confirmed. SA (Loiter) and SC (Return) remain unconfirmed extrapolations |
 | 2.11 | 2026-10-10 | Julian confirmed the channel-value logic for SA and SD directly: Loiter active at SA = 100%, Armed at SD = 100%, Disarmed at SD = -100% - consistent with the existing Up/Down table. SC (Return) remains the only unconfirmed switch. Also fixed `gx12-front-switches.png` and `gx12-top-switches.png` directly (Python/Pillow, available in this environment) rather than leaving them as a manual-only open item - see the RC Channel Map and CTL-04 in `docs/project/build-checklist.md` |
+| 2.12 | 2026-10-12 | Cross-referenced the ground-side RFD900x modem's own parameter backup (INT-04) - moved from the repo root into the new `docs/operations/GCS RFD900 Modem Backup/` folder, alongside the project's other dated hardware backups |
