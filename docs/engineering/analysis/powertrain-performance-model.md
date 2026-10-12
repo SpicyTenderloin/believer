@@ -7,7 +7,7 @@
 | **Status** | Model calibrated on static thrust-stand data only (MN3110: 2026-09-15/28; U5: 2026-09-30). Not yet compared with in-aircraft or flight measurements |
 | **Inputs** | APC PER3 propeller performance tables, RCbenchmark stand data (`docs/engineering/test-reports/2026-09-15-mn3110-thrust-stand-characterisation.md`), motor datasheets and listings, the wind-tunnel drag polar of the reference airframe (`docs/engineering/references/weishaupl-et-al-2024-drag-curves-small-fixed-wing-uavs.pdf`) |
 
-![Powertrain model: sustainable thrust against drag, level-flight power, and static thrust against winding current](../../assets/powertrain-model-2026-09-28.png)
+![Powertrain model: sustainable thrust against drag, level-flight power, and static thrust against winding current](../../assets/test-plots/powertrain-model-2026-09-28.png)
 
 ## 1. Summary
 
