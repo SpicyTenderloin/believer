@@ -23,9 +23,9 @@ Future capability work (payload, autonomy) that is not required for current flig
 
 ## Current Flight-Readiness Status
 
-> **Release state: NOT CLEARED FOR FLIGHT**
+> **Release state: NOT CLEARED FOR THE NEXT FLIGHT**
 >
-> Flight clearance requires all Critical items below to be completed and verified.
+> The aircraft has flown once (maiden flight, 2026-10-11, no crash or structural incident - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md`). Flight clearance for the next flight requires all Critical items below to be completed and verified.
 
 | Area | Critical blocker | Status |
 |---|---|---|
@@ -216,7 +216,7 @@ Raised 2026-08-28, while working through the MotoCalc "Coeff..." airfoil dialog 
 <details>
 <summary>Background and engineering notes</summary>
 
-Follow-up verification for the UBEC installed under PWR-01 (2026-08-19). Does not block the maiden flight - the UBEC is installed and confirmed functional; this task confirms rail voltage stability under worst-case servo load. Dependency on CTL-06 added 2026-08-31, per the flight-control configuration review.
+Follow-up verification for the UBEC installed under PWR-01 (2026-08-19). Non-critical - the UBEC is installed and confirmed functional, and powered the maiden flight's servos without incident; this task confirms rail voltage stability under worst-case servo load. Dependency on CTL-06 added 2026-08-31, per the flight-control configuration review.
 
 </details>
 
@@ -439,7 +439,7 @@ The flight battery changed on 2026-09-26 (custom 6S4P Li-ion pack, AF-01/AF-02),
 <details>
 <summary>Background and engineering notes</summary>
 
-Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separately. Does not block the maiden flight - the receiver has plenty of range without orthogonal mounting - but should be done soon for optimal reception. RTV securing added 2026-08-19 - standard practice for RF antenna leads/connectors on RC airframes.
+Split out from RF-01 (2026-08-19) once the DBR4 relocation was completed separately. Non-critical - the receiver has plenty of range without orthogonal mounting, confirmed through the maiden flight with no RC-link issues - but should be done soon for optimal reception. RTV securing added 2026-08-19 - standard practice for RF antenna leads/connectors on RC airframes.
 
 </details>
 
