@@ -23,7 +23,7 @@ Future capability work (payload, autonomy) that is not required for current flig
 
 ## Current Flight-Readiness Status
 
-> **Release state: NOT CLEARED FOR THE NEXT FLIGHT**
+> **Release state: NOT CLEARED FOR FLIGHT**
 >
 > The aircraft has flown once (maiden flight, 2026-10-11, no crash or structural incident - see `docs/engineering/test-reports/2026-10-11-maiden-flight.md`). Flight clearance for the next flight requires all Critical items below to be completed and verified.
 
