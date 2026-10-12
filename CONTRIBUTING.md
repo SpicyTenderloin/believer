@@ -8,7 +8,7 @@ You will need a GitHub account and Git installed on your computer. Contributions
 
 ## Before you start
 
-This repo is engineering documentation and configuration for a real fixed-wing UAV flight test campaign, not just a software project - a few things are worth knowing before you dive in.
+This repo contains systems engineering documentation, configuration files, user manuals, and governance documentation for developing and maintaining a fixed-wing UAV system. To contribute effectively, there are a few things worth knowing before you dive in.
 
 This repo is also explicitly designed around an AI-in-the-loop workflow, which shapes how it's organised. **`context/` is built primarily for AI agents, not people.** It holds the project's working memory - conventions, decision history, open items, a running changelog - so an AI coding agent (Claude Code, Codex, or similar) can pick up full context at the start of a session instead of re-deriving it. You can read and edit these files directly, but the repo's workflow is designed around having an agent in the loop: when something changes, the agent updates `docs/`, logs the change in `context/CHANGELOG.md`, and records any decision history or new open items in the right `context/` file, all in the same pass. Doing this entirely by hand means remembering to make all of those updates yourself - **the easiest way to contribute correctly is to point an AI agent at [`context/startup-prompt.md`](context/startup-prompt.md) and work through it**, even if you're the one deciding what should change.
 
