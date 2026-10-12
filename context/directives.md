@@ -40,6 +40,8 @@ Standing conventions for working in this repo. Update this file when the user gi
 
 - **Commit and push changes as we go**, rather than batching many changes into one commit at the end of a session.
 
+- **Attribute a change to Julian by name only when it adds real information - not reflexively.** Warranted: identity/role facts (project lead, who paid for a purchase, who physically built/flew/tested something - these are plain facts, not provenance narration); and genuine engineering judgement calls where the reasoning or accountability matters, especially safety-relevant parameter/configuration decisions - this is what `context/CHANGELOG.md`, `context/project-notes.md`, and `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md` exist for. Not warranted: routine wording edits, reverts, or direct instruction-following - in a single-maintainer project almost everything is technically "per Julian," so tagging every trivial edit that way adds noise, not information. Never attribute inside `docs/` itself - see `context/style-guide.md` on why decision-provenance belongs in `context/`, not `docs/`.
+
 - **Standing authorities granted to Claude are logged in `context/authorities.md`.** At the start of each session, check that list against `.claude/settings.local.json` and ask the user whether to sync any gaps before proceeding. Settings are local/gitignored, so `authorities.md` is the durable record of what has been authorised.
 
 - Mark unknown or unconfirmed details as `TBD` - track them in `context/open-items.md` and confirm with the user rather than guessing.
