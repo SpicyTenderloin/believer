@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | ICD-BELIEVER-001 |
-| **Revision** | 2.12 |
+| **Revision** | 2.13 |
 | **Date** | 2026-10-12 |
 | **Status** | Draft |
 
@@ -37,9 +37,9 @@ The servo rail is electrically isolated from the main flight controller power su
 | INT-02a | V-Tail Left servo (MAIN 1) | PWM | FC MAIN 1 | Emax ES3054 |
 | INT-02b | V-Tail Right servo (MAIN 2) | PWM | FC MAIN 2 | Emax ES3054 |
 | INT-02c | Left Aileron servo (MAIN 3) | PWM | FC MAIN 3 | Hitec HS-5125MG |
-| INT-02d | Left Motor (MAIN 4) | PWM | FC MAIN 4 | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
+| INT-02d | Left Motor (MAIN 4) | PWM | FC MAIN 4 | T-MOTOR U5 KV400 (via T-Motor AIR 40A ESC) |
 | INT-02e | Right Aileron servo (MAIN 5) | PWM | FC MAIN 5 | Hitec HS-5125MG |
-| INT-02f | Right Motor (MAIN 6) | PWM | FC MAIN 6 | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
+| INT-02f | Right Motor (MAIN 6) | PWM | FC MAIN 6 | T-MOTOR U5 KV400 (via T-Motor AIR 40A ESC) |
 | INT-03 | RC control link | Serial, TELEM1 | FC | Radiomaster DBR4 receiver |
 | INT-04 | Telemetry link | Serial, TELEM2 | FC | RFD900x radio modem |
 | INT-05 | GPS instance 1 (primary, RTK-capable) | Serial, physical GPS2 UART | FC | SparkFun GPS-RTK-SMA Breakout (ZED-F9P) |
@@ -83,13 +83,13 @@ All flight control surface and motor servos connect to the FC's PWM outputs.
 | V-Tail Left | MAIN 1 | 1000 | 2000 | 1500 | 1500 | No |
 | V-Tail Right | MAIN 2 | 1000 | 2000 | 1500 | 1500 | Yes |
 | Left Aileron | MAIN 3 | 1100 | 2000 | 1500 | 1500 | Yes |
-| Left Motor | MAIN 4 | 1000 | 1800 | 1000 | 1000 | No |
+| Left Motor | MAIN 4 | 1000 | 2000 | 1000 | 1000 | No |
 | Right Aileron | MAIN 5 | 1100 | 2000 | 1500 | 1500 | No |
-| Right Motor | MAIN 6 | 1000 | 1800 | 1000 | 1000 | No |
+| Right Motor | MAIN 6 | 1000 | 2000 | 1000 | 1000 | No |
 
 Endpoints independently remeasured as actual safe mechanical limits per servo and reconfirmed 2026-09-02 (`docs/project/build-checklist.md` CTL-06) - superseding the previous asymmetric values, which had conflated PWM endpoint selection with an attempt at aerodynamic aileron differential (see Control Surface Mixing below and CTL-06's background notes). Disarmed/trim values reset to 1500 across all four control surfaces now that they are no longer being used to approximate differential.
 
-Motor max lowered from 2000 to 1800 on 2026-09-02 (PROP-08) as a throttle ceiling, based on a thrust-test log correlation showing ~42A total current draw (~21A/motor, the MN3110 KV700's 21A continuous rating) at ~1800-1809us. Not yet confirmed via a dedicated sustained-run test - see `docs/project/build-checklist.md` PROP-08.
+Motor max lowered from 2000 to 1800 on 2026-09-02 (PROP-08), as a throttle ceiling for the then-fitted MN3110 KV700's 21A continuous rating, based on a thrust-test log correlation showing ~42A total current draw (~21A/motor) at ~1800-1809us. Raised back to 2000 on 2026-10-02, following the MN3110's failure and replacement by the T-Motor U5 KV400 (PROP-11, see below) - the U5's higher 30A continuous rating gives ample margin at full throttle, confirmed by the 2026-10-02 ground test (29.4-30.9A total, about 15.5A/motor) and the 2026-09-30 thrust-stand sustained run. PROP-08 remains For review pending a dedicated sustained in-aircraft run - see `docs/project/build-checklist.md` PROP-08.
 
 ![PX4 Actuator Output Configuration](../assets/config-screenshots/actuator-output-config.png)
 
@@ -113,9 +113,9 @@ V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4
 | MAIN 1 | V-Tail Left | Emax ES3054 (V-tail servo) |
 | MAIN 2 | V-Tail Right | Emax ES3054 (V-tail servo) |
 | MAIN 3 | Left Aileron | Hitec HS-5125MG (wing servo) |
-| MAIN 4 | Left Motor | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
+| MAIN 4 | Left Motor | T-MOTOR U5 KV400 (via T-Motor AIR 40A ESC) |
 | MAIN 5 | Right Aileron | Hitec HS-5125MG (wing servo) |
-| MAIN 6 | Right Motor | T-MOTOR MN3110 KV700 (via T-Motor AIR 40A ESC) |
+| MAIN 6 | Right Motor | T-MOTOR U5 KV400 (via T-Motor AIR 40A ESC) |
 
 **V-Tail Servos (MAIN 1, MAIN 2) - Emax ES3054**
 
@@ -145,23 +145,21 @@ V-tail yaw-effectiveness coefficients restored 2026-09-02 from ±0.85 to the PX4
 
 ![Hitec HS-5125MG wing servo](../assets/component-photos/hitec-hs5125mg-wing-servo.jpg)
 
-**Motors (MAIN 4, MAIN 6) - T-MOTOR MN3110 KV700**
+**Motors (MAIN 4, MAIN 6) - T-Motor U5 KV400**
 
-Installed 2026-08-19, replacing the T-Motor U5 v2.0 KV400 motors.
+The originally-fitted T-Motor U5 v2.0 KV400 motors, reinstalled 2026-09-30 (PROP-11) after the T-Motor MN3110 KV700 motors fitted 2026-08-19 failed on 2026-09-26 (the left motor smoked and melted its PETG mount; cause undetermined between motor and ESC - `docs/engineering/test-reports/2026-09-26-bench-simulated-flight-motor-failure.md`). No new motors were purchased for this - the same U5 units removed in 2026-08-19 were re-fitted.
 
 | Characteristic | Value |
 |---|---|
-| KV | 700 |
-| Max continuous current | 21A |
-| ESC | T-Motor AIR 40A (one per motor) |
-| Propeller | 11x7" (Hobbyrama LP11X7E), carried over from the previous motor installation |
-| Propeller rotation | Both propellers rotate clockwise (viewed from the body reference plane) - same handedness, not contra-rotating. Confirmed not a problem for the maiden flight; contra-rotation is not required. |
+| KV | 400 |
+| Max continuous current | 30A |
+| ESC | T-Motor AIR 40A (one per motor), retained from the MN3110 installation |
+| Propeller | 12x6E (as marked; see `docs/engineering/analysis/powertrain-performance-model.md` on its likely Gemfan-copy origin) |
+| Propeller rotation | Both propellers rotate clockwise (viewed from the body reference plane) - same handedness, not contra-rotating. **Confirmed a problem in the 2026-10-11 maiden flight**: roll-right authority was less than half of roll-left for the same stick deflection, consistent with the additive motor reaction torque from two same-direction propellers (`docs/engineering/test-reports/2026-10-11-maiden-flight.md`). Contra-rotating propellers are a decided Critical fix, not yet fitted - `docs/project/build-checklist.md` PROP-12. |
 | Mount | 3D-printed PETG motor mounting boards |
 | Cooling | Airflow over the motors in flight (prop wash and freestream) |
 
-The left motor failed on 2026-09-26 (it smoked and melted its PETG mount) and is to be replaced - `docs/project/build-checklist.md` PROP-11.
-
-Datasheet: `Component datasheets/tmotor-mn3110-kv700-motor-datasheet.pdf` (covers the KV470/700/780 family). The previously-fitted T-Motor U5 v2.0 KV400 motors have been removed; their load-test report remains at `Component datasheets/tmotor-u5-kv400-motor-test-report.pdf` for historical reference.
+Datasheet: `Component datasheets/tmotor-u5-kv400-motor-test-report.pdf`. The MN3110 KV700 motors have been removed following their 2026-09-26 failure; their datasheet remains at `Component datasheets/tmotor-mn3110-kv700-motor-datasheet.pdf` for historical reference.
 
 **ESCs (MAIN 4, MAIN 6) - T-Motor AIR 40A**
 
@@ -393,3 +391,4 @@ Tracked in [context/open-items.md](../../context/open-items.md).
 | 2.10 | 2026-10-10 | Julian confirmed the SB/SE tri-rate switch directions directly on the physical radio, matching the 2.9 extrapolation exactly: down = 100%, middle = 70%, up = 50% for both aileron (SB) and elevator (SE) rate. Updated the table to show these as confirmed. SA (Loiter) and SC (Return) remain unconfirmed extrapolations |
 | 2.11 | 2026-10-10 | Julian confirmed the channel-value logic for SA and SD directly: Loiter active at SA = 100%, Armed at SD = 100%, Disarmed at SD = -100% - consistent with the existing Up/Down table. SC (Return) remains the only unconfirmed switch. Also fixed `gx12-front-switches.png` and `gx12-top-switches.png` directly (Python/Pillow, available in this environment) rather than leaving them as a manual-only open item - see the RC Channel Map and CTL-04 in `docs/project/build-checklist.md` |
 | 2.12 | 2026-10-12 | Cross-referenced the ground-side RFD900x modem's own parameter backup (INT-04) - moved from the repo root into the new `docs/operations/GCS RFD900 Modem Backup/` folder, alongside the project's other dated hardware backups |
+| 2.13 | 2026-10-12 | Corrected INT-02d/f, the actuator connected-devices table, and the motor spec block, which had never been updated after the MN3110 KV700 failed (2026-09-26) and was replaced by the reinstalled T-Motor U5 KV400 (PROP-11, 2026-09-30) - all still described the removed MN3110. Updated to the U5 KV400: KV/current rating, the 12x6E propeller (was still showing the 11x7" Hobbyrama), and the PWM Max endpoints (1800 was the MN3110-era ceiling; the live value, confirmed from the maiden flight's own embedded parameters, is 2000). Corrected the propeller-rotation row, which incorrectly stated contra-rotation was "confirmed not required" - the maiden flight found the opposite (roll-authority asymmetry, contra-rotating propellers now a decided Critical fix, PROP-12) |
