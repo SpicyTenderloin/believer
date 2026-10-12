@@ -231,14 +231,14 @@ Physical switch direction (SD = CH5 Arm, SF = CH7 Kill) is confirmed directly fr
 | SD (Arm) | **Disarmed** (EdgeTX's configured safe/startup-expected position) | **Armed** (triggers the "armed" sound and starts the GX12's flight timer) |
 | SF (Kill) | **Kill engaged** | **Kill inactive / normal** (EdgeTX's configured safe/startup-expected position) |
 
-SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/CH11) are not covered by a `switchWarning` entry, so their physical direction had to be extrapolated from the same up/down pattern as SD/SF rather than read directly from the file. Julian confirmed the tri-rate switches directly on the physical radio, 2026-10-10, matching that extrapolation exactly:
+SA (Loiter/CH8), SC (Return/CH10), SB (aileron rate/CH9), and SE (elevator rate/CH11) are not covered by a `switchWarning` entry, so their physical direction had to be extrapolated from the same up/down pattern as SD/SF rather than read directly from the file. The tri-rate switches were confirmed directly on the physical radio, 2026-10-10, matching that extrapolation exactly:
 
 | Switch | Down | Middle | Up |
 |---|---|---|---|
 | SB (aileron rate) | **100%** (confirmed) | 70% (confirmed) | **50%** (confirmed) |
 | SE (elevator rate) | **100%** (confirmed) | 70% (confirmed) | **50%** (confirmed) |
 
-Julian also confirmed the channel-value logic for SA and SD directly, 2026-10-10: Loiter is active when the SA channel reads 100%, and SD reads 100% when armed and -100% when disarmed - consistent with the Up/Down table above and with the extrapolated pattern (100% = the "down" position, per SD/SF). SC (Return) remains unconfirmed - extrapolation still suggests SC up likely engages Return, but this hasn't been checked on the physical radio yet.
+The channel-value logic for SA and SD was also confirmed directly, 2026-10-10: Loiter is active when the SA channel reads 100%, and SD reads 100% when armed and -100% when disarmed - consistent with the Up/Down table above and with the extrapolated pattern (100% = the "down" position, per SD/SF). SC (Return) remains unconfirmed - extrapolation still suggests SC up likely engages Return, but this hasn't been checked on the physical radio yet.
 
 ![PX4 Flight Modes / Switch Settings Configuration](../assets/config-screenshots/flight-modes-config.png)
 

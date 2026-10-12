@@ -11,7 +11,7 @@
 
 This document sequences the flight test campaign following the Believer's pre-maiden parameter review and pre-flight checklist work (`docs/operations/manual.md`, `docs/project/build-checklist.md`). All flights in this campaign are assisted hand launches - see `docs/operations/manual.md` for the launch/landing procedure and the pre-flight checklist. This plan sets which flight modes are used and what is being tested; `docs/operations/manual.md` step 3 requires the pilot be briefed against the current version of this document before every flight.
 
-Per Julian, 2026-10-02: the intent is to complete as many of the test phases below as possible within a single flight, battery and conditions permitting - there is no requirement to land between phases. Section 3 lists them in a conservative-to-demanding order for this reason, not as separate flights.
+Decided 2026-10-02: the intent is to complete as many of the test phases below as possible within a single flight, battery and conditions permitting - there is no requirement to land between phases. Section 3 lists them in a conservative-to-demanding order for this reason, not as separate flights.
 
 ## 2. General Conditions
 
@@ -21,7 +21,7 @@ Per Julian, 2026-10-02: the intent is to complete as many of the test phases bel
 - Crew: a pilot (GX12) and a handler, per `docs/operations/manual.md`.
 - The full pre-flight checklist in `docs/operations/manual.md` must be completed before every flight in this campaign, including the parameter-confirmation steps (`NAV_RCL_ACT`/`NAV_DLL_ACT`/`RTL_TYPE`/`RTL_LAND_DELAY`, `COM_LOW_BAT_ACT`, `NAV_LOITER_RAD`/`RTL_LOITER_RAD`/`NAV_MIN_LTR_ALT`, geofence, battery chemistry).
 - PWR-04 and NAV-08 (`docs/project/build-checklist.md`) are confirmed applied via a direct QGroundControl parameter export, 2026-10-02. RF-06 (`NAV_DLL_ACT` = 2, Return on data-link loss) was applied 2026-10-02 but reverted to 0 (Disabled) on 2026-10-11, before this flight - see `docs/operations/Pixhawk Parameter Backup/parameter-change-log.md`. A maiden-flight mission and polygon geofence are uploaded (Section 5).
-- **Wind limits, abort criteria, and the safe altitude for each phase are deliberately not fixed in this document.** Per Julian, 2026-10-02: set these on the day, taking BNEMAC's on-site advice rather than a pre-determined number.
+- **Wind limits, abort criteria, and the safe altitude for each phase are deliberately not fixed in this document.** Decided 2026-10-02: set these on the day, taking BNEMAC's on-site advice rather than a pre-determined number.
 
 ## 3. Flight Profile (single flight, battery/conditions permitting)
 
@@ -54,7 +54,7 @@ Full-throttle climb from a safe altitude; confirm a positive, adequate climb rat
 
 ### Phase D - PID Auto-Tune (CTL-02)
 
-Moved here (immediately after Climb), per Julian - the whole point of tuning is to have better gains for the phases that follow, not just for the last few. Prerequisite is basic airworthiness and climb performance (Phases A/C), not Position Hold specifically - Hold mode is engaged for the first time as part of the procedure itself, and the pre-tuning check below is its own safety gate before anything automatic happens.
+Moved here (immediately after Climb) - the whole point of tuning is to have better gains for the phases that follow, not just for the last few. Prerequisite is basic airworthiness and climb performance (Phases A/C), not Position Hold specifically - Hold mode is engaged for the first time as part of the procedure itself, and the pre-tuning check below is its own safety gate before anything automatic happens.
 
 1. Pre-tuning check: at cruise airspeed, perform roll doublets (left-right-centre) at progressively larger angles, then the same for pitch, confirming the aircraft settles within about 2 oscillations at ~20 degrees. Do not proceed to auto-tune if it doesn't.
 2. Engage Hold mode (CH8) at cruise speed.
@@ -119,7 +119,7 @@ A test mission is uploaded: `docs/operations/Pixhawk Mission Backup/maiden-missi
 - Since this mission will only be engaged while already airborne (Phase K, not from a ground start), PX4 treats the takeoff item as a normal waypoint rather than attempting an autonomous takeoff - this is documented PX4 behaviour, not something this mission needs to account for separately.
 - On completing the last waypoint, with no landing/RTL/loiter item following, PX4 automatically enters Hold behaviour at that position and altitude - per `docs/engineering/flight-modes.md` Section 4.7's documented end-of-mission behaviour.
 
-**Mission validity (`MIS_TKO_LAND_REQ` = 2, PX4's fixed-wing default, requires a landing pattern):** this mission has no landing pattern, which would normally cause PX4 to reject it ("Mission rejected: landing pattern required"). `RTL_TYPE` was changed from 1 to 0 on 2026-10-02 specifically to avoid this - PX4's landing-pattern requirement only applies when Return mode might need to use one, and `RTL_TYPE` = 0 never does. **Confirmed, 2026-10-10 (Julian): the mission uploaded successfully with no rejection message**, validating the `RTL_TYPE` fix.
+**Mission validity (`MIS_TKO_LAND_REQ` = 2, PX4's fixed-wing default, requires a landing pattern):** this mission has no landing pattern, which would normally cause PX4 to reject it ("Mission rejected: landing pattern required"). `RTL_TYPE` was changed from 1 to 0 on 2026-10-02 specifically to avoid this - PX4's landing-pattern requirement only applies when Return mode might need to use one, and `RTL_TYPE` = 0 never does. **Confirmed, 2026-10-10: the mission uploaded successfully with no rejection message**, validating the `RTL_TYPE` fix.
 
 ## 6. Loiter / Position-Hold Radius Reference
 
