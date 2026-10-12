@@ -3,6 +3,7 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-10-12
+- Added `CONTRIBUTING.md` (root), adapted from a draft Julian had ChatGPT write. The fork/clone/branch/PR mechanics were already solid and are kept as-is; added a "Before you start" section pointing contributors at `context/startup-prompt.md`, `context/style-guide.md` (including the repo-wide no-em-dash rule), and `context/directives.md` (the CHANGELOG-every-change rule), plus a safety-critical-changes note tied to `docs/project/build-checklist.md`'s priority system and a pointer to `context/academic-integrity.md` for QUT student contributors. Filled in the real repository URL (the draft had a placeholder). Linked from `README.md`. No LICENSE file exists in the repo - flagged to Julian since a fork-and-PR workflow usually implies one, but not added unilaterally since that's a licensing decision, not a documentation one.
 - Moved `GCS_RFD900_params.ini` (the ground-side RFD900x modem's own AT-command parameter backup - air data rate, frequency range, net ID, encryption, serial speed) from the repo root, where Julian had dropped it, into a new `docs/operations/GCS RFD900 Modem Backup/` folder, matching the existing Pixhawk Parameter/Mission Backup and GX12 Radio Backup folders. Cross-referenced it from `docs/engineering/ICD.md` INT-04 (Rev 2.12) - `SERIAL_SPEED` = 57 there matches the FC-side `SER_TEL2_BAUD` = 57600 already documented, a useful consistency check.
 
 ## 2026-10-11

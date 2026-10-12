@@ -2,6 +2,8 @@
 
 Engineering documentation, configuration, and parameter change log for the **Believer** fixed-wing UAV - a long-range BVLOS observation drone built by the QUT Aerospace Society (QUTAS). See [docs/project/project-overview.md](docs/project/project-overview.md) for the project background and roadmap.
 
+Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork-and-pull-request workflow and this project's conventions.
+
 ## AI-enabled workflow
 
 This repository is designed for AI-assisted engineering work. Documentation is actively maintained with the help of AI tools (primarily Claude), and the repo structure is built around making that collaboration reliable and consistent across sessions.
