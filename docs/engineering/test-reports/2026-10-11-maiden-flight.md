@@ -14,7 +14,7 @@ The maiden flight ran 24m47s (armed to disarmed): airborne (`Takeoff detected`) 
 
 Per Julian's debrief: the launch itself was marginal (hand-launched from a hill, using all the available elevation to gain flying speed - see Launch below) and the pilot found the aircraft difficult to roll right throughout the flight, worse at higher throttle, suspected to be induced motor torque fighting the roll command since both propellers turn the same direction. Both are addressed below with log evidence. Post-flight inspection also found a bad bearing in the right motor - see Post-Flight Inspection Findings.
 
-The flight's most important finding is operational, not aerodynamic: the GCS telemetry link (RFD900x) dropped out at least 15 times over the 24.8-minute flight, three of them longer than the 10-second data-link-loss failsafe timeout (`COM_DL_LOSS_T`). The aircraft launched with `NAV_DLL_ACT` already reverted to 0 (Disabled) rather than the 2 (Return) set on 2026-10-02 under RF-06 - confirmed directly from the log's embedded parameter set - which is why none of those dropouts triggered an unwanted RTL. Had RF-06's setting still been live, at least three automatic RTLs would very likely have fired mid-flight despite the pilot holding full manual RC control throughout. This is documented in full in `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`.
+The flight's most important finding is operational, not aerodynamic: the GCS telemetry link (RFD900x) dropped out 18 times over the 24.8-minute flight, three of them longer than the 10-second data-link-loss failsafe timeout (`COM_DL_LOSS_T`). The aircraft launched with `NAV_DLL_ACT` already reverted to 0 (Disabled) rather than the 2 (Return) set on 2026-10-02 under RF-06 - confirmed directly from the log's embedded parameter set - which is why none of those dropouts triggered an unwanted RTL. Had RF-06's setting still been live, at least three automatic RTLs would very likely have fired mid-flight despite the pilot holding full manual RC control throughout. This is documented in full in `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`.
 
 A second significant finding: `airspeed_validated` was invalid for almost the entire flight (only 2.9% of samples in a physically plausible range). This is not a sensor or pitot-line fault - the raw differential-pressure readings were physically sane for the whole flight - but a PX4 validator that latched the sensor as failed after one trip 16.4s after takeoff and, by default, never let it recover in flight (see Airspeed validator latched invalid below). TECS-dependent modes that rely on airspeed (Altitude mode, the Cruise Efficiency Sweep's hands-off points) were likely operating on degraded or fallback airspeed estimates for this flight regardless of the root cause. Ground speed from GPS was used in this report instead, where airspeed data was needed.
 
@@ -101,17 +101,35 @@ Roll angle at the moment of each break (not just over the surrounding window, wh
 
 ### GCS data-link dropouts and the `NAV_DLL_ACT` reversal
 
-15 distinct "Connection to ground station lost" / "GCS connection regained" event pairs were logged. Three exceeded `COM_DL_LOSS_T` (10s):
+18 distinct "Connection to ground station lost" / "GCS connection regained" event pairs were logged. Three exceeded `COM_DL_LOSS_T` (10s):
 
 | Lost at (s) | Regained at (s) | Duration |
 |---|---|---|
 | 38.8 | 78.6 | 39.8s |
-| 434.3 | 462.2 | 27.9s |
 | 97.9 | 114.9 | 17.0s |
+| 434.3 | 462.2 | 27.9s |
 
-The remaining ~12 dropouts were under 10s (several under 1s). The log's embedded parameter set confirms `NAV_DLL_ACT` was already 0 (Disabled) at boot for this flight - not 2 (Return), as set on 2026-10-02 under RF-06 - and no `AUTO_RTL` transition occurs anywhere in the log. Had RF-06's setting still been live, the three dropouts above would each very likely have triggered an automatic RTL, despite the pilot holding full manual RC control (via ELRS/TELEM1, a separate link from the RFD900x GCS radio) throughout. This directly confirms Julian's reasoning for the reversal ("to stop it RTL if the laptop dies") against real flight data, and is now the documented rationale in `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`, `docs/operations/manual.md` (Section 6 and step 28), and `docs/engineering/build-checklist.md`.
+The remaining 15 dropouts were under 10s (several under 1s). The log's embedded parameter set confirms `NAV_DLL_ACT` was already 0 (Disabled) at boot for this flight - not 2 (Return), as set on 2026-10-02 under RF-06 - and no `AUTO_RTL` transition occurs anywhere in the log. Had RF-06's setting still been live, the three dropouts above would each very likely have triggered an automatic RTL, despite the pilot holding full manual RC control (via ELRS/TELEM1, a separate link from the RFD900x GCS radio) throughout. This directly confirms Julian's reasoning for the reversal ("to stop it RTL if the laptop dies") against real flight data, and is now the documented rationale in `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`, `docs/operations/manual.md` (Section 6 and step 28), and `docs/engineering/build-checklist.md`.
 
 **Julian's assessment, post-flight: this was the right call.** The GCS laptop actually died before launch on the day, which is what prompted checking this setting in the first place - seeing that happen firsthand made clear how dangerous an un-overridable RTL-on-GCS-loss would be (the pilot has no way to cancel an automatic RTL from the radio once it starts other than switching flight mode again, which assumes the pilot is paying attention and not, say, mid-launch). Combined with the 15+ dropouts actually seen in flight, this is now a settled decision, not just a precaution.
+
+### Investigation of the dropouts' cause
+
+The link was lost for about 148 s of the 1,487 s flight (roughly 10%). The flight log narrows the cause but does not identify it.
+
+| Check | Result |
+|---|---|
+| Range | The aircraft never exceeded 316 m from home. Dropouts began anywhere from 47 m to 259 m, including the 27.9s outage at 47 m. |
+| Signal strength at the aircraft | `radio_status` RSSI stayed at 220 to 254 (254 is the maximum) in the 5s before and during dropouts. |
+| Geometry | The lost fraction is 5 to 14% in every bin of bearing to home, elevation angle, distance, bank angle and altitude (bearing and distance measured to the home point, used as a proxy for the GCS position). Correlation of the lost flag with distance, altitude and bank angle is near zero; throttle is the weakest hint (0.14). |
+| What the aircraft received | The receive rate from the ground was about 0 B/s during outages, apart from sporadic 21-byte bursts (one heartbeat). |
+| What the ground sent | The lost-message counter on the RFD900x port jumped when each long outage ended (by 54, 12 and 52 for the 39.8s, 17.0s and 27.9s outages). The GCS kept transmitting with advancing sequence numbers; the aircraft did not receive them. The GCS software was therefore running throughout. |
+| Radio statistics | Remote RSSI, receive errors and corrected errors read 0 in every sample, and the TX buffer reads 0 for 99.98% of samples. The TX buffer has read 0 in every log recorded since 2026-06-02, including clean ones, so these fields carry no information about the dropouts. Mean noise is 25 in this flight against 10 to 14 in every other log, but it does not differ between outage and linked seconds. |
+| ELRS link | `input_rc` carries no link-quality data (RSSI fixed at 100, link quality -1), so the ELRS link could not be compared against the dropouts. |
+
+Range, antenna aspect and bank angle are unlikely causes, and weak signal at the aircraft does not explain a loss that occurs with strong RSSI. The log cannot show whether the aircraft-to-ground direction survived the outages, since that data is on the GCS. Interference from other 900 MHz equipment is one candidate: the RFD900x hops across 915 to 928 MHz, and both the aircraft's DBR4 receiver and the pilot's GX12 transmitter are dual-band including 900 MHz. This is untested, and the ELRS frequency domain in use has not been checked. A ground-side cause (modem placement, antenna, USB or laptop interference) is equally consistent with the log.
+
+Data that would settle it: the QGroundControl `.tlog` for the flight (ground modem RSSI and noise, and whether the downlink survived), an `ATI5` dump of the air-side RFD900x (only the ground modem's settings are backed up, so the two ends cannot be confirmed to match), and a stationary bench test logging the GCS-lost fraction with the ELRS receiver powered on and off.
 
 ### PID auto-tune (Phase D)
 
@@ -194,7 +212,7 @@ Per Julian: takeoff requires full throttle to gain airspeed quickly enough to cl
 
 - **Brief critical-failure flag** (`failsafe_flags.fd_critical_failure`, 2 samples true, first at t=574.1s): coincides with a generic "Failsafe activated" log message at the same timestamp, about 2.4s after a switch into Position Hold (t=571.7s) and shortly after a GCS dropout/regain pair (567.4-573.3s). The flight continued normally for another ~900s with no further sign of trouble. PX4's failure detector trips this flag on an excessive attitude/rate excursion - plausibly a stall-recovery or other deliberate maneuver (Phase G/H) rather than a genuine structural event, but not confirmed either way from this log alone.
 - **GPS spoofing warning** (t=748.8s): `gps` driver logged "GPS spoofing detected! (state: 2)", a one-off warning. Most likely a false positive (multipath/RF environment at the field) given no corresponding position glitch is evident in the altitude/speed data; not investigated further.
-- **MAVLink RADIO_STATUS timeouts**: logged three times (t=580.6s, 949.9s, 1265.2s) - consistent with, and likely a symptom of, the same GCS link instability discussed above.
+- **MAVLink RADIO_STATUS timeouts**: logged three times (t=580.6s, 949.9s, 1265.2s) - each falls shortly after a dropout ended, not during one, so they do not mark the dropouts themselves.
 - **New parameter observed**: `MIS_DIST_1WP` (maximum distance to first waypoint check) was found in this flight's parameter set at 10000m (PX4's firmware default) but was absent from the 2026-10-02 backup export entirely. This looks like an export omission rather than a deliberate change - not acted on further.
 
 ## Post-Flight Inspection Findings
@@ -217,6 +235,6 @@ Not from the log - found by Julian during post-flight inspection of the airframe
 - Per-motor thrust balance still cannot be verified in flight (no current/RPM instrumentation per motor) - worth prioritising now that a bearing fault has been found on one side.
 - `ASPD_FS_T_START` (decided: -1 -> 2s) needs applying to the physical FC before the next flight - no airspeed sensor hardware inspection is needed, the raw sensor read correctly throughout.
 - Phase J (Return to Home, CH10) should be deliberately exercised on a future flight - not yet tested.
-- Root cause of the repeated GCS link dropouts (RFD900x) not investigated - antenna, range, and RF environment at BNEMAC are all plausible candidates.
+- Root cause of the repeated GCS link dropouts (RFD900x) not identified: range, antenna aspect and bank angle are unlikely, but the flight log cannot separate ground-side causes from 900 MHz interference - see "Investigation of the dropouts' cause".
 - The t=574.1s `fd_critical_failure` flag and the t=748.8s GPS spoofing warning are noted but not root-caused; revisit if either recurs.
 - A frame-by-frame phase breakdown (matching this flight's actual timeline against the test plan's Phases A-K) would benefit from the pilot's own notes on when each phase was flown, since `nav_state` alone cannot separate several of them.
