@@ -1,0 +1,2 @@
+mavlink stream -d /dev/ttyS6 -s BATTERY_STATUS -r 10
+mavlink stream -d /dev/ttyS4 -s BATTERY_STATUS -r 5

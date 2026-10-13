@@ -16,7 +16,7 @@ Standing conventions for working in this repo. Update this file when the user gi
     - `docs/engineering/references/` - external reference material (papers, standards) cited in the engineering record
   - `docs/operations/` - how the aircraft is flown, and the backups that support that
     - `docs/operations/manual.md` - operating manual: flight modes, switch mapping, pre-flight checklist, procedures, and PX4 flight-mode configuration detail
-    - `docs/operations/backups/` - functional restore images and raw data pulled from hardware: `GX12 Radio Backup/` (EdgeTX SD card), `Pixhawk Parameter Backup/` (`parameter-change-log.md` and the raw parameter dump), `Pixhawk Mission Backup/`, `Pixhawk Flight Log Backup/` (raw PX4 `.ulg` logs), `GCS RFD900 Modem Backup/`
+    - `docs/operations/backups/` - functional restore images and raw data pulled from hardware: `GX12 Radio Backup/` (EdgeTX SD card), `Pixhawk Parameter Backup/` (`parameter-change-log.md` and the raw parameter dump), `Pixhawk Mission Backup/`, `Pixhawk SD Card Backup/` (copy of the Pixhawk's microSD card: raw PX4 `.ulg` logs, `dataman`, `etc/`, `parameters_backup.bson`), `GCS RFD900 Modem Backup/`
   - `docs/governance/` - project management, funding, and formal records
     - `docs/governance/timeline-and-roadmap.md` - milestone history and forward roadmap
     - `docs/governance/purchase-history/` - `purchase-history.md` and its `invoices/` subfolder, named `<vendor>-<item>-<date>.pdf`

@@ -38,7 +38,7 @@ AI use on this project is open and acknowledged. See [`AI-context/academic-integ
     - `references/` - external reference material (papers, standards) cited in the engineering record
   - `operations/` - how the aircraft is flown, and the backups that support that
     - `manual.md` - flight modes, switch mapping, pre-flight checklist, operating procedures, and PX4 flight-mode configuration detail
-    - `backups/` - functional restore images and raw data pulled from hardware: GX12 Radio Backup (EdgeTX SD card), Pixhawk Parameter Backup (`parameter-change-log.md` and the raw parameter dump), Pixhawk Mission Backup, Pixhawk Flight Log Backup (raw PX4 `.ulg` logs), GCS RFD900 Modem Backup
+    - `backups/` - functional restore images and raw data pulled from hardware: GX12 Radio Backup (EdgeTX SD card), Pixhawk Parameter Backup (`parameter-change-log.md` and the raw parameter dump), Pixhawk Mission Backup, Pixhawk SD Card Backup (copy of the Pixhawk's microSD card: raw PX4 `.ulg` logs, mission store, startup script), GCS RFD900 Modem Backup
   - `governance/` - project management, funding, and formal records
     - `timeline-and-roadmap.md` - milestone history and forward roadmap
     - `purchase-history/` - component purchase log (`purchase-history.md`) with cost, funder, and installed status, plus its `invoices/` subfolder

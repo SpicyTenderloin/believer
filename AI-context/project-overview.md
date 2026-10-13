@@ -100,7 +100,7 @@ believer/
 │   │       │   ├── parameter-change-log.md    ← Narrative PX4 parameter change history
 │   │       │   └── believer-parameters.params ← Full PX4 parameter dump (raw backup)
 │   │       ├── Pixhawk Mission Backup/
-│   │       ├── Pixhawk Flight Log Backup/ ← Raw PX4 .ulg flight/bench-test logs
+│   │       ├── Pixhawk SD Card Backup/    ← Copy of the Pixhawk's microSD card (logs, dataman, etc/)
 │   │       └── GCS RFD900 Modem Backup/
 │   ├── governance/                  ← Project management, funding, and formal records
 │   │   ├── timeline-and-roadmap.md  ← Milestone history and forward roadmap
