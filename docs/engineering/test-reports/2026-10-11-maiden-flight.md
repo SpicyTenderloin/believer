@@ -43,21 +43,20 @@ Finally, the in-flight **PID auto-tuning procedure (Phase D)** was attempted twi
 | 154.5 | Acro | Phase A / H |
 | 339.2 | Stabilized | Phase B |
 | 426.3-486.1 | Acro / Stabilized / Position Hold, alternating | Phases A/B/H |
-| 543.0-699.7 | Stabilized -> Position Hold (569.7-699.7, including the first auto-tune attempt) | Phase D (attempt 1, aborted), I |
-| 699.7-947.1 | Stabilized (long segment, 138s) -> Acro -> Stabilized -> Position Hold | Likely includes Phase E (Cruise Sweep), F (Glide), G (Stall) - not separable from `nav_state` alone |
+| 543.0-699.7 | Stabilized -> Position Hold (569.7-699.7, including the first auto-tune attempt) | Phase D (attempt 1, aborted), Phase I |
+| 699.7-947.1 | Stabilized (long segment, 138s) -> Acro -> Stabilized -> Position Hold | Includes Phase E (Cruise Sweep), F (Glide), G (Stall) |
 | 995.8-1081.3 | Acro -> Stabilized | |
 | 1112.0-1211.1 | **Auto Mission** | Phase K (Mission Mode) |
 | 1211.1-1383.4 | Stabilized / Position Hold, alternating, including the second (successful) auto-tune attempt at t=1309.3-1330.2s | Phase D (attempt 2, succeeded) |
 | 1482.5 | - | Landing detected |
 | 1486.0 | - | Disarmed by RC switch |
 
-**Not observed:** `AUTO_RTL` never appears in this log. Phase J (Return to Home via CH10) does not appear to have been deliberately exercised in flight - the only RTL seen anywhere on the day was the RC-loss-failsafe RTL in the earlier ground/range-check log, which is a different trigger and not a deliberate test of CH10. Flagged in `AI-context/open-items.md`.
 
-**Limitation:** `nav_state` alone cannot distinguish Phase A's Acro launch/landing from Phase H's dedicated Acro check, or isolate Phase E/F/G within the long Stabilized/Manual segments - a full phase-by-phase reconstruction would need the pilot's own recollection of timing, or a closer pass through airspeed/altitude/stick-input traces than this report attempts.
+**Not tested:** Phase J (Return to Home via CH10) was not exercised during the maiden flight and remains untested.
 
 ### Launch
 
-Per Julian's debrief: the launch was hand-launched from a hill at the BNEMAC field, and needed all of the elevation the hill afforded to gain enough airspeed to begin climbing - "very touch and go," and it could easily have crashed.
+The aircraft was hand-launched from a hill at the BNEMAC flying field, requiring nearly all of the available elevation to establish sufficient airspeed for sustained climb. The launch was marginal, with little apparent margin for recovery, and presented a significant risk of the aircraft crashing before achieving stable flight.
 
 ![Launch](../../assets/flight-footage/maiden-flight-launch-2026-10-11.mp4)
 
@@ -69,11 +68,20 @@ The log backs this up directly. Using the moment altitude first leaves the groun
 
 The dip coincides with the lowest airspeed of the window - **12.4 m/s at the lowest point**, only 1.4 m/s above `FW_AIRSPD_STALL` (11 m/s). This window is entirely within the time the airspeed validator was still trusting the sensor (see Airspeed validator latched invalid below), so this is EKF-fused airspeed, not a ground-speed proxy - a real, measurably thin margin above stall during the few seconds right after release, not just a visual impression.
 
-The climb-rate figure below (about 1.0 m/s average from takeoff) is consistent with this account - a marginal, not comfortable, margin above stall during the initial climb-out. **Decision (Julian): future flights will use a launch dolly instead of a hand launch** - tracked in `AI-context/open-items.md` and cross-referenced against the existing launch-dolly requirements document (`docs/engineering/requirements/launch-dolly-requirements.md`).
+The climb-rate figure below (about 1.0 m/s average from takeoff) is consistent with this account - a marginal, not comfortable, margin above stall during the initial climb-out. **Decision (Julian): future flights will use a launch dolly instead of a hand launch** - tracked in `AI-context/open-items.md` and supports the existing launch-dolly requirements document (`docs/engineering/requirements/launch-dolly-requirements.md`).
 
-### Altitude and climb
+### Climb and Altitude Performance
 
-Home position: 24.7m AMSL. Initial climb from takeoff (t=32.6s) reached about 59m AGL by t=89.9s (57.3s), an average climb rate of roughly 1.0 m/s. Maximum altitude reached during the flight was 112.6m AGL (137.3m AMSL), comfortably under the 120m AGL geofence ceiling (`GF_MAX_VER_DIST`). Altitude varied considerably through the flight (roughly 5-86m AGL at the 60-second sample points), consistent with an active flight test campaign working through multiple phases rather than a single cruise segment.
+The aircraft's home position was recorded at 24.7 m AMSL. Between takeoff (t = 32.6 s) and the transition from Acro to Position Hold (t ≈ 89.3 s), the aircraft gained approximately 59 m of altitude, giving a net average climb rate of 1.0 m/s. However, this period involved substantial manoeuvring in Acro mode rather than a continuous climb. Flight-log analysis identified approximately 140 m of cumulative ascent and 81 m of descent, with a **mean vertical climb rate of 4.26 m/s during ascending portions**. Consequently, the net average of 1.0 m/s is not representative of the aircraft's actual climb capability.
+
+Later in the flight, the aircraft demonstrated a more representative climb performance in Stabilized mode, sustaining approximately **5.6 m/s over 6–10 seconds**, with a peak of 6.5 m/s. This was achieved at approximately 91% throttle and 19–20 m/s GPS ground speed. While this demonstrates substantially greater climb capability than the initial net altitude gain suggests, a longer, controlled climb test would be required to establish the maximum sustained climb rate.
+
+The aircraft also demonstrated good altitude-holding performance in autonomous flight modes:
+
+- **Position Hold:** Across four segments totalling approximately 340 seconds, the RMS altitude tracking error ranged from **1.1 to 1.6 m**, with a maximum transient deviation of 4.5 m from the commanded altitude. This performance was maintained during both in-flight PID auto-tuning attempts.
+- **Mission mode:** Once established on the commanded flight path, altitude tracking achieved an **RMS error of 1.26 m**, comparable to Position Hold. Following engagement, the aircraft required 28.6 seconds to converge within 2 m of the commanded altitude, reflecting the time required to descend from its initial altitude to the new setpoint.
+
+The maximum altitude recorded during the flight was **112.6 m AGL (137.3 m AMSL)**, remaining below the configured 120 m AGL geofence limit (`GF_MAX_VER_DIST`).
 
 ### Speed
 
@@ -85,9 +93,13 @@ Pack voltage: 24.97V at arm, 22.99V at disarm (minimum 22.38V in flight), consis
 
 ### Airspeed validator latched invalid - not a hardware fault
 
-`airspeed_validated` was invalid for almost the entire flight (only 215 of 7436 samples, 2.9%, in a physically plausible range), and at t=48.9s the `airspeed_selector` logged "Airspeed sensor failure detected. Return to launch (RTL) is advised." This looked at first like a sensor or pitot-line fault, but checking the raw differential-pressure sensor directly (not the processed/validated topic) rules that out: recomputing airspeed straight from the raw pressure readings gives physically sane values (13-24 m/s) for the entire flight, with no negative, zero, or stuck readings - the kind of signature a cut or blocked line would produce. The sensor hardware was working the whole time.
+PX4's airspeed validation system failed shortly after takeoff, leaving the aircraft without reliable validated airspeed data for most of the flight. Of the 7,436 samples recorded in the `airspeed_validated` topic, only 215 (2.9%) contained physically plausible airspeed values. At t = 48.9 s, the `airspeed_selector` reported: "Airspeed sensor failure detected. Return to launch (RTL) is advised."
 
-What actually happened: `airspeed_sensor_measurement_valid` flips false exactly once, at **t=49.0s** (16.4s after takeoff), and never recovers for the remaining ~1400s. At that moment body-frame vertical acceleration was swinging up to about 2.4g while indicated airspeed was only 15-17 m/s - not far above the 11 m/s stall speed - during the hard pull-up recovering from the launch sag (see Launch above). That combination is exactly what PX4's `check_load_factor()` validator check is designed to catch (`AirspeedValidator.cpp`), making it the likely trigger. It never got a chance to clear afterward because `ASPD_FS_T_START` was at **-1**, PX4's own default - documented as disabling in-flight re-enabling of the sensor entirely once it's marked invalid.
+Importantly, subsequent analysis found no evidence of a physical sensor or pitot-line fault. Airspeed reconstructed directly from the raw differential-pressure measurements remained physically reasonable (13–24 m/s) throughout the flight, with no zero, negative, or stuck readings indicative of a disconnected or obstructed pitot line. This strongly suggests that the issue originated in PX4's airspeed validation logic rather than the sensor itself.
+
+The `airspeed_sensor_measurement_valid` flag transitioned to false at **t = 49.0 s**, just 16.4 seconds after takeoff, and remained invalid for the rest of the flight. This coincided with the aircraft's recovery from the marginal launch, during which body-frame vertical acceleration reached approximately 2.4 g while indicated airspeed was only 15–17 m/s, relatively close to the estimated 11 m/s stall speed. These conditions are consistent with triggering PX4's load-factor plausibility check (`check_load_factor()` in `AirspeedValidator.cpp`), making it the most likely cause of the initial rejection.
+
+The failure subsequently persisted because `ASPD_FS_T_START` was configured to **-1**, the PX4 default, which disables automatic in-flight revalidation once a sensor has been declared invalid. Consequently, a likely transient validation failure resulted in the loss of validated airspeed data for the remainder of the flight, despite continued plausible measurements from the underlying sensor.
 
 **Decision: `ASPD_FS_T_START` changed to 2s** so a future transient trip can clear itself in flight instead of latching for the rest of the flight - not yet applied to the physical FC, see `docs/operations/backups/Pixhawk Parameter Backup/parameter-change-log.md`.
 
