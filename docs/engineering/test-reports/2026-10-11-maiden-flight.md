@@ -4,9 +4,9 @@
 |---|---|
 | **Date** | 2026-10-11, approximately 09:02-09:27 Brisbane local time (23:02-23:27 UTC on 2026-10-10 by the aircraft's own clock) |
 | **Location** | BNEMAC field, 420 Roghan Rd, Fitzgibbon QLD 4018 |
-| **Attendees** | Julian Williams (handler/ground station), Ross Dennington (BNEMAC - pilot) |
-| **Purpose** | Execute `docs/engineering/test-plans/2026-10-11-maiden-flight-test-plan.md` Rev 0.6/0.7 - first flight of the airframe |
-| **Status** | Flown, one week later than the originally planned date (Sunday 11 October, not Sunday 4 October), 7:30am slot shifted to approximately 9:00am. No crash or structural incident. Analysis is from the Pixhawk's onboard SD card logs, the launch video, and Julian's post-flight debrief (relaying pilot Ross Dennington's account) |
+| **Attendees** | Julian Williams (handler/ground station), Ross Dennington (BNEMAC - pilot), Henry Thomasson (ground support and videographer) |
+| **Purpose** | Execute `docs/engineering/test-plans/2026-10-11-maiden-flight-test-plan.md` - first flight of the airframe |
+| **Status** | Flown, complete. No crash or structural incident. Analysis traced from the Pixhawk's onboard SD card logs, the launch video, and post-flight debrief (relaying pilot Ross Dennington's account) |
 
 ## Summary
 
