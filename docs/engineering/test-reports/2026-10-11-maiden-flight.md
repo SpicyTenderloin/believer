@@ -62,11 +62,9 @@ The aircraft was hand-launched from a hill at the BNEMAC flying field, requiring
 
 ![Launch, ground view](../../assets/flight-footage/maiden-flight-launch-ground-view-2026-10-11.mp4)
 
-The log backs this up directly. Using the moment altitude first leaves the ground as t=0, the aircraft sagged to **3.3m below release height at t=1.6s**, recovered most of the way, sagged a second, shallower time (~1.8m) around t=3.5s, and only settled into a sustained climb from about t=4s:
+The log backs this up directly. Using the moment altitude first leaves the ground as t=0, the aircraft sagged to **3.3m below release height at t=1.6s**, recovered most of the way, sagged a second, shallower time (~1.8m) around t=3.5s, and only settled into a sustained climb from about t=4s. The dip coincides with the lowest airspeed of the window - **12.4 m/s at the lowest point**, only 1.4 m/s above `FW_AIRSPD_STALL` (11 m/s). This window is entirely within the time the airspeed validator was still trusting the sensor (see Airspeed validator latched invalid below), so this is EKF-fused airspeed, not a ground-speed proxy - a real, measurably thin margin above stall during the few seconds right after release, not just a visual impression.
 
 ![Launch profile: altitude vs. time, coloured by EKF true airspeed, first 10 seconds](../../assets/test-plots/launch-profile-first-10s-2026-10-11.png)
-
-The dip coincides with the lowest airspeed of the window - **12.4 m/s at the lowest point**, only 1.4 m/s above `FW_AIRSPD_STALL` (11 m/s). This window is entirely within the time the airspeed validator was still trusting the sensor (see Airspeed validator latched invalid below), so this is EKF-fused airspeed, not a ground-speed proxy - a real, measurably thin margin above stall during the few seconds right after release, not just a visual impression.
 
 The climb-rate figure below (about 1.0 m/s average from takeoff) is consistent with this account - a marginal, not comfortable, margin above stall during the initial climb-out. **Decision (Julian): future flights will use a launch dolly instead of a hand launch** - tracked in `AI-context/open-items.md` and supports the existing launch-dolly requirements document (`docs/engineering/requirements/launch-dolly-requirements.md`).
 
