@@ -85,6 +85,26 @@ The maximum altitude recorded during the flight was **112.6 m AGL (137.3 m AMSL)
 
 GPS ground speed (`vehicle_local_position` vx/vy) ranged from 0 (on the ground) to 31.3 m/s, averaging 17.7 m/s - used here instead of airspeed, since `airspeed_validated` (not the raw sensor, which was healthy throughout - see Airspeed validator latched invalid below) was invalid for almost the whole flight. This is ground speed, not airspeed, and includes wind effects.
 
+Ground speed varied between flight modes, as summarised below.
+
+| Flight mode | Mean (m/s) | 95th percentile (m/s) | Maximum (m/s) |
+|---|---|---|---|
+| Acro | 19.1 | 27.3 | 31.3 |
+| Stabilized | 19.2 | 24.5 | 28.8 |
+| Manual | 18.0 | 22.3 | 24.3 |
+| Position Hold | 16.7 | 22.1 | 24.1 |
+| Auto Mission | 13.7 | 17.7 | 20.7 |
+
+![Ground speed by flight mode: mean, 95th percentile and maximum](../../assets/test-plots/maiden-flight-speed-by-mode-2026-10-11.png)
+
+Auto Mission flew noticeably slower than every other mode - consistent with TECS holding a steady cruise through a tight pattern (`NAV_LOITER_RAD` = 50m turns) rather than the more dynamic speeds the pilot commanded elsewhere. The maximum groundspeed (31.3 m/s) occurred in Acro mode at t=435.6s, inside a later Acro segment (t=426.3-443.6s) with the same large roll/pitch swings described for the post-launch window in Climb and Altitude Performance above - a manoeuvring speed, not level cruise.
+
+**3D speed.** The figures above are 2D (horizontal) groundspeed only. Including the vertical component (`vehicle_local_position` vz) makes very little difference in aggregate: mean 3D speed exceeds 2D by only 0.02-0.45 m/s across every mode, and the single maximum (31.3 m/s) is identical between 2D and 3D, since that particular peak was a level high-speed pass, not a dive or climb.
+
+Aggregate stats hide the real story, though: 3D speed diverges sharply from 2D during steep climbs and dives, where a large vertical-velocity component adds to the total speed without showing up in the horizontal ground track at all. The largest single gap in the whole flight was **11.0 m/s**, at t=59.2s (2D speed only 8.7 m/s, 3D speed 19.7 m/s, vertical speed 17.7 m/s) - a near-vertical climb within the same post-launch Acro manoeuvring window (t=32.6-89.3s) already discussed in Climb and Altitude Performance above, not a data artefact.
+
+![2D vs 3D speed vs time, shaded by flight mode](../../assets/test-plots/maiden-flight-speed-2d-vs-3d-2026-10-11.png)
+
 ### Battery and Power Consumption
 
 The aircraft was powered by a custom 6S4P lithium-ion battery pack with a nominal capacity of approximately 12.4 Ah (270 Wh). Over the 24-minute, 47-second flight, PX4's Coulomb counter recorded 3.90 Ah discharged, corresponding to approximately 91.4 Wh of energy consumed. This energy figure was independently verified by integrating the recorded battery voltage and current over time, with both methods agreeing to within 0.3%.
