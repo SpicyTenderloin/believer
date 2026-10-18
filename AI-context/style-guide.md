@@ -40,6 +40,8 @@ Test reports are named `docs/engineering/test-reports/YYYY-MM-DD-<descriptive-sl
 
 - All documents are Markdown (`.md`) - not Word, PDF, or other formats - so they version cleanly in git.
 - Diagrams and photos are saved under `docs/assets/` with descriptive filenames.
+- Link to files under `docs/assets/` with a relative path (e.g. `../../assets/test-plots/foo.png`), not an absolute GitHub URL (`https://github.com/.../blob/main/...`) - relative paths render the same whether the doc is viewed on GitHub, cloned locally, or the repo is ever renamed/moved; a GitHub URL only works in one of those contexts.
+- Embed images with standard Markdown image syntax (`![alt](path)`). Video files (`.mp4` etc.) do not render reliably with that syntax on GitHub - use a plain link instead (`[Launch video](path.mp4)`).
 - Top-level sections use `##`, subsections use `###`.
 - Tables are preferred over prose for structured data.
 - No trailing changelog blocks at the bottom of individual documents - all changes go in `AI-context/CHANGELOG.md`.
