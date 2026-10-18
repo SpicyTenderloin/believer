@@ -86,7 +86,7 @@ Ground speed varied between flight modes, as summarised below.
 | Position Hold   | 16.7           | 22.1                      | 24.1              |
 | Auto Mission    | 13.7           | 17.7                      | 20.7              |
 
-[2D ground speed distribution by flight mode](https://github.com/SpicyTenderloin/believer/blob/main/docs/assets/test-plots/maiden-flight-speed-histogram-by-mode-2026-10-11.png) ([image](https://github.com/SpicyTenderloin/believer/raw/main/docs/assets/test-plots/maiden-flight-speed-histogram-by-mode-2026-10-11.png))
+![2D ground speed distribution by flight mode](../../assets/test-plots/maiden-flight-speed-histogram-by-mode-2026-10-11.png)
 
 Auto Mission exhibited the lowest and most consistent ground speeds (13.7 m/s mean), with the tightest distribution - consistent with TECS holding a steady cruise through the mission pattern's repeated turns (`NAV_LOITER_RAD` = 50m). Acro showed the greatest spread and the longest high-speed tail, consistent with the manoeuvring described in *Climb and Altitude Performance*; the maximum recorded ground speed (31.3 m/s) occurred at t=435.6s during an Acro segment with substantial roll and pitch changes (t=426.3-443.6s) - a transient manoeuvring speed, not the aircraft's maximum sustained level-flight speed.
 
