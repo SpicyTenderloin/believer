@@ -69,9 +69,30 @@ Home position: 24.7m AMSL. Initial climb from takeoff (t=32.6s) reached about 59
 
 GPS ground speed (`vehicle_local_position` vx/vy) ranged from 0 (on the ground) to 31.3 m/s, averaging 17.7 m/s - used here instead of airspeed, since `airspeed_validated` (not the raw sensor, which was healthy throughout - see Airspeed validator latched invalid below) was invalid for almost the whole flight. This is ground speed, not airspeed, and includes wind effects.
 
-### Battery
+### Battery and Power Consumption
 
-Pack voltage: 24.97V at arm, 22.99V at disarm (minimum 22.38V in flight), consistent with `BAT1_V_EMPTY` (3.2 V/cell x 6 = 19.2V) never being approached. Reported remaining charge fell from 100% to 74%. Peak current draw was 33.5A, mean 9.4A.
+The aircraft was powered by a custom 6S4P lithium-ion battery pack with a nominal capacity of approximately 12.4 Ah (270 Wh). Over the 24-minute, 47-second flight, PX4's Coulomb counter recorded 3.90 Ah discharged, corresponding to approximately 91.4 Wh of energy consumed. This energy figure was independently verified by integrating the recorded battery voltage and current over time, with both methods agreeing to within 0.3%.
+
+The average power consumption was 221.4 W, with a mean current draw of 9.45 A. Peak recorded power reached 789.7 W during the initial climb-out, shortly after takeoff, while the maximum recorded current was 33.47 A. Battery voltage decreased from 24.97 V to 22.99 V over the flight, with a minimum recorded voltage of 22.38 V under load, consistent with `BAT1_V_EMPTY` (3.2 V/cell x 6 = 19.2V) never being approached.
+
+![Battery current draw vs. time, shaded by flight mode](../../assets/test-plots/maiden-flight-current-vs-time-2026-10-11.png)
+
+Power consumption varied considerably between flight modes, as summarised below.
+
+| Flight mode | Duration (s) | Mean current (A) | Mean power (W) | Energy (Wh) |
+|---|---|---|---|---|
+| Acro | 395.7 | 11.48 | 271.1 | 29.82 |
+| Stabilized | 566.0 | 10.32 | 239.7 | 37.69 |
+| Position Hold | 363.7 | 6.88 | 161.5 | 16.32 |
+| Manual | 61.2 | 10.70 | 258.4 | 4.40 |
+| Auto Mission | 99.1 | 5.00 | 115.0 | 3.17 |
+| **Total** | **1,485.7** | **9.45** | **221.4** | **91.40** |
+
+Position Hold and Auto Mission exhibited substantially lower average power consumption than the pilot-controlled modes. Auto Mission recorded the lowest mean power draw at 115.0 W, compared with 271.1 W in Acro and 239.7 W in Stabilized mode. This is consistent with the more controlled, less aggressive flight profiles flown during autonomous operation, although differences in manoeuvring, throttle demand and flight conditions prevent a direct comparison of propulsion efficiency between modes.
+
+The recorded discharge of 3.90 Ah represents approximately 30-31% of the pack's rated 12.4-13.2 Ah capacity. This is slightly higher than the 26% reduction indicated by PX4's estimated state of charge (100% to 74%), highlighting a discrepancy between the onboard capacity estimate and the measured Coulomb-counted discharge.
+
+Determining the pack's exact capacity - and setting `BAT1_CAPACITY` from it, rather than its current unset (-1) value - is an open item, tracked as PWR-06 in `docs/engineering/build-checklist.md`.
 
 ### Airspeed validator latched invalid - not a hardware fault
 
