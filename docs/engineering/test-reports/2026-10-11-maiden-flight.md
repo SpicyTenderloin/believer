@@ -81,25 +81,25 @@ The aircraft also demonstrated good altitude-holding performance in autonomous f
 
 The maximum altitude recorded during the flight was **112.6 m AGL (137.3 m AMSL)**, remaining below the configured 120 m AGL geofence limit (`GF_MAX_VER_DIST`).
 
-### Speed
+### Speed Performance
 
-GPS ground speed (`vehicle_local_position` vx/vy) ranged from 0 (on the ground) to 31.3 m/s, averaging 17.7 m/s - used here instead of airspeed, since `airspeed_validated` (not the raw sensor, which was healthy throughout - see Airspeed validator latched invalid below) was invalid for almost the whole flight. This is ground speed, not airspeed, and includes wind effects.
+GPS ground speed, calculated from `vehicle_local_position` (`vx` and `vy`), averaged **18.1 m/s during flight**, with a maximum of **31.3 m/s (112.7 km/h)**. The average across the full recording, including ground operations, was 17.7 m/s. GPS ground speed is used here because PX4's validated airspeed output was unreliable for most of the flight, despite the underlying differential-pressure sensor continuing to function correctly (see *Airspeed Validator Latched Invalid*). Unlike airspeed, ground speed includes the effects of wind.
 
 Ground speed varied between flight modes, as summarised below.
 
-| Flight mode | Mean (m/s) | 95th percentile (m/s) | Maximum (m/s) |
-|---|---|---|---|
-| Acro | 19.1 | 27.3 | 31.3 |
-| Stabilized | 19.2 | 24.5 | 28.8 |
-| Manual | 18.0 | 22.3 | 24.3 |
-| Position Hold | 16.7 | 22.1 | 24.1 |
-| Auto Mission | 13.7 | 17.7 | 20.7 |
+| **Flight mode** | **Mean (m/s)** | **95th percentile (m/s)** | **Maximum (m/s)** |
+| --------------- | -------------- | ------------------------- | ----------------- |
+| Acro            | 19.1           | 27.3                      | 31.3              |
+| Stabilized      | 19.2           | 24.5                      | 28.8              |
+| Manual          | 18.0           | 22.3                      | 24.3              |
+| Position Hold   | 16.7           | 22.1                      | 24.1              |
+| Auto Mission    | 13.7           | 17.7                      | 20.7              |
 
-![2D ground speed distribution by flight mode](../../assets/test-plots/maiden-flight-speed-histogram-by-mode-2026-10-11.png)
+[2D ground speed distribution by flight mode](https://github.com/SpicyTenderloin/believer/blob/main/docs/assets/test-plots/maiden-flight-speed-histogram-by-mode-2026-10-11.png) ([image](https://github.com/SpicyTenderloin/believer/raw/main/docs/assets/test-plots/maiden-flight-speed-histogram-by-mode-2026-10-11.png))
 
-Auto Mission flew noticeably slower than every other mode, and its distribution is also the tightest - consistent with TECS holding a steady cruise through a tight pattern (`NAV_LOITER_RAD` = 50m turns) rather than the more dynamic speeds the pilot commanded elsewhere. Acro has by far the widest spread and the longest tail toward high speed, reflecting the aggressive manoeuvring described in Climb and Altitude Performance above; the maximum groundspeed (31.3 m/s) occurred in Acro mode at t=435.6s, inside a later Acro segment (t=426.3-443.6s) with the same large roll/pitch swings - a manoeuvring speed, not level cruise.
+**Auto Mission exhibited the lowest and most consistent ground speeds**, averaging 13.7 m/s. This is consistent with the controlled flight profile maintained by TECS while navigating the mission pattern, including repeated turns with a configured loiter radius of 50 m (`NAV_LOITER_RAD`).
 
-![2D vs 3D speed vs time, shaded by flight mode](../../assets/test-plots/maiden-flight-speed-2d-vs-3d-2026-10-11.png)
+Conversely, **Acro exhibited the greatest speed variation**, consistent with the aggressive manoeuvring identified in *Climb and Altitude Performance*. The maximum recorded ground speed of 31.3 m/s occurred at t = 435.6 s during an Acro segment characterised by substantial roll and pitch changes. This represents a transient manoeuvring speed rather than the aircraft's maximum sustained level-flight speed.
 
 ### Battery and Power Consumption
 
