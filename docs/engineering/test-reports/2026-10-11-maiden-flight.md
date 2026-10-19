@@ -111,6 +111,10 @@ Power consumption varied considerably between flight modes:
 
 Position Hold and Auto Mission drew substantially less power than the pilot-controlled modes - Auto Mission's 115.0 W mean compares with 271.1 W in Acro and 239.7 W in Stabilized - consistent with the more controlled, less aggressive flight profile under autonomous operation, though differences in manoeuvring, throttle demand and flight conditions prevent a direct efficiency comparison between modes.
 
+![Battery current draw distribution by flight mode](../../assets/test-plots/maiden-flight-current-histogram-by-mode-2026-10-11.png)
+
+The per-mode distributions show the same pattern as the table: Position Hold and Auto Mission sit in tight, low-current clusters (means 6.9 A and 5.0 A), while the pilot-flown modes are both higher and more spread out. Acro's distribution is the widest and most multimodal, consistent with its mix of sustained manoeuvring and the launch-climb transient (33.47 A peak) that it contains.
+
 The recorded discharge of 3.90 Ah is approximately 30-31% of the pack's rated 12.4-13.2 Ah capacity, somewhat higher than the 26% reduction PX4's state-of-charge estimate reports (100% to 74%) - a discrepancy between the onboard capacity estimate and the measured Coulomb-counted discharge. Determining the pack's exact capacity, and setting `BAT1_CAPACITY` from it rather than its current unset (-1) value, is an open item, tracked as PWR-06 in `docs/engineering/build-checklist.md`.
 
 ### Airspeed System Assessment
