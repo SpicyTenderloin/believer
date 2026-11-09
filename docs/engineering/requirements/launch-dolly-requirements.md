@@ -77,11 +77,13 @@ Using the Weishäupl et al. 2024 drag-polar reference data (`CL0` = 0.2570, `CL�
 | Base frame | Two side frames, one under each wing, each built on a lower rail of PVC tube with 3D-printed fittings, joined by front and rear cross members. Rail centres about 340 mm apart (TBD) |
 | Wing supports | One per side: a 3D-printed wedge tray with lightening cutouts and a TPU cover, carried on a front upright and a diagonal strut from a rail tee. Tray surface 5° nose-up relative to the rail |
 | Ramp stops | Integral with the front of each tray. Face 75° to the tray (80° to the ground); lip 30 mm above the tray surface. At rest the wing leading edge sits about 3 mm behind the face |
-| Tail support | Centreline pad on an adjustable post on the rear cross member, at the rear axle station about 600 mm aft of the wing leading edge. TPU-faced |
+| Tail support | TPU-lined printed V-cradle (160 mm wide, 20° flanks) on an adjustable 32 mm post in a tee at the middle of the rear cross member, at the rear axle station about 600 mm aft of the wing leading edge. V apex about 153 mm above the axle; the belly bottom sits about 160 mm above the axle. Detail on BLV-DOL-007 |
 | Rear wheels | One at the rear end of each rail, about 200 mm diameter; rear axle 570 mm aft of the front cross member |
 | Front wheels | One each side on an outrigger from the front corner tee, outboard of the propeller disc (front track about 1110 mm, TBD). Each outrigger is braced by a horizontal brace back to the rail tee and a vertical strut up to a tee on the front upright |
 
 ![Launch dolly concept views](../../assets/diagrams/launch-dolly-BLV-DOL-006.png)
+
+![Tail support cradle](../../assets/diagrams/launch-dolly-BLV-DOL-007.png)
 
 ### Tail-support height
 
