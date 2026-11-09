@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import matplotlib.patches
 from matplotlib.patches import Polygon, Circle, Rectangle, FancyArrowPatch
 import fit_side_view as F
+_fonts = {f.name for f in matplotlib.font_manager.fontManager.ttflist}
+plt.rcParams["font.family"] = next(f for f in ("Inter", "Segoe UI", "DejaVu Sans") if f in _fonts)
 
 NAVY, OR, ORD, TUBE, GREY = "#0A2A5B", "#D9772E", "#B85E1E", "#E6E1D3", "#8C8778"
 S, X0, Y0 = F.S, 755.3, F.RAIL_C                     # screenshot px -> dolly mm (origin: front cross centre)
@@ -63,16 +65,27 @@ def dolly(ax, dx=0.0):
     tray = [(-275, 190), (X_RAMP + 12, 190), (X_RAMP + 12, Y_LIP), (X_RAMP, Y_LIP), (X_RAMP, tray_top(X_RAMP))] + \
            [(x, tray_top(x)) for x in xs[::-1]]
     ax.add_patch(Polygon(sh(tray), closed=True, fc=OR, ec="k", lw=0.7, zorder=5))
-    # tail support: centreline post on the rear cross member, pad top at the belly, 6 deg
-    t6 = math.tan(math.radians(6))
-    ax.add_patch(Polygon(sh([(X_AX - 22, 18), (X_AX + 22, 18), (X_AX + 22, PAD_TOP - 22 * t6), (X_AX - 22, PAD_TOP + 22 * t6)]),
+    # tail support: V-cradle on a centreline post on the rear cross member, belly in the V, top 6 deg (higher at the rear)
+    t6 = math.tan(math.radians(6)); L2 = 35
+    apex, tips, bot = PAD_TOP - 7, PAD_TOP + 18.5, PAD_TOP - 25
+    tube(ax, (X_AX + dx, 18), (X_AX + dx, bot - 40), w=32, z=3)
+    ax.add_patch(Rectangle((X_AX - 21 + dx, bot - 55), 42, 56, fc=OR, ec="k", lw=0.7, zorder=4))
+    ax.add_patch(Polygon(sh([(X_AX - L2, bot + L2 * t6), (X_AX + L2, bot - L2 * t6), (X_AX + L2, tips - L2 * t6), (X_AX - L2, tips + L2 * t6)]),
                          closed=True, fc=OR, ec="k", lw=0.7, zorder=4, alpha=0.95))
-    ax.add_patch(Circle((X_AX + dx, 0), R_W, fc=GREY, ec="k", lw=0.8, zorder=5))
-    ax.add_patch(Circle((X_AX + dx, 0), R_W * 0.72, fc="#F4F2EC", ec="k", lw=0.5, zorder=5))
-    ax.add_patch(Circle((X_AX + dx, 0), 14, fc=GREY, ec="k", lw=0.6, zorder=5))
-    ax.add_patch(Circle((dx, 0), R_W, fc=GREY, ec="k", lw=0.8, zorder=7))
-    ax.add_patch(Circle((dx, 0), R_W * 0.72, fc="#F4F2EC", ec="k", lw=0.5, zorder=7))
-    ax.add_patch(Circle((dx, 0), 18, fc=OR, ec="k", lw=0.6, zorder=7))
+    ax.plot([X_AX - L2 + dx, X_AX + L2 + dx], [apex + L2 * t6, apex - L2 * t6], color="k", lw=0.6, ls=(0, (3, 2)), zorder=4)
+    wheel(ax, X_AX + dx, 5); wheel(ax, dx, 7)
+
+def wheel(ax, x, z):
+    """Five-spoke printed wheel with a tyre, as in the Fusion model."""
+    ax.add_patch(Circle((x, 0), R_W, fc="#3A3A3A", ec="k", lw=0.8, zorder=z))
+    ax.add_patch(Circle((x, 0), R_W * 0.84, fc=OR, ec="k", lw=0.6, zorder=z))
+    for k in range(5):
+        th = np.radians(90 + 72 * k + np.linspace(-24, 24, 12))
+        r1, r2 = R_W * 0.30, R_W * 0.72
+        P = np.r_[np.c_[r2 * np.cos(th), r2 * np.sin(th)], np.c_[r1 * np.cos(th[::-1]), r1 * np.sin(th[::-1])]] + [x, 0]
+        ax.add_patch(Polygon(P, closed=True, fc="white", ec="k", lw=0.5, zorder=z))
+    ax.add_patch(Circle((x, 0), R_W * 0.17, fc=OR, ec="k", lw=0.6, zorder=z))
+    ax.add_patch(Circle((x, 0), R_W * 0.08, fc="#3A3A3A", ec="none", zorder=z))
 
 def arrow(ax, p, q, col, lw=2.2, z=9, ms=14):
     ax.add_patch(FancyArrowPatch(p, q, arrowstyle="-|>", mutation_scale=ms, lw=lw, color=col, zorder=z))
@@ -91,8 +104,8 @@ def panel(ax, n, title, body):
 
 fig = plt.figure(figsize=(18, 7.9), dpi=140)
 fig.text(0.012, 0.982, "Believer launch dolly - concept of operations", fontsize=16, weight="bold", va="top", color=NAVY)
-fig.text(0.012, 0.942, "Side view to scale: manufacturer outline at 1:1 on the dolly geometry. Nearest side frame and outrigger wheel shown; "
-         "the tail support is on the centreline.", fontsize=9.5, va="top", color="#444")
+fig.text(0.012, 0.942, "Side view to scale: manufacturer outline at 1:1 on the dolly geometry. Nearest side frame and wheels shown; "
+         "the V-cradle tail support is on the centreline.", fontsize=9.5, va="top", color="#444")
 axs = [fig.add_axes([0.005 + c * 0.332, 0.475 - r * 0.44, 0.325, 0.44]) for r in range(2) for c in range(3)]
 LEc = np.array([LE[0], LE[1] - 2.0])                       # leading-edge contact on the tray (pivot for pitch-down)
 A_LOW = 2.0                                                # illustrative lower AoA (trim), TBD
@@ -139,7 +152,7 @@ def ghost(ax):
     aircraft(ax, alpha=0.18, colour="#555555")
 
 # 1 set-up
-ax = axs[0]; panel(ax, 1, "Set-up", "Dolly pointed into wind. Wing seated on both 5° trays, leading\nedge ~3 mm behind the ramps; rear fuselage on the tail support.\nHand launch remains the fallback.")
+ax = axs[0]; panel(ax, 1, "Set-up", "Dolly pointed into wind. Wing seated on both 5° trays, leading\nedge ~3 mm behind the ramps; rear fuselage in the V-cradle tail support.\nHand launch remains the fallback.")
 dolly(ax); f = aircraft(ax); gauge(ax, F.TRAY_DEG)
 label(ax, X_RAMP + 30, Y_LIP + 10, "ramp lip\n30 mm", fontsize=8)
 label(ax, -925, 150, "tail support", fontsize=8)
