@@ -3,6 +3,7 @@
 All notable changes to the Believer project repo are logged here, most recent first.
 
 ## 2026-11-09
+- `docs/engineering/requirements/launch-dolly-requirements.md` (rev 0.7): REQ-DOL-01 now also requires the dolly not to tip sideways. Julian wants stability stated as the requirement, with outrigger front wheels added only if the Fusion design proves to need them, so the Section 3c front-wheel row and rail spacing are left as they were for now. Section 3c's rear-wheel row is updated from Julian's latest Fusion side view: 580 mm axle to axle and wheels about 218 mm over the tread (scaled from the screenshot), with the tail post on the rear axle line and the cradle about 10 mm ahead of it, still about 600 mm aft of the wing LE. The tail-support belly heights above ground rise by 11 mm (257 to 268 mm at the cradle). `launch-dolly-conops.png` is rescaled to the same wheelbase and wheel size.
 - Redrew `docs/assets/diagrams/launch-dolly-conops.png` to match the current Fusion dolly model: the tail support is now drawn as the V-cradle on its centreline post (top 6 deg, higher at the rear), both wheels are the five-spoke printed wheels, and the caption no longer refers to an outrigger wheel. Geometry is otherwise unchanged from the 2026-11-05 side-view fit (rear axle 570 mm aft of the front cross member, wheel about 196 mm). `rear-support-fit/conops_image.py` now uses Inter if installed, otherwise Segoe UI, otherwise DejaVu Sans.
 
 ## 2026-11-05

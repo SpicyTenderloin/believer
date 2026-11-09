@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | SRD-BELIEVER-DOLLY-001 |
-| **Revision** | 0.6 |
-| **Date** | 2026-11-05 |
+| **Revision** | 0.7 |
+| **Date** | 2026-11-09 |
 | **Status** | Draft |
 
 ## 1. Scope
@@ -77,8 +77,8 @@ Using the Weishäupl et al. 2024 drag-polar reference data (`CL0` = 0.2570, `CL�
 | Base frame | Two side frames, one under each wing, each built on a lower rail of PVC tube with 3D-printed fittings, joined by front and rear cross members. Rail centres about 340 mm apart (TBD) |
 | Wing supports | One per side: a 3D-printed wedge tray with lightening cutouts and a TPU cover, carried on a front upright and a diagonal strut from a rail tee. Tray surface 5° nose-up relative to the rail |
 | Ramp stops | Integral with the front of each tray. Face 75° to the tray (80° to the ground); lip 30 mm above the tray surface. At rest the wing leading edge sits about 3 mm behind the face |
-| Tail support | TPU-lined printed V-cradle (160 mm wide, 20° flanks) on an adjustable 32 mm post in a tee at the middle of the rear cross member, at the rear axle station about 600 mm aft of the wing leading edge. V apex about 153 mm above the axle; the belly bottom sits about 160 mm above the axle. Detail on BLV-DOL-007 |
-| Rear wheels | One at the rear end of each rail, about 200 mm diameter; rear axle 570 mm aft of the front cross member |
+| Tail support | TPU-lined printed V-cradle (160 mm wide, 20° flanks) on an adjustable 32 mm post in a tee at the middle of the rear cross member, on the rear axle line, with the cradle about 600 mm aft of the wing leading edge. V apex about 153 mm above the axle; the belly bottom sits about 160 mm above the axle. Detail on BLV-DOL-007 |
+| Rear wheels | One at the rear end of each rail, five-spoke printed wheels about 218 mm diameter over the tread; rear axle 580 mm aft of the front axle |
 | Front wheels | One each side on an outrigger from the front corner tee, outboard of the propeller disc (front track about 1110 mm, TBD). Each outrigger is braced by a horizontal brace back to the rail tee and a vertical strut up to a tee on the front upright |
 
 ![Launch dolly concept views](../../assets/diagrams/launch-dolly-BLV-DOL-006.png)
@@ -94,12 +94,14 @@ Estimated by resting the manufacturer's side view at 1:1 on the wing supports, w
 
 | Tail-support station, aft of wing LE | Belly above rail top | Belly above ground | Belly slope (higher at rear) |
 |---|---|---|---|
-| 450 mm | 125 mm | 240 mm | about 7° |
-| 500 mm | 131 mm | 245 mm | about 7° |
-| 550 mm | 136 mm | 251 mm | about 6° |
-| **600 mm (rear axle station)** | **142 mm** | **257 mm** | **about 6°** |
+| 450 mm | 125 mm | 251 mm | about 7° |
+| 500 mm | 131 mm | 257 mm | about 7° |
+| 550 mm | 136 mm | 262 mm | about 6° |
+| **600 mm (tail cradle)** | **142 mm** | **268 mm** | **about 6°** |
 
-At the rear axle station the pad top is therefore about 142 mm above the rail top (160 mm above the rail and axle centreline), inclined about 6° higher at the rear. Each 1° difference between the wing underside and the fuselage datum moves this height by about 10 mm (wing incidence TBD, Section 6), so the pad is adjustable over at least ±20 mm and is set on the aircraft: wing seated on both trays, belly just bearing on the pad without lifting the leading edges.
+Heights above ground are for the 218 mm wheels, with the axles on the rail centreline.
+
+At the tail cradle the pad top is therefore about 142 mm above the rail top (160 mm above the rail and axle centreline), inclined about 6° higher at the rear. Each 1° difference between the wing underside and the fuselage datum moves this height by about 10 mm (wing incidence TBD, Section 6), so the pad is adjustable over at least ±20 mm and is set on the aircraft: wing seated on both trays, belly just bearing on the pad without lifting the leading edges.
 
 ### Launch Sequence
 
@@ -118,7 +120,7 @@ The AoA the aircraft settles at during the tail rise sets the lift-off speed. Us
 
 | ID | Requirement |
 |---|---|
-| REQ-DOL-01 | The dolly shall support the aircraft in a stable attitude throughout the ground-roll acceleration, without inducing porpoising, yaw wander, or a tendency to nose over. |
+| REQ-DOL-01 | The dolly shall support the aircraft in a stable attitude throughout the ground-roll acceleration, without inducing porpoising, yaw wander, a tendency to nose over, or tipping sideways. |
 | REQ-DOL-02 | The dolly shall separate cleanly from the aircraft at or before rotation, without contacting the airframe, propellers, or control surfaces during or after separation. |
 | REQ-DOL-03 | The dolly shall require no permanent modification to the airframe (no added mass, no attachment hardware left on the aircraft after separation). |
 
@@ -183,3 +185,4 @@ Tracked in [AI-context/open-items.md](../../../AI-context/open-items.md).
 | 0.4 | 2026-10-12 | Replaced Section 3b's stale, pre-flight PX4 airspeed parameters with the current configured values and the maiden flight's own measured stall speed (8-10 m/s at the aircraft's actual 4.0kg flying weight, `docs/engineering/test-reports/2026-10-11-maiden-flight.md`) - a real measured floor rather than a parameter estimate. Added the current-weight wing loading figure alongside the MTOW one. Narrowed Section 6's release-speed open item to a target range (roughly 11-13 m/s) pending the dolly's release AoA |
 | 0.5 | 2026-10-12 | Decided the retention/release mechanism (new Section 3c): a tail-rising dolly (sailplane/motorglider trolley style) with a single cradle 30mm forward of the CG and a separate tail support, rather than a rigid fixed-angle cradle. Added the lift-curve-derived ~5-6° separation AoA target. Distinguished the static resting angle (doesn't need precision) from the separation AoA (does). Updated Sections 5/6 accordingly; added the undocumented wing-incidence-angle gap as a new open item |
 | 0.6 | 2026-11-05 | Replaced the single-cradle concept (Section 3c) with the wing-saddle dolly with ramp stops, keeping the tail rise: configuration including braced front outrigger wheels, concept-of-operations and concept-view images, tail-support height estimate, and launch sequence (tail rises and the aircraft pitches down to a lower AoA before lifting over the ramp lips). Updated Section 2, Section 3b's separation-AoA note, REQ-DOL-10 and Sections 5 and 6 to match |
+| 0.7 | 2026-11-09 | REQ-DOL-01 now also requires the dolly not to tip sideways, so stability is stated as a requirement and outrigger front wheels are fitted only if the Fusion design needs them. Section 3c updated to the Fusion model's 580 mm wheelbase and 218 mm wheels (tail-support heights above ground raised by 11 mm), and the concept-of-operations image rescaled to match |

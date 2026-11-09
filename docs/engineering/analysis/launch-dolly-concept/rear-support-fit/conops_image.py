@@ -12,9 +12,10 @@ plt.rcParams["font.family"] = next(f for f in ("Inter", "Segoe UI", "DejaVu Sans
 NAVY, OR, ORD, TUBE, GREY = "#0A2A5B", "#D9772E", "#B85E1E", "#E6E1D3", "#8C8778"
 S, X0, Y0 = F.S, 755.3, F.RAIL_C                     # screenshot px -> dolly mm (origin: front cross centre)
 def mm(P): P = np.atleast_2d(P); return np.c_[(P[:, 0] - X0) * S, (Y0 - P[:, 1]) * S]
-GROUND = (Y0 - F.GROUND) * S
-R_W = (F.GROUND - 337) * S / 2
-X_AX = (F.AXLE_X - X0) * S
+X_AX = (F.AXLE_X - X0) * S                           # tail-support contact station (side-view fit)
+WHEELBASE, D_WHEEL = 580.0, 218.0                    # Fusion side view 2026-11-09: rear axle aft of the front axle; wheel dia over tread
+X_RW, R_W = -WHEELBASE, D_WHEEL / 2                  # rear axle (tail post on it, cradle ~10 mm ahead)
+GROUND = -R_W                                        # axles on the rail centreline
 def tray_top(x): return (Y0 - F.tray_y(x / S + X0)) * S
 X_RAMP = (F.RAMP_X - X0) * S; Y_LIP = (Y0 - F.LIP_Y) * S
 RAIL_TOP = (Y0 - F.RAIL_TOP) * S
@@ -57,9 +58,9 @@ def dolly(ax, dx=0.0):
     sh = lambda pts: [(x + dx, y) for x, y in pts]
     ax.add_patch(Rectangle((EXT[0], EXT[2]), EXT[1] - EXT[0], GROUND - EXT[2], fc="#DCE8C8", ec="none", zorder=1))
     ax.plot([EXT[0], EXT[1]], [GROUND] * 2, color="#5E7A3A", lw=1.2, zorder=2)
-    tube(ax, (X_AX + dx, 0), (dx + 8, 0))
+    tube(ax, (X_RW + dx, 0), (dx + 8, 0))
     tube(ax, (dx, 0), (dx, 192)); tube(ax, (-436 + dx, 0), (-272 + dx, 205))
-    for x0, x1 in ((X_AX + 10, X_AX + 70), (-470, -400), (-35, 8)):
+    for x0, x1 in ((X_RW + 10, X_RW + 70), (-470, -400), (-35, 8)):
         ax.add_patch(Rectangle((x0 + dx, -18), x1 - x0, 36, fc=OR, ec="k", lw=0.6, zorder=4))
     xs = np.linspace(-275, X_RAMP, 30)
     tray = [(-275, 190), (X_RAMP + 12, 190), (X_RAMP + 12, Y_LIP), (X_RAMP, Y_LIP), (X_RAMP, tray_top(X_RAMP))] + \
@@ -68,12 +69,12 @@ def dolly(ax, dx=0.0):
     # tail support: V-cradle on a centreline post on the rear cross member, belly in the V, top 6 deg (higher at the rear)
     t6 = math.tan(math.radians(6)); L2 = 35
     apex, tips, bot = PAD_TOP - 7, PAD_TOP + 18.5, PAD_TOP - 25
-    tube(ax, (X_AX + dx, 18), (X_AX + dx, bot - 40), w=32, z=3)
-    ax.add_patch(Rectangle((X_AX - 21 + dx, bot - 55), 42, 56, fc=OR, ec="k", lw=0.7, zorder=4))
+    tube(ax, (X_RW + dx, 18), (X_RW + dx, bot - 40), w=32, z=3)
+    ax.add_patch(Rectangle((X_RW - 21 + dx, bot - 55), 42, 56, fc=OR, ec="k", lw=0.7, zorder=4))
     ax.add_patch(Polygon(sh([(X_AX - L2, bot + L2 * t6), (X_AX + L2, bot - L2 * t6), (X_AX + L2, tips - L2 * t6), (X_AX - L2, tips + L2 * t6)]),
                          closed=True, fc=OR, ec="k", lw=0.7, zorder=4, alpha=0.95))
     ax.plot([X_AX - L2 + dx, X_AX + L2 + dx], [apex + L2 * t6, apex - L2 * t6], color="k", lw=0.6, ls=(0, (3, 2)), zorder=4)
-    wheel(ax, X_AX + dx, 5); wheel(ax, dx, 7)
+    wheel(ax, X_RW + dx, 5); wheel(ax, dx, 7)
 
 def wheel(ax, x, z):
     """Five-spoke printed wheel with a tyre, as in the Fusion model."""
