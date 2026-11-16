@@ -617,4 +617,8 @@ Design choices made by Julian along the way: the trays are wedges at 5° to the 
 
 Tail-support height was estimated by overlaying the manufacturer side view at 1:1 on Julian's Fusion side view, calibrated from his measurement of 570.35 mm between the 40 mm circles at the rear axle and front cross member (570.0 mm in the side plane). A first pass the same day assumed 1.0 mm/px from the tube width and read about 16 mm low. The drawing is reliable for length (1070 mm dimensioned) and its fuselage depth is consistent with the published 260 x 140 x 105 mm battery bay; its front view is not to scale (the 185 mm height dimension disagrees with its own span), and the wing section drawn on the side view implies about -5° incidence, which was treated as a drawing artefact.
 
+## Livery Chosen: Roundel C and Navy Side ID C1 - 2026-11-16
+
+From the livery options drawn up on 2026-11-05 (`docs/assets/livery/`), Julian has chosen, for now, wingtip roundel C (the QUTAS logo inside navy and orange rings, 130 mm) and side identification C1 ("QA <roundel C> BLV" in navy Bebas Neue, 45 mm letters with a 54 mm roundel C in the centre). The print-and-cut files are `docs/assets/livery/out/print/wingtip-C.svg`/`.pdf` (cut outline about 135 mm across) and `id-C1.svg`/`.pdf` (artwork 189 x 54 mm, cut outline about 194 x 59 mm), two of each: one roundel per wing and one ID per fuselage side. The other options' files stay in `out/print/` in case the choice changes. The sizes were fitted on the manufacturer three-view, which is not reliable for chord or height, so they still need a test fit on the aircraft before ordering.
+
 See [open-items.md](open-items.md) for what's still missing.
